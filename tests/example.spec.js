@@ -1,0 +1,103 @@
+// @ts-check
+const { test, expect } = require('@playwright/test');
+//const moment = require('moment');
+
+
+// test('has title', async ({ page }) => {
+//   await page.goto('https://playwright.dev/');
+//
+//   // Expect a title "to contain" a substring.
+//   await expect(page).toHaveTitle(/Playwright/);
+// });
+//
+// test('get started link', async ({ page }) => {
+//   await page.goto('https://playwright.dev/');
+//
+//   // Click the get started link.
+//   await page.getByRole('link', { name: 'Get started' }).click();
+//
+//   // Expects page to have a heading with the name of Installation.
+//   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+// });
+//
+/* test('drag and drop card on week view', async ({ page }) => {
+  const nextDayDate = moment(Date.now())
+      .add(1, 'days')
+      .format('dddd, D MMMM');
+
+  const composeText = `test drag and drop ${Date.now()}`;
+  await page.goto('https://staging.hootsuite.com/login');
+
+  await expect(page).toHaveTitle(/Hootsuite - Login/);
+
+  await page.locator('#loginEmailInput').fill("plan.create.automation+stgpro1@hootsuite.com")
+  await page.locator('#loginPasswordInput').fill("0i292mJLOfyN");
+
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+  await page.waitForTimeout(2000);
+
+  await page.getByLabel('Composer', { exact: true }).click();
+  await page.getByLabel('Composer', { exact: true }).click();
+  await page.getByLabel('Post').click();
+  await page.getByPlaceholder('Select a social account').click();
+  await page.getByTestId('MessageEditArea').getByText('HComposer1').first().click();
+  await page.getByText('Twitterhs_composer1@HComposer1• Just nowSocial networks regularly make updates t').click();
+
+  await page.getByLabel('Text').click();
+  await page.getByLabel('Text').fill(composeText);
+  await page.getByRole('button', { name: 'Schedule for later' }).click();
+  await page.getByRole('button', { name: 'Done' }).click();
+  await page.getByRole('button', { name: 'Schedule', exact: true }).click();
+  await page.getByRole('button', { name: 'Schedule', exact: true }).click();
+  await page.getByTestId('CloseButton').click();
+
+  const source = await page.getByText(composeText);
+  const destination = await page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at 3PM` });
+  await page.waitForTimeout(1000);
+
+  await source.hover();
+  await page.mouse.down();
+
+  await destination.hover();
+  await destination.hover();
+  await page.mouse.up();
+
+  await page.waitForTimeout(1000);
+  await page.getByText(composeText).click();
+  await page.getByTestId('DeleteButton').click();
+  await page.getByRole('button', { name: 'Delete post' }).click();
+  await page.waitForTimeout(3000);
+
+  await page.close();
+}); */
+
+test('drag and drop media from side pane on week view', async ({ page }) => {
+  const nextDayDate = moment(Date.now())
+      .add(1, 'days')
+      .format('dddd, D MMMM');
+
+  await page.goto('https://staging.hootsuite.com/login');
+  await page.getByRole('textbox', { name: 'Please enter a valid email address' }).fill("pro_user_composer2@hootsuite.com")
+  await page.locator('#loginPasswordInput').fill("nJUW6u6M3q6M");
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+  await page.waitForTimeout(2000);
+
+  await page.getByLabel('Planner', { exact: true }).click();
+  await page.getByTestId('ContentButton').click();
+
+  const source = page.getByLabel('Tall majestic palm trees on green hills');
+
+  const destination = await page.getByRole('gridcell', { name: `0 posts, Friday, 6 October at 12AM` });
+  await page.waitForTimeout(1000);
+
+  await source.dragTo(destination);
+
+  await page.waitForTimeout(2000);
+
+  await page.getByText('No account').click();
+
+  await page.getByTestId('DeleteButton').click();
+  await page.getByRole('button', { name: 'Delete post' }).click();
+  await page.waitForTimeout(2000);
+  await page.close();
+});

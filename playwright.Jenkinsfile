@@ -20,7 +20,7 @@ pod {
     execWrapper {
         boolean stashRepo = true
         stage ('Setup playwright') {
-            sh 'rm -rf playwright && git clone --branch PUB-30482 --single-branch git@github.hootops.com:lavanya-petchetti-hs/playwright.git playwright --depth=1'
+            sh 'rm -rf playwright && git clone --branch PUB-30482 --single-branch git@github.hootops.com:hootsuite/playwright.git playwright --depth=1'
             sh 'yarn install'
             sh 'npm install saucectl'
             sh 'npx saucectl -v'
