@@ -27,7 +27,7 @@ pod {
             sh "ls -la ${pwd()}"
 
             if (stashRepo) {
-                stash includes: 'playwright/**', name: 'playwright-saucelabs-automation'
+                stash includes: 'playwright-saucelabs-automation/**', name: 'playwright-saucelabs-automation'
                 }
             }
             stage ('Run tests via saucelabs') {
