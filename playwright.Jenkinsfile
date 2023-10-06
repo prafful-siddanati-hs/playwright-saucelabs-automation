@@ -1,7 +1,7 @@
 #!groovy
 import hootsuite.jsl.pipeline.General
 
-@Library('hootsuite@PUB-30482-test') _
+@Library('hootsuite@6') _
 
 def pod = declarePod {
     name = 'playwright'
@@ -20,14 +20,14 @@ pod {
     execWrapper {
         boolean stashRepo = true
         stage ('Setup playwright') {
-            sh 'rm -rf playwright && git clone --branch PUB-30482 --single-branch git@github.hootops.com:hootsuite/playwright.git playwright --depth=1'
+            sh 'rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright --depth=1'
             sh 'yarn install'
             sh 'npm install saucectl'
             sh 'npx saucectl -v'
             sh "ls -la ${pwd()}"
 
             if (stashRepo) {
-                stash includes: 'playwright/**', name: 'playwright'
+                stash includes: 'playwright/**', name: 'playwright-saucelabs-automation'
                 }
             }
             stage ('Run tests via saucelabs') {
@@ -35,7 +35,7 @@ pod {
                     def general = new General()
                     general.saucelabsVaultSetup{
                         if (stashRepo){
-                            unstash 'playwright'
+                            unstash 'playwright-saucelabs-automation'
                             echo 'Running saucectl... '
                             sh 'saucectl run'
                         }
