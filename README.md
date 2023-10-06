@@ -1,2 +1,2 @@
-# playwright-saucelabs-automation
-Run playwright tests via Saucelabs
+# playwright
+UI Test Automation
