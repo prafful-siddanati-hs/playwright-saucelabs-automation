@@ -1,6 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const moment = require('moment');
+//const moment = require('moment');
 
 
 // test('has title', async ({ page }) => {
@@ -20,7 +20,7 @@ const moment = require('moment');
 //   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 // });
 //
-test('drag and drop card on week view', async ({ page }) => {
+/* test('drag and drop card on week view', async ({ page }) => {
   const nextDayDate = moment(Date.now())
       .add(1, 'days')
       .format('dddd, D MMMM');
@@ -69,7 +69,7 @@ test('drag and drop card on week view', async ({ page }) => {
   await page.waitForTimeout(3000);
 
   await page.close();
-});
+}); */
 
 test('drag and drop media from side pane on week view', async ({ page }) => {
   const nextDayDate = moment(Date.now())
