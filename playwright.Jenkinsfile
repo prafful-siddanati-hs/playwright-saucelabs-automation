@@ -10,8 +10,8 @@ def pod = declarePod {
     containerDefault = 'playwright'
     container {
         name = 'playwright'
-        image = 'docker-registry.hootops.com/playwright:v1.38.0-focal'
-        cpu = 1
+        image = 'docker-registry.hootops.com/playwright:v1.38.0-jammy'
+        cpu = 2
         memory = '4Gi'
     }
 }
@@ -19,16 +19,19 @@ def pod = declarePod {
 pod {
     execWrapper {
         boolean stashRepo = true
-        stage ('Setup playwright') {
-            checkout scm
-            sh 'rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
-            sh 'yarn install'
-            sh 'npm install saucectl'
-            sh 'npx saucectl -v'
-            sh "ls -la ${pwd()}"
+        kubernetesNode('jenkins-agent-small') {
+            stage('Checkout project') {
+                sh 'rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
+            }
+            stage ('Setup playwright') {  
+                checkout scm    
+                sh 'yarn install'
+                sh 'npm install saucectl'
+                sh 'npx saucectl -v'
+                sh "ls -la ${pwd()}"
 
-            if (stashRepo) {
-                stash includes: 'playwright-saucelabs-automation/**', name: 'playwright-saucelabs-automation'
+                if (stashRepo) {
+                    stash includes: 'playwright-saucelabs-automation/**', name: 'playwright-saucelabs-automation'
                 }
             }
             stage ('Run tests via saucelabs') {
@@ -46,7 +49,7 @@ pod {
                     println (err.toString())
                 }
             }
-        
+        }
     }
 }
 
