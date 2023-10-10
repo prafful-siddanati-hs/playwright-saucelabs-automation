@@ -5,12 +5,11 @@ import hootsuite.jsl.pipeline.General
 
 def pod = declarePod {
     name = 'playwright'
-    dind {}
     vault {}
     containerDefault = 'playwright'
     container {
         name = 'playwright'
-        image = 'docker-registry.hootops.com/playwright:v1.38.0-focal'
+        image = 'docker-registry.hootops.com/pod/build-playwright:10-e849a93-PR-292-amd64'
         cpu = 2
         memory = '4Gi'
     }
@@ -19,13 +18,12 @@ def pod = declarePod {
 pod {
     execWrapper {
         boolean stashRepo = true
-        kubernetesNode('jenkins-agent-small') {
             stage ('Setup playwright') {     
                 checkout scm
-                sh 'rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'       
-                sh 'yarn install'
-                sh 'npm install saucectl'
-                sh 'npx saucectl -v'
+                sh "rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1"       
+                sh "yarn install"
+                sh "npm install saucectl"
+                sh "npx saucectl -v"
                 sh "ls -la ${pwd()}"
 
                 if (stashRepo) {
@@ -47,7 +45,6 @@ pod {
                     println (err.toString())
                 }
             }
-        }
     }
 }
 
