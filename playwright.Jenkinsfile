@@ -11,7 +11,7 @@ def pod = declarePod {
         name = 'playwright'
         image = 'docker-registry.hootops.com/pod/build-playwright:995-f9afe13'
         cpu = 2
-        memory = '4Gi'
+        memory = '8Gi'
     }
 }
 
