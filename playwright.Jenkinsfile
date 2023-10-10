@@ -10,7 +10,7 @@ def pod = declarePod {
     containerDefault = 'playwright'
     container {
         name = 'playwright'
-        image = 'docker-registry.hootops.com/playwright:v1.38.0-jammy'
+        image = 'docker-registry.hootops.com/playwright:v1.38.0-focal'
         cpu = 2
         memory = '4Gi'
     }
@@ -20,11 +20,9 @@ pod {
     execWrapper {
         boolean stashRepo = true
         kubernetesNode('jenkins-agent-small') {
-            stage('Checkout project') {
-                sh 'rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
-            }
-            stage ('Setup playwright') {  
-                checkout scm    
+            stage ('Setup playwright') {     
+                checkout scm
+                sh 'rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'       
                 sh 'yarn install'
                 sh 'npm install saucectl'
                 sh 'npx saucectl -v'

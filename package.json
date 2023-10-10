@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "UI Test Automation",
   "main": "index.js",
+  
   "scripts": {
     "test.local": "npx playwright test",
     "test.sauce.us": "saucectl run"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.hootops.com:lavanya-petchetti-hs/playwright.git"
+    "url": "git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git"
   },
   "keywords": [],
   "author": "",
