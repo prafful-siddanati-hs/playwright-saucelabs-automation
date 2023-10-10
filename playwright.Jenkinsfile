@@ -9,7 +9,7 @@ def pod = declarePod {
     containerDefault = 'playwright'
     container {
         name = 'playwright'
-        image = 'docker-registry.hootops.com/pod/build-playwright:995-f9afe13'
+        image = 'default/playwright'
         cpu = 2
         memory = '8Gi'
     }
@@ -24,7 +24,7 @@ pod {
                 sh 'yarn install'
                 sh 'npm install saucectl'
                 sh 'npx saucectl -v'
-                sh 'ls -la ${pwd()}'
+                sh "ls -la ${pwd()}"
 
                 if (stashRepo) {
                     stash includes: 'playwright-saucelabs-automation/**', name: 'playwright-saucelabs-automation'
