@@ -23,8 +23,6 @@ pod {
                 sh 'rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
                 sh 'yarn install'
                 sh 'npm install saucectl'
-                sh 'npx saucectl -v'
-                sh "ls -la ${pwd()}"
 
                 if (stashRepo) {
                     stash includes: 'playwright-saucelabs-automation/**', name: 'playwright-saucelabs-automation'
