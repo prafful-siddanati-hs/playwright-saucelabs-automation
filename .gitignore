@@ -5,9 +5,6 @@
 # Logs
 logs
 *.log
-geckodriver.log
-selenium.log
-selenium.log.lck
 
 # Runtime data
 pids
@@ -16,7 +13,6 @@ pids
 
 # intelliJ
 .idea
-venkman.iml
 
 # vscode
 .vscode
@@ -33,9 +29,15 @@ build/Release
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
-node_modules
+node_modules/
 
 # Screenshots & Reports
+sauce-app-payload*
+artifacts/
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/__assets__
 screenshots
 reports
 tests_output
