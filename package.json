@@ -21,5 +21,8 @@
   },
   "dependencies": {
     "saucectl": "^0.164.0"
+  },
+  "directories": {
+    "test": "tests"
   }
 }
