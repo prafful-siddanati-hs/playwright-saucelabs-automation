@@ -22,7 +22,7 @@ suites:
   - name: "[Playwright] Plan Create Tests"
     platformName: "Windows 10"
     screenResolution: "1920x1080"
-    testMatch: ['tests/example.spec.js']
+    testMatch: ['.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
