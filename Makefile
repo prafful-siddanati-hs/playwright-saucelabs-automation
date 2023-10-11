@@ -8,3 +8,6 @@ install:
 
 test-playwright-saucelabs:
 	npx saucectl run
+
+test-playwright-local:
+	npx playwright test tests/folderName/testName.js
