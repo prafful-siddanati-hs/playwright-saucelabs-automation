@@ -1,7 +1,7 @@
 #!groovy
 import hootsuite.jsl.pipeline.General
 
-@Library('hootsuite@PUB-30482-test') _
+@Library('hootsuite@6') _
 
 def pod = declarePod {
     name = 'playwright'
@@ -50,6 +50,7 @@ def execWrapper(Closure c) {
     try {
         c()
         echo "Build Success"
+        //TODO:Update slack channel and details
         slackSend color: '#138347', channel: '#blackhole', message: " P&C Playwright tests - Passed"
     } 
     catch (e) {
