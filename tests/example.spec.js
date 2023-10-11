@@ -75,9 +75,9 @@ test('drag and drop card on week view', async ({ page }) => {
 });
 
 test('drag and drop media from side pane on week view', async ({ page }) => {
-  /* const nextDayDate = moment(Date.now())
+  const nextDayDate = moment(Date.now())
       .add(1, 'days')
-      .format('dddd, D MMMM'); */
+      .format('dddd, D MMMM');
 
   await page.goto('https://staging.hootsuite.com/login');
   await page.getByRole('textbox', { name: 'Please enter a valid email address' }).fill("pro_user_composer2@hootsuite.com")
