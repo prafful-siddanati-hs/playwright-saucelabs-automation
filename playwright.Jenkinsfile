@@ -1,7 +1,7 @@
 #!groovy
 import hootsuite.jsl.pipeline.General
 
-@Library('hootsuite@PUB-30428-test') _
+@Library('hootsuite@PUB-30482-test') _
 
 def pod = declarePod {
     name = 'playwright'
