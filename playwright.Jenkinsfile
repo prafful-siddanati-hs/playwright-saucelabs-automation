@@ -1,7 +1,7 @@
 #!groovy
 import hootsuite.jsl.pipeline.General
 
-@Library('hootsuite@6') _
+@Library('hootsuite@PUB-30428-test') _
 
 def pod = declarePod {
     name = 'playwright'
@@ -20,7 +20,7 @@ pod {
         boolean stashRepo = true
             stage ('Setup playwright') {     
                 checkout scm
-                sh 'rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
+                sh 'rm -rf playwright-saucelabs-automation && git clone --branch PUB-30428 --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
                 sh 'yarn install'
                 sh 'npm install saucectl'
 
