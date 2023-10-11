@@ -14,7 +14,7 @@ rootDir: ./
 npm:
  registry: https://registry.npmjs.org
  packages:
-  moment: "2.29.4"
+  moment-timezone: "^0.5.34"
 suites:
   # - name: "Firefox Win"
   #   platformName: "Windows 11"
