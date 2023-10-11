@@ -21,6 +21,5 @@
     "moment": "^2.29.4"
   },
   "dependencies": {
-    "saucectl": "^0.163.0"
   }
 }
