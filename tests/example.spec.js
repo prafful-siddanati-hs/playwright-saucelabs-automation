@@ -90,7 +90,7 @@ test('drag and drop media from side pane on week view', async ({ page }) => {
 
   const source = page.getByLabel('Tall majestic palm trees on green hills');
 
-  const destination = await page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at 12AM` });
+  const destination = await page.getByRole('gridcell', { name: `0 posts, Thursday, 12 October at 12AM` });
   await page.waitForTimeout(1000);
 
   await source.dragTo(destination);

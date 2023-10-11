@@ -1,7 +1,7 @@
 #!groovy
 import hootsuite.jsl.pipeline.General
 
-@Library('hootsuite@6') _
+@Library('hootsuite@PUB-30482-test') _
 
 def pod = declarePod {
     name = 'playwright'
@@ -17,32 +17,24 @@ def pod = declarePod {
 
 pod {
     execWrapper {
-        boolean stashRepo = true
-            stage ('Setup playwright') {     
-                checkout scm
-                sh 'rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
-                sh 'yarn install'
-                sh 'npm install saucectl'
-
-                if (stashRepo) {
-                    stash includes: 'playwright-saucelabs-automation/**', name: 'playwright-saucelabs-automation'
+        stage ('Setup playwright') {     
+            checkout scm
+            sh 'rm -rf playwright-saucelabs-automation && git clone --branch PUB-30428 --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
+            sh 'yarn install'
+            sh 'npm install saucectl'
+        }
+        stage ('Run tests via saucelabs') {
+            try {
+                def general = new General()
+                general.saucelabsVaultSetup {
+                    echo 'Running saucectl... '
+                    sh 'npx saucectl run'
                 }
             }
-            stage ('Run tests via saucelabs') {
-                try {
-                    def general = new General()
-                    general.saucelabsVaultSetup{
-                        if (stashRepo){
-                            unstash 'playwright-saucelabs-automation'
-                            echo 'Running saucectl... '
-                            sh 'npx saucectl run'
-                        }
-                    }
-                }
-                catch(err) {
-                    println (err.toString())
-                }
+            catch(err) {
+                println (err.toString())
             }
+        }
     }
 }
 
