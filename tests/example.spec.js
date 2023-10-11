@@ -117,3 +117,4 @@ test('drag and drop media from side pane on week view', async ({ page }) => {
 //   await page1.close();
 //   await page.close();
 // });
+
