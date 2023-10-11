@@ -23,6 +23,7 @@ suites:
     platformName: "Windows 10"
     screenResolution: "1920x1080"
     testMatch: ['.*.js']
+    excludedTestFiles: ["tests/example.spec.js"]
     params:
       browserName: "chromium"
       project: "chromium"
