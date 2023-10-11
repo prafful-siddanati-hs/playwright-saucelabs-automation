@@ -72,9 +72,9 @@ const { test, expect } = require('@playwright/test');
 }); */
 
 test('drag and drop media from side pane on week view', async ({ page }) => {
-  const nextDayDate = moment(Date.now())
+  /* const nextDayDate = moment(Date.now())
       .add(1, 'days')
-      .format('dddd, D MMMM');
+      .format('dddd, D MMMM'); */
 
   await page.goto('https://staging.hootsuite.com/login');
   await page.getByRole('textbox', { name: 'Please enter a valid email address' }).fill("pro_user_composer2@hootsuite.com")
@@ -87,7 +87,7 @@ test('drag and drop media from side pane on week view', async ({ page }) => {
 
   const source = page.getByLabel('Tall majestic palm trees on green hills');
 
-  const destination = await page.getByRole('gridcell', { name: `0 posts, Friday, 6 October at 12AM` });
+  const destination = await page.getByRole('gridcell', { name: `0 posts, Wednesday, 11 October at 12AM` });
   await page.waitForTimeout(1000);
 
   await source.dragTo(destination);
