@@ -1,6 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const moment = require('moment');
+//const moment = require('moment');
 
 
 // test('has title', async ({ page }) => {
@@ -21,9 +21,9 @@ const moment = require('moment');
 // });
 //
 test('drag and drop card on week view', async ({ page }) => {
-  const nextDayDate = moment(Date.now())
+  /* const nextDayDate = moment(Date.now())
       .add(1, 'days')
-      .format('dddd, D MMMM');
+      .format('dddd, D MMMM'); */
 
   const composeText = `test drag and drop ${Date.now()}`;
   await page.goto('https://staging.hootsuite.com/login');
@@ -52,7 +52,7 @@ test('drag and drop card on week view', async ({ page }) => {
   await page.getByTestId('CloseButton').click();
 
   const source = await page.getByText(composeText);
-  const destination = await page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at 3PM` });
+  const destination = await page.getByRole('gridcell', { name: `0 posts, Thursday, 12 October at 3PM` });
   await page.waitForTimeout(1000);
 
   await source.hover();
@@ -72,9 +72,9 @@ test('drag and drop card on week view', async ({ page }) => {
 });
 
 test('drag and drop media from side pane on week view', async ({ page }) => {
-  const nextDayDate = moment(Date.now())
+  /* const nextDayDate = moment(Date.now())
       .add(1, 'days')
-      .format('dddd, D MMMM');
+      .format('dddd, D MMMM'); */
 
   await page.goto('https://staging.hootsuite.com/login');
   await page.getByRole('textbox', { name: 'Please enter a valid email address' }).fill("pro_user_composer2@hootsuite.com")
@@ -87,7 +87,7 @@ test('drag and drop media from side pane on week view', async ({ page }) => {
 
   const source = page.getByLabel('Tall majestic palm trees on green hills');
 
-  const destination = await page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at 12AM` });
+  const destination = await page.getByRole('gridcell', { name: `0 posts, Thursday, 12 October at 12AM` });
   await page.waitForTimeout(1000);
 
   await source.dragTo(destination);
