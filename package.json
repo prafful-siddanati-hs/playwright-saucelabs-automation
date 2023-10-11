@@ -6,7 +6,7 @@
   
   "scripts": {
     "test.local": "npx playwright test",
-    "test.sauce.us": "saucectl run"
+    "test.sauce": "npx saucectl run"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,5 @@
     "@playwright/test": "^1.38.1",
     "@types/node": "^20.7.1",
     "moment": "^2.29.4"
-  },
-  "dependencies": {
   }
 }
