@@ -38,8 +38,8 @@ test('drag and drop card on week view', async ({ page }) => {
   await page.getByRole('button', { name: 'Schedule', exact: true }).click();
   await page.getByTestId('CloseButton').click();
 
-  const source = await page.getByText(composeText);
-  const destination = await page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at ${nextDayTime}` });
+  const source = page.getByText(composeText);
+  const destination = page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at ${nextDayTime}` });
   await page.waitForTimeout(2000);
   await source.hover();
   await page.mouse.down();
@@ -73,7 +73,7 @@ test('drag and drop media from side pane on week view', async ({ page }) => {
 
   const source = page.getByLabel('Tall majestic palm trees on green hills');
 
-  const destination = await page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at 12AM` });
+  const destination = page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at 12AM` });
   await page.waitForTimeout(1000);
 
   await source.dragTo(destination);
