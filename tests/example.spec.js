@@ -71,7 +71,7 @@ test('drag and drop media from side pane on week view', async ({ page }) => {
   await page.getByLabel('Planner', { exact: true }).click();
   await page.getByTestId('ContentButton').click();
 
-  const source = page.getByLabel('Tall majestic palm trees on green hills');
+  const source = page.locator('.-mediaRow img').first();
 
   const destination = page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at 12AM` });
   await page.waitForTimeout(1000);
