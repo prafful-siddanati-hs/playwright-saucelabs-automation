@@ -12,9 +12,8 @@ playwright:
 # Controls what files are available in the context of a test run (unless explicitly excluded by .sauceignore).
 rootDir: ./
 npm:
- registry: https://registry.npmjs.org
- packages:
-  moment-timezone: "^0.5.34"
+  dependencies:
+    - moment-timezone
 suites:
   # - name: "Firefox Win"
   #   platformName: "Windows 11"
