@@ -118,6 +118,13 @@
   dependencies:
     "mime-db" "1.52.0"
 
+"moment-timezone@^0.5.34":
+  "integrity" "sha512-72j3aNyuIsDxdF1i7CEgV2FfxM1r6aaqJyLB2vwb33mXYyoyLly+F1zbWqhA3/bVIoJ4szlUoMbUnVdid32NUQ=="
+  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/moment-timezone/-/moment-timezone-0.5.43.tgz"
+  "version" "0.5.43"
+  dependencies:
+    "moment" "^2.29.4"
+
 "moment@^2.29.4":
   "integrity" "sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w=="
   "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/moment/-/moment-2.29.4.tgz"
@@ -152,10 +159,10 @@
   "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/queue-tick/-/queue-tick-1.0.1.tgz"
   "version" "1.0.1"
 
-"saucectl@^0.164.0":
-  "integrity" "sha512-egZaqjSK7zxQ5MO9HFHzfD32IGvrB3c8WKNbvGEGIxvwfmA6GkzNhUhUsYIKPHKsS/dA5k3iKIZZ8G0ZRPpSyg=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/saucectl/-/saucectl-0.164.0.tgz"
-  "version" "0.164.0"
+"saucectl@^0.157.0":
+  "integrity" "sha512-iRZgD6lo9Pp3Nq4MstFs3VUmVYSGwOVE+NALonTLlDlEbcaGUW8Y95RG6mbSV6OS50gfxcI6LvdMIwDYVuurWA=="
+  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/saucectl/-/saucectl-0.157.0.tgz"
+  "version" "0.157.0"
   dependencies:
     "@saucelabs/bin-wrapper" "^0.4.0"
 
