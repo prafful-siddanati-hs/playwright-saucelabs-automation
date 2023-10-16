@@ -21,9 +21,6 @@
     "moment-timezone": "^0.5.34",
     "saucectl": "^0.157.0"
   },
-  "dependencies": {
-    "moment-timezone": "^0.5.34"
-  },
   "directories": {
     "test": "tests"
   }
