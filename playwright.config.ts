@@ -1,4 +1,4 @@
-import { defineConfig, devices, PlaywrightTestConfig } from '@playwright/test';
+import { devices, PlaywrightTestConfig } from '@playwright/test';
 
 /**
  * Read environment variables from file.
@@ -13,7 +13,7 @@ function getEnv (key: string, defaultValue: string): string {
   return v !== '' ? v : defaultValue;
 }
 
-const config: PlaywrightTestConfig = defineConfig({
+const config: PlaywrightTestConfig = {
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -46,7 +46,7 @@ const config: PlaywrightTestConfig = defineConfig({
       },
     },
   ]
-});
+};
 
 process.env.SAUCE_USERNAME = getEnv('SAUCE_USERNAME', '');
 process.env.SAUCE_ACCESS_KEY = getEnv('SAUCE_ACCESS_KEY', '');
