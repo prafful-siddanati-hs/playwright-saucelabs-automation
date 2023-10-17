@@ -1,5 +1,4 @@
-// @ts-check
-const { defineConfig, devices } = require('@playwright/test');
+import { defineConfig, devices, PlaywrightTestConfig } from '@playwright/test';
 
 /**
  * Read environment variables from file.
@@ -14,7 +13,7 @@ function getEnv (key: string, defaultValue: string): string {
   return v !== '' ? v : defaultValue;
 }
 
-export default defineConfig({
+const config: PlaywrightTestConfig = defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -44,17 +43,15 @@ export default defineConfig({
       use: { 
         ...devices['Desktop Chrome'],
         viewport: { width: 1920, height: 1080 },
-        saucelabs: {
-          username: getEnv('SAUCE_USERNAME', ''),
-          access_key: getEnv('SAUCE_ACCESS_KEY', ''),
-          runOnSaucelabs: true,
-          test_workers: {
-            enabled: true,
-            workers: 'auto'
-          }
-        }
       },
-      
     },
-  ],
+  ]
 });
+
+process.env.SAUCE_USERNAME = getEnv('SAUCE_USERNAME', '');
+process.env.SAUCE_ACCESS_KEY = getEnv('SAUCE_ACCESS_KEY', '');
+process.env.RUN_ON_SAUCELABS = 'true';
+process.env.TEST_WORKERS_ENABLED = 'true';
+process.env.TEST_WORKERS = 'auto';
+
+export default config;
