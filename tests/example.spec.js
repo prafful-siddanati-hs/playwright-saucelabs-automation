@@ -1,7 +1,7 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const moment = require('moment');
-
+const moment = require('moment-timezone');
+moment.tz.setDefault('America/Vancouver');
 
 test('drag and drop card on week view', async ({ page }) => {
   const nextDayDate = moment(Date.now())
@@ -28,19 +28,17 @@ test('drag and drop card on week view', async ({ page }) => {
   await page.getByLabel('Post').click();
   await page.getByPlaceholder('Select a social account').click();
   await page.getByTestId('MessageEditArea').getByText('HComposer1').first().click();
-  await page.getByText('Twitterhs_composer1@HComposer1• Just nowSocial networks regularly make updates t').click();
+  await page.locator('.vk-ComposerHeader').click();
 
   await page.getByLabel('Text').click();
   await page.getByLabel('Text').fill(composeText);
   await page.getByRole('button', { name: 'Schedule for later' }).click();
   await page.getByRole('button', { name: 'Done' }).click();
   await page.getByRole('button', { name: 'Schedule', exact: true }).click();
-  await page.getByRole('button', { name: 'Schedule', exact: true }).click();
   await page.getByTestId('CloseButton').click();
 
   const source = page.getByText(composeText);
   const destination = page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at ${nextDayTime}` });
-  await page.waitForTimeout(2000);
   await source.hover();
   await page.mouse.down();
 
@@ -48,11 +46,11 @@ test('drag and drop card on week view', async ({ page }) => {
   await destination.hover();
   await page.mouse.up();
 
-  await page.waitForTimeout(1000);
   await page.getByText(composeText).click();
+
   await page.getByTestId('DeleteButton').click();
   await page.getByRole('button', { name: 'Delete post' }).click();
-  await page.waitForTimeout(3000);
+  await page.waitForTimeout(2000);
 
   await page.close();
 });
