@@ -3,182 +3,182 @@
 
 
 "@playwright/test@^1.38.1":
-  "integrity" "sha512-NqRp8XMwj3AK+zKLbZShl0r/9wKgzqI/527bkptKXomtuo+dOjU9NdMASQ8DNC9z9zLOMbG53T4eihYr3XR+BQ=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/@playwright/test/-/test-1.38.1.tgz"
-  "version" "1.38.1"
+  version "1.38.1"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/@playwright/test/-/test-1.38.1.tgz"
+  integrity sha512-NqRp8XMwj3AK+zKLbZShl0r/9wKgzqI/527bkptKXomtuo+dOjU9NdMASQ8DNC9z9zLOMbG53T4eihYr3XR+BQ==
   dependencies:
-    "playwright" "1.38.1"
+    playwright "1.38.1"
 
 "@saucelabs/bin-wrapper@^0.4.0":
-  "integrity" "sha512-pplQY+lzAwCSEpKbc59NbvmIVSqx5oHy+OfgV6WryDtX32y13Cra4Mj2ZskU9neCM3W+bQq0PwpWQLPmWxTvmA=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/@saucelabs/bin-wrapper/-/bin-wrapper-0.4.0.tgz"
-  "version" "0.4.0"
+  version "0.4.0"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/@saucelabs/bin-wrapper/-/bin-wrapper-0.4.0.tgz"
+  integrity sha512-pplQY+lzAwCSEpKbc59NbvmIVSqx5oHy+OfgV6WryDtX32y13Cra4Mj2ZskU9neCM3W+bQq0PwpWQLPmWxTvmA==
   dependencies:
-    "adm-zip" "^0.5.10"
-    "axios" "^1.2.2"
-    "https-proxy-agent" "^5.0.1"
-    "tar-stream" "^3.0.0"
+    adm-zip "^0.5.10"
+    axios "^1.2.2"
+    https-proxy-agent "^5.0.1"
+    tar-stream "^3.0.0"
 
 "@types/node@^20.7.1":
-  "integrity" "sha512-Vvycsc9FQdwhxE3y3DzeIxuEJbWGDsnrxvMADzTDF/lcdR9/K+AQIeAghTQsHtotg/q0j3WEOYS/jQgSdWue3w=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/@types/node/-/node-20.8.2.tgz"
-  "version" "20.8.2"
+  version "20.8.2"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/@types/node/-/node-20.8.2.tgz"
+  integrity sha512-Vvycsc9FQdwhxE3y3DzeIxuEJbWGDsnrxvMADzTDF/lcdR9/K+AQIeAghTQsHtotg/q0j3WEOYS/jQgSdWue3w==
 
-"adm-zip@^0.5.10":
-  "integrity" "sha512-x0HvcHqVJNTPk/Bw8JbLWlWoo6Wwnsug0fnYYro1HBrjxZ3G7/AZk7Ahv8JwDe1uIcz8eBqvu86FuF1POiG7vQ=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/adm-zip/-/adm-zip-0.5.10.tgz"
-  "version" "0.5.10"
+adm-zip@^0.5.10:
+  version "0.5.10"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/adm-zip/-/adm-zip-0.5.10.tgz"
+  integrity sha512-x0HvcHqVJNTPk/Bw8JbLWlWoo6Wwnsug0fnYYro1HBrjxZ3G7/AZk7Ahv8JwDe1uIcz8eBqvu86FuF1POiG7vQ==
 
-"agent-base@6":
-  "integrity" "sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/agent-base/-/agent-base-6.0.2.tgz"
-  "version" "6.0.2"
+agent-base@6:
+  version "6.0.2"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/agent-base/-/agent-base-6.0.2.tgz"
+  integrity sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==
   dependencies:
-    "debug" "4"
+    debug "4"
 
-"asynckit@^0.4.0":
-  "integrity" "sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/asynckit/-/asynckit-0.4.0.tgz"
-  "version" "0.4.0"
+asynckit@^0.4.0:
+  version "0.4.0"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/asynckit/-/asynckit-0.4.0.tgz"
+  integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
 
-"axios@^1.2.2":
-  "integrity" "sha512-Q28iYCWzNHjAm+yEAot5QaAMxhMghWLFVf7rRdwhUI+c2jix2DUXjAHXVi+s1ibs3mjPO/cCgbA++3BjD0vP/A=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/axios/-/axios-1.5.1.tgz"
-  "version" "1.5.1"
+axios@^1.2.2:
+  version "1.5.1"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/axios/-/axios-1.5.1.tgz"
+  integrity sha512-Q28iYCWzNHjAm+yEAot5QaAMxhMghWLFVf7rRdwhUI+c2jix2DUXjAHXVi+s1ibs3mjPO/cCgbA++3BjD0vP/A==
   dependencies:
-    "follow-redirects" "^1.15.0"
-    "form-data" "^4.0.0"
-    "proxy-from-env" "^1.1.0"
+    follow-redirects "^1.15.0"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
 
-"b4a@^1.6.4":
-  "integrity" "sha512-fpWrvyVHEKyeEvbKZTVOeZF3VSKKWtJxFIxX/jaVPf+cLbGUSitjb49pHLqPV2BUNNZ0LcoeEGfE/YCpyDYHIw=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/b4a/-/b4a-1.6.4.tgz"
-  "version" "1.6.4"
+b4a@^1.6.4:
+  version "1.6.4"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/b4a/-/b4a-1.6.4.tgz"
+  integrity sha512-fpWrvyVHEKyeEvbKZTVOeZF3VSKKWtJxFIxX/jaVPf+cLbGUSitjb49pHLqPV2BUNNZ0LcoeEGfE/YCpyDYHIw==
 
-"combined-stream@^1.0.8":
-  "integrity" "sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/combined-stream/-/combined-stream-1.0.8.tgz"
-  "version" "1.0.8"
+combined-stream@^1.0.8:
+  version "1.0.8"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/combined-stream/-/combined-stream-1.0.8.tgz"
+  integrity sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
   dependencies:
-    "delayed-stream" "~1.0.0"
+    delayed-stream "~1.0.0"
 
-"debug@4":
-  "integrity" "sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/debug/-/debug-4.3.4.tgz"
-  "version" "4.3.4"
+debug@4:
+  version "4.3.4"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/debug/-/debug-4.3.4.tgz"
+  integrity sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==
   dependencies:
-    "ms" "2.1.2"
+    ms "2.1.2"
 
-"delayed-stream@~1.0.0":
-  "integrity" "sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/delayed-stream/-/delayed-stream-1.0.0.tgz"
-  "version" "1.0.0"
+delayed-stream@~1.0.0:
+  version "1.0.0"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/delayed-stream/-/delayed-stream-1.0.0.tgz"
+  integrity sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
 
-"fast-fifo@^1.1.0", "fast-fifo@^1.2.0":
-  "integrity" "sha512-/d9sfos4yxzpwkDkuN7k2SqFKtYNmCTzgfEpz82x34IM9/zc8KGxQoXg1liNC/izpRM/MBdt44Nmx41ZWqk+FQ=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/fast-fifo/-/fast-fifo-1.3.2.tgz"
-  "version" "1.3.2"
+fast-fifo@^1.1.0, fast-fifo@^1.2.0:
+  version "1.3.2"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/fast-fifo/-/fast-fifo-1.3.2.tgz"
+  integrity sha512-/d9sfos4yxzpwkDkuN7k2SqFKtYNmCTzgfEpz82x34IM9/zc8KGxQoXg1liNC/izpRM/MBdt44Nmx41ZWqk+FQ==
 
-"follow-redirects@^1.15.0":
-  "integrity" "sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/follow-redirects/-/follow-redirects-1.15.3.tgz"
-  "version" "1.15.3"
+follow-redirects@^1.15.0:
+  version "1.15.3"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/follow-redirects/-/follow-redirects-1.15.3.tgz"
+  integrity sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q==
 
-"form-data@^4.0.0":
-  "integrity" "sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/form-data/-/form-data-4.0.0.tgz"
-  "version" "4.0.0"
+form-data@^4.0.0:
+  version "4.0.0"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/form-data/-/form-data-4.0.0.tgz"
+  integrity sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==
   dependencies:
-    "asynckit" "^0.4.0"
-    "combined-stream" "^1.0.8"
-    "mime-types" "^2.1.12"
+    asynckit "^0.4.0"
+    combined-stream "^1.0.8"
+    mime-types "^2.1.12"
 
-"fsevents@2.3.2":
-  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/fsevents/-/fsevents-2.3.2.tgz"
-  "version" "2.3.2"
+fsevents@2.3.2:
+  version "2.3.2"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/fsevents/-/fsevents-2.3.2.tgz"
+  integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
 
-"https-proxy-agent@^5.0.1":
-  "integrity" "sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/https-proxy-agent/-/https-proxy-agent-5.0.1.tgz"
-  "version" "5.0.1"
+https-proxy-agent@^5.0.1:
+  version "5.0.1"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/https-proxy-agent/-/https-proxy-agent-5.0.1.tgz"
+  integrity sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA==
   dependencies:
-    "agent-base" "6"
-    "debug" "4"
+    agent-base "6"
+    debug "4"
 
-"mime-db@1.52.0":
-  "integrity" "sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/mime-db/-/mime-db-1.52.0.tgz"
-  "version" "1.52.0"
+mime-db@1.52.0:
+  version "1.52.0"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/mime-db/-/mime-db-1.52.0.tgz"
+  integrity sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==
 
-"mime-types@^2.1.12":
-  "integrity" "sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/mime-types/-/mime-types-2.1.35.tgz"
-  "version" "2.1.35"
+mime-types@^2.1.12:
+  version "2.1.35"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/mime-types/-/mime-types-2.1.35.tgz"
+  integrity sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==
   dependencies:
-    "mime-db" "1.52.0"
+    mime-db "1.52.0"
 
-"moment-timezone@^0.5.34":
-  "integrity" "sha512-72j3aNyuIsDxdF1i7CEgV2FfxM1r6aaqJyLB2vwb33mXYyoyLly+F1zbWqhA3/bVIoJ4szlUoMbUnVdid32NUQ=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/moment-timezone/-/moment-timezone-0.5.43.tgz"
-  "version" "0.5.43"
+moment-timezone@^0.5.34:
+  version "0.5.43"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/moment-timezone/-/moment-timezone-0.5.43.tgz"
+  integrity sha512-72j3aNyuIsDxdF1i7CEgV2FfxM1r6aaqJyLB2vwb33mXYyoyLly+F1zbWqhA3/bVIoJ4szlUoMbUnVdid32NUQ==
   dependencies:
-    "moment" "^2.29.4"
+    moment "^2.29.4"
 
-"moment@^2.29.4":
-  "integrity" "sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/moment/-/moment-2.29.4.tgz"
-  "version" "2.29.4"
+moment@^2.29.4:
+  version "2.29.4"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/moment/-/moment-2.29.4.tgz"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
-"ms@2.1.2":
-  "integrity" "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/ms/-/ms-2.1.2.tgz"
-  "version" "2.1.2"
+ms@2.1.2:
+  version "2.1.2"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/ms/-/ms-2.1.2.tgz"
+  integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-"playwright-core@1.38.1":
-  "integrity" "sha512-tQqNFUKa3OfMf4b2jQ7aGLB8o9bS3bOY0yMEtldtC2+spf8QXG9zvXLTXUeRsoNuxEYMgLYR+NXfAa1rjKRcrg=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/playwright-core/-/playwright-core-1.38.1.tgz"
-  "version" "1.38.1"
+playwright-core@1.38.1:
+  version "1.38.1"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/playwright-core/-/playwright-core-1.38.1.tgz"
+  integrity sha512-tQqNFUKa3OfMf4b2jQ7aGLB8o9bS3bOY0yMEtldtC2+spf8QXG9zvXLTXUeRsoNuxEYMgLYR+NXfAa1rjKRcrg==
 
-"playwright@1.38.1":
-  "integrity" "sha512-oRMSJmZrOu1FP5iu3UrCx8JEFRIMxLDM0c/3o4bpzU5Tz97BypefWf7TuTNPWeCe279TPal5RtPPZ+9lW/Qkow=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/playwright/-/playwright-1.38.1.tgz"
-  "version" "1.38.1"
+playwright@1.38.1:
+  version "1.38.1"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/playwright/-/playwright-1.38.1.tgz"
+  integrity sha512-oRMSJmZrOu1FP5iu3UrCx8JEFRIMxLDM0c/3o4bpzU5Tz97BypefWf7TuTNPWeCe279TPal5RtPPZ+9lW/Qkow==
   dependencies:
-    "playwright-core" "1.38.1"
+    playwright-core "1.38.1"
   optionalDependencies:
-    "fsevents" "2.3.2"
+    fsevents "2.3.2"
 
-"proxy-from-env@^1.1.0":
-  "integrity" "sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/proxy-from-env/-/proxy-from-env-1.1.0.tgz"
-  "version" "1.1.0"
+proxy-from-env@^1.1.0:
+  version "1.1.0"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/proxy-from-env/-/proxy-from-env-1.1.0.tgz"
+  integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
 
-"queue-tick@^1.0.1":
-  "integrity" "sha512-kJt5qhMxoszgU/62PLP1CJytzd2NKetjSRnyuj31fDd3Rlcz3fzlFdFLD1SItunPwyqEOkca6GbV612BWfaBag=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/queue-tick/-/queue-tick-1.0.1.tgz"
-  "version" "1.0.1"
+queue-tick@^1.0.1:
+  version "1.0.1"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/queue-tick/-/queue-tick-1.0.1.tgz"
+  integrity sha512-kJt5qhMxoszgU/62PLP1CJytzd2NKetjSRnyuj31fDd3Rlcz3fzlFdFLD1SItunPwyqEOkca6GbV612BWfaBag==
 
-"saucectl@^0.157.0":
-  "integrity" "sha512-iRZgD6lo9Pp3Nq4MstFs3VUmVYSGwOVE+NALonTLlDlEbcaGUW8Y95RG6mbSV6OS50gfxcI6LvdMIwDYVuurWA=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/saucectl/-/saucectl-0.157.0.tgz"
-  "version" "0.157.0"
+saucectl@^0.157.0:
+  version "0.157.0"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/saucectl/-/saucectl-0.157.0.tgz"
+  integrity sha512-iRZgD6lo9Pp3Nq4MstFs3VUmVYSGwOVE+NALonTLlDlEbcaGUW8Y95RG6mbSV6OS50gfxcI6LvdMIwDYVuurWA==
   dependencies:
     "@saucelabs/bin-wrapper" "^0.4.0"
 
-"streamx@^2.15.0":
-  "integrity" "sha512-fQMzy2O/Q47rgwErk/eGeLu/roaFWV0jVsogDmrszM9uIw8L5OA+t+V93MgYlufNptfjmYR1tOMWhei/Eh7TQA=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/streamx/-/streamx-2.15.1.tgz"
-  "version" "2.15.1"
+streamx@^2.15.0:
+  version "2.15.1"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/streamx/-/streamx-2.15.1.tgz"
+  integrity sha512-fQMzy2O/Q47rgwErk/eGeLu/roaFWV0jVsogDmrszM9uIw8L5OA+t+V93MgYlufNptfjmYR1tOMWhei/Eh7TQA==
   dependencies:
-    "fast-fifo" "^1.1.0"
-    "queue-tick" "^1.0.1"
+    fast-fifo "^1.1.0"
+    queue-tick "^1.0.1"
 
-"tar-stream@^3.0.0":
-  "integrity" "sha512-B/UyjYwPpMBv+PaFSWAmtYjwdrlEaZQEhMIBFNC5oEG8lpiW8XjcSdmEaClj28ArfKScKHs2nshz3k2le6crsg=="
-  "resolved" "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/tar-stream/-/tar-stream-3.1.6.tgz"
-  "version" "3.1.6"
+tar-stream@^3.0.0:
+  version "3.1.6"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/tar-stream/-/tar-stream-3.1.6.tgz"
+  integrity sha512-B/UyjYwPpMBv+PaFSWAmtYjwdrlEaZQEhMIBFNC5oEG8lpiW8XjcSdmEaClj28ArfKScKHs2nshz3k2le6crsg==
   dependencies:
-    "b4a" "^1.6.4"
-    "fast-fifo" "^1.2.0"
-    "streamx" "^2.15.0"
+    b4a "^1.6.4"
+    fast-fifo "^1.2.0"
+    streamx "^2.15.0"
