@@ -11,8 +11,8 @@ test('Media upload', async ({ page }) => {
     await page.getByLabel('Post').click();
     await page.getByPlaceholder('Select a social account').click();
     await page.getByTestId('MessageEditArea').getByText('Composer3H').first().click();
+    await page.locator('.vk-ComposerHeader').click();
     await page.setInputFiles('.vk-MediaUpload input[type="file"]', 'tests/owly-snowboard.jpg');
     await page.waitForTimeout(3000);
     await page.close();
   });
-  
