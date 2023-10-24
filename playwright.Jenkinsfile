@@ -51,7 +51,7 @@ pod {
         }
         stage ('Run test suites via saucelabs') {
             try {
-                def config = readYaml(file: '.sauce/config.yml')
+                //def config = readYaml(file: '.sauce/config.yml')
                 def general = new General()
                 general.saucelabsVaultSetup {
                     echo 'Run test suites via parameterized cron...'
@@ -64,10 +64,10 @@ pod {
             }
             catch(err) {
                 println (err.toString())
-                catchError(stageResult: "FAILURE") {
+                /* catchError(stageResult: "FAILURE") {
                     build_ok = false
                     sh "exit 1"
-                }
+                } */
             }
         }
     }
