@@ -6,6 +6,8 @@ sauce:
   metadata:
     tags:
       - e2e
+  launchOrder: fail rate
+  retries: 1
 playwright:
   version: package.json # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/#supported-testing-platforms for a list of supported versions.
   configFile: playwright.config.ts # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/yaml/#configfile for a list of supported configuration files.
@@ -15,17 +17,17 @@ npm:
   dependencies:
     - moment-timezone
 suites:
-  # - name: "Firefox Win"
-  #   platformName: "Windows 11"
-  #   screenResolution: "1440x900"
-  #   testMatch: ['tests/example.spec.js']
-  #   params:
-  #     browserName: "firefox"
-  #     project: "firefox"  # Runs the project that's defined in `playwright.config.js`
+  - name: "[Playwright] Firefox"
+    platformName: "Windows 11"
+    screenResolution: "1440x900"
+    testMatch: ['tests/example.spec.js']
+    params:
+      browserName: "firefox"
+      project: "firefox"
   - name: "[Playwright] Plan Create Tests"
-    platformName: "Windows 10"
+    platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['tests/externalMediaUpload.spec.ts']
+    testMatch: ['.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
