@@ -39,7 +39,7 @@ def pod = declarePod {
     }
 }
 
-def suiteNameParam = params.SUITE_NAME.toString()
+def suiteNameParam = params.SUITE_NAME
 
 pod {
     execWrapper {
@@ -55,7 +55,7 @@ pod {
                 def general = new General()
                 general.saucelabsVaultSetup {
                     echo 'Run test suites via parameterized cron...'
-                    sh "npx saucectl run --select-suite ${suiteNameParam}"
+                    sh "npx saucectl run --select-suite \"${suiteNameParam}\""
                     /* echo 'Run all test suites via saucectl... '
                     for (suiteName in config.suites) {
                         sh "npx saucectl run --select-suite \"${suiteName.name}\""
