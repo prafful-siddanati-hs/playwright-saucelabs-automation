@@ -3,6 +3,23 @@ import hootsuite.jsl.pipeline.General
 
 @Library('hootsuite@6') _
 
+slackChannel = "#blackhole"
+
+jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_PlanCreate/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
+
+properties(
+    [
+        buildDiscarder(
+            logRotator(
+                numToKeepStr: '100'
+            )
+        ),
+        pipelineTriggers(
+            [cron('5 13,15,17,21,23 * * 2-4')] //5AM & 3PM PST, Tuesday - Thursday
+        )
+    ]
+)
+
 def pod = declarePod {
     name = 'playwright'
     vault {}
@@ -23,14 +40,13 @@ pod {
             sh 'yarn install'
             sh 'npm install saucectl'
         }
-        stage ('Run tests via saucelabs') {
+        stage ('Run test suites via saucelabs') {
             try {
                 def config = readYaml(file: '.sauce/config.yml')
                 def general = new General()
                 general.saucelabsVaultSetup {
-                    echo 'Running saucectl... '
+                    echo 'Running test suites via saucectl... '
                     for (suiteName in config.suites) {
-                        echo "${suiteName.name}"
                         sh "npx saucectl run --select-suite \"${suiteName.name}\""
                     }
                 }
@@ -51,11 +67,12 @@ def execWrapper(Closure c) {
         c()
         echo "Build Success"
         //TODO:Update slack channel and details
-        slackSend color: '#138347', channel: '#blackhole', message: " P&C Playwright tests - Passed"
+        slackSend color: '#138347', channel: slackChannel, message: " P&C Playwright tests - Passed"
     } 
     catch (e) {
         echo "BUILD FAILURE"
-        slackSend color: '#FF0000', channel: '#blackhole', message: " P&C Playwright tests - Failed! \n"
+        slackSend color: '#FF0000', channel: slackChannel, message: " P&C Playwright tests - Failed! \n" +
+        " Jenkins URL: ${jenkinsUrl} \n"
         currentBuild.result = "FAILURE"
     throw e
   } 
