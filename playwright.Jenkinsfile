@@ -25,17 +25,21 @@ pod {
         }
         stage ('Run tests via saucelabs') {
             try {
-                def suiteNames = ["[Playwright] Firefox", "[Playwright] Plan Create Tests"]
+                def config = readYaml(file: '.sauce/config.yml')
                 def general = new General()
                 general.saucelabsVaultSetup {
                     echo 'Running saucectl... '
-                    for (suiteName in suiteNames) {
-                        sh "npx saucectl run --select-suite \"${suiteName}\""
+                    for (suiteName in config.suites) {
+                        sh "npx saucectl run --select-suite \"${suiteName.name}\""
                     }
                 }
             }
             catch(err) {
                 println (err.toString())
+                catchError(stageResult: "FAILURE") {
+                    build_ok = false
+                    sh "exit 1"
+                }
             }
         }
     }

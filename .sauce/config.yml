@@ -27,7 +27,7 @@ suites:
   - name: "[Playwright] Plan Create Tests"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['.*.js']
+    testMatch: ['.*.ts']
     params:
       browserName: "chromium"
       project: "chromium"
