@@ -15,7 +15,7 @@ properties(
             )
         ),
         pipelineTriggers(
-            [cron('5 13,15,17,21,23 * * 2-4')] //5AM & 3PM PST, Tuesday - Thursday
+            [cron('5 13,15,17,21,23 * * 2-4')] //Testing a few cron builds
         )
     ]
 )
