@@ -19,16 +19,19 @@ pod {
     execWrapper {
         stage ('Setup playwright') {     
             checkout scm
-            sh 'rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
+            sh 'rm -rf playwright-saucelabs-automation && git clone --branch PUB-30648 --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
             sh 'yarn install'
             sh 'npm install saucectl'
         }
         stage ('Run tests via saucelabs') {
             try {
+                def suiteNames = ["[Playwright] Firefox", "[Playwright] Plan Create Tests"]
                 def general = new General()
                 general.saucelabsVaultSetup {
                     echo 'Running saucectl... '
-                    sh 'npx saucectl run'
+                    for (suiteName in suiteNames) {
+                        sh "npx saucectl run --select-suite \"${suiteName}\""
+                    }
                 }
             }
             catch(err) {
