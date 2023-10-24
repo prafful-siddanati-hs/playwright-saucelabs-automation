@@ -78,7 +78,6 @@ def execWrapper(Closure c) {
         c()
         echo "Build Success"
         //TODO:Update slack channel and details
-        slackSend color: '#138347', channel: slackChannel, message: " P&C Playwright tests - Passed"
     } 
     catch (e) {
         echo "BUILD FAILURE"
