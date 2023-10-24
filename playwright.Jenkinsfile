@@ -14,8 +14,15 @@ properties(
                 numToKeepStr: '100'
             )
         ),
+        parameters([
+            string(name: 'SUITE_NAME', defaultValue: '[Playwright] Media Upload', description: 'Tests with media upload'),
+            string(name: 'SUITE_NAME', defaultValue: '[Playwright] Drag & Drop', description: 'Tests with drag & drop')
+        ]),
         pipelineTriggers(
-            [cron('5 13,15,17,21,23 * * 2-4')] //Testing a few cron builds
+            [parameterizedCron('''
+                30 15,17,21,23 * * 2-4 %SUITE_NAME=[Playwright] Media Upload
+                20 13,15,21,23 * * 1-4 %SUITE_NAME=[Playwright] Drag & Drop
+                ''')] //Testing a few cron builds
         )
     ]
 )
@@ -32,6 +39,8 @@ def pod = declarePod {
     }
 }
 
+def suiteNameParam = params.SUITE_NAME.toString()
+
 pod {
     execWrapper {
         stage ('Setup playwright') {     
@@ -45,10 +54,12 @@ pod {
                 def config = readYaml(file: '.sauce/config.yml')
                 def general = new General()
                 general.saucelabsVaultSetup {
-                    echo 'Running test suites via saucectl... '
+                    echo 'Run test suites via parameterized cron...'
+                    sh "npx saucectl run --select-suite ${suiteNameParam}"
+                    /* echo 'Run all test suites via saucectl... '
                     for (suiteName in config.suites) {
                         sh "npx saucectl run --select-suite \"${suiteName.name}\""
-                    }
+                    } */
                 }
             }
             catch(err) {
