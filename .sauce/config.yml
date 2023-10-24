@@ -20,14 +20,14 @@ suites:
   - name: "[Playwright] Firefox"
     platformName: "Windows 11"
     screenResolution: "1440x900"
-    testMatch: ['tests/example.spec.js']
+    testMatch: ['tests/externalMediaUpload.spec.js']
     params:
       browserName: "firefox"
       project: "firefox"
   - name: "[Playwright] Plan Create Tests"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['.*.ts']
+    testMatch: ['tests/example.spec.js']
     params:
       browserName: "chromium"
       project: "chromium"

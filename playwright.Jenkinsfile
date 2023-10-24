@@ -30,6 +30,7 @@ pod {
                 general.saucelabsVaultSetup {
                     echo 'Running saucectl... '
                     for (suiteName in config.suites) {
+                        echo "${suiteName.name}"
                         sh "npx saucectl run --select-suite \"${suiteName.name}\""
                     }
                 }
