@@ -18,24 +18,17 @@ npm:
     - hsapi
     - date-fns
 suites:
-  - name: "[Playwright] Media Upload"
-    platformName: "Windows 11"
-    screenResolution: "1440x900"
-    testMatch: ['tests/externalMediaUpload.spec.js']
-    params:
-      browserName: "firefox"
-      project: "firefox"
-  - name: "[Playwright] Drag & Drop"
-    platformName: "Windows 11"
-    screenResolution: "1440x900"
-    testMatch: ['tests/example.spec.js']
-    params:
-      browserName: "chromium"
-      project: "chromium"    
-  - name: "[Playwright] Schedule via API"
-    platformName: "Windows 11"
-    screenResolution: "1440x900"
-    testMatch: ['tests/scheduleViaApi.spec.js']
+  # - name: "Firefox Win"
+  #   platformName: "Windows 11"
+  #   screenResolution: "1440x900"
+  #   testMatch: ['tests/example.spec.js']
+  #   params:
+  #     browserName: "firefox"
+  #     project: "firefox"  # Runs the project that's defined in `playwright.config.js`
+  - name: "[Playwright] Plan Create Tests"
+    platformName: "Windows 10"
+    screenResolution: "1920x1080"
+    testMatch: ['.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
