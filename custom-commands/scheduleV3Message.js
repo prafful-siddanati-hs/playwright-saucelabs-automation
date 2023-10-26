@@ -3,9 +3,8 @@ const { service_message_publishing } = require('../globals.js')
 
 
 async function scheduleV3Message(member, options) {
-
+    
     const mps = new MPS(service_message_publishing);
-    console.log(`${mps}`)
 
     try {
         const data = await mps.scheduleV3Message(member, options);
