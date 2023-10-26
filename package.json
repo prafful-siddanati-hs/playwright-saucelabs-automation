@@ -4,8 +4,9 @@
   "description": "UI Test Automation",
   "main": "index.js",
   "scripts": {
-    "test.local": "npx playwright test",
-    "test.sauce": "npx saucectl run"
+    "test": "npx playwright test && npx playwright show-report",
+    "test.sauce": "npx saucectl run",
+    "test:report": "if [ -z \"$SAUCE_USERNAME\" ]; then open ./test-results.html; fi"
   },
   "repository": {
     "type": "git",
@@ -17,9 +18,11 @@
   "devDependencies": {
     "@playwright/test": "^1.38.1",
     "@types/node": "^20.7.1",
+    "date-fns": "^2.30.0",
+    "hsapi": "^6.2370.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.34",
-    "saucectl": "^0.164.0"
+    "saucectl": "^0.164.2"
   },
   "directories": {
     "test": "tests"

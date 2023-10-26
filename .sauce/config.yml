@@ -7,7 +7,6 @@ sauce:
     tags:
       - e2e
   launchOrder: fail rate
-  retries: 1
 playwright:
   version: package.json # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/#supported-testing-platforms for a list of supported versions.
   configFile: playwright.config.js # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/yaml/#configfile for a list of supported configuration files.
@@ -16,18 +15,20 @@ rootDir: ./
 npm:
   dependencies:
     - moment-timezone
+    - hsapi
+    - date-fns
 suites:
-  - name: "[Playwright] Media Upload"
-    platformName: "Windows 11"
-    screenResolution: "1440x900"
-    testMatch: ['tests/externalMediaUpload.spec.js']
-    params:
-      browserName: "firefox"
-      project: "firefox"
-  - name: "[Playwright] Drag & Drop"
+  # - name: "[Playwright] Media Upload"
+  #   platformName: "Windows 11"
+  #   screenResolution: "1440x900"
+  #   testMatch: ['tests/externalMediaUpload.spec.js']
+  #   params:
+  #     browserName: "firefox"
+  #     project: "firefox"
+  - name: "[Playwright] Schdule via API"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['tests/example.spec.js']
+    testMatch: ['tests/scheduleViaApi.spec.js']
     params:
       browserName: "chromium"
       project: "chromium"

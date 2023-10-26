@@ -1,7 +1,7 @@
 const { test } = require('@playwright/test');
 
 test('Media upload', async ({ page }) => {
-    await page.goto('https://staging.hootsuite.com/login');
+    await page.goto('login/');
     await page.getByRole('textbox', { name: 'Please enter a valid email address' }).fill("pro_user_composer3_stg@hootsuite.com")
     await page.locator('#loginPasswordInput').fill("0Kh5xdBIGYzV");
     await page.getByRole('button', { name: 'Sign in', exact: true }).click();
