@@ -1,6 +1,8 @@
 const { test } = require('@playwright/test');
 const fs = require('fs');
 const { formatISO, addHours } = require('date-fns');
+const {ComposePage} = require("../../pages/planandcreate/compose");
+const {LoginPage} = require("../../pages/login");
 const scheduleV3Message = require("../custom-commands/scheduleV3Message");
 
 function readJson(fileName) {
@@ -15,11 +17,10 @@ test('Schedule a message via API', async ({ page }) => {
     const scheduleTime = addHours(now, 24);
     const scheduleText = `This is scheduled via API in PlayWright ${now}`;
 
-    await page.goto('login/');
-    await page.getByRole('textbox', { name: 'Please enter a valid email address' }).fill(testData[2].email)
-    await page.locator('#loginPasswordInput').fill(testData[2].password);
-    await page.getByRole('button', { name: 'Sign in', exact: true }).click();
-    await page.waitForTimeout(2000);
+    const loginPage = new LoginPage(page);
+    const composePage = new ComposePage(page);
+
+    await loginPage.login(user[2].email, user[2].password);
 
     const data = await scheduleV3Message(
         parseInt(testData[2].memberId, 10),

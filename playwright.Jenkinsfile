@@ -15,13 +15,13 @@ properties(
             )
         ),
         parameters([
-            string(name: 'SUITE_NAME', defaultValue: '[Playwright] Media Upload', description: 'Tests with media upload'),
-            string(name: 'SUITE_NAME', defaultValue: '[Playwright] Drag & Drop', description: 'Tests with drag & drop')
+            string(name: 'SUITE_NAME', defaultValue: '[Playwright] Composer Tests', description: 'Composer tests'),
+            string(name: 'SUITE_NAME', defaultValue: '[Playwright] Planner Tests', description: 'Planner tests')
         ]),
         pipelineTriggers(
             [parameterizedCron('''
-                30 15,17,21,23 * * 2-4 %SUITE_NAME=[Playwright] Media Upload
-                20 13,15,21,23 * * 1-4 %SUITE_NAME=[Playwright] Drag & Drop
+                30 15,17,21,23 * * 2-4 %SUITE_NAME=[Playwright] Composer Tests
+                20 13,15,21,23 * * 1-4 %SUITE_NAME=[Playwright] Planner Tests
                 ''')] //Testing a few cron builds
         )
     ]

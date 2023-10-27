@@ -1,4 +1,4 @@
-const { test, expect, defineConfig} = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 
 exports.LoginPage = class LoginPage {
     constructor(page) {
@@ -9,10 +9,10 @@ exports.LoginPage = class LoginPage {
     }
 
     async visit() {
-        await this.page.goto('https://staging.hootsuite.com/login?lang=en');
+        await this.page.goto('login?lang=en');
     }
 
-    async login(email, password, defineConfig) {
+    async login(email, password) {
         await this.page.goto('/login?lang=en');
         await expect(this.page).toHaveTitle(/Hootsuite - Login/);
         await this.emailAddress.fill(email);
