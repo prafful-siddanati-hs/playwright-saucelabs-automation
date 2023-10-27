@@ -17,6 +17,7 @@ npm:
     - moment-timezone
     - hsapi
     - date-fns
+    - events
 suites:
   # - name: "Firefox Win"
   #   platformName: "Windows 11"
@@ -25,17 +26,24 @@ suites:
   #   params:
   #     browserName: "firefox"
   #     project: "firefox"  # Runs the project that's defined in `playwright.config.js`
-  - name: "[Playwright] Composer Tests"
+  # - name: "[Playwright] Composer Tests"
+  #   platformName: "Windows 11"
+  #   screenResolution: "1920x1080"
+  #   testMatch: ['tests/composer/.*.js']
+  #   params:
+  #     browserName: "firefox"
+  #     project: "firefox"
+  # - name: "[Playwright] Planner Tests"
+  #   platformName: "Windows 11"
+  #   screenResolution: "1920x1080"
+  #   testMatch: ['tests/planner/.*.js']
+  #   params:
+  #     browserName: "chromium"
+  #     project: "chromium"
+  - name: "[Playwright] Schedule via API"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['tests/composer/.*.js']
-    params:
-      browserName: "firefox"
-      project: "firefox"
-  - name: "[Playwright] Planner Tests"
-    platformName: "Windows 11"
-    screenResolution: "1920x1080"
-    testMatch: ['tests/planner/.*.js']
+    testMatch: ['tests/scheduleViaApi.spec.js']
     params:
       browserName: "chromium"
       project: "chromium"

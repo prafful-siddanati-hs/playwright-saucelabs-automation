@@ -52,18 +52,30 @@ module.exports = defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         viewport: { width: 1920, height: 1080 },
-        baseURL: 'https://staging.hootsuite.com/',
         saucelabs: {
           username: getEnv('SAUCE_USERNAME', ''),
           access_key: getEnv('SAUCE_ACCESS_KEY', ''),
-          runOnSaucelabs: true,
+          launchOptions: {
+            args: [
+              '--headless',
+              '--no-sandbox',
+              '--ignore-certificate-errors',
+              '--allow-insecure-localhost',
+              '--disable-infobars'
+            ]
+          },
+          contextOptions: {
+            ignoreHTTPSErrors: true,
+            viewport: { width: 1920, height: 1080 },
+          },
+          video: 'on-first-retry'
         }
       },
     },
-    {
+    /* {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
-    },
+    }, */
   ],
 
   /* Run your local dev server before starting the tests */

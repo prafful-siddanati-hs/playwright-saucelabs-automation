@@ -1,8 +1,7 @@
 const { test } = require('@playwright/test');
 const fs = require('fs');
 const { formatISO, addHours } = require('date-fns');
-const {ComposePage} = require("../../pages/planandcreate/compose");
-const {LoginPage} = require("../../pages/login");
+const { LoginPage } = require("../pages/login");
 const scheduleV3Message = require("../custom-commands/scheduleV3Message");
 
 function readJson(fileName) {
@@ -11,29 +10,30 @@ function readJson(fileName) {
 }
 
 test('Schedule a message via API', async ({ page }) => {
-    let testData = readJson('fixtures/accounts.json')
+    const createScheduleMessage = new scheduleV3Message();
+
+    const user = readJson('fixtures/accounts.json')
     
     const now = new Date();
     const scheduleTime = addHours(now, 24);
-    const scheduleText = `This is scheduled via API in PlayWright ${now}`;
+    const scheduleText = `This is scheduled via API in PlayWright ${scheduleTime}`;
+    console.log(scheduleTime)
 
     const loginPage = new LoginPage(page);
-    const composePage = new ComposePage(page);
 
-    await loginPage.login(user[2].email, user[2].password);
-
-    const data = await scheduleV3Message(
-        parseInt(testData[2].memberId, 10),
+    await createScheduleMessage.command(
+        parseInt(user[2].memberId, 10),
         {
             messages: [
                 {
-                    socialProfileId: testData[2].socialProfileId,
+                    socialProfileId: user[2].socialProfileId,
                     text: scheduleText,
                     scheduledSendTime: formatISO(scheduleTime)
                 }
             ]
         });
-    console.log(data)
+
+    await loginPage.login(user[2].email, user[2].password);
 
     await page.getByLabel('Planner', { exact: true }).click();
     await page.getByText(scheduleText).click();
