@@ -1,12 +1,11 @@
 // @ts-check
-const { test, expect, defineConfig} = require('@playwright/test');
+const { test } = require('@playwright/test');
 const {LoginPage} = require("../../pages/login");
 const {ComposePage} = require("../../pages/planandcreate/compose");
 const {PlannerPage} = require("../../pages/planandcreate/planner");
 const fs = require('fs');
 
-
- function readJson(fileName) {
+ function readJson() {
   let rawData = fs.readFileSync('fixtures/accounts.json', 'utf-8');
   return JSON.parse(rawData);
 }

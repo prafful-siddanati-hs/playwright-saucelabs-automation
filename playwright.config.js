@@ -52,7 +52,6 @@ module.exports = defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         viewport: { width: 1920, height: 1080 },
-        baseURL: 'https://staging.hootsuite.com/',
         saucelabs: {
           username: getEnv('SAUCE_USERNAME', ''),
           access_key: getEnv('SAUCE_ACCESS_KEY', ''),
@@ -73,25 +72,12 @@ module.exports = defineConfig({
         }
       },
     },
-
     /* {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: { ...devices['Desktop Firefox'],
+      viewport: { width: 1920, height: 1080 },
+     },
     }, */
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
   ],
 
   /* Run your local dev server before starting the tests */

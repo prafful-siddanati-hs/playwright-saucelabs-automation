@@ -3,6 +3,32 @@ import hootsuite.jsl.pipeline.General
 
 @Library('hootsuite@6') _
 
+slackChannel = "#publisher-automation"
+
+jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_PlanCreate/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
+
+properties(
+    [
+        buildDiscarder(
+            logRotator(
+                numToKeepStr: '100'
+            )
+        ),
+        parameters([
+            string(name: 'SUITE_NAME', defaultValue: '[Playwright] Composer Tests', description: 'Composer tests'),
+            string(name: 'SUITE_NAME', defaultValue: '[Playwright] Planner Tests', description: 'Planner tests'),
+            string(name: 'SUITE_NAME', defaultValue: '[Playwright] Schedule & Delete via API', description: 'API actions')
+        ]),
+        pipelineTriggers(
+            [parameterizedCron('''
+                30 15,17,21,23 * * 2-4 %SUITE_NAME=[Playwright] Composer Tests
+                20 13,15,21,23 * * 1-4 %SUITE_NAME=[Playwright] Planner Tests
+                10 14,16,20,23 * * 1-4 %SUITE_NAME=[Playwright] Schedule & Delete via API
+                ''')] //Testing a few cron builds
+        )
+    ]
+)
+
 def pod = declarePod {
     name = 'playwright'
     vault {}
@@ -15,6 +41,8 @@ def pod = declarePod {
     }
 }
 
+def suiteNameParam = params.SUITE_NAME
+
 pod {
     execWrapper {
         stage ('Setup playwright') {     
@@ -23,12 +51,12 @@ pod {
             sh 'yarn install'
             sh 'npm install saucectl'
         }
-        stage ('Run tests via saucelabs') {
+        stage ('Run test suites via saucelabs') {
             try {
                 def general = new General()
                 general.saucelabsVaultSetup {
-                    echo 'Running saucectl... '
-                    sh 'npx saucectl run'
+                    echo 'Run test suites via parameterized cron...'
+                    sh "npx saucectl run --select-suite \"${suiteNameParam}\""
                 }
             }
             catch(err) {
@@ -43,11 +71,11 @@ def execWrapper(Closure c) {
         c()
         echo "Build Success"
         //TODO:Update slack channel and details
-        slackSend color: '#138347', channel: '#blackhole', message: " P&C Playwright tests - Passed"
     } 
     catch (e) {
         echo "BUILD FAILURE"
-        slackSend color: '#FF0000', channel: '#blackhole', message: " P&C Playwright tests - Failed! \n"
+        slackSend color: '#FF0000', channel: slackChannel, message: " P&C Playwright tests - Failed! \n" +
+        " Jenkins URL: ${jenkinsUrl} \n"
         currentBuild.result = "FAILURE"
     throw e
   } 
