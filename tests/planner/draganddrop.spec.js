@@ -5,7 +5,6 @@ const {ComposePage} = require("../../pages/planandcreate/compose");
 const {PlannerPage} = require("../../pages/planandcreate/planner");
 const fs = require('fs');
 
-
  function readJson() {
   let rawData = fs.readFileSync('fixtures/accounts.json', 'utf-8');
   return JSON.parse(rawData);
