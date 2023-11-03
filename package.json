@@ -19,7 +19,8 @@
     "@types/node": "^20.7.1",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.34",
-    "saucectl": "^0.157.0"
+    "saucectl": "^0.164.3",
+    "hsapi": "^6.2370.0"
   },
   "directories": {
     "test": "tests"

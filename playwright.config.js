@@ -17,11 +17,11 @@ function getEnv (key, defaultValue) {
 module.exports = defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 1 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   timeout: 60 * 3 * 1000,
@@ -37,7 +37,7 @@ module.exports = defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'https://www.staging.com/',
+    baseURL: 'https://staging.hootsuite.com/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -56,14 +56,22 @@ module.exports = defineConfig({
         saucelabs: {
           username: getEnv('SAUCE_USERNAME', ''),
           access_key: getEnv('SAUCE_ACCESS_KEY', ''),
-          runOnSaucelabs: true,
-          test_workers: {
-            enabled: true,
-            workers: 'auto'
-          }
+          launchOptions: {
+            args: [
+              '--headless',
+              '--no-sandbox',
+              '--ignore-certificate-errors',
+              '--allow-insecure-localhost',
+              '--disable-infobars'
+            ]
+          },
+          contextOptions: {
+            ignoreHTTPSErrors: true,
+            viewport: { width: 1920, height: 1080 },
+          },
+          video: 'on-first-retry'
         }
       },
-
     },
 
     /* {

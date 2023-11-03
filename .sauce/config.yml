@@ -6,6 +6,7 @@ sauce:
   metadata:
     tags:
       - e2e
+  launchOrder: fail rate
 playwright:
   version: package.json # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/#supported-testing-platforms for a list of supported versions.
   configFile: playwright.config.js # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/yaml/#configfile for a list of supported configuration files.
@@ -14,6 +15,9 @@ rootDir: ./
 npm:
   dependencies:
     - moment-timezone
+    - hsapi
+    - date-fns
+    - events
 suites:
   # - name: "Firefox Win"
   #   platformName: "Windows 11"
