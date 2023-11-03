@@ -14,9 +14,9 @@ playwright:
 rootDir: ./
 npm:
   dependencies:
-    - moment-timezone
     - hsapi
     - date-fns
+    - date-fns-tz
     - events
 suites:
   - name: "[Playwright] Composer Tests"

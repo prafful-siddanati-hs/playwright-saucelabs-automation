@@ -1,6 +1,8 @@
 const { expect } = require('@playwright/test');
-const moment = require("moment-timezone");
-moment.tz.setDefault('America/Vancouver')
+const { format, addDays } = require('date-fns');
+const { utcToZonedTime } = require('date-fns-tz');
+const timeZone = 'America/Vancouver';
+
 exports.PlannerPage = class PlannerPage {
     constructor(page) {
         this.page = page;
@@ -14,13 +16,8 @@ exports.PlannerPage = class PlannerPage {
     }
 
     async dragAndDropCard(message) {
-        const nextDayDate = moment(Date.now())
-            .add(1, 'days')
-            .format('dddd, D MMMM');
-
-        const nextDayTime = moment(Date.now())
-            .add(2, 'days')
-            .format('hA');
+        const nextDayDate = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'eeee, d MMMM');
+        const nextDayTime = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'ha');
 
         await this.plannerButton.click();
 
