@@ -19,10 +19,10 @@
     "@playwright/test": "^1.38.1",
     "@types/node": "^20.7.1",
     "date-fns": "^2.30.0",
-    "hsapi": "^6.2370.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.34",
-    "saucectl": "^0.164.2"
+    "saucectl": "^0.164.3",
+    "hsapi": "^6.2370.0"
   },
   "directories": {
     "test": "tests"
