@@ -19,10 +19,9 @@ test('Schedule & Delete a message via API', async ({ page }) => {
 
     const user = readJson('fixtures/accounts.json')
     
-    const now = new Date();
-    const scheduleTime = addHours(now, 24);
-    const startTime = subDays(now, 1)
-    const endTime = addDays(now, 3)
+    const scheduleTime = addHours(new Date(), 24);
+    const startTime = subDays(new Date(), 1)
+    const endTime = addDays(new Date(), 3)
 
     const scheduleText = `This is scheduled via API in PlayWright ${scheduleTime}`;
 
