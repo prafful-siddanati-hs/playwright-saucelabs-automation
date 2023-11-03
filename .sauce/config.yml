@@ -19,13 +19,6 @@ npm:
     - date-fns
     - events
 suites:
-  - name: "Firefox Win"
-    platformName: "Windows 11"
-    screenResolution: "1440x900"
-    testMatch: ['tests/example.spec.js']
-    params:
-      browserName: "firefox"
-      project: "firefox"  # Runs the project that's defined in `playwright.config.js`
   - name: "[Playwright] Composer Tests"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
