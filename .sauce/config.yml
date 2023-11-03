@@ -19,13 +19,13 @@ npm:
     - date-fns
     - events
 suites:
-  # - name: "[Playwright] Composer Tests"
-  #   platformName: "Windows 11"
-  #   screenResolution: "1920x1080"
-  #   testMatch: ['tests/composer/.*.js']
-  #   params:
-  #     browserName: "firefox"
-  #     project: "firefox"
+  - name: "[Playwright] Composer Tests"
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: ['tests/composer/.*.js']
+    params:
+      browserName: "firefox"
+      project: "firefox"
   - name: "[Playwright] Planner Tests"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
@@ -33,13 +33,13 @@ suites:
     params:
       browserName: "chromium"
       project: "chromium"
-  # - name: "[Playwright] Schedule via API"
-  #   platformName: "Windows 11"
-  #   screenResolution: "1920x1080"
-  #   testMatch: ['tests/scheduleAndDeleteViaApi.spec.js.spec.js']
-  #   params:
-  #     browserName: "chromium"
-  #     project: "chromium"
+  - name: "[Playwright] Schedule & Delete via API"
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: ['tests/scheduleAndDeleteViaApi.spec.js']
+    params:
+      browserName: "chromium"
+      project: "chromium"
 #  - name: "Webkit Win"
 #     platformName: "Windows 11"
 #     screenResolution: "1440x900"
