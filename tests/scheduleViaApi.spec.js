@@ -1,26 +1,40 @@
 const { test } = require('@playwright/test');
 const fs = require('fs');
-const { formatISO, addHours } = require('date-fns');
+const { formatISO, addHours, addDays, subDays } = require('date-fns');
 const { LoginPage } = require("../pages/login");
 const scheduleV3Message = require("../custom-commands/scheduleV3Message");
+const getScheduledMessages = require('../custom-commands/getScheduledMessages');
+const deleteScheduledMessageById = require("../custom-commands/deleteScheduledMesssagesById")
 
 function readJson(fileName) {
   let rawData = fs.readFileSync(fileName, 'utf-8');
   return JSON.parse(rawData)
 }
 
-test('Schedule a message via API', async ({ page }) => {
+test('Schedule & Delete a message via API', async ({ page }) => {
+    const loginPage = new LoginPage(page);
     const createScheduleMessage = new scheduleV3Message();
+    const deleteScheduledMessages = new deleteScheduledMessageById();
+    const getAllScheduledMessages = new getScheduledMessages();
 
     const user = readJson('fixtures/accounts.json')
     
     const now = new Date();
     const scheduleTime = addHours(now, 24);
+    const startTime = subDays(now, 1)
+    const endTime = addDays(now, 3)
+
     const scheduleText = `This is scheduled via API in PlayWright ${scheduleTime}`;
-    console.log(scheduleTime)
 
-    const loginPage = new LoginPage(page);
+    let messagesToDelete = [];
 
+    let apiAuthorizationValue = await loginPage.login(user[2].email, user[2].password).then(() => {
+         let apiAuthorization = loginPage.cookie.find(({name}) => name === "apiAuthorization");
+        return apiAuthorization.value;
+    });
+    console.log('- - - apiAuthorization value retrieved - - -');
+
+    /* Create a scheduled message */
     await createScheduleMessage.command(
         parseInt(user[2].memberId, 10),
         {
@@ -31,16 +45,31 @@ test('Schedule a message via API', async ({ page }) => {
                     scheduledSendTime: formatISO(scheduleTime)
                 }
             ]
-        });
+        },
+        apiAuthorizationValue
+        );
 
-    await loginPage.login(user[2].email, user[2].password);
+    /* Get list of messages & delete them by messageId */
+    await getAllScheduledMessages.command(
+        parseInt(user[2].memberId, 10),
+        formatISO(startTime), 
+        formatISO(endTime), 
+        user[2].socialProfileId, 
+        'SCHEDULED', 
+        15,
+        apiAuthorizationValue).then(
+            response => 
+            messagesToDelete = response);
+    
+    let messageIdsToDelete = messagesToDelete.map(message => Number(message.id))
 
-    await page.getByLabel('Planner', { exact: true }).click();
-    await page.getByText(scheduleText).click();
-
-    await page.getByTestId('DeleteButton').click();
-    await page.getByRole('button', { name: 'Delete post' }).click();
-    await page.waitForTimeout(2000);
+    if (messageIdsToDelete.length !== 0) {
+        console.log('Deleting scheduled messages');
+        for (const messageId of messageIdsToDelete) {
+            console.log(`Deleting message ID: ${messageId}`);
+            await deleteScheduledMessages.command(parseInt(user[2].memberId, 10), messageId, apiAuthorizationValue);
+        }
+    } 
 
     await page.close();
 });

@@ -3,6 +3,7 @@ const { test, expect } = require('@playwright/test');
 exports.LoginPage = class LoginPage {
     constructor(page) {
         this.page = page;
+        this.cookie = [];
         this.emailAddress = page.locator('#loginEmailInput');
         this.password = page.locator('#loginPasswordInput');
         this.loginSubmit = page.getByRole('button', { name: 'Sign in', exact: true });
@@ -20,5 +21,6 @@ exports.LoginPage = class LoginPage {
         await this.loginSubmit.click();
         await expect(this.emailAddress).not.toBeVisible;
         await this.page.waitForLoadState();
+        this.cookie = await this.page.context().cookies();
     }
 };
