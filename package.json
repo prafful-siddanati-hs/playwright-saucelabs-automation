@@ -4,9 +4,8 @@
   "description": "UI Test Automation",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test && npx playwright show-report",
-    "test.sauce": "npx saucectl run",
-    "test:report": "if [ -z \"$SAUCE_USERNAME\" ]; then open ./test-results.html; fi"
+    "test.local": "npx playwright test",
+    "test.sauce": "npx saucectl run"
   },
   "repository": {
     "type": "git",
