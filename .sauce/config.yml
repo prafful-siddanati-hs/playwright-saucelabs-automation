@@ -24,8 +24,8 @@ suites:
     screenResolution: "1920x1080"
     testMatch: ['tests/composer/.*.js']
     params:
-      browserName: "firefox"
-      project: "firefox"
+      browserName: "chromium"
+      project: "chromium"
   - name: "[Playwright] Planner Tests"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
