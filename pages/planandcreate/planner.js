@@ -40,9 +40,7 @@ exports.PlannerPage = class PlannerPage {
     }
 
     async dragAndDropMedia() {
-        const nextDayDate = moment(Date.now())
-            .add(1, 'days')
-            .format('dddd, D MMMM');
+        const nextDayDate = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'eeee, d MMMM');
 
         await this.plannerButton.click();
         await this.addMediaButton.click();

@@ -28,6 +28,7 @@ test('Drag and drop card on week view', async ({ page }) => {
   await plannerPage.dragAndDropCard(composeText);
   await page.close();
 });
+
 test('drag and drop media from side pane on week view', async ({ page }) => {
   const user = readJson();
 
