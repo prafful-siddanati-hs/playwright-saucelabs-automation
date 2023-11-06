@@ -70,16 +70,18 @@ def execWrapper(Closure c) {
     try {
         c()
         echo "Build Success"
+        slackSend color: '#539E65', channel: slackChannel, message: " [P&C Playwright tests] Suite Name: ${suiteNameParam} - Passed \n" +
+        " Jenkins URL: ${jenkinsUrl}"
         //TODO:Update slack channel and details
     } 
     catch (e) {
         echo "BUILD FAILURE"
-        slackSend color: '#FF0000', channel: slackChannel, message: " P&C Playwright tests - Failed! \n" +
+        slackSend color: '#C85960', channel: slackChannel, message: " [P&C Playwright tests] Suite Name: ${suiteNameParam} - Failed! \n" +
         " Jenkins URL: ${jenkinsUrl} \n"
         currentBuild.result = "FAILURE"
     throw e
   } 
   finally {
-    archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
+    archiveArtifacts artifacts: '**/playwright.report/test-results.json', allowEmptyArchive: true
   }
 }
