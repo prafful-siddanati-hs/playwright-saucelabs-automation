@@ -79,5 +79,7 @@ def execWrapper(Closure c) {
         currentBuild.result = "FAILURE"
     throw e
   } 
-  finally {}
+  finally {
+    archiveArtifacts artifacts: 'test-results/**', allowEmptyArchive: true
+  }
 }
