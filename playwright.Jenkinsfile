@@ -61,9 +61,15 @@ pod {
             }
             catch(err) {
                 echo "BUILD FAILURE"
-                println (err.toString())
-                slackSend color: '#C85960', channel: slackChannel, message: " [P&C Playwright tests]\n *Suite Name:* ${suiteNameParam} - Failed! \n" +
+                currentBuild.result = "FAILURE"
+                println(err.toString())
+                println(err.getMessage());
+                println(err.getStackTrace());
+                slackSend color: '#C85960', channel: slackChannel, message: " [P&C Playwright tests]\n *Suite Name:* _${suiteNameParam}_ - Failed! :warning: \n" +
                     " Jenkins URL: ${jenkinsUrl} \n"
+            }
+            finally {
+                archiveArtifacts artifacts: 'screenshots/**/*.png, playwright-report/index.html', allowEmptyArchive: true
             }
         }
     }
