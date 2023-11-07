@@ -4,7 +4,7 @@ killcmd = $(if $(procs), "kill" "-9" $(procs), "echo" "no matching processes")
 install:
 	rm -rf node_modules || true
 	yarn
-	npm install saucectl
+	npm install -g saucectl
 
 test-playwright-saucelabs:
 	npx saucectl run

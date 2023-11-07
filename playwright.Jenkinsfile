@@ -3,7 +3,7 @@ import hootsuite.jsl.pipeline.General
 
 @Library('hootsuite@6') _
 
-slackChannel = "#publisher-automation"
+slackChannel = "#blackhole"
 
 jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_PlanCreate/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
 
@@ -47,7 +47,7 @@ pod {
     execWrapper {
         stage ('Setup playwright') {     
             checkout scm
-            sh 'rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
+            sh 'rm -rf playwright-saucelabs-automation && git clone --branch PUB-30790 --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
             sh 'yarn install'
             sh 'npm install saucectl'
         }
@@ -60,9 +60,8 @@ pod {
                 }
             }
             catch(err) {
+                echo "BUILD FAILURE"
                 println (err.toString())
-                slackSend color: '#C85960', channel: slackChannel, message: " [P&C Playwright tests]\n *Suite Name:* ${suiteNameParam} - Failed! \n" +
-                " Jenkins URL: ${jenkinsUrl} \n"
             }
         }
     }
@@ -71,14 +70,17 @@ pod {
 def execWrapper(Closure c) {
     try {
         c()
-        echo "Build Success"
+        echo "Build Completed"
+        if (currentBuild?.result == "FAILURE") {
+            slackSend color: '#C85960', channel: slackChannel, message: " [P&C Playwright tests]\n *Suite Name:* ${suiteNameParam} - Failed! \n" +
+                " Jenkins URL: ${jenkinsUrl} \n"
+            currentBuild.result = "FAILURE"
+        }
     } 
     catch (e) {
-        echo "BUILD FAILURE"
-        currentBuild.result = "FAILURE"
     throw e
   } 
   finally {
-    archiveArtifacts artifacts: '/artifacts/test-results.json', allowEmptyArchive: true
+    archiveArtifacts artifacts: '**/artifacts/test-results.json', allowEmptyArchive: true
   }
 }
