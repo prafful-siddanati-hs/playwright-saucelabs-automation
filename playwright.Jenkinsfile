@@ -44,7 +44,7 @@ def pod = declarePod {
 def suiteNameParam = params.SUITE_NAME
 
 pod {
-    execWrapper(suiteNameParam) {
+    execWrapper {
         stage ('Setup playwright') {     
             checkout scm
             sh 'rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
@@ -61,26 +61,24 @@ pod {
             }
             catch(err) {
                 println (err.toString())
+                slackSend color: '#C85960', channel: slackChannel, message: " [P&C Playwright tests]\n *Suite Name:* ${suiteNameParam} - Failed! \n" +
+                " Jenkins URL: ${jenkinsUrl} \n"
             }
         }
     }
 }
 
-def execWrapper(String suiteNameParam, Closure c) {
+def execWrapper(Closure c) {
     try {
         c()
         echo "Build Success"
-        slackSend color: '#539E65', channel: slackChannel, message: " [P&C Playwright tests] Suite Name: ${suiteNameParam} - Passed \n" +
-        " Jenkins URL: ${jenkinsUrl}"
     } 
     catch (e) {
         echo "BUILD FAILURE"
-        slackSend color: '#C85960', channel: slackChannel, message: " [P&C Playwright tests] Suite Name: ${suiteNameParam} - Failed! \n" +
-        " Jenkins URL: ${jenkinsUrl} \n"
         currentBuild.result = "FAILURE"
     throw e
   } 
   finally {
-    archiveArtifacts artifacts: '**/test-results.json', allowEmptyArchive: true
+    archiveArtifacts artifacts: '/artifacts/test-results.json', allowEmptyArchive: true
   }
 }
