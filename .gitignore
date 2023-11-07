@@ -24,6 +24,9 @@ pids
 # node-waf configuration
 *.lock-wscript
 
+# Yarn Integrity file
+.yarn-integrity
+
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
@@ -40,8 +43,6 @@ artifacts/
 /__assets__
 screenshots
 reports
-tests_output
-report.html
 
 # NPM lockfile
 package-lock.json
