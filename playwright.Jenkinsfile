@@ -62,11 +62,8 @@ pod {
             catch(err) {
                 echo "BUILD FAILURE"
                 println (err.toString())
-                if (currentBuild?.result == "FAILURE") {
-                    slackSend color: '#C85960', channel: slackChannel, message: " [P&C Playwright tests]\n *Suite Name:* ${suiteNameParam} - Failed! \n" +
-                        " Jenkins URL: ${jenkinsUrl} \n"
-                 currentBuild.result = "FAILURE"
-                }
+                slackSend color: '#C85960', channel: slackChannel, message: " [P&C Playwright tests]\n *Suite Name:* ${suiteNameParam} - Failed! \n" +
+                    " Jenkins URL: ${jenkinsUrl} \n"
             }
         }
     }
