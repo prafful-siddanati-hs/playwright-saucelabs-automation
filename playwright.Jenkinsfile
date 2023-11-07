@@ -3,7 +3,7 @@ import hootsuite.jsl.pipeline.General
 
 @Library('hootsuite@6') _
 
-slackChannel = "#blackhole"
+slackChannel = "#publisher-automation"
 
 jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_PlanCreate/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
 
@@ -47,7 +47,7 @@ pod {
     execWrapper {
         stage ('Setup playwright') {     
             checkout scm
-            sh 'rm -rf playwright-saucelabs-automation && git clone --branch PUB-30790 --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
+            sh 'rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
             sh 'yarn install'
             sh 'npm install saucectl'
         }
@@ -61,14 +61,12 @@ pod {
             }
             catch(err) {
                 echo "BUILD FAILURE"
-                currentBuild.result = "FAILURE"
                 println(err.toString())
-                slackSend color: '#C85960', channel: slackChannel, message: " :playwright-logo: *[P&C Playwright tests]*\n *Suite Name:* _${suiteNameParam}_ - Failed! :warning: \n" +
-                    " *Jenkins URL:* ${jenkinsUrl} \n"
-            }
-            finally {
-                archiveArtifacts artifacts: '**/screenshots/**/*.png', allowEmptyArchive: true
-                archiveArtifacts artifacts: '**/test-results/test_result.json', allowEmptyArchive: true
+                slackSend color: '#C85960', channel: slackChannel, 
+                        message: " :playwright-logo: *[P&C Playwright tests]*\n *Suite Name:* _${suiteNameParam}_ - Failed! :warning: \n" +
+                            " *Jenkins URL:* ${jenkinsUrl} \n"
+                currentBuild.result = "FAILURE"
+                throw err            
             }
         }
     }
@@ -81,6 +79,9 @@ def execWrapper(Closure c) {
     } 
     catch (e) {
         throw e
-  } 
-  finally {}
+  }
+  finally {
+    archiveArtifacts artifacts: '**/screenshots/**/*.png', allowEmptyArchive: true
+    archiveArtifacts artifacts: '**/test-results/test_result.json', allowEmptyArchive: true
+  }
 }
