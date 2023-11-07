@@ -60,7 +60,13 @@ pod {
                 }
             }
             catch(err) {
-                println (err.toString())
+                echo "BUILD FAILURE"
+                println(err.toString())
+                slackSend color: '#C85960', channel: slackChannel, 
+                        message: " :playwright-logo: *[P&C Playwright tests]*\n *Suite Name:* _${suiteNameParam}_ - Failed! :warning: \n" +
+                            " *Jenkins URL:* ${jenkinsUrl} \n"
+                currentBuild.result = "FAILURE"
+                throw err            
             }
         }
     }
@@ -69,15 +75,13 @@ pod {
 def execWrapper(Closure c) {
     try {
         c()
-        echo "Build Success"
-        //TODO:Update slack channel and details
+        echo "Build Completed"
     } 
     catch (e) {
-        echo "BUILD FAILURE"
-        slackSend color: '#FF0000', channel: slackChannel, message: " P&C Playwright tests - Failed! \n" +
-        " Jenkins URL: ${jenkinsUrl} \n"
-        currentBuild.result = "FAILURE"
-    throw e
-  } 
-  finally {}
+        throw e
+  }
+  finally {
+    archiveArtifacts artifacts: '**/screenshots/**/*.png', allowEmptyArchive: true
+    archiveArtifacts artifacts: '**/test-results/test_result.json', allowEmptyArchive: true
+  }
 }

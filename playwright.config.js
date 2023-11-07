@@ -33,17 +33,21 @@ module.exports = defineConfig({
     timeout: 30000,
   },
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['html',{outputFile: 'tests.results.html', open: 'never'}]],
+  reporter: [['html',{outputFile: 'playwright-report/index.html', open: 'never'}],
+              ['json', {outputFile: 'test-results/test_result.json'}]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'https://staging.hootsuite.com/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
+    ignoreHTTPSErrors: true,
     screenshot: 'only-on-failure',
     timezoneId: 'America/Vancouver',
+    video: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
   },
+  outputDir: 'screenshots',
 
   /* Configure projects for major browsers */
   projects: [
