@@ -1,6 +1,6 @@
 const { test } = require('@playwright/test');
 const fs = require('fs');
-const { formatISO, addHours, addDays, subDays, addMonths, lastDayOfMonth} = require('date-fns');
+const {addMonths, lastDayOfMonth} = require('date-fns');
 const { LoginPage } = require("../pages/login");
 const createCampaign = require("../custom-commands/createCampaign");
 
@@ -14,11 +14,8 @@ test('Create campaign via API', async ({ page }) => {
     const createTestCampaign = new createCampaign();
 
     const user = readJson('fixtures/accounts.json')
-
     const CAMPAIGN_START_DATE = addMonths(new Date(), 1);
     const CAMPAIGN_END_DATE = lastDayOfMonth(CAMPAIGN_START_DATE);
-
-
     const campaignName = `Campaign via API in PlayWright ${Date.now()}`;
 
     let apiAuthorizationValue = await loginPage.login(user[3].email, user[3].password).then(() => {
@@ -26,7 +23,7 @@ test('Create campaign via API', async ({ page }) => {
         return apiAuthorization.value;
     });
 
-    /* Create a scheduled message */
+    /* Create test campaign */
     await createTestCampaign.command(
         parseInt(user[3].memberId, 10),
         {
