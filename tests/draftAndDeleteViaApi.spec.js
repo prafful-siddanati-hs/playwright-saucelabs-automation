@@ -1,6 +1,6 @@
 const { test } = require('@playwright/test');
 const fs = require('fs');
-const { formatISO, addHours, addDays, subDays } = require('date-fns');
+const {addHours } = require('date-fns');
 const { LoginPage } = require("../pages/login");
 const draftMessage = require("../custom-commands/draftMessage");
 const getDrafts = require('../custom-commands/getDrafts');
@@ -30,7 +30,7 @@ test('Create & delete a draft message via API', async ({ page }) => {
         return apiAuthorization.value;
     });
 
-    /* Create a scheduled message */
+    /* Create a draft message */
     await createDraftMessage.command(
         parseInt(user[0].memberId, 10),
         {

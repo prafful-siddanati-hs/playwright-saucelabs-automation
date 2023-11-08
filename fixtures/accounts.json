@@ -19,5 +19,14 @@
         "name": "Account for external media upload",
         "email": "pro_user_composer3_stg@hootsuite.com",
         "password": "0Kh5xdBIGYzV"
+    },
+    {
+        "memberId": 13062818,
+        "socialProfileId": 1998264249,
+        "name": "Account for campaign creation",
+        "orgId": 1866715,
+        "username": "Prafful Siddanati",
+        "email": "prafful.siddanati+testaccount@hootsuite.com",
+        "password": "!1Password"
     }
 ]
