@@ -3,7 +3,7 @@ import hootsuite.jsl.pipeline.General
 
 @Library('hootsuite@6') _
 
-slackChannel = "#blackhole"
+slackChannel = "#publisher-automation"
 
 jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_PlanCreate/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
 
