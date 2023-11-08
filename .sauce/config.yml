@@ -55,4 +55,6 @@ artifacts:
     when: always
     match:
       - console.log
+      - 'sauce-test-report.json'
+      - '*.png'
     directory: ./artifacts/

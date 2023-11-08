@@ -81,7 +81,7 @@ def execWrapper(Closure c) {
         throw e
   }
   finally {
-    archiveArtifacts artifacts: '**/screenshots/**/*.png', allowEmptyArchive: true
-    archiveArtifacts artifacts: '**/test-results/test_result.json', allowEmptyArchive: true
+    archiveArtifacts artifacts: 'artifacts/**/*.png', allowEmptyArchive: true
+    archiveArtifacts artifacts: 'artifacts/**/sauce-test-report.json', allowEmptyArchive: true
   }
 }
