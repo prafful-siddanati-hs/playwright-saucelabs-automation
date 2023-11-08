@@ -16,7 +16,7 @@ test('Media upload', async ({ page }) => {
     await loginPage.login(user[2].email, user[2].password);
     await composePage.selectComposeButton();
     await composePage.uploadFile('tests/composer/owly-snowboard.jpg')
-    await composePage.selectSocialProfile('Composer3H');
+    await composePage.selectSocialProfile('Composer30H');
     await expect(composePage.twitterPreviewSingleImage).toBeVisible;
     await page.waitForTimeout(1000);
     await page.close();

@@ -3,7 +3,7 @@ import hootsuite.jsl.pipeline.General
 
 @Library('hootsuite@6') _
 
-slackChannel = "#publisher-automation"
+slackChannel = "#blackhole"
 
 jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_PlanCreate/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
 
@@ -81,7 +81,7 @@ def execWrapper(Closure c) {
         throw e
   }
   finally {
-    archiveArtifacts artifacts: './artifacts/**/*.png', allowEmptyArchive: true
-    archiveArtifacts artifacts: './artifacts/**/sauce-test-report.json', allowEmptyArchive: true
+    archiveArtifacts artifacts: 'artifacts/**/*.png', allowEmptyArchive: true
+    archiveArtifacts artifacts: 'artifacts/**/sauce-test-report.json', allowEmptyArchive: true
   }
 }
