@@ -47,7 +47,7 @@ pod {
     execWrapper {
         stage ('Setup playwright') {     
             checkout scm
-            sh 'rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
+            sh 'rm -rf playwright-saucelabs-automation && git clone --branch fix-PUB-30790 --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
             sh 'yarn install'
             sh 'npm install saucectl'
         }
@@ -81,7 +81,7 @@ def execWrapper(Closure c) {
         throw e
   }
   finally {
-    archiveArtifacts artifacts: '**/screenshots/**/*.png', allowEmptyArchive: true
-    archiveArtifacts artifacts: '**/test-results/test_result.json', allowEmptyArchive: true
+    archiveArtifacts artifacts: './artifacts/**/*.png', allowEmptyArchive: true
+    archiveArtifacts artifacts: './artifacts/**/sauce-test-report.json', allowEmptyArchive: true
   }
 }
