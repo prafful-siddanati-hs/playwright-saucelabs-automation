@@ -47,8 +47,8 @@ pod {
         stage ('Run test suites via saucelabs') {
             try {
                 def optionalParam = [:]
-                def suiteNameList = ["${suiteNameParam}"]
-                runPlaywrightTests(optionalParam, suiteNameList)
+                def suiteNamesList = ["${suiteNameParam}"]
+                runPlaywrightTestsViaSaucelabs(optionalParam, suiteNamesList)
             }
             catch(err) {
                 echo "BUILD FAILURE"
@@ -72,7 +72,7 @@ def execWrapper(Closure c) {
         throw e
   }
   finally {
-    archiveArtifacts artifacts: 'artifacts/**/*.png', allowEmptyArchive: true
-    archiveArtifacts artifacts: 'artifacts/**/sauce-test-report.json', allowEmptyArchive: true
+    archiveArtifacts artifacts: '**/*.png', allowEmptyArchive: true
+    archiveArtifacts artifacts: '**/sauce-test-report.json', allowEmptyArchive: true
   }
 }
