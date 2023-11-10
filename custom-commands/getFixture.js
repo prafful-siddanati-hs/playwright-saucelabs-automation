@@ -163,4 +163,5 @@ class getFixture extends events.EventEmitter {
             return this;
         }
     };
+    
 module.exports = getFixture;
