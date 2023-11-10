@@ -1,6 +1,6 @@
 #!groovy
 
-@Library('hootsuite@PUB-30482-test') _
+@Library('hootsuite@6') _
 
 slackChannel = "#publisher-automation"
 
@@ -46,6 +46,7 @@ pod {
     execWrapper {
         stage ('Run test suites via saucelabs') {
             try {
+                //Refer to https://github.hootops.com/hootsuite/jenkins-shared-libraries/blob/6/vars/runPlaywrightTestsViaSaucelabs.groovy for usage directions
                 def optionalParam = [:]
                 def suiteNamesList = ["${suiteNameParam}"]
                 runPlaywrightTestsViaSaucelabs(optionalParam, suiteNamesList)
