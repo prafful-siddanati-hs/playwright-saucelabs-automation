@@ -32,4 +32,4 @@ dynamodb-browse-locks:
 		--table-name build-ci-dynamodb-test-accounts-dev \
 		--profile build-ci-aws-creds \
 		--key '{ "TestType": {"S": "playwright-saucelabs"}, "Account": {"S": "'$$account'"}}'
-		
+	
