@@ -1,5 +1,4 @@
 #!groovy
-import hootsuite.jsl.pipeline.General
 
 @Library('hootsuite@6') _
 
@@ -45,19 +44,12 @@ def suiteNameParam = params.SUITE_NAME
 
 pod {
     execWrapper {
-        stage ('Setup playwright') {     
-            checkout scm
-            sh 'rm -rf playwright-saucelabs-automation && git clone --branch master --single-branch git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git playwright-saucelabs-automation --depth=1'
-            sh 'yarn install'
-            sh 'npm install saucectl'
-        }
         stage ('Run test suites via saucelabs') {
             try {
-                def general = new General()
-                general.saucelabsVaultSetup {
-                    echo 'Run test suites via parameterized cron...'
-                    sh "npx saucectl run --select-suite \"${suiteNameParam}\""
-                }
+                //Refer to https://github.hootops.com/hootsuite/jenkins-shared-libraries/blob/6/vars/runPlaywrightTestsViaSaucelabs.groovy for usage directions
+                def optionalParam = [:]
+                def suiteNamesList = ["${suiteNameParam}"]
+                runPlaywrightTestsViaSaucelabs(optionalParam, suiteNamesList)
             }
             catch(err) {
                 echo "BUILD FAILURE"
@@ -81,7 +73,7 @@ def execWrapper(Closure c) {
         throw e
   }
   finally {
-    archiveArtifacts artifacts: 'artifacts/**/*.png', allowEmptyArchive: true
-    archiveArtifacts artifacts: 'artifacts/**/sauce-test-report.json', allowEmptyArchive: true
+    archiveArtifacts artifacts: '**/*.png', allowEmptyArchive: true
+    archiveArtifacts artifacts: '**/sauce-test-report.json', allowEmptyArchive: true
   }
 }
