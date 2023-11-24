@@ -14,7 +14,9 @@ playwright:
 rootDir: ./
 npm:
   dependencies:
+    - hsdynamodb
     - hsapi
+    - underscore
     - date-fns
     - date-fns-tz
     - events
