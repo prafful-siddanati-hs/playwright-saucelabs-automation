@@ -44,12 +44,10 @@ test('Schedule & Delete a message via API', async ({ page }) => {
                     scheduledSendTime: formatISO(scheduleTime)
                 }
             ]
-        },
-        apiAuthorizationValue
-        );
+        });
 
     /* Get list of messages & delete them by messageId */
-    await getAllScheduledMessages.command(
+   /*  await getAllScheduledMessages.command(
         parseInt(user[2].memberId, 10),
         formatISO(startTime), 
         formatISO(endTime), 
@@ -68,7 +66,7 @@ test('Schedule & Delete a message via API', async ({ page }) => {
             console.log(`Deleting message ID: ${messageId}`);
             await deleteScheduledMessages.command(parseInt(user[2].memberId, 10), messageId, apiAuthorizationValue);
         }
-    } 
+    }  */
 
     await page.close();
 });

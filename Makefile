@@ -12,6 +12,16 @@ test-playwright-saucelabs:
 test-playwright-local:
 	npx playwright test tests/folderName/testName.js
 
+start-tunnel:
+	sc-4.9.1-osx/bin/sc -c sc-4.9.1-osx/tunnel-config.yml
+
+stop-tunnel:
+	@echo 'processes == ['$(procs)']'
+	@$(killcmd)
+
+run-test:
+	saucectl -c .sauce/config.yml --select-suite "[Playwright] Schedule & Delete via API"
+
 dynamodb-setup-local-dev:
 	@vault write aws/sts/build-ci-dynamodb-test-accounts ttl=60m | \
 	tee /dev/stderr | \

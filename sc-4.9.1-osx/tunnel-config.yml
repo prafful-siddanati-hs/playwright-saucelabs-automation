@@ -1,0 +1,6 @@
+---
+rest-url: 'https://api.us-west-4-i3er.saucelabs.com/rest/v1'
+user: '$SAUCE_USERNAME'
+api-key: '$SAUCE_ACCESS_KEY'
+vm-version: 'v2alpha2'
+tunnel-identifier: 'sauce-playwright-tunnel'
