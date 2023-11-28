@@ -13,7 +13,7 @@ test-playwright-local:
 	npx playwright test tests/folderName/testName.js
 
 start-tunnel:
-	sc-4.9.1-osx/bin/sc -c sc-4.9.1-osx/tunnel-config.yml
+	sc-4.9.2-linux/bin/sc -c sc-4.9.2-linux/tunnel-config.yml
 
 stop-tunnel:
 	@echo 'processes == ['$(procs)']'
