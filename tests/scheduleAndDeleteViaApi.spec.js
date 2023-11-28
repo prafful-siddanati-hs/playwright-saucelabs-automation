@@ -14,24 +14,24 @@ function readJson(fileName) {
 test('Schedule & Delete a message via API', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const createScheduleMessage = new scheduleV3Message();
-    const deleteScheduledMessages = new deleteScheduledMessageById();
-    const getAllScheduledMessages = new getScheduledMessages();
+    /* const deleteScheduledMessages = new deleteScheduledMessageById();
+    const getAllScheduledMessages = new getScheduledMessages(); */
 
     const user = readJson('fixtures/accounts.json')
     
     const scheduleTime = addHours(new Date(), 24);
-    const startTime = subDays(new Date(), 1)
-    const endTime = addDays(new Date(), 3)
+    /* const startTime = subDays(new Date(), 1)
+    const endTime = addDays(new Date(), 3) */
 
     const scheduleText = `This is scheduled via API in PlayWright ${scheduleTime}`;
 
-    let messagesToDelete = [];
+    /* let messagesToDelete = [];
 
     let apiAuthorizationValue = await loginPage.login(user[2].email, user[2].password).then(() => {
          let apiAuthorization = loginPage.cookie.find(({name}) => name === "apiAuthorization");
         return apiAuthorization.value;
     });
-    console.log('- - - apiAuthorization value retrieved - - -');
+    console.log('- - - apiAuthorization value retrieved - - -'); */
 
     /* Create a scheduled message */
     await createScheduleMessage.command(
