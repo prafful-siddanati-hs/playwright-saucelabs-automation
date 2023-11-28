@@ -1,4 +1,5 @@
 const { expect } = require('@playwright/test');
+const { use: { defaultPassword } } = require('../playwright.config.js')
 
 exports.LoginPage = class LoginPage {
     constructor(page) {
@@ -11,6 +12,30 @@ exports.LoginPage = class LoginPage {
 
     async visit() {
         await this.page.goto('login?lang=en');
+    }
+
+    async signIn(member) {
+        let user;
+        let hsUsers = (global.member)[0];
+
+        if (typeof member === 'string') {
+            user = hsUsers;
+        } else if (hsUsers.size() > 0) {
+            user = hsUsers.get()[hsUsers.size() - 1];
+        } else if (member) {
+            user = member;
+        } else {
+            console.log('No Hootsuite User found.');
+        }
+
+        await this.page.goto('/login?lang=en');
+        await expect(this.page).toHaveTitle(/Hootsuite - Login/);
+        await this.emailAddress.fill(user.email);
+        await this.password.fill(defaultPassword);
+        await this.loginSubmit.click();
+        await expect(this.emailAddress).not.toBeVisible;
+        await this.page.waitForLoadState();
+        this.cookie = await this.page.context().cookies();
     }
 
     async login(email, password) {
