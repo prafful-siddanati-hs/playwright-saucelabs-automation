@@ -41,7 +41,7 @@ suites:
   - name: "[Playwright] Schedule & Delete via API"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['tests/scheduleAndDelete.spec.js']
+    testMatch: ['tests/scheduleAndDeleteViaApi.spec.js']
     params:
       browserName: "chromium"
       project: "chromium"
