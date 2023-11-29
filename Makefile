@@ -1,4 +1,4 @@
-procs = $(shell ps -ef | grep  saucectl | grep -v grep | awk '{ print $$2 ; }')
+procs = $(shell ps -ef | grep  saucectl | grep  'bin/sc' | grep -v grep | awk '{ print $$2 ; }')
 killcmd = $(if $(procs), "kill" "-9" $(procs), "echo" "no matching processes")
 
 install:
