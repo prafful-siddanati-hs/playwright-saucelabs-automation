@@ -22,12 +22,12 @@ class getScheduledMessages extends events.EventEmitter {
         super ();
     }
 
-    async command(memberId, startTime, endTime, socialProfileIds, state, limit, apiAuthorizationValue) {
+    async command(memberId, startTime, endTime, socialProfileIds, state, limit) {
         const mps = new MPS(service_message_publishing);
         let messages = [];
 
         try {
-            const data = await mps.getScheduledMessages(memberId, startTime, endTime, socialProfileIds, state, limit, "apiAuthorization=" + apiAuthorizationValue);
+            const data = await mps.getScheduledMessages(memberId, startTime, endTime, socialProfileIds, state, limit);
 
             if (!data) {
                 throw new Error(`Request did not return scheduled messages. Error code ${data.errors[0].code}`)

@@ -1,4 +1,4 @@
-procs = $(shell ps -ef | grep  saucectl | grep  'bin/sc' | grep -v grep | awk '{ print $$2 ; }')
+procs = $(shell ps -ef | grep 'bin/sc' | grep -v grep | awk '{ print $$2 ; }')
 killcmd = $(if $(procs), "kill" "-9" $(procs), "echo" "no matching processes")
 
 install:
@@ -15,12 +15,15 @@ test-playwright-local:
 start-tunnel:
 	sc-4.9.2-linux/bin/sc -c sc-4.9.2-linux/tunnel-config.yml
 
+start-tunnel-local:
+	sc-4.9.1-osx/bin/sc -c sc-4.9.1-osx/local-tunnel-config.yml
+
 stop-tunnel:
 	@echo 'processes == ['$(procs)']'
 	@$(killcmd)
 
 run-test:
-	npx saucectl run -c .sauce/config.yml --select-suite "[Playwright] Schedule & Delete via API"
+	npx saucectl run --select-suite "[Playwright] Schedule & Delete via API"
 
 dynamodb-setup-local-dev:
 	@vault write aws/sts/build-ci-dynamodb-test-accounts ttl=60m | \
