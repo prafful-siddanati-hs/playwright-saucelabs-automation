@@ -19,11 +19,11 @@ start-tunnel-local:
 	sc-4.9.1-osx/bin/sc -c sc-4.9.1-osx/local-tunnel-config.yml
 
 stop-tunnel:
-	@echo 'processes == ['$(procs)']'
+	@echo 'sauce tunnel processId: ['$(procs)'] stopped'
 	@$(killcmd)
 
 run-test:
-	npx saucectl run --select-suite "[Playwright] Schedule & Delete via API"
+	npx saucectl run --select-suite "[Suite name from .sauce/config.yml]"
 
 dynamodb-setup-local-dev:
 	@vault write aws/sts/build-ci-dynamodb-test-accounts ttl=60m | \
