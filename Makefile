@@ -20,7 +20,7 @@ stop-tunnel:
 	@$(killcmd)
 
 run-test:
-	saucectl -c .sauce/config.yml --select-suite "[Playwright] Schedule & Delete via API"
+	npx saucectl run -c .sauce/config.yml --select-suite "[Playwright] Schedule & Delete via API"
 
 dynamodb-setup-local-dev:
 	@vault write aws/sts/build-ci-dynamodb-test-accounts ttl=60m | \
