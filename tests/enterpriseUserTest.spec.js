@@ -5,7 +5,7 @@ const createOrg = require('../custom-commands/createOrg');
 
 test.afterEach(async ({ page }) => {
     const cleanUp = new tearDown();
-    
+
     //await cleanUp.command();
     await page.close();
 });
