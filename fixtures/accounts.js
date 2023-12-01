@@ -120,6 +120,149 @@ module.exports = {
         }
     ],
 
+    enterprise: [
+        {
+            memberId: '13747229',
+            isSocialProfile: false,
+            isHootsuiteUser: true,
+            tearDown: false,
+            type: 'enterprise',
+            email: 'plan.create.automation+enterprise1@hootsuite.com',
+            username: 'Enterprise_user_one',
+            password: '!1Password'
+        },
+        {
+            memberId: '13747240',
+            isSocialProfile: false,
+            isHootsuiteUser: true,
+            tearDown: false,
+            type: 'enterprise',
+            email: 'plan.create.automation+enterprise2@hootsuite.com',
+            username: 'Enterprise_user_two',
+            password: '!1Password'
+        },
+        {
+            memberId: '13747241',
+            isSocialProfile: false,
+            isHootsuiteUser: true,
+            tearDown: false,
+            type: 'enterprise',
+            email: 'plan.create.automation+enterprise3@hootsuite.com',
+            username: 'Enterprise_user_three',
+            password: '!1Password'
+        },
+        {
+            memberId: '13747242',
+            isSocialProfile: false,
+            isHootsuiteUser: true,
+            tearDown: false,
+            type: 'enterprise',
+            email: 'plan.create.automation+enterprise4@hootsuite.com',
+            username: 'Enterprise_user_four',
+            password: '!1Password'
+        },
+        {
+            memberId: '13747243',
+            isSocialProfile: false,
+            isHootsuiteUser: true,
+            tearDown: false,
+            type: 'enterprise',
+            email: 'plan.create.automation+enterprise5@hootsuite.com',
+            username: 'Enterprise_user_five',
+            password: '!1Password'
+        },
+        {
+            memberId: '13747252',
+            isSocialProfile: false,
+            isHootsuiteUser: true,
+            tearDown: false,
+            type: 'enterprise',
+            email: 'plan.create.automation+enterprise6@hootsuite.com',
+            username: 'Enterprise_User_Six',
+            password: '!1Password'
+        },
+        {
+            memberId: '13747254',
+            isSocialProfile: false,
+            isHootsuiteUser: true,
+            tearDown: false,
+            type: 'enterprise',
+            email: 'plan.create.automation+enterprise7@hootsuite.com',
+            username: 'Enterprise_User_Seven',
+            password: '!1Password'
+        },
+        {
+            memberId: '13747258',
+            isSocialProfile: false,
+            isHootsuiteUser: true,
+            tearDown: false,
+            type: 'enterprise',
+            email: 'plan.create.automation+enterprise8@hootsuite.com',
+            username: 'Enterprise_User_Eight',
+            password: '!1Password'
+        },
+        {
+            memberId: '13747269',
+            isSocialProfile: false,
+            isHootsuiteUser: true,
+            tearDown: false,
+            type: 'enterprise',
+            email: 'plan.create.automation+enterprise9@hootsuite.com',
+            username: 'Enterprise_User_Nine',
+            password: '!1Password'
+        },
+        {
+            memberId: '13747271',
+            isSocialProfile: false,
+            isHootsuiteUser: true,
+            tearDown: false,
+            type: 'enterprise',
+            email: 'plan.create.automation+enterprise10@hootsuite.com',
+            username: 'Enterprise_User_Ten',
+            password: '!1Password'
+        },
+        {
+            memberId: '13749002',
+            isSocialProfile: false,
+            isHootsuiteUser: true,
+            tearDown: false,
+            type: 'enterprise',
+            email: 'plan.create.automation+enterprise11@hootsuite.com',
+            username: 'Enterprise_User_Eleven',
+            password: '!1Passw0rd'
+        },
+        {
+            memberId: '13749003',
+            isSocialProfile: false,
+            isHootsuiteUser: true,
+            tearDown: false,
+            type: 'enterprise',
+            email: 'plan.create.automation+enterprise12@hootsuite.com',
+            username: 'Enterprise_User_Twelve',
+            password: '!1Passw0rd'
+        },
+        {
+            memberId: '13749004',
+            isSocialProfile: false,
+            isHootsuiteUser: true,
+            tearDown: false,
+            type: 'enterprise',
+            email: 'plan.create.automation+enterprise13@hootsuite.com',
+            username: 'Enterprise_User_Thirteen',
+            password: '!1Passw0rd'
+        },
+        {
+            memberId: '13749005',
+            isSocialProfile: false,
+            isHootsuiteUser: true,
+            tearDown: false,
+            type: 'enterprise',
+            email: 'plan.create.automation+enterprise14@hootsuite.com',
+            username: 'Enterprise_User_Fourteen',
+            password: '!1Passw0rd'
+        },
+    ],
+
     staging_pro_users: [
         {
             "memberId": 13515514,

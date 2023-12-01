@@ -1,9 +1,10 @@
 const events = require('events');
 const DynamoDB = require('hsdynamodb');
 const SocialProfiles = require('hsapi').som;
+const OrganizationMembers = require('hsapi').organizationMembersService;
 const _ = require('underscore');
 
-const { som_bridge } = require('../globals.js')
+const { som_bridge, tops_skyline } = require('../globals.js')
 
 class getFixture extends events.EventEmitter {
     constructor() {
@@ -133,16 +134,49 @@ class getFixture extends events.EventEmitter {
                 } 
             } else {
                 fixture.isSocialProfile = false;
-                fixture.customAccout = {};
+                fixture.customAccount = {};
 
-                Object.assign(fixture.customAccout, locked.resource);
+                Object.assign(fixture.customAccount, locked.resource);
                 if(!locked.resource.email) {
-                    fixture.customAccout.email = locked.resource.id;
+                    fixture.customAccount.email = locked.resource.id;
+                }
+
+                if (fixture.type === 'enterprise') {
+                    let organizationMembers = new OrganizationMembers(tops_skyline);
+                    
+                    this.step = 'Checking user for existing Organizations';
+                    let existingOrgs = await organizationMembers.getMemberOrgs(parseInt(fixture.memberId));
+
+                    if (typeof existingOrgs !== 'object') {
+                        console.log(`Failed to retrieve user organizations. Response: ${JSON.stringify(existingOrgs)}`);
+                    }
+
+                    if (existingOrgs.data.length > 0) {
+                        let existingOrgData = Object.values(existingOrgs.data);
+
+                        console.log(`Current member is in ${existingOrgData.length} orgs`);
+
+                        existingOrgData.forEach((org) => {
+                            console.log(` Org name: ${org.name} / Org Id: ${org.id} / Payment Member Id: ${org.paymentMemberId}`);
+                        })
+                    }
+                }
+
+                //Do not call tearDown() for dedicated enterprise users
+                if (fixture.customAccount.isHootsuiteUser || fixture.type === 'enterprise') {
+                    fixture.customAccount.requiresTearDown = false;
+                    fixture.customAccount.requiresEmailChange = false;
+                    fixture.customAccount.name = fixture.name;
+                }
+
+                //If custom account does not have email, return the id instead.
+                if (!locked.resource.email) {
+                    fixture.customAccount.email = locked.resource.id;
                 }
             }
 
-            let displayEmail = fixture.isSocialProfile ? fixture.socialProfile.email : fixture.customAccout.email;
-            let displayPassword = fixture.isSocialProfile ? fixture.socialProfile.password : fixture.customAccout.password;
+            let displayEmail = fixture.isSocialProfile ? fixture.socialProfile.email : fixture.customAccount.email;
+            let displayPassword = fixture.isSocialProfile ? fixture.socialProfile.password : fixture.customAccount.password;
 
             //TODO:Figure out how to differentiate pipeline vs local
             if (global.pipeline) {
