@@ -46,7 +46,7 @@ module.exports = defineConfig({
     screenshot: 'only-on-failure',
     timezoneId: 'America/Vancouver',
     video: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
-    longTimeout: 60 * 1000,
+    longTimeout: 30 * 1000,
     defaultPassword: 'Passw0rd',
   },
   outputDir: 'screenshots',

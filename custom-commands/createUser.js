@@ -49,7 +49,6 @@ class createUser extends events.EventEmitter{
             if (typeof callback === 'function') {
                 callback.call(this, member);
             }
-            console.log(member)
         } catch (err) {
             console.assert(false, `Error creating user with billing. ${err}`);
         } finally {
