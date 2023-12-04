@@ -173,10 +173,10 @@ hasown@^2.0.0:
   dependencies:
     function-bind "^1.1.2"
 
-hsapi@^6.2370.0:
-  version "6.2370.0"
-  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/hsapi/-/hsapi-6.2370.0.tgz"
-  integrity sha512-+FpodlMD/8Nvs58v9QFZnW2Hdq4odLWKqBJ7a59K65G+k7b88MvdgBA4eZ61ALigUPCuqfi0AkO9y0f55EIh+Q==
+hsapi@^6.2374.0:
+  version "6.2374.0"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/hsapi/-/hsapi-6.2374.0.tgz"
+  integrity sha512-4P8OF5gOs23Pt86FdGRT+8XThUv7gwsJ62tQRqH0Cet0lXGYacjnHVLMWgmzOXGrZKz1N7CoyPQ2DtDXxMiEBQ==
   dependencies:
     hsrequest "4.2.1"
 
