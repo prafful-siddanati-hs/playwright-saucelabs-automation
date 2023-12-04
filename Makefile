@@ -13,10 +13,10 @@ test-playwright-local:
 	npx playwright test tests/folderName/testName.js
 
 start-tunnel:
-	sc-4.9.2-linux/bin/sc -c sc-4.9.2-linux/tunnel-config.yml
+	sc-tunnel/linux/bin/sc -c sc-tunnel/linux/tunnel-config.yml
 
 start-tunnel-local:
-	sc-4.9.1-osx/bin/sc -c sc-4.9.1-osx/local-tunnel-config.yml
+	sc-tunnel/local/bin/sc -c sc-tunnel/local/local-tunnel-config.yml
 
 stop-tunnel:
 	@echo 'sauce tunnel processId: ['$(procs)'] stopped'
