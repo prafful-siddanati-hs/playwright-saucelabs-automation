@@ -18,11 +18,11 @@ class deleteScheduledMessageById extends events.EventEmitter {
         super ();
     }
 
-    async command(member, messageId, apiAuthorizationValue, callback) {
+    async command(member, messageId, callback) {
         const mps = new MPS(service_message_publishing);
 
         try {
-            const data = await mps.deleteScheduledMessageById(member, messageId, "apiAuthorization=" + apiAuthorizationValue);
+            const data = await mps.deleteScheduledMessageById(member, messageId);
 
             if (data) {
                 throw new Error(`Request did not delete scheduled message. Error code ${data.errors[0].codes}`);

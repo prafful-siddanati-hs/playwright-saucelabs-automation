@@ -1,7 +1,7 @@
 const { test } = require('@playwright/test');
 const fs = require('fs');
 const { formatISO, addHours, addDays, subDays } = require('date-fns');
-const { LoginPage } = require("../pages/login");
+//const { LoginPage } = require("../pages/login");
 const scheduleV3Message = require("../custom-commands/scheduleV3Message");
 const getScheduledMessages = require('../custom-commands/getScheduledMessages');
 const deleteScheduledMessageById = require("../custom-commands/deleteScheduledMesssagesById")
@@ -12,7 +12,7 @@ function readJson(fileName) {
 }
 
 test('Schedule & Delete a message via API', async ({ page }) => {
-    const loginPage = new LoginPage(page);
+    //const loginPage = new LoginPage(page);
     const createScheduleMessage = new scheduleV3Message();
     const deleteScheduledMessages = new deleteScheduledMessageById();
     const getAllScheduledMessages = new getScheduledMessages();
@@ -27,11 +27,13 @@ test('Schedule & Delete a message via API', async ({ page }) => {
 
     let messagesToDelete = [];
 
-    let apiAuthorizationValue = await loginPage.login(user[2].email, user[2].password).then(() => {
+    /*let apiAuthorizationValue = await loginPage.login(user[2].email, user[2].password).then(() => {
          let apiAuthorization = loginPage.cookie.find(({name}) => name === "apiAuthorization");
         return apiAuthorization.value;
     });
-    console.log('- - - apiAuthorization value retrieved - - -');
+    console.log('- - - apiAuthorization value retrieved - - -'); */
+
+    console.log('- - -Not using apiAuthorization value - - -');
 
     /* Create a scheduled message */
     await createScheduleMessage.command(
@@ -44,9 +46,7 @@ test('Schedule & Delete a message via API', async ({ page }) => {
                     scheduledSendTime: formatISO(scheduleTime)
                 }
             ]
-        },
-        apiAuthorizationValue
-        );
+        });
 
     /* Get list of messages & delete them by messageId */
     await getAllScheduledMessages.command(
@@ -55,8 +55,7 @@ test('Schedule & Delete a message via API', async ({ page }) => {
         formatISO(endTime), 
         user[2].socialProfileId, 
         'SCHEDULED', 
-        15,
-        apiAuthorizationValue).then(
+        15).then(
             response => 
             messagesToDelete = response);
     
@@ -66,7 +65,7 @@ test('Schedule & Delete a message via API', async ({ page }) => {
         console.log('Deleting scheduled messages');
         for (const messageId of messageIdsToDelete) {
             console.log(`Deleting message ID: ${messageId}`);
-            await deleteScheduledMessages.command(parseInt(user[2].memberId, 10), messageId, apiAuthorizationValue);
+            await deleteScheduledMessages.command(parseInt(user[2].memberId, 10), messageId);
         }
     } 
 

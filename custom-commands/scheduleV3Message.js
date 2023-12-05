@@ -19,11 +19,12 @@ class scheduleV3Message extends events.EventEmitter {
         super();
     }
 
-    async command(memberId, options, apiAuthorizationValue, callback) {
+    async command(memberId, options, callback) {
         const mps = new MPS(service_message_publishing);
 
         try {
-            const data = await mps.scheduleV3Message(memberId, options, "apiAuthorization=" + apiAuthorizationValue);
+            const data = await mps.scheduleV3Message(memberId, options);
+            console.log(data)
 
             if (!data || !data.messages || !data.messages[0].id) {
                 throw new Error(`Request did not return a message ID. Error code ${data.errors[0].codes}`);
