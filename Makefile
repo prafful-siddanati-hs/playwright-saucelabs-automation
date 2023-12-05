@@ -1,4 +1,4 @@
-procs = $(shell ps -ef | grep  saucectl | grep -v grep | awk '{ print $$2 ; }')
+procs = $(shell ps -ef | grep 'bin/sc' | grep -v grep | awk '{ print $$2 ; }')
 killcmd = $(if $(procs), "kill" "-9" $(procs), "echo" "no matching processes")
 
 install:
@@ -11,6 +11,19 @@ test-playwright-saucelabs:
 
 test-playwright-local:
 	npx playwright test tests/folderName/testName.js
+
+start-tunnel:
+	sc-tunnel/linux/bin/sc -c sc-tunnel/linux/tunnel-config.yml
+
+start-tunnel-local:
+	sc-tunnel/local/bin/sc -c sc-tunnel/local/local-tunnel-config.yml
+
+stop-tunnel:
+	@echo 'sauce tunnel processId: ['$(procs)'] stopped'
+	@$(killcmd)
+
+run-test:
+	npx saucectl run --select-suite "[Suite name from .sauce/config.yml]"
 
 dynamodb-setup-local-dev:
 	@vault write aws/sts/build-ci-dynamodb-test-accounts ttl=60m | \

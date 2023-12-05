@@ -2,6 +2,9 @@ apiVersion: v1alpha
 kind: playwright
 sauce:
   region: us-west-1
+  tunnel:
+    name: 'sauce-playwright-tunnel'
+    owner: '$SAUCE_USERNAME'
   concurrency: 10 # Controls how many suites are executed at the same time.
   metadata:
     tags:
