@@ -44,6 +44,7 @@ exports.PlannerPage = class PlannerPage {
 
         await this.plannerButton.click();
         await this.addMediaButton.click();
+        await expect(this.firstFreeImage).toBeVisible;
 
         const source = this.firstFreeImage;
         const destination = this.page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at 12AM` });

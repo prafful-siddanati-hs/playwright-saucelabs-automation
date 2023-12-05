@@ -35,7 +35,6 @@ exports.LoginPage = class LoginPage {
         await this.loginSubmit.click();
         await expect(this.emailAddress).not.toBeVisible;
         await this.page.waitForLoadState();
-        this.cookie = await this.page.context().cookies();
     }
 
     async login(email, password) {
@@ -46,6 +45,18 @@ exports.LoginPage = class LoginPage {
         await this.loginSubmit.click();
         await expect(this.emailAddress).not.toBeVisible;
         await this.page.waitForLoadState();
-        this.cookie = await this.page.context().cookies();
+    }
+
+    async logout() {
+        await this.page.goto('/logout');
+        await expect(this.emailAddress).toBeVisible;
+    }
+
+    // Redirect to dashboard home after login to skip any onboarding
+    async signInSkipOnboarding(member) {
+        await this.signIn(member);
+        await this.page.goto('/dashboard#home');
+
+        return this;
     }
 };
