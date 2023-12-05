@@ -1,5 +1,5 @@
 const events = require('events');
-const { service_message_publishing } = require('../globals.js')
+const { service_message_publishing } = require('../globals.js');
 const MPS = require('hsapi').messagePublishingService;
 
 /**

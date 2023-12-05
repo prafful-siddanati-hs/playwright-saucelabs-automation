@@ -1,5 +1,5 @@
 const { expect } = require('@playwright/test');
-const { use: { defaultPassword } } = require('../playwright.config.js')
+const { defaultPassword } = require('../globals.js')
 
 exports.LoginPage = class LoginPage {
     constructor(page) {

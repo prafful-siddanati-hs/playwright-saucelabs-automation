@@ -1,8 +1,7 @@
 const events = require('events');
 const Som = require('hsapi').som;
 
-const { som } = require('../globals.js')
-const { use: { defaultPassword } } = require('../playwright.config.js')
+const { som, defaultPassword } = require('../globals.js');
 
 class createUser extends events.EventEmitter{
     constructor() {
