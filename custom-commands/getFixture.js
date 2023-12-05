@@ -173,13 +173,15 @@ class getFixture extends events.EventEmitter {
             }
 
             let displayEmail = fixture.isSocialProfile ? fixture.socialProfile.email : fixture.customAccount.email;
-            let displayPassword = fixture.isSocialProfile ? fixture.socialProfile.password : fixture.customAccount.password;
+            /*let displayPassword = fixture.isSocialProfile ? fixture.socialProfile.password : fixture.customAccount.password;
 
-            //TODO:Figure out how to differentiate pipeline vs local
-            if (global.pipeline) {
-                console.log(!locked.resource !== undefined, `${displayEmail}`);
+            //TODO:Figure out how to differentiate pipeline vs local, for now print only email, update later is needed
+            if (isPipeline) {
+                console.log(!locked.resource !== undefined, `Only Email: ${displayEmail}`);
             }
-            console.log(locked.resource !== undefined, `${displayEmail} / ${displayPassword}`);
+            console.log(locked.resource !== undefined, `${displayEmail} / ${displayPassword}`); */
+
+            console.log(!locked.resource !== undefined, `${displayEmail}`);
 
         } catch (err) {
             console.assert(false, `${this.step} ${err}`);
