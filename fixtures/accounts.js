@@ -122,16 +122,6 @@ module.exports = {
 
     enterprise: [
         {
-            memberId: '13747229',
-            isSocialProfile: false,
-            isHootsuiteUser: true,
-            tearDown: false,
-            type: 'enterprise',
-            email: 'plan.create.automation+enterprise1@hootsuite.com',
-            username: 'Enterprise_user_one',
-            password: '!1Password'
-        },
-        {
             memberId: '13747240',
             isSocialProfile: false,
             isHootsuiteUser: true,
