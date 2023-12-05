@@ -46,7 +46,7 @@ class createOrg extends events.EventEmitter {
         }
     }
 
-    async command(name) {
+    async command(name, user) {
         let createdOrg = {};
         let orgName = testOrgPrefix + name;
 
@@ -56,9 +56,17 @@ class createOrg extends events.EventEmitter {
             }
             
             let u = (global.fixture)[0];
+            let hsUsers = [u];
+
+            if (typeof user === 'string') {
+                u = hsUsers;
+            } else if (hsUsers.length > 0) {
+                u = hsUsers[0];
+            } else {
+                throw new Error('You must have a pro or enterprise user before creating an organization.');
+            }
             
             let pwTestMemberId = parseInt(u.memberId);
-            console.log("payment member", pwTestMemberId)
             let orgs = new Organizations(tops_skyline);
             let organizationMembers = new OrganizationMembers(tops_skyline);
 

@@ -16,7 +16,7 @@ test('Create an Enterprise user', async ({ page }) => {
 
     await addFixture.command('pw_enterprise_test', 'enterprise', false, 240);
     await addFixture.command('test_ent','twitter', false, 300);
-    await createNewOrg.command('pw_1299')
+    await createNewOrg.command('playwright_org_' + Math.floor(Math.random() * 10000))
 
     //await page.waitForTimeout(2000);
     //TODO:Implement signInSkipOnboarding() similar to Nightwatch

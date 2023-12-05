@@ -137,9 +137,6 @@ class getFixture extends events.EventEmitter {
                 fixture.customAccount = {};
 
                 Object.assign(fixture.customAccount, locked.resource);
-                if(!locked.resource.email) {
-                    fixture.customAccount.email = locked.resource.id;
-                }
 
                 if (fixture.type === 'enterprise') {
                     let organizationMembers = new OrganizationMembers(tops_skyline);
