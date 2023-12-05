@@ -11,7 +11,7 @@ module.exports = {
     launch_url_cms: 'https://www-staging.hootsuite.com',
     login_url: 'https://staging.hootsuite.com/login?lang=en',
     defaultPassword: 'Passw0rd',
-    testOrgPrefix: 'PW_TEST_ORG_',
+    testOrgPrefix: 'TEMP_ORG_',
     isOrgSafeToDelete: function (org, memberId, testOrgPrefix) {
         const DO_NOT_DELETE_STAGING_ORG = [1866699];
         
