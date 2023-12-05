@@ -4,7 +4,7 @@ const SocialProfiles = require('hsapi').som;
 const OrganizationMembers = require('hsapi').organizationMembersService;
 const _ = require('underscore');
 
-const { som_bridge, tops_skyline } = require('../globals.js')
+const { som_bridge, tops_skyline } = require('../globals.js');
 
 class getFixture extends events.EventEmitter {
     constructor() {

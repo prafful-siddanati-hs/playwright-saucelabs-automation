@@ -1,7 +1,7 @@
 const events = require('events');
 const Som = require('hsapi').som;
 
-const { som, defaultPassword } = require('../globals.js')
+const { som, defaultPassword } = require('../globals.js');
 
 class createUser extends events.EventEmitter{
     constructor() {
