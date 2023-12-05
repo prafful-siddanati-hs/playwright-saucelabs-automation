@@ -1,5 +1,4 @@
 // globals.js
-const testOrgPrefix = 'PW_TEST_ORG_';
 
 module.exports = {
     som: 'https://som-staging.hootops.com:504',
@@ -13,7 +12,7 @@ module.exports = {
     login_url: 'https://staging.hootsuite.com/login?lang=en',
     defaultPassword: 'Passw0rd',
     testOrgPrefix: 'PW_TEST_ORG_',
-    isOrgSafeToDelete: function (org, memberId) {
+    isOrgSafeToDelete: function (org, memberId, testOrgPrefix) {
         const DO_NOT_DELETE_STAGING_ORG = [1866699];
         
         let orgInWhiteList = DO_NOT_DELETE_STAGING_ORG.includes(org.id);

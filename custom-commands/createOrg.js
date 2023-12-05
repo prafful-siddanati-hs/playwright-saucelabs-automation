@@ -83,7 +83,7 @@ class createOrg extends events.EventEmitter {
                 console.log(`Member is already in ${existingOrgData.length} orgs. Removing orgs before creating new one`);
     
                 let deletedOrgs = existingOrgData.map((org) => {
-                    if (isOrgSafeToDelete(org, pwTestMemberId)) {
+                    if (isOrgSafeToDelete(org, pwTestMemberId, testOrgPrefix)) {
                         console.log(`Deleting Org ${org.name}: / Org Id: ${org.id} / Payment Member Id: ${org.paymentMemberId}`);
                         return orgs.deleteOrganization(org.id, pwTestMemberId);
                     } else {
@@ -95,21 +95,18 @@ class createOrg extends events.EventEmitter {
                 let deleted = await Promise.all(deletedOrgs);
                 this.checkResponse(deleted, 'Hootsuite organizations deleted.');
             }
-
+            
             this.step = 'Creating new Organization';
             try {
                 createdOrg = await orgs.createOrganization(orgName, pwTestMemberId);
-                console.log(`Org Name: ${orgName} created successfully. / Org Id: ${createdOrg.id} / Payment Member Id: ${createdOrg.paymentMemberId}`);
+            } catch (orgCreationError) {
+                console.log(false, JSON.stringify(orgCreationError))
+            } finally {
+                this.checkResponse(createdOrg, `Org Name: ${orgName} created successfully. / Org Id: ${createdOrg.id} / Payment Member Id: ${createdOrg.paymentMemberId}`);
 
                 //Create an array to store team details
                 createdOrg.teams = [];
                 createdOrg.pwTestMemberId = pwTestMemberId;
-            } catch (orgError) {
-                console.log(orgError)
-            }
-
-            if (typeof callback === 'function') {
-                callback.call(this, member);
             }
         } catch (err) {
             console.assert(err, 'Organization created successfully.')
