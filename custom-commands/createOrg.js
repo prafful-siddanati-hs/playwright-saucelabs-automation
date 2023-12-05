@@ -109,7 +109,7 @@ class createOrg extends events.EventEmitter {
                 createdOrg.pwTestMemberId = pwTestMemberId;
             }
         } catch (err) {
-            console.assert(err, 'Organization created successfully.')
+            console.assert(err, 'Error while creating Organization.')
         } finally {
             //Update global storage with organization array so that tearDown() can access it.
             if (!global.organization) {
