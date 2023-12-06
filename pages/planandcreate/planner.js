@@ -12,7 +12,7 @@ exports.PlannerPage = class PlannerPage {
         this.deletePostButton = page.getByRole('button', { name: 'Delete post' });
         this.addMediaButton = page.getByTestId('ContentButton');
         this.firstFreeImage = page.locator('.-mediaRow img').first();
-        this.draftCard = page.getByText('No account')
+        this.draftCard = page.getByText('No account');
         this.closeSaveDraftPopup = page.locator('#DraftSavedPopover [aria-label="Close Draft saved"]');
     }
 
