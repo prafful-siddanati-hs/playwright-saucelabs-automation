@@ -50,16 +50,17 @@ exports.PlannerPage = class PlannerPage {
 
         await this.plannerButton.click();
         await this.addMediaButton.click();
+        await this.page.waitForTimeout(4000);
         await expect(this.firstFreeImage).toBeVisible;
 
         const source = this.firstFreeImage;
         const destination = this.page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at 12AM` });
-        await this.page.waitForTimeout(2000);
+        await this.page.waitForTimeout(1000);
 
         await source.dragTo(destination);
 
-        await expect(this.closeSaveDraftPopup).toBeVisible;
-        await this.closeSaveDraftPopup.click();
+        await this.sidePaneCloseButton.click();
+
         await this.draftCard.click();
 
         await this.deleteButton.click();
