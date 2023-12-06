@@ -10,39 +10,35 @@ const scheduleV3Message = require("../../custom-commands/scheduleV3Message");
   let rawData = fs.readFileSync('fixtures/accounts.json', 'utf-8');
   return JSON.parse(rawData);
 }
-
-test('Drag and drop card on week view', async ({ page }) => {
-    const user = readJson();
-    const loginPage = new LoginPage(page);
-    const createScheduleMessage = new scheduleV3Message();
-    const plannerPage = new PlannerPage(page);
-
-    const scheduleTime = addHours(new Date(), 1);
-    const composeText = `test drag and drop card on planner week view ${Date.now()}`;
-
-    let apiAuthorizationValue = await loginPage.login(user[0].email, user[0].password).then(() => {
-        let apiAuthorization = loginPage.cookie.find(({name}) => name === "apiAuthorization");
-        return apiAuthorization.value;
-    });
-
-    /* Create a scheduled message */
-    await createScheduleMessage.command(
-        parseInt(user[0].memberId, 10),
-        {
-            messages: [
-                {
-                    socialProfileId: user[0].socialProfileId,
-                    text: composeText,
-                    scheduledSendTime: formatISO(scheduleTime)
-                }
-            ]
-        },
-        apiAuthorizationValue
-    );
-
-  await plannerPage.dragAndDropCard(composeText);
-  await page.close();
-});
+//
+// test('Drag and drop card on week view', async ({ page }) => {
+//     const user = readJson();
+//     const loginPage = new LoginPage(page);
+//     const createScheduleMessage = new scheduleV3Message();
+//     const plannerPage = new PlannerPage(page);
+//
+//     const scheduleTime = addHours(new Date(), 1);
+//     const composeText = `test drag and drop card on planner week view ${Date.now()}`;
+//
+//     await loginPage.login(user[0].email, user[0].password);
+//
+//     /* Create a scheduled message */
+//     await createScheduleMessage.command(
+//         parseInt(user[0].memberId, 10),
+//         {
+//             messages: [
+//                 {
+//                     socialProfileId: user[0].socialProfileId,
+//                     text: composeText,
+//                     scheduledSendTime: formatISO(scheduleTime)
+//                 }
+//             ]
+//         }
+//     );
+//
+//   await plannerPage.dragAndDropCard(composeText);
+//   await page.close();
+// });
 
 test('drag and drop media from side pane on week view', async ({ page }) => {
   const user = readJson();

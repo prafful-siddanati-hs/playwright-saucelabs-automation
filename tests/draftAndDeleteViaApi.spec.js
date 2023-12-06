@@ -12,7 +12,6 @@ function readJson(fileName) {
 }
 
 test('Create & delete a draft message via API', async ({ page }) => {
-    const loginPage = new LoginPage(page);
     const createDraftMessage = new draftMessage();
     const deleteDraftMessages = new deleteDraftById();
     const getAllDraftMessages = new getDrafts();
@@ -24,11 +23,6 @@ test('Create & delete a draft message via API', async ({ page }) => {
     const draftText = `This is draft text via API in PlayWright ${scheduleTime}`;
 
     let draftsToDelete = [];
-
-    let apiAuthorizationValue = await loginPage.login(user[0].email, user[0].password).then(() => {
-         let apiAuthorization = loginPage.cookie.find(({name}) => name === "apiAuthorization");
-        return apiAuthorization.value;
-    });
 
     /* Create a draft message */
     await createDraftMessage.command(
@@ -48,14 +42,12 @@ test('Create & delete a draft message via API', async ({ page }) => {
                     }
                 ]
             }
-        },
-        apiAuthorizationValue
+        }
         );
 
     /* Get list of messages & delete them by messageId */
     await getAllDraftMessages.command(
-        parseInt(user[0].memberId, 10),
-        apiAuthorizationValue).then(
+        parseInt(user[0].memberId, 10)).then(
         response =>
             draftsToDelete = response);
 
@@ -64,7 +56,7 @@ test('Create & delete a draft message via API', async ({ page }) => {
     if (draftIdsToDelete.length !== 0) {
         for (const draftId of draftIdsToDelete) {
             console.log(`Deleting message ID: ${draftId.toString()}`);
-            await deleteDraftMessages.command(parseInt(user[0].memberId, 10), draftId.toString(), apiAuthorizationValue);
+            await deleteDraftMessages.command(parseInt(user[0].memberId, 10), draftId.toString());
         }
     }
 

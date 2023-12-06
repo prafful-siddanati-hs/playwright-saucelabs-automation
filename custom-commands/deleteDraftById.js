@@ -7,7 +7,6 @@ const DRAFT = require('hsapi').draftsService;
  *
  * @param {number}      memberId              The ID of the member
  * @param {string}      draftId               The ID of the draft message
- * @param {string}      apiAuthorizationValue API auth token of the member
  * @param {object}      callback  Optional    callback with message data as argument
  *
  * @return {function} this      Returning this allows commands to be chained
@@ -17,11 +16,11 @@ class deleteDraftById extends events.EventEmitter {
         super ();
     }
 
-    async command(memberId, draftId, apiAuthorizationValue) {
+    async command(memberId, draftId) {
         let draft = new DRAFT(service_drafts);
 
         try {
-            const data = await draft.deleteDraftById(memberId, draftId,"apiAuthorization=" + apiAuthorizationValue);
+            const data = await draft.deleteDraftById(memberId, draftId);
 
             if (!data.id) {
                 throw new Error(`Request did not delete draft message. Error code ${data.body.details[0].value}`);
