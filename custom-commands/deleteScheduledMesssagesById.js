@@ -7,7 +7,6 @@ const MPS = require('hsapi').messagePublishingService;
  *
  * @param {number}      memberId            The ID of the member.
  * @param {number}      messageId           The ID of the scheduled message.
- * @param {string}      apiAuthorizationValue API auth token of the member
  * @param {object}      callback  Optional callback with message data as argument
  *
  * @return {function} this      Returning this allows commands to be chained

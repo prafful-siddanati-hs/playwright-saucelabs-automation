@@ -7,7 +7,6 @@ const DRAFT = require('hsapi').draftsService;
  * operations in tests that require draft messages.
  *
  * @param {number}    member    ID of the member creating the draft message
- * @param {string}    apiAuthorizationValue API auth token of the member
  * @param {object}    options   Draft options (text, social profiles, etc.)
  * @param {object}    callback  Optional callback with message data as argument
  *
@@ -19,12 +18,11 @@ class draftMessage extends events.EventEmitter {
         super ();
     }
 
-    async command(memberId, options, apiAuthorizationValue) {
+    async command(memberId, options) {
         let draft = new DRAFT(service_drafts);
 
         try {
-            const data = await draft.draftMessage(memberId, options,"apiAuthorization=" + apiAuthorizationValue);
-
+            const data = await draft.draftMessage(memberId, options);
             if (!data || !data.draft || !data.draft.id) {
                 throw new Error(`Request did not return draft messages. Error code ${data.errors[0].codes}`);
             }

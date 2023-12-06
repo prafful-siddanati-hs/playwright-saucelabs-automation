@@ -13,22 +13,27 @@ exports.PlannerPage = class PlannerPage {
         this.addMediaButton = page.getByTestId('ContentButton');
         this.firstFreeImage = page.locator('.-mediaRow img').first();
         this.draftCard = page.getByText('No account');
+        this.closeSaveDraftPopup = page.locator('#DraftSavedPopover [aria-label="Close Draft saved"]');
     }
 
     async dragAndDropCard(message) {
         const nextDayDate = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'eeee, d MMMM');
         const nextDayTime = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'ha');
-
         await this.plannerButton.click();
+
+        await expect(this.page.getByText(message)).toBeVisible;
 
         const source = this.page.getByText(message);
         const destination = this.page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at ${nextDayTime}` });
+        await this.page.waitForTimeout(1000);
 
         await source.hover();
         await this.page.mouse.down();
 
         await destination.hover();
         await destination.hover();
+        await destination.hover();
+
         await this.page.mouse.up();
         await this.page.waitForTimeout(1000);
 
@@ -37,6 +42,7 @@ exports.PlannerPage = class PlannerPage {
         await this.deleteButton.click();
         await this.deletePostButton.click();
         await this.page.waitForTimeout(1000);
+        await expect(this.page.getByText(message)).not.toBeVisible;
     }
 
     async dragAndDropMedia() {
@@ -44,6 +50,7 @@ exports.PlannerPage = class PlannerPage {
 
         await this.plannerButton.click();
         await this.addMediaButton.click();
+        await this.page.waitForTimeout(4000);
         await expect(this.firstFreeImage).toBeVisible;
 
         const source = this.firstFreeImage;
@@ -52,7 +59,7 @@ exports.PlannerPage = class PlannerPage {
 
         await source.dragTo(destination);
 
-        await this.page.waitForTimeout(1000);
+        await this.sidePaneCloseButton.click();
 
         await this.draftCard.click();
 

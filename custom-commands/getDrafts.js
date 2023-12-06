@@ -6,7 +6,6 @@ const DRAFT = require('hsapi').draftsService;
  * Get all draft messages directly through DRAFT. Useful for avoiding UI
  *
  * @param {number}      memberId            The ID of the member
- * @param {string}      apiAuthorizationValue API auth token of the member
  * @param {object}      callback  Optional callback with draft data as argument
  * @return {function} this      Returning this allows commands to be chained
  */
@@ -16,12 +15,12 @@ class getDrafts extends events.EventEmitter {
         super ();
     }
 
-    async command(memberId, apiAuthorizationValue) {
+    async command(memberId) {
         let draft = new DRAFT(service_drafts);
         let drafts = [];
 
         try {
-            const data = await draft.getDrafts(memberId, "apiAuthorization=" + apiAuthorizationValue);
+            const data = await draft.getDrafts(memberId);
 
             if (!data) {
                 throw new Error(`Request did not return draft messages. Error code ${data.errors[0].codes}`);
