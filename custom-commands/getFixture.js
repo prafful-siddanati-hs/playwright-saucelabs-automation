@@ -11,6 +11,11 @@ class getFixture extends events.EventEmitter {
         super();
         this.step = '';
     }
+
+    static getEnv (key, defaultValue) {
+        let v = process.env[key] || '';
+        return v !== '' ? v : defaultValue;
+      }
     
     hasResponseErrors(res) {
         if (typeof res !== 'object') {
@@ -57,10 +62,12 @@ class getFixture extends events.EventEmitter {
             let accountsFile = 'accounts.js';
             let dynamodb = new DynamoDB('playwright-saucelabs', AWSprofile, dynamoDB);
             let socialProfiles = new SocialProfiles(som_bridge);
-            let accounts = require(`./../fixtures/${accountsFile}`)[type];
+            let accountData = require(`../fixtures/${accountsFile}`);
+            let accounts = accountData[type];
+            
 
             if (!accounts) {
-                let keys = _.allKeys(accounts);
+                let keys = _.allKeys(accountData);
                 throw new Error(`${type} not available. Supported values are ${keys.toString()}.`);
             }
 
