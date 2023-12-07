@@ -11,7 +11,7 @@ exports.PlannerPage = class PlannerPage {
         this.sidePaneCloseButton = page.getByTestId('CloseButton');
         this.deletePostButton = page.getByRole('button', { name: 'Delete post' });
         this.addMediaButton = page.getByTestId('ContentButton');
-        this.firstFreeImage = page.locator('.-mediaRow img').first();
+        this.firstFreeImage = page.locator('.-mediaRow img[draggable="true"]').first();
         this.draftCard = page.getByText('No account');
         this.closeSaveDraftPopup = page.locator('#DraftSavedPopover [aria-label="Close Draft saved"]');
     }
@@ -47,20 +47,23 @@ exports.PlannerPage = class PlannerPage {
 
     async dragAndDropMedia() {
         const nextDayDate = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'eeee, d MMMM');
-
         await this.plannerButton.click();
+        await this.page.waitForLoadState();
         await this.addMediaButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
         await this.page.waitForTimeout(4000);
+
         await expect(this.firstFreeImage).toBeVisible;
 
         const source = this.firstFreeImage;
         const destination = this.page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at 12AM` });
-        await this.page.waitForTimeout(1000);
 
         await source.dragTo(destination);
 
-        await this.sidePaneCloseButton.click();
+        await this.page.waitForTimeout(2000);
 
+        await this.sidePaneCloseButton.click();
+        await expect(this.draftCard).toBeVisible;
         await this.draftCard.click();
 
         await this.deleteButton.click();
