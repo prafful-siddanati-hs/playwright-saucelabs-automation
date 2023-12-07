@@ -16,7 +16,7 @@ exports.LoginPage = class LoginPage {
 
     async signIn(member) {
         let user;
-        let hsUsers = (global.member)[0];
+        let hsUsers = (global.member)[0] ? (global.member)[0] : (global.fixture)[0];
 
         if (typeof member === 'string') {
             user = hsUsers;

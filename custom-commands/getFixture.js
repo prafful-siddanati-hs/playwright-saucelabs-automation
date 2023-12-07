@@ -57,10 +57,11 @@ class getFixture extends events.EventEmitter {
             let accountsFile = 'accounts.js';
             let dynamodb = new DynamoDB('playwright-saucelabs', AWSprofile, dynamoDB);
             let socialProfiles = new SocialProfiles(som_bridge);
-            let accounts = require(`./../fixtures/${accountsFile}`)[type];
+            let accountData = require(`./../fixtures/${accountsFile}`);
+            let accounts = accountData[type];
 
             if (!accounts) {
-                let keys = _.allKeys(accounts);
+                let keys = _.allKeys(accountData);
                 throw new Error(`${type} not available. Supported values are ${keys.toString()}.`);
             }
 
@@ -186,6 +187,7 @@ class getFixture extends events.EventEmitter {
         } catch (err) {
             console.assert(false, `${this.step} ${err}`);
         } finally {
+            console.log(global.fixture)
             //Update global storage with fixture array so that functions like tearDown() can access it.
             if (!global.fixture) {
                 global.fixture = []
