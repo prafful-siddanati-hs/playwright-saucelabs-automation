@@ -60,8 +60,6 @@ module.exports = defineConfig({
         saucelabs: {
           username: getEnv('SAUCE_USERNAME', ''),
           access_key: getEnv('SAUCE_ACCESS_KEY', ''),
-          aws_access_key: getEnv('AWS_ACCESS_KEY_ID', ''),
-          aws_session_token: getEnv('AWS_SESSION_TOKEN', ''),
           launchOptions: {
             args: [
               '--headless',

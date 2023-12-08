@@ -11,11 +11,6 @@ class getFixture extends events.EventEmitter {
         super();
         this.step = '';
     }
-
-    static getEnv (key, defaultValue) {
-        let v = process.env[key] || '';
-        return v !== '' ? v : defaultValue;
-      }
     
     hasResponseErrors(res) {
         if (typeof res !== 'object') {
