@@ -109,6 +109,7 @@ class getFixture extends events.EventEmitter {
 
                 if (addSocial) {
                     let member = (global.member)[0];
+                    console.log("member:: ", member)
 
                     if (!member) {
                         throw new Error('No Hootsuite account. Call createUser before add social network.');
@@ -187,7 +188,7 @@ class getFixture extends events.EventEmitter {
         } catch (err) {
             console.assert(false, `${this.step} ${err}`);
         } finally {
-            console.log(global.fixture)
+            console.log("pushing data to global.fixture", fixture)
             //Update global storage with fixture array so that functions like tearDown() can access it.
             if (!global.fixture) {
                 global.fixture = []

@@ -7,7 +7,7 @@ const { LoginPage } = require("../pages/login");
 test.afterEach(async ({ page }) => {
     const cleanUp = new tearDown();
 
-    //await cleanUp.command();
+    await cleanUp.command();
     await page.close();
 });
 
@@ -20,8 +20,8 @@ test('Create an Enterprise user', async ({ page }) => {
     await addFixture.command('test_ent','twitter', false, 300);
     await createNewOrg.command('playwright_org_' + Math.floor(Math.random() * 100000))
 
-    await page.waitForTimeout(2000);
-    await loginPage.signInSkipOnboarding('pw_enterprise_test');
+    //await page.waitForTimeout(2000);
+    //await loginPage.signInSkipOnboarding('pw_enterprise_test');
 
-    await page.waitForTimeout(20000);
+    await page.waitForTimeout(2000);
 });
