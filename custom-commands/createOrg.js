@@ -111,7 +111,6 @@ class createOrg extends events.EventEmitter {
         } catch (err) {
             console.assert(err, 'Error while creating Organization.')
         } finally {
-            //console.log("Push to global.organization:: ", createdOrg)
             //Update global storage with organization array so that tearDown() can access it.
             if (!global.organization) {
                 global.organization = []
