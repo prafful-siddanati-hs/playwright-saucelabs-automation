@@ -17,7 +17,7 @@ test('Try resource locking', async ({page}) => {
     const loginPage = new LoginPage(page);
 
     await createNewUser.command('pw_test', 'professional');
-    //await addFixture.command('test1','twitter', true, 180);
+    await addFixture.command('test1','twitter', true, 180);
     await addFixture.command('test2','twitter', true, 180);
 
     await page.waitForTimeout(2000);

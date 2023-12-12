@@ -85,7 +85,8 @@ class getFixture extends events.EventEmitter {
                 destroy: locked.destroy
             };
 
-            if ((fixture.isSocialProfile === undefined || fixture.isSocialProfile === true) && fixture.tearDown !== false ) {
+            if ((fixture.isSocialProfile === undefined || fixture.isSocialProfile === true) && (fixture.tearDown !== false)) {
+                // If tearDown is false we don't want to cleanup the test accounts.
                 fixture.isSocialProfile = true;
 
                 fixture.socialProfile = {
@@ -108,8 +109,7 @@ class getFixture extends events.EventEmitter {
                 this.checkResponse(isClean, 'Social profile has been cleaned.');
 
                 if (addSocial) {
-                    let member = (global.member)[0];
-                    console.log("member:: ", member)
+                    let member = (global.member && global.member[0]) ? global.member[0] : (global.fixture && global.fixture[0]);
 
                     if (!member) {
                         throw new Error('No Hootsuite account. Call createUser before add social network.');
@@ -188,7 +188,6 @@ class getFixture extends events.EventEmitter {
         } catch (err) {
             console.assert(false, `${this.step} ${err}`);
         } finally {
-            console.log("pushing data to global.fixture", fixture)
             //Update global storage with fixture array so that functions like tearDown() can access it.
             if (!global.fixture) {
                 global.fixture = []

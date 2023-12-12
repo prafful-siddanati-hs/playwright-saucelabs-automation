@@ -1,11 +1,12 @@
 const events = require('events');
 const MemberService = require('hsapi').memberService;
 const SocialProfiles = require('hsapi').som;
-const TeamMembers = require('hsapi').teamMembersService;
 const Teams = require('hsapi').teamsService;
+const TeamMembers = require('hsapi').teamMembersService;
+const Organization = require('hsapi').organizationsService;
 const OrganizationMembers = require('hsapi').organizationMembersService;
 
-const { som_bridge, broker_member_service, tops_skyline, testOrgPrefix } = require('../globals.js');
+const { som_bridge, broker_member_service, tops_skyline, testOrgPrefix, isOrgSafeToDelete } = require('../globals.js');
 const { use: { longTimeout } } = require('../playwright.config.js');
 
 class tearDown extends events.EventEmitter {
@@ -51,18 +52,24 @@ class tearDown extends events.EventEmitter {
     }, parseInt(longTimeout));
 
     async command() {
-        console.log("Inside teardown()")
+        
         try {
-            let socialProfiles = new SocialProfiles(som_bridge);
             let memberService = new MemberService(broker_member_service);
-            let teamMembers = new TeamMembers(tops_skyline);
+            let socialProfiles = new SocialProfiles(som_bridge);
             let teams = new Teams(tops_skyline);
+            let teamMembers = new TeamMembers(tops_skyline);
+            let organization = new Organization(tops_skyline);
             let organizationMembers = new OrganizationMembers(tops_skyline);
 
-            let users = global.member;
-            console.log(users)
-            let fixtures = global.fixture;
-            let orgs = [global.organization];
+            let users = (global.member && global.member[0]) ? global.member[0] : (global.fixture && global.fixture[0]);
+            if (users.customAccount) {
+                users = [users.customAccount];
+            } else {
+                users = [users];
+            }
+            //Set default values for fixtures & orgs
+            let fixtures = global.fixture ? global.fixture : [];
+            let orgs = global.organization ? global.organization :  [] ;
 
             function requiresTearDown (user) {
                 return user.tearDown === true;
@@ -131,13 +138,11 @@ class tearDown extends events.EventEmitter {
             let tms = [];
             let ots = [];
             let oms = [];
-            console.log("Content of orgs:", orgs)
-            console.log(typeof(orgs))
             orgs.forEach((o) => {
                 o.teams.forEach((t) => {
                     ots.push(t);
                     t.members.forEach((m) => {
-                        // We don't want to delete the payment member of the organization.
+                        // Do not delete the payment member of the organization.
                         if (m.memberId !== o.paymentMemberId) {
                             oms.push({
                                 org: o,
@@ -151,7 +156,6 @@ class tearDown extends events.EventEmitter {
                     });
                 });
             });
-            console.log("pushed orgs:", orgs)
 
             this.step = 'Removing Team Members';
             let removedTeamMembers = tms.map((tm) => {
@@ -190,7 +194,7 @@ class tearDown extends events.EventEmitter {
 
             this.step = 'Deleting Organizations';
             let deletedOrgs = orgs.map((org) => {
-                if (isOrgSafeToProceedDeletion(org, org.pwTestMemberId, testOrgPrefix)) {
+                if (isOrgSafeToDelete(org, org.pwTestMemberId, testOrgPrefix)) {
                     console.log(`Deleting Org ${org.name}: / Org Id: ${org.id} / Payment Member Id: ${org.paymentMemberId}`);
                     return organization.deleteOrganization(org.id, org.pwTestMemberId);
                 }else {
@@ -209,7 +213,6 @@ class tearDown extends events.EventEmitter {
             clearTimeout(this.tearDownTimeout);
             this.emit('Complete')
         }
-
     }
 };
 
