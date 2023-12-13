@@ -46,3 +46,4 @@ reports
 
 # NPM lockfile
 package-lock.json
+.aws-session.saucelabs.ini

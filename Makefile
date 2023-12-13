@@ -25,6 +25,13 @@ stop-tunnel:
 run-test:
 	npx saucectl run --select-suite "[Suite name from .sauce/config.yml]"
 
+dynamodb-setup-for-saucelabs:
+	@profile="build-ci-aws-creds" \
+	awsDefaultCredFile="$$HOME/.aws/credentials" && \
+	awsLocalCredFile=".aws-session.local.ini" && \
+	grep -A 4 "\\[$$profile\\]" "$$awsDefaultCredFile" > "$$awsLocalCredFile"
+
+
 dynamodb-setup-local-dev:
 	@vault write aws/sts/build-ci-dynamodb-test-accounts ttl=60m | \
 	tee /dev/stderr | \
