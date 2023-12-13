@@ -22,13 +22,13 @@ stop-tunnel:
 	@echo 'sauce tunnel processId: ['$(procs)'] stopped'
 	@$(killcmd)
 
-run-test:
+run-test: dynamodb-setup-for-saucelabs
 	npx saucectl run --select-suite "[Suite name from .sauce/config.yml]"
 
 dynamodb-setup-for-saucelabs:
 	@profile="build-ci-aws-creds" \
 	awsDefaultCredFile="$$HOME/.aws/credentials" && \
-	awsLocalCredFile=".aws-session.local.ini" && \
+	awsLocalCredFile=".aws-session.saucelabs.ini" && \
 	grep -A 4 "\\[$$profile\\]" "$$awsDefaultCredFile" > "$$awsLocalCredFile"
 
 
