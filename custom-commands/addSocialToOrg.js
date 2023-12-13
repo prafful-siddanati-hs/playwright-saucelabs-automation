@@ -1,7 +1,7 @@
 const events = require('events');
 const SocialProfiles = require('hsapi').som;
 
-const { som_bridge, testOrgPrefix, hasResponseErrors, getSocialProfileObject  } = require('../globals.js');
+const { som_bridge, testOrgPrefix, hasResponseErrors, getObjectByName  } = require('../globals.js');
 
 /**
  * @param  {string}    socialProfile   Social Network name, eg. acc1 in .getFixture('acc1', 'twitter', true))
@@ -26,7 +26,7 @@ class addSocialToOrg extends events.EventEmitter {
                 throw new Error('Please specify a social profile to add to the organization.');
             }
 
-            s = getSocialProfileObject(global.fixture, socialProfile);
+            s = getObjectByName(global.fixture, socialProfile);
 
             if (!s.isSocialProfile) {
                 throw new Error('Fixture specified is not a Social Profile.');
@@ -37,7 +37,8 @@ class addSocialToOrg extends events.EventEmitter {
             }
 
             if (typeof organization === 'string') {
-                o = testOrgPrefix + organization;
+                let orgName = testOrgPrefix + organization;
+                o = getObjectByName(global.organization, orgName);
             } else {
                 o = global.organization[0];
             }

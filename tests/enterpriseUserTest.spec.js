@@ -13,6 +13,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Create an Enterprise user', async ({ page }) => {
+    let orgName = 'playwright_org_' + Math.floor(Math.random() * 10000);
     const addFixture = new getFixture();
     const createNewOrg = new createOrg();
     const addSocialNetwork = new addSocialToOrg();
@@ -21,7 +22,7 @@ test('Create an Enterprise user', async ({ page }) => {
     await addFixture.command('pw_enterprise_test', 'enterprise', false, 240);
     await addFixture.command('test_x_acc1','twitter', false, 300);
     await addFixture.command('test_x_acc2','twitter',false,240);
-    await createNewOrg.command('playwright_org_' + Math.floor(Math.random() * 10000));
+    await createNewOrg.command(orgName);
     await addSocialNetwork.command('test_x_acc1');
     await addSocialNetwork.command('test_x_acc2');
 

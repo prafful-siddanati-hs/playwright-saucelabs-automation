@@ -35,12 +35,17 @@ module.exports = {
         // Check for errors in the body and non-200 status codes.
         return ((res.body && res.body.errors) || (res.statusCode && res.statusCode !== 200));
     },
-    //Returns socialProfile object from global.fixture [] pushed at the end of getFixture()
-    getSocialProfileObject: function(fixtureData, name) {
-        
-        for (let i = 0; i < fixtureData.length; i++) {
-            if (fixtureData[i].name === name && fixtureData[i].isSocialProfile !== false) {
-                return fixtureData[i];
+    /**
+         * Function to get object from Playwright's global storage
+         *
+         * @param {string}     globalData  Data pushed to Playwright's global storage. Ex: global.fixture, global.organization etc
+         * @param {string}     name        Name of the socialProfile/Org you want to get. Example: 'acc1','playwright_org_'
+         * @return {object}    storage     Returns socialProfile/organization object from global storage pushed at the end of getFixture()/createOrg()
+    */
+    getObjectByName: function(globalData, name) {
+        for (let i = 0; i < globalData.length; i++) {
+            if (globalData[i].name === name) {
+                return globalData[i];
             }
         }
         return `No social profile object found for ${name}`;
