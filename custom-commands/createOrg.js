@@ -4,6 +4,17 @@ const OrganizationMembers = require('hsapi').organizationMembersService;
 
 const { tops_skyline, testOrgPrefix, isOrgSafeToDelete, hasResponseErrors } = require('../globals.js');
 
+/**
+ * Creates a new organization for a given user.
+ *
+ * NOTE: This will delete all organizations that the user is a member of before creating a new one.
+ *
+ * @param {string}    name      Organization's name
+ * @param {string}    user      Hootsuite member (used when not created through hsapi)
+ *
+ * @return this      Returning this allows commands to be chained
+ */
+
 class createOrg extends events.EventEmitter {
     constructor() {
         super();

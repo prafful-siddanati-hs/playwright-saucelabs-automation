@@ -132,6 +132,7 @@ class tearDown extends events.EventEmitter {
             }
 
             this.step = 'Check for teams and orgs';
+            // Build array of teams, organizations, and members that need to be cleaned up.
             let tms = [];
             let ots = [];
             let oms = [];
@@ -208,6 +209,7 @@ class tearDown extends events.EventEmitter {
             console.log('\nERROR', this.step, ':', err, '\n');
         } finally {
             clearTimeout(this.tearDownTimeout);
+            //Clean up global storage
             global.member = [];
             global.fixture = [];
             global.organization = [];

@@ -1,7 +1,7 @@
 const events = require('events');
 const SocialProfiles = require('hsapi').som;
 
-const { som_bridge, hasResponseErrors } = require('../globals.js');
+const { som_bridge, testOrgPrefix, hasResponseErrors, getSocialProfileObject  } = require('../globals.js');
 
 /**
  * @param  {string}    socialProfile   Social Network name, eg. acc1 in .getFixture('acc1', 'twitter', true))
@@ -19,33 +19,34 @@ class addSocialToOrg extends events.EventEmitter {
     async command(socialProfile, organization) {
         let s;
         let o;
+        let response = [];
 
         try {
             if (!socialProfile) {
                 throw new Error('Please specify a social profile to add to the organization.');
             }
 
-            s = global.fixture ? global.fixture : [];
+            s = getSocialProfileObject(global.fixture, socialProfile);
 
             if (!s.isSocialProfile) {
                 throw new Error('Fixture specified is not a Social Profile.');
             }
 
-            if (!organization && global.organization.size() === 0){
+            if ((!organization) && (global.organization.length === 0)){
                 throw new Error('No organization found. Please create one using createOrg().');
             }
 
             if (typeof organization === 'string') {
-                o = global.organization.name;
+                o = testOrgPrefix + organization;
             } else {
                 o = global.organization[0];
             }
-
+        
             let socialProfiles = new SocialProfiles(som_bridge);
 
-            console.log('Adding social profile to organization.');
+            console.log('Adding social profile to organization:');
 
-            socialProfiles.addSocialProfile(
+            response = await socialProfiles.addSocialProfile(
                 s.socialProfile.userId,
                 s.socialProfile.username,
                 s.socialProfile.type,
@@ -63,7 +64,7 @@ class addSocialToOrg extends events.EventEmitter {
                 s.socialProfile.socialProfileId = response.socialProfileId;
                 s.socialProfile.isSecurePost = response.isSecurePost;
                 s.socialProfile.isReauthRequired = response.isReauthRequired;
-                console.log(true, `Social profile ${s.socialProfile.username} has been added to organization ${o.id}`);
+                console.log(true, `Social profile ${s.socialProfile.username} has been added to ${o.name} with Org Id: ${o.id}`);
             } else {
                 console.log(false, JSON.stringify(response));
             }
@@ -72,6 +73,5 @@ class addSocialToOrg extends events.EventEmitter {
         return this;
     }
 };
-
 
 module.exports = addSocialToOrg;

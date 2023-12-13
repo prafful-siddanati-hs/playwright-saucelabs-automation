@@ -35,4 +35,14 @@ module.exports = {
         // Check for errors in the body and non-200 status codes.
         return ((res.body && res.body.errors) || (res.statusCode && res.statusCode !== 200));
     },
+    //Returns socialProfile object from global.fixture [] pushed at the end of getFixture()
+    getSocialProfileObject: function(fixtureData, name) {
+        
+        for (let i = 0; i < fixtureData.length; i++) {
+            if (fixtureData[i].name === name && fixtureData[i].isSocialProfile !== false) {
+                return fixtureData[i];
+            }
+        }
+        return `No social profile object found for ${name}`;
+    }
 };
