@@ -25,7 +25,7 @@ test('Create an Enterprise user', async ({ page }) => {
     await addSocialNetwork.command('test_x_acc1');
     await addSocialNetwork.command('test_x_acc2');
 
-//    await page.waitForTimeout(5000);
+    //await page.waitForTimeout(2000);
     //TODO:Implement signInSkipOnboarding() similar to Nightwatch
 
     await page.waitForTimeout(2000);
