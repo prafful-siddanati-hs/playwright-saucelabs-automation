@@ -15,6 +15,9 @@ playwright:
   configFile: playwright.config.js # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/yaml/#configfile for a list of supported configuration files.
 # Controls what files are available in the context of a test run (unless explicitly excluded by .sauceignore).
 rootDir: ./
+env:
+  AWS_SDK_LOAD_CONFIG: 1
+  AWS_CONFIG_FILE: ".aws-config.saucelabs.ini"
 npm:
   dependencies:
     - hsdynamodb
