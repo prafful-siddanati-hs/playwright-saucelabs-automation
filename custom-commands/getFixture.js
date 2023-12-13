@@ -21,7 +21,46 @@ const SocialProfiles = require('hsapi').som;
 const OrganizationMembers = require('hsapi').organizationMembersService;
 const _ = require('underscore');
 
-const { som_bridge, tops_skyline } = require('../globals.js');
+const { som_bridge, tops_skyline, hasResponseErrors } = require('../globals.js');
+
+/**
+ * @param  {string}    name         Name of the fixture to be called by other methods
+ * @param  {string}    type         Social Media account type @see {fixtures/accounts.js}
+ * @param  {boolean}   addSocial    If true, social profile is included in Hootsuite account (optional, default: false)
+ * @param  {number}    ttl          Amount of time in seconds to lock the account.
+ *                                  Value must be between 30 and 600. (optional, default: 90)
+ *
+ * @return {function}  this         Allows to chain commands
+ * 
+ * If success and addSocial = true, example below returned via optional callback
+ * and pushed into global.fixtures[]:
+ *
+ * {
+ *    name: 'acc1',
+ *    socialProfile: {
+ *       userId: 3428047578,
+ *       type: 'TWITTER',
+ *       email: 'gabriel.sagula+ads3@hootsuite.com',
+ *       username: 'LMongosy',
+ *       password: '4Connection',
+ *       auth1: '3428047578-lmzfsrymEtdHKwwWyl8kBSCtO3l8ccBz0ZJPCye',
+ *       auth2: 'FJzTlcpbdxM5Tk5wZHoAt9AQp67R3YtlhlPq2vGE9PMxo',
+ *       socialProfileId: 57347427,
+ *       isSecurePost: true,
+ *       isReauthRequired: 0
+ *    },
+ *    dynamodb: {
+ *       session: '96f04d44-453b-1fb2-1ed5-d10caa4e09e3',
+ *       key: 'tests/venkman/3428047578'
+ *    },
+ *    member: {
+ *       fullName: 'wideguide',
+ *       email: 'wideguide_1455410303384@hootfree.com',
+ *       password: 'Password',
+ *       memberId: 10779974
+ *    }
+ * }
+ */
 
 /**
  * @param  {string}    name         Name of the fixture to be called by other methods
@@ -68,15 +107,6 @@ class getFixture extends events.EventEmitter {
         this.step = '';
     }
     
-    hasResponseErrors(res) {
-        if (typeof res !== 'object') {
-            console.log('Unable to parse response object.');
-            return true;
-        }
-        // Check for errors in the body and non-200 status codes.
-        return ((res.body && res.body.errors) || (res.statusCode && res.statusCode !== 200));
-    }
-
     checkResponse(response, successMsg) {
         if (this.step && this.step !== '') {
             console.log(`${this.step}:`);
@@ -87,7 +117,7 @@ class getFixture extends events.EventEmitter {
         }
 
         response.forEach((r) => {
-            if (!this.hasResponseErrors(r)) {
+            if (!hasResponseErrors(r)) {
                 console.log(true, `${successMsg}`);
             } else {
                 console.log(false, JSON.stringify(r, null, 2));

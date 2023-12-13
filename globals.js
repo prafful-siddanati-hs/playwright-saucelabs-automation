@@ -26,4 +26,13 @@ module.exports = {
             return false;
         }
     },
+    // Check whether or not HSAPI responded with error
+    hasResponseErrors: function (res) {
+        if (typeof res !== 'object') {
+            console.log('Unable to parse response object.');
+            return true;
+        }
+        // Check for errors in the body and non-200 status codes.
+        return ((res.body && res.body.errors) || (res.statusCode && res.statusCode !== 200));
+    },
 };
