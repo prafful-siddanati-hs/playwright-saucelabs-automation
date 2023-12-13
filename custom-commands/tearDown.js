@@ -211,6 +211,9 @@ class tearDown extends events.EventEmitter {
             console.log('\nERROR', this.step, ':', err, '\n');
         } finally {
             clearTimeout(this.tearDownTimeout);
+            global.member = [];
+            global.fixture = [];
+            global.organization = [];
             this.emit('Complete')
         }
     }
