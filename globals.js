@@ -48,6 +48,6 @@ module.exports = {
                 return globalData[i];
             }
         }
-        return `No social profile object found for ${name}`;
+        return `No object data found for ${name}`;
     }
 };
