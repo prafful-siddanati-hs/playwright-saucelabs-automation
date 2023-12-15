@@ -25,16 +25,14 @@ stop-tunnel:
 	@$(killcmd)
 
 run-test : dynamodb-setup-for-saucelabs
-	npx saucectl run --select-suite "${SUITE_NAME}"
+	npx saucectl run --select-suite "${SUITE_NAME}" --show-console-log
 
 dynamodb-setup-for-saucelabs:
-	@if [ ! -f .aws-session.saucelabs.ini ]; then \
-		profile="build-ci-aws-creds" \
-		awsDefaultCredFile="$$HOME/.aws/credentials" && \
-		awsLocalCredFile=".aws-session.saucelabs.ini" && \
-		grep -A 4 "\\[$$profile\\]" "$$awsDefaultCredFile" > "$$awsLocalCredFile" && \
-		printf "\n🟢 AWS credentials for 'build-ci-aws-creds' profile have been successfully set up for Saucelabs.\n"; \
-	fi
+	@profile="build-ci-aws-creds" \
+	awsDefaultCredFile="$$HOME/.aws/credentials" && \
+	awsLocalCredFile=".aws-session.saucelabs.ini" && \
+	grep -A 4 "\\[$$profile\\]" "$$awsDefaultCredFile" > "$$awsLocalCredFile" && \
+	printf "\n🟢 AWS credentials for 'build-ci-aws-creds' profile have been successfully set up for Saucelabs.\n"; \
 
 dynamodb-setup-local-dev:
 	@vault write aws/sts/build-ci-dynamodb-test-accounts ttl=60m | \
