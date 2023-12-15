@@ -34,7 +34,7 @@ class getFixture extends events.EventEmitter {
             if (!this.hasResponseErrors(r)) {
                 console.log(true, `${successMsg}`);
             } else {
-                console.log(false, JSON.stringify(r, null, 2));
+                console.log(false, `Error: ${r.statusCode}\n${r.body}`);
             }
         });
     }
@@ -100,11 +100,12 @@ class getFixture extends events.EventEmitter {
                 };
 
                 // Cleaning social profile
-                this.step = 'Cleaning social profile';
+                this.step = 'Cleaning social profile in getFixture';
                 
                 let isClean = await socialProfiles.cleanUpSocialProfile(fixture.socialProfile.type, {
                     userId: fixture.socialProfile.userId
                 });
+                console.log("value of isClean: ",isClean)
 
                 this.checkResponse(isClean, 'Social profile has been cleaned.');
 

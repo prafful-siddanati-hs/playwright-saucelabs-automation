@@ -22,5 +22,5 @@ test('Try resource locking', async ({page}) => {
 
     await page.waitForTimeout(2000);
     await loginPage.signIn('pw_test');
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(4000);
 });

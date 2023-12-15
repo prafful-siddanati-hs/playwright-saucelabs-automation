@@ -1,5 +1,6 @@
 procs = $(shell ps -ef | grep 'bin/sc' | grep -v grep | awk '{ print $$2 ; }')
 killcmd = $(if $(procs), "kill" "-9" $(procs), "echo" "no matching processes")
+SUITE_NAME ?= [Playwright] Account Locking via API
 
 install:
 	rm -rf node_modules || true
@@ -22,14 +23,15 @@ stop-tunnel:
 	@echo 'sauce tunnel processId: ['$(procs)'] stopped'
 	@$(killcmd)
 
-run-test: dynamodb-setup-for-saucelabs
-	npx saucectl run --select-suite "[Suite name from .sauce/config.yml]"
+run-test : dynamodb-setup-for-saucelabs
+	npx saucectl run --select-suite "${SUITE_NAME}" --show-console-log
 
 dynamodb-setup-for-saucelabs:
 	@profile="build-ci-aws-creds" \
 	awsDefaultCredFile="$$HOME/.aws/credentials" && \
 	awsLocalCredFile=".aws-session.saucelabs.ini" && \
 	grep -A 4 "\\[$$profile\\]" "$$awsDefaultCredFile" > "$$awsLocalCredFile"
+	printf "\n🟢 Successfully loaded saucelabs config for 'build-ci-aws-creds' aws profile.\n"
 
 
 dynamodb-setup-local-dev:
