@@ -1,3 +1,20 @@
+/**
+ * Custom command to find an account not currently being used by other tests.
+ * Uses dynamodb to lock resource while it's using it.
+ *
+ * Requirements:
+ * Always run it as first step (not before block)
+ *  - abortOnAssertionFailure: false
+ *  - end_session_on_fail: true
+ *  - skip_testcases_on_fail: true
+ *
+ * Fault tolerance:
+ * In case of any operation fails, fixture is pushed to the global
+ * storage at the last then() block, after catch. This allows to
+ * teardown (after) block to release locked accounts.
+ *
+ * Make sure to run tearDown once you are done.
+ */
 const events = require('events');
 const DynamoDB = require('hsdynamodb');
 const SocialProfiles = require('hsapi').som;
@@ -6,12 +23,51 @@ const _ = require('underscore');
 
 const { som_bridge, tops_skyline } = require('../globals.js');
 
+/**
+ * @param  {string}    name         Name of the fixture to be called by other methods
+ * @param  {string}    type         Social Media account type @see {fixtures/accounts.js}
+ * @param  {boolean}   addSocial    If true, social profile is included in Hootsuite account (optional, default: false)
+ * @param  {number}    ttl          Amount of time in seconds to lock the account.
+ *                                  Value must be between 30 and 600. (optional, default: 90)
+ *
+ * @return {function}  this         Allows to chain commands
+ *
+ * If success and addSocial = true, example below returned via optional callback
+ * and pushed into global.fixtures[]:
+ *
+ * {
+ *    name: 'acc1',
+ *    socialProfile: {
+ *       userId: 3428047578,
+ *       type: 'TWITTER',
+ *       email: 'gabriel.sagula+ads3@hootsuite.com',
+ *       username: 'LMongosy',
+ *       password: '4Connection',
+ *       auth1: '3428047578-lmzfsrymEtdHKwwWyl8kBSCtO3l8ccBz0ZJPCye',
+ *       auth2: 'FJzTlcpbdxM5Tk5wZHoAt9AQp67R3YtlhlPq2vGE9PMxo',
+ *       socialProfileId: 57347427,
+ *       isSecurePost: true,
+ *       isReauthRequired: 0
+ *    },
+ *    dynamodb: {
+ *       session: '96f04d44-453b-1fb2-1ed5-d10caa4e09e3',
+ *       key: 'tests/venkman/3428047578'
+ *    },
+ *    member: {
+ *       fullName: 'wideguide',
+ *       email: 'wideguide_1455410303384@hootfree.com',
+ *       password: 'Password',
+ *       memberId: 10779974
+ *    }
+ * }
+ */
+
 class getFixture extends events.EventEmitter {
     constructor() {
         super();
         this.step = '';
     }
-    
+
     hasResponseErrors(res) {
         if (typeof res !== 'object') {
             console.log('Unable to parse response object.');
@@ -41,7 +97,7 @@ class getFixture extends events.EventEmitter {
 
     async command(name, type, addSocial, ttl) {
         let fixture = {};
-        
+
         try {
             if (!ttl) {
                 ttl = 90;
@@ -57,20 +113,21 @@ class getFixture extends events.EventEmitter {
             let accountsFile = 'accounts.js';
             let dynamodb = new DynamoDB('playwright-saucelabs', AWSprofile, dynamoDB);
             let socialProfiles = new SocialProfiles(som_bridge);
-            let accounts = require(`./../fixtures/${accountsFile}`)[type];
+            let accountData = require(`./../fixtures/${accountsFile}`);
+            let accounts = accountData[type];
 
             if (!accounts) {
-                let keys = _.allKeys(accounts);
+                let keys = _.allKeys(accountData);
                 throw new Error(`${type} not available. Supported values are ${keys.toString()}.`);
             }
 
             const opts = {
                 timeout: (ttl * 1000)
             };
-            
+
             // Locking account in DynamoDB
             this.step = 'Locking account in DynamoDB';
-            
+
             let locked = await dynamodb.lockFromList(accounts, opts);
 
             this.checkResponse(locked.resource, 'Account has been locked.');
@@ -84,7 +141,8 @@ class getFixture extends events.EventEmitter {
                 destroy: locked.destroy
             };
 
-            if ((fixture.isSocialProfile === undefined || fixture.isSocialProfile === true) && fixture.tearDown !== false ) {
+            if ((fixture.isSocialProfile === undefined || fixture.isSocialProfile === true) && (fixture.tearDown !== false)) {
+                // If tearDown is false we don't want to cleanup the test accounts.
                 fixture.isSocialProfile = true;
 
                 fixture.socialProfile = {
@@ -99,7 +157,7 @@ class getFixture extends events.EventEmitter {
 
                 // Cleaning social profile
                 this.step = 'Cleaning social profile';
-                
+
                 let isClean = await socialProfiles.cleanUpSocialProfile(fixture.socialProfile.type, {
                     userId: fixture.socialProfile.userId
                 });
@@ -107,17 +165,17 @@ class getFixture extends events.EventEmitter {
                 this.checkResponse(isClean, 'Social profile has been cleaned.');
 
                 if (addSocial) {
-                    let member = (global.member)[0];
+                    let member = (global.member && global.member[0]) ? global.member[0] : (global.fixture && global.fixture[0]);
 
                     if (!member) {
                         throw new Error('No Hootsuite account. Call createUser before add social network.');
                     }
-                    
+
                     fixture.member = member;
 
                     this.step = 'Adding social network to Hootsuite member';
 
-                    let profile = await socialProfiles.addSocialProfile(fixture.socialProfile.userId,
+                    let profile = socialProfiles.addSocialProfile(fixture.socialProfile.userId,
                         fixture.socialProfile.username,
                         fixture.socialProfile.type,
                         fixture.socialProfile.auth1,
@@ -131,7 +189,7 @@ class getFixture extends events.EventEmitter {
                     fixture.socialProfile.socialProfileId = profile.socialProfileId;
                     fixture.socialProfile.isSecurePost = profile.isSecurePost;
                     fixture.socialProfile.isReuathRequired = profile.isReuathRequired;
-                } 
+                }
             } else {
                 fixture.isSocialProfile = false;
                 fixture.customAccount = {};
@@ -140,9 +198,9 @@ class getFixture extends events.EventEmitter {
 
                 if (fixture.type === 'enterprise') {
                     let organizationMembers = new OrganizationMembers(tops_skyline);
-                    
+
                     this.step = 'Checking user for existing Organizations';
-                    let existingOrgs = await organizationMembers.getMemberOrgs(parseInt(fixture.memberId));
+                    let existingOrgs = organizationMembers.getMemberOrgs(parseInt(fixture.memberId));
 
                     if (typeof existingOrgs !== 'object') {
                         console.log(`Failed to retrieve user organizations. Response: ${JSON.stringify(existingOrgs)}`);
@@ -164,6 +222,10 @@ class getFixture extends events.EventEmitter {
                     fixture.customAccount.requiresTearDown = false;
                     fixture.customAccount.requiresEmailChange = false;
                     fixture.customAccount.name = fixture.name;
+                    if (!global.member) {
+                        global.member = []
+                    }
+                    global.member.push(fixture.customAccount);
                 }
 
                 //If custom account does not have email, return the id instead.
@@ -196,5 +258,5 @@ class getFixture extends events.EventEmitter {
             return this;
         }
     };
-    
+
 module.exports = getFixture;

@@ -1,8 +1,12 @@
 const events = require('events');
 const MemberService = require('hsapi').memberService;
 const SocialProfiles = require('hsapi').som;
+const Teams = require('hsapi').teamsService;
+const TeamMembers = require('hsapi').teamMembersService;
+const Organization = require('hsapi').organizationsService;
+const OrganizationMembers = require('hsapi').organizationMembersService;
 
-const { som_bridge, broker_member_service } = require('../globals.js');
+const { som_bridge, broker_member_service, tops_skyline, testOrgPrefix, isOrgSafeToDelete } = require('../globals.js');
 const { use: { longTimeout } } = require('../playwright.config.js');
 
 class tearDown extends events.EventEmitter {
@@ -47,22 +51,34 @@ class tearDown extends events.EventEmitter {
         throw new Error(message);
     }, parseInt(longTimeout));
 
-    async command(callback) {
-        try {
-            let socialProfiles = new SocialProfiles(som_bridge);
-            let memberService = new MemberService(broker_member_service);
+    async command() {
 
-            let users = global.member;
-            let fixtures = global.fixture;
+        try {
+            let memberService = new MemberService(broker_member_service);
+            let socialProfiles = new SocialProfiles(som_bridge);
+            let teams = new Teams(tops_skyline);
+            let teamMembers = new TeamMembers(tops_skyline);
+            let organization = new Organization(tops_skyline);
+            let organizationMembers = new OrganizationMembers(tops_skyline);
+
+            let users = (global.member && global.member[0]) ? global.member[0] : (global.fixture && global.fixture[0]);
+            if (users.customAccount) {
+                users = [users.customAccount];
+            } else {
+                users = [users];
+            }
+            //Set default values for fixtures & orgs
+            let fixtures = global.fixture ? global.fixture : [];
+            let orgs = global.organization ? global.organization :  [] ;
 
             function requiresTearDown (user) {
                 return user.tearDown === true;
             }
-        
+
             function requiresEmailChange (user) {
                 return user.emailChange === true;
             }
-        
+
             function requiresSocialProfileCleanup (fixture) {
                 return fixture.isSocialProfile === true;
             }
@@ -70,7 +86,7 @@ class tearDown extends events.EventEmitter {
             this.step = 'Editing Hootsuite users emails';
             let emailChangedUsers = users.filter(requiresEmailChange).map((user) => {
                 let emailToDelete = `qa_${Date.now()}@tobedeleted.ly`;
-                
+
 
                 return memberService.modifyUserAccount(user.memberId, {
                     email: emailToDelete
@@ -89,7 +105,7 @@ class tearDown extends events.EventEmitter {
             });
 
             if (cancelledUsers.length > 0) {
-                let cancelledMembers = await Promise.all(cancelledUsers);
+                let cancelledMembers = Promise.all(cancelledUsers);
 
                 this.checkResponse(cancelledMembers, 'All Hootsuite users have been cancelled.');
             }
@@ -118,17 +134,88 @@ class tearDown extends events.EventEmitter {
                 this.checkResponse(released, 'All accounts have been released.')
             }
 
-            if (typeof callback === 'function') {
-                callback.call(self);
+            this.step = 'Check for teams and orgs';
+            let tms = [];
+            let ots = [];
+            let oms = [];
+            orgs.forEach((o) => {
+                o.teams.forEach((t) => {
+                    ots.push(t);
+                    t.members.forEach((m) => {
+                        // Do not delete the payment member of the organization.
+                        if (m.memberId !== o.paymentMemberId) {
+                            oms.push({
+                                org: o,
+                                member: m
+                            });
+                        }
+                        tms.push({
+                            team: t,
+                            member: m
+                        });
+                    });
+                });
+            });
+
+            this.step = 'Removing Team Members';
+            let removedTeamMembers = tms.map((tm) => {
+                return teamMembers.removeTeamMember(
+                    parseInt(tm.member.memberId), parseInt(tm.team.id), parseInt(tm.team.createdUser));
+            });
+
+            if (removedTeamMembers.length > 0) {
+                let removed = await Promise.all(removedTeamMembers);
+
+                this.checkResponse(removed, 'All Hootsuite team members have been removed.');
             }
 
+            this.step = 'Removing Teams';
+            let removedTeams = ots.map((ot) => {
+                return teams.removeTeam(ot.createdUser, ot.id);
+            });
+
+            if (removedTeams.length > 0) {
+                let removed = await Promise.all(removedTeams);
+
+                this.checkResponse(removed, 'All Hootsuite teams have been removed.');
+            }
+
+            this.step = 'Removing Organization Members';
+            let removedOrgMembers = oms.map((om) => {
+                return organizationMembers.deleteOrganizationMember(om.org.paymentMemberId,
+                    om.member.memberId, om.org.id);
+            });
+
+            if (removedOrgMembers.length > 0) {
+                let removed = await Promise.all(removedOrgMembers);
+
+                this.checkResponse(removed, 'All Hootsuite organization members have been removed.');
+            }
+
+            this.step = 'Deleting Organizations';
+            let deletedOrgs = orgs.map((org) => {
+                if (isOrgSafeToDelete(org, org.pwTestMemberId, testOrgPrefix)) {
+                    console.log(`Deleting Org ${org.name}: / Org Id: ${org.id} / Payment Member Id: ${org.paymentMemberId}`);
+                    return organization.deleteOrganization(org.id, org.pwTestMemberId);
+                }else {
+                    throw new Error(`Org safety check failed: Skipping org ${org.id} deletion`);
+                }
+            });
+
+            if (deletedOrgs.length > 0) {
+                let deleted = await Promise.all(deletedOrgs);
+
+                this.checkResponse(deleted, 'All Hootsuite temporary organizations have been deleted.');
+            }
         } catch (err) {
             console.log('\nERROR', this.step, ':', err, '\n');
         } finally {
             clearTimeout(this.tearDownTimeout);
+            global.member = [];
+            global.fixture = [];
+            global.organization = [];
             this.emit('Complete')
         }
-
     }
 };
 

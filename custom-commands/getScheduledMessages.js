@@ -11,7 +11,6 @@ const MPS = require('hsapi').messagePublishingService;
  * @param {number}      socialProfileIds    The ID of the social network.
  * @param {String}      state               The state of the  scheduled message.
  * @param {number}      limit               The limit for no of the scheduled messages.
- * @param {string}      apiAuthorizationValue API auth token of the member
  * @param {object}      callback  Optional callback with message data as argument
  *
  * @return {function} this      Returning this allows commands to be chained

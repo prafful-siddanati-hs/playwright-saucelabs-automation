@@ -20,10 +20,7 @@ test('Drag and drop card on week view', async ({ page }) => {
     const scheduleTime = addHours(new Date(), 1);
     const composeText = `test drag and drop card on planner week view ${Date.now()}`;
 
-    let apiAuthorizationValue = await loginPage.login(user[0].email, user[0].password).then(() => {
-        let apiAuthorization = loginPage.cookie.find(({name}) => name === "apiAuthorization");
-        return apiAuthorization.value;
-    });
+    await loginPage.login(user[0].email, user[0].password);
 
     /* Create a scheduled message */
     await createScheduleMessage.command(
@@ -36,8 +33,7 @@ test('Drag and drop card on week view', async ({ page }) => {
                     scheduledSendTime: formatISO(scheduleTime)
                 }
             ]
-        },
-        apiAuthorizationValue
+        }
     );
 
   await plannerPage.dragAndDropCard(composeText);

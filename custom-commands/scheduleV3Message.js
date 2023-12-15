@@ -8,7 +8,6 @@ const MPS = require('hsapi').messagePublishingService;
  *
  * @param {number}    memberId    ID of the member creating the message
  * @param {object}    options   Message options (text, social profiles, etc.)
- * @param {string}    apiAuthorizationValue API auth token of the member
  * @param {object}    callback  Optional callback with message data as argument
  *
  * @return {function} this      Returning this allows commands to be chained
@@ -24,7 +23,6 @@ class scheduleV3Message extends events.EventEmitter {
 
         try {
             const data = await mps.scheduleV3Message(memberId, options);
-            console.log(data)
 
             if (!data || !data.messages || !data.messages[0].id) {
                 throw new Error(`Request did not return a message ID. Error code ${data.errors[0].codes}`);
@@ -35,7 +33,7 @@ class scheduleV3Message extends events.EventEmitter {
             if (typeof callback === 'function') {
                 callback.call(this, data);
             }
-            
+
         } catch (err) {
             console.assert(false, `Error scheduling a message. ${err}`);
         } finally {
