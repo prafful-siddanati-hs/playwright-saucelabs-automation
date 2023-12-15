@@ -23,7 +23,9 @@ make install
 To run your tests on Saucelabs via local
 - Make sure to install saucectl. Follow the instructions [here](https://docs.saucelabs.com/dev/cli/saucectl/#installing-saucectl/)
 - Use the command `npx saucectl run` on terminal to see the results on SL UI
-- If you want to run tests inside a specific suite, then use `npx saucectl run --select-suite="Suite Name" `. Refer to the [Jenkinsfile](https://github.hootops.com/hootsuite/playwright-saucelabs-automation/blob/master/playwright.Jenkinsfile) for an example.
+- If you want to run tests inside a specific suite, then use `make run-test SUITE_NAME="[Select suite name from .sauce/config.yml]"` or `npx saucectl run --select-suite="Suite Name" `.
+- Use the option `--show-console-log` to view the test log in terminal, else the log can also be found under console.log option under Logs tab of SL UI
+Refer to the [Jenkinsfile](https://github.hootops.com/hootsuite/playwright-saucelabs-automation/blob/master/playwright.Jenkinsfile) for an example.
 
 
 ### Vault Setup 
@@ -44,6 +46,9 @@ vaultlogin dev
 #This generates a temporary aws session which expires after 60 minutes that has permission only on the dev dynamodb used for test accounts
 make dynamodb-setup-local-dev
 
+#This creates necessary saucelabs config for the aws profile
+make dynamodb-setup-for-saucelabs
+
 #Once the time has expired, re-run to create a new session
 ```
 
@@ -55,3 +60,6 @@ To check what tests are currently locked:
 # If not deleted manually, it will eventually time out.
 make dynamodb-browse-locks
 ```
+
+### Jenkins Job
+Jenkins job for this repo can be found at [Dashboard/Playwright_PlanCreate](https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_PlanCreate/)

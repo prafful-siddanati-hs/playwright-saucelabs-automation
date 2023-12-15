@@ -49,6 +49,13 @@ suites:
     params:
       browserName: "chromium"
       project: "chromium"
+  - name: "[Playwright] Schedule & Delete via API"
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: ['tests/scheduleAndDeleteViaApi.spec.js']
+    params:
+      browserName: "chromium"
+      project: "chromium"
   - name: "[Playwright] Draft & Delete via API"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
