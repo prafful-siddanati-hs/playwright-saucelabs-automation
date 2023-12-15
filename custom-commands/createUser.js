@@ -51,7 +51,6 @@ class createUser extends events.EventEmitter{
         } catch (err) {
             console.assert(false, `Error creating user with billing. ${err}`);
         } finally {
-            console.log("Print memberId to debug: ",member.memberId)
             //Update global storage with member details so that functions like getFixture() can access it.
             if (!global.member) {
                 global.member = []

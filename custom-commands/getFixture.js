@@ -34,7 +34,7 @@ class getFixture extends events.EventEmitter {
             if (!this.hasResponseErrors(r)) {
                 console.log(true, `${successMsg}`);
             } else {
-                console.log(false, `Error: ${r.statusCode}\n${r.body}`);
+                console.log(false, JSON.stringify(r, null, 2));
             }
         });
     }
@@ -57,12 +57,10 @@ class getFixture extends events.EventEmitter {
             let accountsFile = 'accounts.js';
             let dynamodb = new DynamoDB('playwright-saucelabs', AWSprofile, dynamoDB);
             let socialProfiles = new SocialProfiles(som_bridge);
-            let accountData = require(`../fixtures/${accountsFile}`);
-            let accounts = accountData[type];
-            
+            let accounts = require(`./../fixtures/${accountsFile}`)[type];
 
             if (!accounts) {
-                let keys = _.allKeys(accountData);
+                let keys = _.allKeys(accounts);
                 throw new Error(`${type} not available. Supported values are ${keys.toString()}.`);
             }
 
@@ -100,7 +98,7 @@ class getFixture extends events.EventEmitter {
                 };
 
                 // Cleaning social profile
-                this.step = 'Cleaning social profile in getFixture';
+                this.step = 'Cleaning social profile';
                 
                 let isClean = await socialProfiles.cleanUpSocialProfile(fixture.socialProfile.type, {
                     userId: fixture.socialProfile.userId
