@@ -103,7 +103,6 @@ class getFixture extends events.EventEmitter {
                 let isClean = await socialProfiles.cleanUpSocialProfile(fixture.socialProfile.type, {
                     userId: fixture.socialProfile.userId
                 });
-                console.log("value of isClean: ",isClean)
 
                 this.checkResponse(isClean, 'Social profile has been cleaned.');
 

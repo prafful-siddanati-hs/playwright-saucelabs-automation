@@ -131,7 +131,7 @@ module.exports = {
             username: 'Enterprise_user_two',
             password: '!1Password'
         },
-        /* {
+        {
             memberId: '13747241',
             isSocialProfile: false,
             isHootsuiteUser: true,
@@ -250,7 +250,7 @@ module.exports = {
             email: 'plan.create.automation+enterprise14@hootsuite.com',
             username: 'Enterprise_User_Fourteen',
             password: '!1Passw0rd'
-        }, */
+        },
     ],
 
     staging_pro_users: [
