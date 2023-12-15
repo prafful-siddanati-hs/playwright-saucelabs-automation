@@ -1,6 +1,7 @@
 procs = $(shell ps -ef | grep 'bin/sc' | grep -v grep | awk '{ print $$2 ; }')
 killcmd = $(if $(procs), "kill" "-9" $(procs), "echo" "no matching processes")
-SUITE_NAME ?= [Playwright] Account Locking via API #Pass Suite name from .sauce/config.yml. Default value is set to [Playwright] Account Locking via API
+#Pass Suite name from .sauce/config.yml. Default value is set to [Playwright] Account Locking via API
+SUITE_NAME ?= [Playwright] Account Locking via API
 
 install:
 	rm -rf node_modules || true
@@ -27,12 +28,13 @@ run-test : dynamodb-setup-for-saucelabs
 	npx saucectl run --select-suite "${SUITE_NAME}"
 
 dynamodb-setup-for-saucelabs:
-	@profile="build-ci-aws-creds" \
-	awsDefaultCredFile="$$HOME/.aws/credentials" && \
-	awsLocalCredFile=".aws-session.saucelabs.ini" && \
-	grep -A 4 "\\[$$profile\\]" "$$awsDefaultCredFile" > "$$awsLocalCredFile"
-	printf "\n🟢 Successfully loaded saucelabs config for 'build-ci-aws-creds' aws profile.\n"
-
+	@if [ ! -f .aws-session.saucelabs.ini ]; then \
+		profile="build-ci-aws-creds" \
+		awsDefaultCredFile="$$HOME/.aws/credentials" && \
+		awsLocalCredFile=".aws-session.saucelabs.ini" && \
+		grep -A 4 "\\[$$profile\\]" "$$awsDefaultCredFile" > "$$awsLocalCredFile" && \
+		printf "\n🟢 AWS credentials for 'build-ci-aws-creds' profile have been successfully set up for Saucelabs.\n"; \
+	fi
 
 dynamodb-setup-local-dev:
 	@vault write aws/sts/build-ci-dynamodb-test-accounts ttl=60m | \
