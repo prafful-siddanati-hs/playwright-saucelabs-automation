@@ -52,7 +52,7 @@ class tearDown extends events.EventEmitter {
     }, parseInt(longTimeout));
 
     async command() {
-        
+
         try {
             let memberService = new MemberService(broker_member_service);
             let socialProfiles = new SocialProfiles(som_bridge);
@@ -74,11 +74,11 @@ class tearDown extends events.EventEmitter {
             function requiresTearDown (user) {
                 return user.tearDown === true;
             }
-        
+
             function requiresEmailChange (user) {
                 return user.emailChange === true;
             }
-        
+
             function requiresSocialProfileCleanup (fixture) {
                 return fixture.isSocialProfile === true;
             }
@@ -86,7 +86,7 @@ class tearDown extends events.EventEmitter {
             this.step = 'Editing Hootsuite users emails';
             let emailChangedUsers = users.filter(requiresEmailChange).map((user) => {
                 let emailToDelete = `qa_${Date.now()}@tobedeleted.ly`;
-                
+
 
                 return memberService.modifyUserAccount(user.memberId, {
                     email: emailToDelete
@@ -105,7 +105,7 @@ class tearDown extends events.EventEmitter {
             });
 
             if (cancelledUsers.length > 0) {
-                let cancelledMembers = await Promise.all(cancelledUsers);
+                let cancelledMembers = Promise.all(cancelledUsers);
 
                 this.checkResponse(cancelledMembers, 'All Hootsuite users have been cancelled.');
             }
