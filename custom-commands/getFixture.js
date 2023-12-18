@@ -230,7 +230,7 @@ class getFixture extends events.EventEmitter {
                     let organizationMembers = new OrganizationMembers(tops_skyline);
 
                     this.step = 'Checking user for existing Organizations';
-                    let existingOrgs = organizationMembers.getMemberOrgs(parseInt(fixture.memberId));
+                    let existingOrgs = await organizationMembers.getMemberOrgs(parseInt(fixture.memberId));
 
                     if (typeof existingOrgs !== 'object') {
                         console.log(`Failed to retrieve user organizations. Response: ${JSON.stringify(existingOrgs)}`);

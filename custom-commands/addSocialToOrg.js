@@ -22,7 +22,7 @@ class addSocialToOrg extends events.EventEmitter {
         let response = [];
 
         try {
-            if (!socialProfile) {
+            if (!socialProfile || typeof (socialProfile) != 'string') {
                 throw new Error('Please specify a social profile to add to the organization.');
             }
 
