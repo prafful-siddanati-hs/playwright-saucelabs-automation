@@ -70,7 +70,7 @@ const { som_bridge, tops_skyline, hasResponseErrors } = require('../globals.js')
  *                                  Value must be between 30 and 600. (optional, default: 90)
  *
  * @return {function}  this         Allows to chain commands
- * 
+ *
  * If success and addSocial = true, example below returned via optional callback
  * and pushed into global.fixtures[]:
  *
@@ -106,7 +106,7 @@ class getFixture extends events.EventEmitter {
         super();
         this.step = '';
     }
-    
+
     checkResponse(response, successMsg) {
         if (this.step && this.step !== '') {
             console.log(`${this.step}:`);
@@ -127,7 +127,7 @@ class getFixture extends events.EventEmitter {
 
     async command(name, type, addSocial, ttl) {
         let fixture = {};
-        
+
         try {
             if (!ttl) {
                 ttl = 90;
@@ -154,10 +154,10 @@ class getFixture extends events.EventEmitter {
             const opts = {
                 timeout: (ttl * 1000)
             };
-            
+
             // Locking account in DynamoDB
             this.step = 'Locking account in DynamoDB';
-            
+
             let locked = await dynamodb.lockFromList(accounts, opts);
 
             this.checkResponse(locked.resource, 'Account has been locked.');
@@ -187,7 +187,7 @@ class getFixture extends events.EventEmitter {
 
                 // Cleaning social profile
                 this.step = 'Cleaning social profile';
-                
+
                 let isClean = await socialProfiles.cleanUpSocialProfile(fixture.socialProfile.type, {
                     userId: fixture.socialProfile.userId
                 });
@@ -200,12 +200,12 @@ class getFixture extends events.EventEmitter {
                     if (!member) {
                         throw new Error('No Hootsuite account. Call createUser before add social network.');
                     }
-                    
+
                     fixture.member = member;
 
                     this.step = 'Adding social network to Hootsuite member';
 
-                    let profile = await socialProfiles.addSocialProfile(fixture.socialProfile.userId,
+                    let profile = socialProfiles.addSocialProfile(fixture.socialProfile.userId,
                         fixture.socialProfile.username,
                         fixture.socialProfile.type,
                         fixture.socialProfile.auth1,
@@ -219,7 +219,7 @@ class getFixture extends events.EventEmitter {
                     fixture.socialProfile.socialProfileId = profile.socialProfileId;
                     fixture.socialProfile.isSecurePost = profile.isSecurePost;
                     fixture.socialProfile.isReuathRequired = profile.isReuathRequired;
-                } 
+                }
             } else {
                 fixture.isSocialProfile = false;
                 fixture.customAccount = {};
@@ -228,9 +228,9 @@ class getFixture extends events.EventEmitter {
 
                 if (fixture.type === 'enterprise') {
                     let organizationMembers = new OrganizationMembers(tops_skyline);
-                    
+
                     this.step = 'Checking user for existing Organizations';
-                    let existingOrgs = await organizationMembers.getMemberOrgs(parseInt(fixture.memberId));
+                    let existingOrgs = organizationMembers.getMemberOrgs(parseInt(fixture.memberId));
 
                     if (typeof existingOrgs !== 'object') {
                         console.log(`Failed to retrieve user organizations. Response: ${JSON.stringify(existingOrgs)}`);
@@ -288,5 +288,5 @@ class getFixture extends events.EventEmitter {
             return this;
         }
     };
-    
+
 module.exports = getFixture;
