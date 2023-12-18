@@ -6,22 +6,19 @@ const TeamMembers = require('hsapi').teamMembersService;
 const Organization = require('hsapi').organizationsService;
 const OrganizationMembers = require('hsapi').organizationMembersService;
 
-const { som_bridge, broker_member_service, tops_skyline, testOrgPrefix, isOrgSafeToDelete } = require('../globals.js');
+const { som_bridge, broker_member_service, tops_skyline, testOrgPrefix, isOrgSafeToDelete, hasResponseErrors } = require('../globals.js');
 const { use: { longTimeout } } = require('../playwright.config.js');
+
+/**
+ * @param {function}   callback     Used to return a locked account
+ *
+ * @return {function}  this         Returns itself for chaning commands
+ */
 
 class tearDown extends events.EventEmitter {
     constructor() {
         super();
         this.step = '';
-    }
-
-    hasResponseErrors(res) {
-        if (typeof res !== 'object') {
-            console.log('Unable to parse response object.');
-            return true;
-        }
-        // Check for errors in the body and non-200 status codes.
-        return ((res.body && res.body.errors) || (res.statusCode && res.statusCode !== 200));
     }
 
     checkResponse(response, successMsg) {
@@ -36,7 +33,7 @@ class tearDown extends events.EventEmitter {
                 response = [response];
             }
             response.forEach((r) => {
-                if (!this.hasResponseErrors(r)) {
+                if (!hasResponseErrors(r)) {
                     console.log(true, `${successMsg}`);
                 } else {
                     console.log(false, JSON.stringify(r, null, 2));
@@ -135,6 +132,7 @@ class tearDown extends events.EventEmitter {
             }
 
             this.step = 'Check for teams and orgs';
+            // Build array of teams, organizations, and members that need to be cleaned up.
             let tms = [];
             let ots = [];
             let oms = [];
@@ -211,6 +209,7 @@ class tearDown extends events.EventEmitter {
             console.log('\nERROR', this.step, ':', err, '\n');
         } finally {
             clearTimeout(this.tearDownTimeout);
+            //Clean up global storage
             global.member = [];
             global.fixture = [];
             global.organization = [];
