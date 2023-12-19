@@ -85,17 +85,21 @@ class modifySocialProfilePermissions extends events.EventEmitter {
             userId: profile.userId
         };
 
+        let socialProfileResult = [];
+
         try {
             console.log(`Modifying ${user.name}(${user.memberId})'s permissions for ${profile.username}`);
 
             this.step = 'Get social profile';
             
-            let socialProfileResult = await socialProfiles.getSocialProfile(profile.type, optionalData);
-            this.checkResponse(socialProfileResult, 'Found social profile');
+            socialProfiles.getSocialProfile(profile.type, optionalData)
+                .then(socialProfileResult => {
+                    this.checkResponse(socialProfileResult, 'Found social profile');
+                });
 
             this.step = 'Changing permissions for social profile';
             
-            let socialProfileId = socialProfileResult[Object.keys(socialProfileResult)[0]].socialProfileId;
+            let socialProfileId = parseInt(Object.keys(socialProfileResult)[0]);
             let memberResult = memberPermissions.editSocialProfilePermissions(parseInt(user.memberId), parseInt(socialProfileId), {permissionPreset: permissionPreset});
             this.checkResponse(memberResult, `Changed permissions to ${permissionPreset}`);
         } catch (err) {
