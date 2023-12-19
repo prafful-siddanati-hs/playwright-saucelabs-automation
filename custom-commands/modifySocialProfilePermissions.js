@@ -108,4 +108,3 @@ class modifySocialProfilePermissions extends events.EventEmitter {
 };
 
 module.exports = modifySocialProfilePermissions;
-
