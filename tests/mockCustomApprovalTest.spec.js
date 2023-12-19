@@ -5,6 +5,7 @@ const tearDown = require('../custom-commands/tearDown');
 const createOrg = require('../custom-commands/createOrg');
 const addSocialToOrg = require('../custom-commands/addSocialToOrg');
 const addUserToOrg = require('../custom-commands/addUserToOrg');
+const modifySocialProfilePermissions = require('../custom-commands/modifySocialProfilePermissions');
 
 test.afterEach(async ({ page }) => {
     const cleanUp = new tearDown();
@@ -20,6 +21,7 @@ test('Sample CA test: Add user & Update permissions : ', async ({ page }) => {
     const createNewOrg = new createOrg();
     const addSocialNetwork = new addSocialToOrg();
     const addUserToNewOrg = new addUserToOrg();
+    const updateSNPermissions = new modifySocialProfilePermissions();
 
     await addFixture.command('pw_enterprise_test_ca', 'enterprise', false, 300);
     await addFixture.command('test_x_acc1','twitter', false, 240);
@@ -27,6 +29,7 @@ test('Sample CA test: Add user & Update permissions : ', async ({ page }) => {
     await createNewOrg.command(orgName);
     await addUserToNewOrg.command('pw_test_ca');
     await addSocialNetwork.command('test_x_acc1');
+    await updateSNPermissions.command('SN_LIMITED', 'test_x_acc1', 'pw_test_ca')
 
     await page.waitForTimeout(2000);
 });
