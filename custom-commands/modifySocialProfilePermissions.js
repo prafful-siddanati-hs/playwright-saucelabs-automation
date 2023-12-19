@@ -97,7 +97,7 @@ class modifySocialProfilePermissions extends events.EventEmitter {
             
             let socialProfileId = socialProfileResult[Object.keys(socialProfileResult)[0]].socialProfileId;
             let memberResult = memberPermissions.editSocialProfilePermissions(parseInt(user.memberId), parseInt(socialProfileId), {permissionPreset: permissionPreset});
-            this.checkResponse(memberResult, 'Changed permissions.');
+            this.checkResponse(memberResult, `Changed permissions to ${permissionPreset}`);
         } catch (err) {
             console.log(`\nERROR: ${err}.\n`);
         } finally {
