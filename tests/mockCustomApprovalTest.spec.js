@@ -1,9 +1,10 @@
 const { test } = require('@playwright/test');
+const createUser = require('../custom-commands/createUser');
 const getFixture = require('../custom-commands/getFixture');
 const tearDown = require('../custom-commands/tearDown');
 const createOrg = require('../custom-commands/createOrg');
 const addSocialToOrg = require('../custom-commands/addSocialToOrg');
-const { LoginPage } = require("../pages/login");
+const addUserToOrg = require('../custom-commands/addUserToOrg');
 
 test.afterEach(async ({ page }) => {
     const cleanUp = new tearDown();
@@ -12,22 +13,20 @@ test.afterEach(async ({ page }) => {
     await page.close();
 });
 
-test('Create an Enterprise user', async ({ page }) => {
-    let orgName = 'playwright_org_' + Math.floor(Math.random() * 10000);
+test('Sample CA test: Add user & Update permissions : ', async ({ page }) => {
+    let orgName = 'playwright_org_ca_' + Math.floor(Math.random() * 10000);
+    const createNewUser = new createUser();
     const addFixture = new getFixture();
     const createNewOrg = new createOrg();
     const addSocialNetwork = new addSocialToOrg();
-    const loginPage = new LoginPage(page);
+    const addUserToNewOrg = new addUserToOrg();
 
-    await addFixture.command('pw_enterprise_test', 'enterprise', false, 240);
-    await addFixture.command('test_x_acc1','twitter', false, 300);
-    await addFixture.command('test_x_acc2','twitter',false,240);
+    await addFixture.command('pw_enterprise_test_ca', 'enterprise', false, 300);
+    await addFixture.command('test_x_acc1','twitter', false, 240);
+    await createNewUser.command('pw_test_ca');
     await createNewOrg.command(orgName);
+    await addUserToNewOrg.command('pw_test_ca');
     await addSocialNetwork.command('test_x_acc1');
-    await addSocialNetwork.command('test_x_acc2');
-
-    //await page.waitForTimeout(2000);
-    //TODO:Implement signInSkipOnboarding() similar to Nightwatch
 
     await page.waitForTimeout(2000);
 });

@@ -2,21 +2,23 @@ const events = require('events');
 const Organizations = require('hsapi').organizationsService;
 const OrganizationMembers = require('hsapi').organizationMembersService;
 
-const { tops_skyline, testOrgPrefix, isOrgSafeToDelete } = require('../globals.js');
+const { tops_skyline, testOrgPrefix, isOrgSafeToDelete, hasResponseErrors } = require('../globals.js');
+
+/**
+ * Creates a new organization for a given user.
+ *
+ * NOTE: This will delete all organizations that the user is a member of before creating a new one.
+ *
+ * @param {string}    name      Organization's name
+ * @param {string}    user      Hootsuite member (used when not created through hsapi)
+ *
+ * @return this      Returning this allows commands to be chained
+ */
 
 class createOrg extends events.EventEmitter {
     constructor() {
         super();
         this.step = '';
-    }
-
-    hasResponseErrors(res) {
-        if (typeof res !== 'object') {
-            console.log('Unable to parse response object.');
-            return true;
-        }
-        // Check for errors in the body and non-200 status codes.
-        return ((res.body && res.body.errors) || (res.statusCode && res.statusCode !== 200));
     }
 
     checkResponse(response, successMsg) {
@@ -29,7 +31,7 @@ class createOrg extends events.EventEmitter {
             }
         try {
             response.forEach((r) => {
-                if (!this.hasResponseErrors(r)) {
+                if (!hasResponseErrors(r)) {
                     console.log(true, `${successMsg}`);
                 } else {
                     if (r.statusCode === 404 && r.method === 'DELETE') {

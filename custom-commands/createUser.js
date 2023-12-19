@@ -3,6 +3,16 @@ const Som = require('hsapi').som;
 
 const { som, defaultPassword } = require('../globals.js');
 
+/**
+ * Creates a new member object in member service, dashboard, and billing service and adds user to globals.
+ *
+ * @param {string}    name                      Name of the test, e.g. playwright_test_user
+ * @param {string}    plan                      default plan: core, other options: professional, team3s
+ * @param {function}  callback                  Use a callback to get the results
+ *
+ * @return {function} this                      Returning this allows commands to be chained
+ */
+
 class createUser extends events.EventEmitter{
     constructor() {
         super();
