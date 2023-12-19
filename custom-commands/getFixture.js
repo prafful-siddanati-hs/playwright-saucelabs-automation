@@ -106,7 +106,7 @@ class getFixture extends events.EventEmitter {
         super();
         this.step = '';
     }
-  
+
     checkResponse(response, successMsg) {
         if (this.step && this.step !== '') {
             console.log(`${this.step}:`);
