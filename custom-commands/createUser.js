@@ -13,7 +13,7 @@ const { som, defaultPassword } = require('../globals.js');
  * @return {function} this                      Returning this allows commands to be chained
  */
 
-class createUser extends events.EventEmitter{
+class createUser extends events.EventEmitter {
     constructor() {
         super();
     }
@@ -31,7 +31,7 @@ class createUser extends events.EventEmitter{
         // retrieve respective productCode and aria flag base on plan
         const { productCode, makeAriaAccount } = planMap[plan.toLowerCase()];
 
-        console.log(`Creating ${name} user with product code: ${productCode}`);
+        console.log(`Creating ${name} user with plan type: ${plan.toUpperCase()}`);
 
         let dashboard = new Som(som);
         let member = {
