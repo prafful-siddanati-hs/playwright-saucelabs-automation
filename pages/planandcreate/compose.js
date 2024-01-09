@@ -8,15 +8,20 @@ exports.ComposePage = class ComposePage {
         this.composeScreen = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal');
         this.profileDropDown = page.getByPlaceholder('Select a social account');
         this.snContentItems = page.locator('.vk-ContentItems');
+        this.snPilltext = page.locator('.vk-PillText');
         this.composerHeader = page.locator('.vk-ComposerHeader');
         this.twitterPreviewSingleImage = page.locator('.vk-TwitterPreview .vk-MediaImg');
         this.messageArea = page.getByLabel('Text');
         this.scheduleLaterButton = page.getByRole('button', { name: 'Schedule for later' });
-        this.ScheduleDone = page.getByRole('button', { name: 'Done' });
+        this.scheduleDone = page.getByRole('button', { name: 'Done' });
+        this.scheduleDoneButton = page.getByTestId('schedule-post-done-btn');
         this.scheduleButton = page.getByRole('button', { name: 'Schedule', exact: true });
         this.postNowButton = page.getByRole('button', { name: 'Post now', exact: true });
         this.openCalendarButton = page.getByLabel('Open calendar');
-
+        this.nextMonthButton = page.getByLabel('Go to next month');
+        this.firstDayOfNextMonth = page.locator('(//button[contains(@class, "rdp-day") and text()="1"])[1]');
+        this.twitterVideoPreviewSelector =this.page.locator('.rc-Composer .vk-TwitterPreview .vk-VideoContainer');
+        this.twitterPreviewtext = this.page.locator('.vk-TwitterPreview .vk-ContentBody');
     }
     async selectComposeButton() {
         await expect(this.composeButton).toBeVisible;
@@ -45,7 +50,7 @@ exports.ComposePage = class ComposePage {
 
     async schedule() {
         await this.scheduleLaterButton.click();
-        await this.ScheduleDone.click();
+        await this.scheduleDone.click();
         await this.scheduleButton.click();
         await expect(this.scheduleButton).not.toBeVisible;
     }
@@ -56,19 +61,29 @@ exports.ComposePage = class ComposePage {
     }
 
     async verifySocialProfileSelected(name) {
-        await expect(this.page.locator('.vk-PillText')).toContainText(`${name}`);
+        await expect(this.snPilltext).toContainText(`${name}`);
     }
 
     async verifyTwitterPreview(text) {
-        await expect(this.page.locator('.vk-TwitterPreview .vk-ContentBody')).toContainText(`${text}`);
+        await expect(this.twitterPreviewtext).toContainText(`${text}`);
+    }
+
+    async verifyTwitterVideoPreview() {
+        await expect(this.twitterVideoPreviewSelector).toHaveCount(1);
+    }
+
+    async verifyTwitterImagePreview() {
+        await expect(this.twitterPreviewSingleImage).toHaveJSProperty('complete', true);
+        await expect(this.twitterPreviewSingleImage).not.toHaveJSProperty('naturalWidth', 0);
     }
 
     async selectMessageScheduleDate() {
         await this.scheduleLaterButton.click();
+        await expect(this.openCalendarButton).toHaveCount(1);
         await this.openCalendarButton.click();
-        await this.page.getByLabel('Go to next month').click();
-        await this.page.locator('(//button[contains(@class, "rdp-day") and text()="1"])[1]').click();
-        await this.page.getByTestId('schedule-post-done-btn').click();
+        await this.nextMonthButton.click();
+        await this.firstDayOfNextMonth.click();
+        await this.scheduleDoneButton.click();
         await this.scheduleButton.click();
         await expect(this.scheduleButton).not.toBeVisible;
     }

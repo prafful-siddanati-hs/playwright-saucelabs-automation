@@ -34,6 +34,6 @@ test('Schedule message using composer', async ({ page }) => {
     await composePage.writeMessage(composeText);
     await composePage.verifyTwitterPreview(composeText);
     await composePage.uploadFile('tests/composer/video.mp4');
-    await expect(page.locator('.rc-Composer .vk-TwitterPreview .vk-VideoContainer')).toHaveCount(1);
+    await composePage.verifyTwitterVideoPreview();
     await composePage.selectMessageScheduleDate();
 });

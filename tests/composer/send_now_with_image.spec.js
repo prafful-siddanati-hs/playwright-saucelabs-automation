@@ -33,8 +33,7 @@ test('Send now message using composer', async ({ page }) => {
     await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, 'twitter_send').username);
     await composePage.writeMessage(composeText);
     await composePage.uploadFile('tests/composer/owly-snowboard.jpg');
-    await expect(page.locator('.vk-TwitterPreview .vk-MediaImg')).toHaveJSProperty('complete', true);
-    await expect(page.locator('.vk-TwitterPreview .vk-MediaImg')).not.toHaveJSProperty('naturalWidth', 0);
+    await composePage.verifyTwitterImagePreview();
     await composePage.verifyTwitterPreview(composeText);
     await composePage.sendNow();
 });
