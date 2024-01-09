@@ -71,10 +71,10 @@ test('drag and drop media from side pane on week view', async ({ page }) => {
 //   const page1 = await page1Promise;
 //   await page1.getByRole('button', { name: 'Close' }).click();
 //   await page1.getByRole('link', { name: 'Sign in with your Bitly account' }).click();
-//   await page1.locator('#sign-in input[name="username"]').click();
-//   await page1.locator('#sign-in input[name="username"]').fill('PraffulS');
-//   await page1.locator('#sign-in input[name="password"]').click();
-//   await page1.locator('#sign-in input[name="password"]').fill('tKq54RWaw362');
+//   await page1.getByLabel('Email').click();
+//   await page1.getByLabel('Email').fill('prafful.siddanati+testaccount@hootsuite.com');
+//   await page1.getByLabel('Password', { exact: true }).click();
+//   await page1.getByLabel('Password', { exact: true }).fill('tKq54RWaw362');
 //   await page1.getByRole('button', { name: 'Log in' }).click();
 //   await page1.getByRole('button', { name: 'Allow' }).click();
 //   await page1.close();

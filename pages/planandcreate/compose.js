@@ -14,6 +14,9 @@ exports.ComposePage = class ComposePage {
         this.scheduleLaterButton = page.getByRole('button', { name: 'Schedule for later' });
         this.ScheduleDone = page.getByRole('button', { name: 'Done' });
         this.scheduleButton = page.getByRole('button', { name: 'Schedule', exact: true });
+        this.postNowButton = page.getByRole('button', { name: 'Post now', exact: true });
+        this.openCalendarButton = page.getByLabel('Open calendar');
+
     }
     async selectComposeButton() {
         await expect(this.composeButton).toBeVisible;
@@ -44,5 +47,29 @@ exports.ComposePage = class ComposePage {
         await this.scheduleLaterButton.click();
         await this.ScheduleDone.click();
         await this.scheduleButton.click();
+        await expect(this.scheduleButton).not.toBeVisible;
+    }
+
+    async sendNow() {
+        await this.postNowButton.click();
+        await expect(this.postNowButton).not.toBeVisible;
+    }
+
+    async verifySocialProfileSelected(name) {
+        await expect(this.page.locator('.vk-PillText')).toContainText(`${name}`);
+    }
+
+    async verifyTwitterPreview(text) {
+        await expect(this.page.locator('.vk-TwitterPreview .vk-ContentBody')).toContainText(`${text}`);
+    }
+
+    async selectMessageScheduleDate() {
+        await this.scheduleLaterButton.click();
+        await this.openCalendarButton.click();
+        await this.page.getByLabel('Go to next month').click();
+        await this.page.locator('(//button[contains(@class, "rdp-day") and text()="1"])[1]').click();
+        await this.page.getByTestId('schedule-post-done-btn').click();
+        await this.scheduleButton.click();
+        await expect(this.scheduleButton).not.toBeVisible;
     }
 };

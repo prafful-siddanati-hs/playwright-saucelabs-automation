@@ -27,11 +27,10 @@ exports.LoginPage = class LoginPage {
         } else {
             console.log('No Hootsuite User found.');
         }
-
         await this.page.goto('/login?lang=en');
         await expect(this.page).toHaveTitle(/Hootsuite - Login/);
         await this.emailAddress.fill(user.email);
-        await this.password.fill(defaultPassword);
+        await this.password.fill(user.password);
         await this.loginSubmit.click();
         await expect(this.emailAddress).not.toBeVisible;
         await this.page.waitForLoadState();
