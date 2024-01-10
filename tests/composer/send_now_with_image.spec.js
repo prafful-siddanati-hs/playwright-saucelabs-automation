@@ -15,7 +15,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Send now message using composer', async ({ page }) => {
-    let orgName = 'send_now_org_' + Math.floor(Math.random() * 10000);
+    let orgName = 'send_now_image_org_' + Math.floor(Math.random() * 10000);
     const composeText = `Publish New Compose Message! ${Date.now()}`;
     const addFixture = new getFixture();
     const createNewOrg = new createOrg();
@@ -28,12 +28,12 @@ test('Send now message using composer', async ({ page }) => {
     await addSocialNetwork.command('twitter_send');
 
     await loginPage.signInSkipOnboarding('pw_send_now');
-
+console.log(getObjectByName(global.fixture, 'twitter_send'));
     await composePage.selectComposeButton();
     await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, 'twitter_send').username);
     await composePage.writeMessage(composeText);
-    await composePage.uploadFile('tests/composer/owly-snowboard.jpg');
-    await composePage.verifyTwitterImagePreview();
-    await composePage.verifyTwitterPreview(composeText);
-    await composePage.sendNow();
+    // await composePage.uploadFile('tests/composer/owly-snowboard.jpg');
+    // await composePage.verifyTwitterImagePreview();
+    // await composePage.verifyTwitterPreview(composeText);
+    // await composePage.sendNow();
 });

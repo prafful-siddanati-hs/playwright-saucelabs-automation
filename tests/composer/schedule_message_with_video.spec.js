@@ -15,7 +15,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Schedule message using composer', async ({ page }) => {
-    let orgName = 'send_now_org_' + Math.floor(Math.random() * 10000);
+    let orgName = 'schedule_org_' + Math.floor(Math.random() * 10000);
     const composeText = `Schedule New Compose Message With Video! ${Date.now()}`;
     const addFixture = new getFixture();
     const createNewOrg = new createOrg();
