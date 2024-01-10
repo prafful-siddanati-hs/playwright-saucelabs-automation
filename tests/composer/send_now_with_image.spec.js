@@ -28,12 +28,11 @@ test('Send now message using composer', async ({ page }) => {
     await addSocialNetwork.command('twitter_send');
 
     await loginPage.signInSkipOnboarding('pw_send_now');
-console.log(getObjectByName(global.fixture, 'twitter_send'));
     await composePage.selectComposeButton();
     await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, 'twitter_send').username);
     await composePage.writeMessage(composeText);
-    // await composePage.uploadFile('tests/composer/owly-snowboard.jpg');
-    // await composePage.verifyTwitterImagePreview();
-    // await composePage.verifyTwitterPreview(composeText);
-    // await composePage.sendNow();
+    await composePage.uploadFile('tests/composer/owly-snowboard.jpg');
+    await composePage.verifyTwitterImagePreview();
+    await composePage.verifyTwitterPreview(composeText);
+    await composePage.sendNow();
 });
