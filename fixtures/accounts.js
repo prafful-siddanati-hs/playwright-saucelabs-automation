@@ -112,15 +112,15 @@ module.exports = {
             auth2: 'srrTMVUESXwdbn8UiqY6fiAnmDeAUX0YxgrdbM8nPqoGT',
             type: 'twitter'
         }, */
-        {
-            email: 'plan.create.automation+tacodove@hootsuite.com',
-            id: '1670892828774535174',
-            username: 'hoot_taco_dove',
-            password: 'Assword!',
-            auth1: '1670892828774535174-7XDQLf0QDF76HEXOb1sm95GeAx6V4D',
-            auth2: 'wtYGRUFs1pOZf8PIceRCAWC8C73tEzGxvx8qRssizVrUW',
-            type: 'twitter'
-        },
+        // {
+        //     email: 'plan.create.automation+tacodove@hootsuite.com',
+        //     id: '1670892828774535174',
+        //     username: 'hoot_taco_dove',
+        //     password: 'Assword!',
+        //     auth1: '1670892828774535174-7XDQLf0QDF76HEXOb1sm95GeAx6V4D',
+        //     auth2: 'wtYGRUFs1pOZf8PIceRCAWC8C73tEzGxvx8qRssizVrUW',
+        //     type: 'twitter'
+        // },
         {
             email: 'plan.create.automation+tacoeagle@hootsuite.com',
             id: '1670891447128846337',

@@ -81,6 +81,7 @@ exports.ComposePage = class ComposePage {
         await this.scheduleLaterButton.click();
         await expect(this.openCalendarButton).toHaveCount(1);
         await this.openCalendarButton.click();
+        await this.openCalendarButton.click();
         await this.nextMonthButton.click();
         await this.firstDayOfNextMonth.click();
         await this.scheduleDoneButton.click();

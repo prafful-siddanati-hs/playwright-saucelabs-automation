@@ -4,7 +4,8 @@ const {getObjectByName} = require("../../globals");
 const scheduleV3Message = require("../../custom-commands/scheduleV3Message");
 const { formatISO, addHours, addDays, subDays } = require('date-fns');
 const {PlannerPage} = require("../../pages/planandcreate/planner");
-const {SetUpAndLoginAsEnterpriseUser} = require("../setUpAndLoginAsEnterpriseUser");
+const {SetUpEnterpriseUser} = require("../../custom-commands/setUpEnterpriseUser");
+const {LoginPage} = require("../../pages/login");
 
 test.afterEach(async ({ page }) => {
     const cleanUp = new tearDown();
@@ -17,13 +18,18 @@ test('Verify scheduled message in week view', async ({ page }) => {
     let orgName = 'planner_basic_org_' + Math.floor(Math.random() * 10000);
     const message = `Planner New Compose Message! ${Date.now()}`;
     const scheduleTime = addHours(new Date(), 1);
-    let accounts = new Map();
-    accounts.set("twitter", 'twitter_msg');
+    let accounts = {
+        twitter: []
+    };
+    accounts.twitter.push("twitter_msg"); //Push no.of Twitter accounts to enterprise user
+
     const createScheduleMessage = new scheduleV3Message();
-    const userLogin = new SetUpAndLoginAsEnterpriseUser();
+    const userSetUp = new SetUpEnterpriseUser();
+    const loginPage = new LoginPage(page);
     const plannerPage = new PlannerPage(page);
 
-    await userLogin.setUpAndLoginAsEnterpriseUser(orgName, page, 'pw_send_now', accounts);
+    await userSetUp.setUpEnterpriseUser(orgName,'pw_planner', accounts);
+    await loginPage.signInSkipOnboarding('pw_planner')
 
     /* Create a scheduled message */
     await createScheduleMessage.command(
@@ -31,7 +37,7 @@ test('Verify scheduled message in week view', async ({ page }) => {
         {
             messages: [
                 {
-                    socialProfileId: getObjectByName(global.fixture, 'twitter_msg').socialProfile.socialProfileId,
+                    socialProfileId: getObjectByName(global.fixture, `${accounts.twitter}`).socialProfile.socialProfileId,
                     text: message,
                     scheduledSendTime: formatISO(scheduleTime)
                 }
