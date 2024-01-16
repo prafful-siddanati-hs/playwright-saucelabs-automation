@@ -216,7 +216,6 @@ class getFixture extends events.EventEmitter {
                         })
                         .then(profile => {
                             this.checkResponse(profile, `Social profile ${fixture.socialProfile.username} has been added.`);
-                            console.log("profile.socialProfileId: ", profile.socialProfileId)
                             fixture.socialProfile.socialProfileId = profile.socialProfileId;
                             fixture.socialProfile.isSecurePost = profile.isSecurePost;
                             fixture.socialProfile.isReuathRequired = profile.isReuathRequired;
