@@ -66,61 +66,6 @@ module.exports = {
             auth2: 'SCMz13MUi8HVXUmQq4RFIBGHuOok8k6qvVYpQPXZPBRE5',
             type: 'TWITTER'
         },
-        //Temporarily disable this till auth1 & auth2 tokens are updated
-        /* {
-            email: 'shane.gearon+tacoalbatross@hootsuite.com',
-            id: '760537676214706176',
-            username: 'tacoalbatross',
-            password: 'Assword!',
-            auth1: '760537676214706176-AGRGc4k9tC15nEPOyLJX5FeRqynonfG',
-            auth2: 'yLg1X33HtmiqXCxpkpqUus7hjVwRip85I5pV3v411wN1Z',
-            type: 'twitter'
-        },
-        {
-            email: 'shane.gearon+tacofowl@hootsuite.com',
-            id: '760533076371877888',
-            username: 'tacofowl',
-            password: 'Assword!',
-            auth1: '760533076371877888-BboXwuODJlKaO2fjnqyuedJs62t0iep',
-            auth2: 'QMHR1Bd6HdsFf4OHIWanttLvvHcKjyZAI0ANDCEqtlR30',
-            type: 'twitter'
-        },
-        {
-            email: 'shane.gearon+tacodove@hootsuite.com',
-            id: '700805302413688832',
-            username: 'taco_dove',
-            password: 'Assword!',
-            auth1: '700805302413688832-vsJGNscPxgYMcauzZyMZcSuU0rZIuQ7',
-            auth2: 'SzKBSRA9RU1DyP6UYEfV24ymKMEsCX4urXr0qrX7REcux',
-            type: 'twitter'
-        },
-        {
-            email: 'shane.gearon+tacoeagle@hootsuite.com',
-            id: '700810751926095872',
-            username: 'taco_eagle',
-            password: 'Assword!',
-            auth1: '700810751926095872-jzVE8Y1EuQ8kmPfDicdzQc2N2tBstKl',
-            auth2: 'PikeAzc21ntKwul4wuNzRkI6GZ1sNFVnXISbcFu7gue4a',
-            type: 'twitter'
-        },
-        {
-            email: 'shane.gearon+tacohawk@hootsuite.com',
-            id: '700811507446128640',
-            username: 'taco_hawk1',
-            password: 'Assword!',
-            auth1: '700811507446128640-0vK8NCJQVXEZfcbFOvqzaSiH00mREwF',
-            auth2: 'srrTMVUESXwdbn8UiqY6fiAnmDeAUX0YxgrdbM8nPqoGT',
-            type: 'twitter'
-        }, */
-        // {
-        //     email: 'plan.create.automation+tacodove@hootsuite.com',
-        //     id: '1670892828774535174',
-        //     username: 'hoot_taco_dove',
-        //     password: 'Assword!',
-        //     auth1: '1670892828774535174-7XDQLf0QDF76HEXOb1sm95GeAx6V4D',
-        //     auth2: 'wtYGRUFs1pOZf8PIceRCAWC8C73tEzGxvx8qRssizVrUW',
-        //     type: 'twitter'
-        // },
         {
             email: 'plan.create.automation+tacoeagle@hootsuite.com',
             id: '1670891447128846337',
@@ -139,15 +84,6 @@ module.exports = {
             auth2: 'W6FRQCekwhUwfj92CnhTVekErGnf2mxuuqiLEirhtkXwj',
             type: 'twitter'
         },
-        // {
-        //     email: 'plan.create.automation+testComposer@hootsuite.com',
-        //     id: '1491929591086157824',
-        //     username: 'HComposerStg',
-        //     password: '806gqDJjwu',
-        //     auth1: '1491929591086157824-pshCQ9N2R5DKvyeMW5xrvtvw4wQMw8',
-        //     auth2: 'MmyNK8iUkvXZoIvNFD8i6Gyo1ogGHgmow0v8eK5Fp8xjd',
-        //     type: 'twitter'
-        // },
         {
             email: 'plan.create.automation+testPlanner@hootsuite.com',
             id: '1502377578597797890',
