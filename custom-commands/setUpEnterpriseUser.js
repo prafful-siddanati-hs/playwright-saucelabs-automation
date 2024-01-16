@@ -1,6 +1,7 @@
 const getFixture = require("../custom-commands/getFixture");
 const createOrg = require("../custom-commands/createOrg");
 const addSocialToOrg = require("../custom-commands/addSocialToOrg");
+
 exports.SetUpEnterpriseUser = class SetUpEnterpriseUser {
     /**
      * @param {string} org      Name of the organization
