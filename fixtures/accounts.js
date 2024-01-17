@@ -101,6 +101,24 @@ module.exports = {
             auth1: '1502381630802911232-sAx5ah0E2GdX9KajHllCgbi5OkXn7Q',
             auth2: 'wIgPUWpyVsAIGwEFMaVLjP3RkHz86dBBTHEdoeTpiF6ov',
             type: 'twitter'
+        },
+        {
+            email: 'plan.create.automation+testpandc@hootsuite.com',
+            id: '1747717097021644800',
+            username: 'HootPandctest',
+            password: '!1Passw0rd',
+            auth1: '1747717097021644800-ODtxYbFMNZkrOoLakx19KvaamVumCF',
+            auth2: 'MYnWlnMhPsbx2eAKwjnoZJD5lA1cbkgQtjxKsfJfg2tKW',
+            type: 'twitter'
+        },
+        {
+            email: 'plan.create.automation+testqa@hootsuite.com',
+            id: '1747721286808420352',
+            username: 'Hoottestqa',
+            password: '!1Passw0rd',
+            auth1: '1747721286808420352-8uejyvZwruygqrvW0yTXiRM0HYoZfQ',
+            auth2: 'ehzc5x1AanFKnoVM7gaKPJTGjjGIwCOAXYYtQZzWaQMDN',
+            type: 'twitter'
         }
     ],
 
