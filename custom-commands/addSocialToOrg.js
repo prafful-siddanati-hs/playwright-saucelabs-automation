@@ -47,7 +47,7 @@ class addSocialToOrg extends events.EventEmitter {
 
             console.log('Adding social profile to organization:');
 
-            response = await socialProfiles.addSocialProfile(
+            socialProfiles.addSocialProfile(
                 s.socialProfile.userId,
                 s.socialProfile.username,
                 s.socialProfile.type,
@@ -57,19 +57,20 @@ class addSocialToOrg extends events.EventEmitter {
                     organizationId: o.id,
                     externalId: s.socialProfile.userId
                 }
-            );
+            ).then(response => {
+                if (!hasResponseErrors(response)) {
+                    s.socialProfile.socialProfileId = response.socialProfileId;
+                    s.socialProfile.isSecurePost = response.isSecurePost;
+                    s.socialProfile.isReauthRequired = response.isReauthRequired;
+                    console.log(true, `Social profile ${s.socialProfile.username} has been added to ${o.name} with Org Id: ${o.id}`);
+                } else {
+                    console.log(false, JSON.stringify(response));
+                }
+                this.emit('Complete');
+                return this;
+            });
         } catch (err) {
             console.log(false, JSON.stringify(err));
-        } finally {
-            if (!hasResponseErrors(response)) {
-                s.socialProfile.socialProfileId = response.socialProfileId;
-                s.socialProfile.isSecurePost = response.isSecurePost;
-                s.socialProfile.isReauthRequired = response.isReauthRequired;
-                console.log(true, `Social profile ${s.socialProfile.username} has been added to ${o.name} with Org Id: ${o.id}`);
-            } else {
-                console.log(false, JSON.stringify(response));
-            }
-            this.emit('Complete');
         }
         return this;
     }
