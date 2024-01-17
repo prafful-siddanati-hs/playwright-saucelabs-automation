@@ -14,6 +14,23 @@ exports.PlannerPage = class PlannerPage {
         this.firstFreeImage = page.locator('.-mediaRow img[draggable="true"]').first();
         this.draftCard = page.getByText('No account');
         this.closeSaveDraftPopup = page.locator('#DraftSavedPopover [aria-label="Close Draft saved"]');
+        this.viewWeekToggle = page.locator('.vk-Planner .vk-ViewToggleBar [aria-label= "View weekly planner"]');
+    }
+
+    async visit() {
+        await this.page.goto('/dashboard#/planner');
+    }
+
+    async selectWeekView() {
+        await this.viewWeekToggle.click();
+    }
+
+    async verifyScheduledMessage(text) {
+        await expect(this.page.getByText(text)).toBeVisible;
+    }
+
+    async showPreviewPane(text) {
+        await this.page.getByText(text).click();
     }
 
     async dragAndDropCard(message) {

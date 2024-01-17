@@ -31,7 +31,7 @@ const { som_bridge, tops_skyline, hasResponseErrors } = require('../globals.js')
  *                                  Value must be between 30 and 600. (optional, default: 90)
  *
  * @return {function}  this         Allows to chain commands
- * 
+ *
  * If success and addSocial = true, example below returned via optional callback
  * and pushed into global.fixtures[]:
  *
@@ -205,7 +205,7 @@ class getFixture extends events.EventEmitter {
 
                     this.step = 'Adding social network to Hootsuite member';
 
-                    let profile = socialProfiles.addSocialProfile(fixture.socialProfile.userId,
+                    socialProfiles.addSocialProfile(fixture.socialProfile.userId,
                         fixture.socialProfile.username,
                         fixture.socialProfile.type,
                         fixture.socialProfile.auth1,
@@ -213,12 +213,13 @@ class getFixture extends events.EventEmitter {
                         {
                             memberId: fixture.member.memberId,
                             externalId: fixture.socialProfile.userId
+                        })
+                        .then(profile => {
+                            this.checkResponse(profile, `Social profile ${fixture.socialProfile.username} has been added.`);
+                            fixture.socialProfile.socialProfileId = profile.socialProfileId;
+                            fixture.socialProfile.isSecurePost = profile.isSecurePost;
+                            fixture.socialProfile.isReuathRequired = profile.isReuathRequired;
                         });
-
-                    this.checkResponse(profile, `Social profile ${fixture.socialProfile.username} has been added.`);
-                    fixture.socialProfile.socialProfileId = profile.socialProfileId;
-                    fixture.socialProfile.isSecurePost = profile.isSecurePost;
-                    fixture.socialProfile.isReuathRequired = profile.isReuathRequired;
                 }
             } else {
                 fixture.isSocialProfile = false;

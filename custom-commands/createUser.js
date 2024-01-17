@@ -2,6 +2,7 @@ const events = require('events');
 const Som = require('hsapi').som;
 
 const { som, defaultPassword } = require('../globals.js');
+const _ = require('underscore');
 
 /**
  * Creates a new member object in member service, dashboard, and billing service and adds user to globals.
@@ -49,7 +50,7 @@ class createUser extends events.EventEmitter {
             console.log(data !== undefined, `${member.email} / ${member.password}`);
 
             // Updates member object, using the keys in data as defaults
-            Object.assign(member, data);
+            _.defaults(member, data);
 
             if (!member.memberId) {
                 throw new Error(`Create user was unable to get a valid memberId. Response: ${JSON.stringify(data)}`);
