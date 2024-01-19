@@ -115,7 +115,7 @@ class tearDown extends events.EventEmitter {
             });
 
             if (cleanedProfiles.length > 0) {
-                let cleaned = await Promise.all(cleanedProfiles);
+                let cleaned = Promise.all(cleanedProfiles);
 
                 this.checkResponse(cleaned, 'All Hootsuite users have been cleaned.');
             }

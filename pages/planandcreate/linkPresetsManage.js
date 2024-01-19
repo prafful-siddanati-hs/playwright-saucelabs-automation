@@ -20,6 +20,7 @@ exports.LinkPresetsManagePage = class LinkPresetsManagePage {
         const page1Promise = this.page.waitForEvent('popup');
         await this.createBitlyButton.click();
         const page1 = await page1Promise;
+        await page1.waitForLoadState('networkidle');
         await page1.getByRole('button', { name: 'Close' }).click();
         await page1.getByRole('link', { name: 'Sign in with your Bitly account' }).click();
         await page1.getByLabel('Email').click();
