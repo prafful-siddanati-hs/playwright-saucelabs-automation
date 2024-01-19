@@ -28,6 +28,7 @@ exports.LoginPage = class LoginPage {
             console.log('No Hootsuite User found.');
         }
         await this.page.goto('/login?lang=en');
+        await this.page.waitForLoadState('networkidle');
         await expect(this.page).toHaveTitle(/Hootsuite - Login/);
         await this.emailAddress.fill(user.email);
         await this.password.fill(user.password);
