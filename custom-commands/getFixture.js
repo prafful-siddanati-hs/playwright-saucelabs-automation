@@ -188,7 +188,7 @@ class getFixture extends events.EventEmitter {
                 // Cleaning social profile
                 this.step = 'Cleaning social profile';
 
-                let isClean = await socialProfiles.cleanUpSocialProfile(fixture.socialProfile.type, {
+                let isClean =  socialProfiles.cleanUpSocialProfile(fixture.socialProfile.type, {
                     userId: fixture.socialProfile.userId
                 });
 
