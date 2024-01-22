@@ -1,11 +1,11 @@
 const { test } = require('@playwright/test');
-const createUser = require('../custom-commands/createUser');
-const getFixture = require('../custom-commands/getFixture');
-const tearDown = require('../custom-commands/tearDown');
-const createOrg = require('../custom-commands/createOrg');
-const addSocialToOrg = require('../custom-commands/addSocialToOrg');
-const addUserToOrg = require('../custom-commands/addUserToOrg');
-const modifySocialProfilePermissions = require('../custom-commands/modifySocialProfilePermissions');
+const createUser = require('../../custom-commands/createUser');
+const getFixture = require('../../custom-commands/getFixture');
+const tearDown = require('../../custom-commands/tearDown');
+const createOrg = require('../../custom-commands/createOrg');
+const addSocialToOrg = require('../../custom-commands/addSocialToOrg');
+const addUserToOrg = require('../../custom-commands/addUserToOrg');
+const modifySocialProfilePermissions = require('../../custom-commands/modifySocialProfilePermissions');
 
 test.afterEach(async ({ page }) => {
     const cleanUp = new tearDown();

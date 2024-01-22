@@ -2,9 +2,9 @@ const { test } = require('@playwright/test');
 const fs = require('fs');
 const { formatISO, addHours, addDays, subDays } = require('date-fns');
 //const { LoginPage } = require("../pages/login");
-const scheduleV3Message = require("../custom-commands/scheduleV3Message");
-const getScheduledMessages = require('../custom-commands/getScheduledMessages');
-const deleteScheduledMessageById = require("../custom-commands/deleteScheduledMesssagesById")
+const scheduleV3Message = require("../../custom-commands/scheduleV3Message");
+const getScheduledMessages = require('../../custom-commands/getScheduledMessages');
+const deleteScheduledMessageById = require("../../custom-commands/deleteScheduledMesssagesById")
 
 function readJson(fileName) {
   let rawData = fs.readFileSync(fileName, 'utf-8');

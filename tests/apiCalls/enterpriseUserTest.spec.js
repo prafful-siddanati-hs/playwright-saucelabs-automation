@@ -1,9 +1,9 @@
 const { test } = require('@playwright/test');
-const getFixture = require('../custom-commands/getFixture');
-const tearDown = require('../custom-commands/tearDown');
-const createOrg = require('../custom-commands/createOrg');
-const addSocialToOrg = require('../custom-commands/addSocialToOrg');
-const { LoginPage } = require("../pages/login");
+const getFixture = require('../../custom-commands/getFixture');
+const tearDown = require('../../custom-commands/tearDown');
+const createOrg = require('../../custom-commands/createOrg');
+const addSocialToOrg = require('../../custom-commands/addSocialToOrg');
+const { LoginPage } = require("../../pages/login");
 
 test.afterEach(async ({ page }) => {
     const cleanUp = new tearDown();
