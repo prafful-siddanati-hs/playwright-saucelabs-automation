@@ -1,8 +1,8 @@
 const { test } = require('@playwright/test');
-const createUser = require('../custom-commands/createUser');
-const getFixture = require('../custom-commands/getFixture');
-const tearDown = require('../custom-commands/tearDown.js');
-const {LoginPage} = require("../pages/login");
+const createUser = require('../../custom-commands/createUser.js');
+const getFixture = require('../../custom-commands/getFixture.js');
+const tearDown = require('../../custom-commands/tearDown.js');
+const {LoginPage} = require("../../pages/login.js");
 
 test.afterEach(async ({ page }) => {
     const cleanUp = new tearDown();

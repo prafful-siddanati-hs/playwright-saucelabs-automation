@@ -1,10 +1,10 @@
 const { test } = require('@playwright/test');
 const fs = require('fs');
 const {addHours } = require('date-fns');
-const { LoginPage } = require("../pages/login");
-const draftMessage = require("../custom-commands/draftMessage");
-const getDrafts = require('../custom-commands/getDrafts');
-const deleteDraftById = require("../custom-commands/deleteDraftById")
+const { LoginPage } = require("../../pages/login");
+const draftMessage = require("../../custom-commands/draftMessage");
+const getDrafts = require('../../custom-commands/getDrafts');
+const deleteDraftById = require("../../custom-commands/deleteDraftById")
 
 function readJson(fileName) {
   let rawData = fs.readFileSync(fileName, 'utf-8');

@@ -1,8 +1,8 @@
 const { test } = require('@playwright/test');
 const fs = require('fs');
 const {addMonths, lastDayOfMonth} = require('date-fns');
-const { LoginPage } = require("../pages/login");
-const createCampaign = require("../custom-commands/createCampaign");
+const { LoginPage } = require("../../pages/login");
+const createCampaign = require("../../custom-commands/createCampaign");
 
 function readJson(fileName) {
   let rawData = fs.readFileSync(fileName, 'utf-8');
