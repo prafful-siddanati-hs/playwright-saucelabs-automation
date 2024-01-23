@@ -4,6 +4,8 @@ const {ComposePage} = require("../../pages/planandcreate/compose");
 const {getObjectByName} = require("../../globals");
 const {SetUpEnterpriseUser} = require("../../custom-commands/setUpEnterpriseUser");
 const {LoginPage} = require("../../pages/login");
+const createUser = require("../../custom-commands/createUser");
+const getFixture = require("../../custom-commands/getFixture");
 
 test.afterEach(async ({ page }) => {
     const cleanUp = new tearDown();
@@ -13,25 +15,24 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Schedule message with video using composer', async ({ page }) => {
-    let orgName = 'schedule_org_' + Math.floor(Math.random() * 10000);
     const composeText = `Schedule New Compose Message With Video! ${Date.now()}`;
-    let accounts = {
-        twitter: []
-    };
-    accounts.twitter.push("twitter_schedule_video"); //Push no.of Twitter accounts to enterprise user
 
+    const createNewUser = new createUser();
+    const addFixture = new getFixture();
     const loginPage = new LoginPage(page);
-    const userSetUp = new SetUpEnterpriseUser();
     const composePage = new ComposePage(page);
 
-    await userSetUp.setUpEnterpriseUser(orgName, 'pw_send_now_video', accounts);
-    await loginPage.signInSkipOnboarding('pw_send_now_video');
+    await createNewUser.command('pw_send_now_video', 'professional');
+    await addFixture.command('schedule_video','plan_create_facebookpage', true, 180);
+
+    await loginPage.signIn('pw_send_now_video');
 
     await composePage.selectComposeButton();
-    await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, `${accounts.twitter}`).username);
+    await  composePage.exitButton.click();
+    await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, 'schedule_video').username);
     await composePage.writeMessage(composeText);
-    await composePage.verifyTwitterPreview(composeText);
-    await composePage.uploadFile('test_data/publisher/videos/video.mp4');
-    await composePage.verifyTwitterVideoPreview();
+    await composePage.verifyFacebookPreview(composeText);
+    await composePage.uploadFile('test_data/publisher/videos/video_2.mp4');
+    await composePage.verifyFacebookVideoPreview();
     await composePage.selectMessageScheduleDate();
 });

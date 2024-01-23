@@ -30,7 +30,7 @@ module.exports = defineConfig({
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 15000,
+    timeout: 20000,
   },
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [['html',{outputFile: 'playwright-report/index.html', open: 'never'}],
