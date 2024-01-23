@@ -5,30 +5,47 @@ const {LoginPage} = require("../../pages/login");
 const {PlannerPage} = require("../../pages/planandcreate/planner");
 const fs = require('fs');
 const scheduleV3Message = require("../../custom-commands/scheduleV3Message");
+const createUser = require("../../custom-commands/createUser");
+const getFixture = require("../../custom-commands/getFixture");
+const {getObjectByName} = require("../../globals");
+const tearDown = require('../../custom-commands/tearDown');
 
- function readJson() {
-  let rawData = fs.readFileSync('fixtures/accounts.json', 'utf-8');
-  return JSON.parse(rawData);
-}
 
-test('Drag and drop card on week view', async ({ page }) => {
-    const user = readJson();
+/** @type {import('@playwright/test').Page} */
+let page;
+test.beforeAll(async ({ browser }) => {
+    page = await browser.newPage();
+});
+
+test.afterAll(async () => {
+    const cleanUp = new tearDown();
+
+    await cleanUp.command();
+    await page.close();
+});
+
+test('Drag and drop card on week view', async ({}) => {
+    const createNewUser = new createUser();
+    const addFixture = new getFixture();
     const loginPage = new LoginPage(page);
-    const createScheduleMessage = new scheduleV3Message();
     const plannerPage = new PlannerPage(page);
+    const createScheduleMessage = new scheduleV3Message();
+
+    await createNewUser.command('dnd_user', 'professional');
+    await addFixture.command('twitter_dnd','twitter', true, 300);
+
+    await loginPage.signIn('dnd_user');
 
     const scheduleTime = addHours(new Date(), 1);
     const composeText = `test drag and drop card on planner week view ${Date.now()}`;
 
-    await loginPage.login(user[0].email, user[0].password);
-
     /* Create a scheduled message */
     await createScheduleMessage.command(
-        parseInt(user[0].memberId, 10),
+        parseInt(global.member[0].memberId, 10),
         {
             messages: [
                 {
-                    socialProfileId: user[0].socialProfileId,
+                    socialProfileId: getObjectByName(global.fixture, 'twitter_dnd').socialProfile.socialProfileId,
                     text: composeText,
                     scheduledSendTime: formatISO(scheduleTime)
                 }
@@ -37,16 +54,11 @@ test('Drag and drop card on week view', async ({ page }) => {
     );
 
   await plannerPage.dragAndDropCard(composeText);
-  await page.close();
 });
 
-test('drag and drop media from side pane on week view', async ({ page }) => {
-  const user = readJson();
+test('drag and drop media from side pane on week view', async ({}) => {
+    const plannerPage = new PlannerPage(page);
 
-  const loginPage = new LoginPage(page);
-  const plannerPage = new PlannerPage(page);
-
-  await loginPage.login(user[1].email, user[1].password);
-  await plannerPage.dragAndDropMedia();
-  await page.close();
+    await plannerPage.dragAndDropMedia();
+    await page.close();
 });

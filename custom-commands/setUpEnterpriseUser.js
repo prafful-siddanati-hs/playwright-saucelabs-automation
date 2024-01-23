@@ -17,6 +17,7 @@ exports.SetUpEnterpriseUser = class SetUpEnterpriseUser {
 
         for (const key of keys) {
             for (const account_name of networks[key]) {
+                console.log(`Account_type: ${key}, Account_name: ${account_name}`);
                 await addFixture.command(`${account_name}`, `${key}`, false, 300);
             }
         }
@@ -25,6 +26,7 @@ exports.SetUpEnterpriseUser = class SetUpEnterpriseUser {
 
         for (const key of keys) {
             for (const account_name of networks[key]) {
+                console.log(`Account_type: ${key}, Account_name: ${account_name}`);
                 await addSocialNetwork.command(`${account_name}`);
             }
         }

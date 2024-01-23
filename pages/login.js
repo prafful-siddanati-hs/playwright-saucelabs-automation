@@ -1,5 +1,6 @@
 const { expect } = require('@playwright/test');
 const { defaultPassword } = require('../globals.js')
+const {getObjectByName} = require("../globals");
 
 exports.LoginPage = class LoginPage {
     constructor(page) {
@@ -16,10 +17,10 @@ exports.LoginPage = class LoginPage {
 
     async signIn(member) {
         let user;
-        let hsUsers = (global.member && global.member[0]) ? global.member[0] : (global.fixture && global.fixture[0]);
+        let hsUsers = global.member;
 
         if (typeof member === 'string') {
-            user = hsUsers;
+            user = getObjectByName(hsUsers, member);
         } else if (hsUsers.size() > 0) {
             user = hsUsers.get()[hsUsers.size() - 1];
         } else if (member) {
@@ -27,6 +28,7 @@ exports.LoginPage = class LoginPage {
         } else {
             console.log('No Hootsuite User found.');
         }
+
         await this.page.goto('/login?lang=en');
         await this.page.waitForLoadState('networkidle');
         await expect(this.page).toHaveTitle(/Hootsuite - Login/);

@@ -5,14 +5,20 @@ const {getObjectByName} = require("../../globals");
 const {SetUpEnterpriseUser} = require("../../custom-commands/setUpEnterpriseUser")
 const {LoginPage} = require("../../pages/login");
 
-test.afterEach(async ({ page }) => {
+/** @type {import('@playwright/test').Page} */
+let page;
+test.beforeAll(async ({ browser }) => {
+    page = await browser.newPage();
+});
+
+test.afterAll(async () => {
     const cleanUp = new tearDown();
 
     await cleanUp.command();
     await page.close();
 });
 
-test('Send now message using composer', async ({ page }) => {
+test('Send now message using composer', async ({}) => {
     let orgName = 'send_now_org_' + Math.floor(Math.random() * 10000);
     const composeText = `Publish New Compose Message! ${Date.now()}`;
     let accounts = {
@@ -33,3 +39,17 @@ test('Send now message using composer', async ({ page }) => {
     await composePage.verifyTwitterPreview(composeText);
     await composePage.sendNow();
 });
+
+test('Send now message with image using composer', async ({}) => {
+    const composeText = `Publish New Compose Message! ${Date.now()}`;
+    const composePage = new ComposePage(page);
+
+    await composePage.selectComposeButton();
+    await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, 'twitter_send').username);
+    await composePage.writeMessage(composeText);
+    await composePage.uploadFile('test_data/publisher/images/owly-snowboard.jpg');
+    await composePage.verifyTwitterImagePreview();
+    await composePage.verifyTwitterPreview(composeText);
+    await composePage.sendNow();
+});
+

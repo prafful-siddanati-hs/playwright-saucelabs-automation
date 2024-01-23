@@ -12,7 +12,7 @@ test.afterEach(async ({ page }) => {
     await page.close();
 });
 
-test('Schedule message using composer', async ({ page }) => {
+test('Schedule message with video using composer', async ({ page }) => {
     let orgName = 'schedule_org_' + Math.floor(Math.random() * 10000);
     const composeText = `Schedule New Compose Message With Video! ${Date.now()}`;
     let accounts = {

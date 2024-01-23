@@ -11,6 +11,7 @@ exports.PlannerPage = class PlannerPage {
         this.sidePaneCloseButton = page.getByTestId('CloseButton');
         this.deletePostButton = page.getByRole('button', { name: 'Delete post' });
         this.addMediaButton = page.getByTestId('ContentButton');
+        this.termsOfServiceWall = page.locator('.vk-TermsOfServiceWall button');
         this.firstFreeImage = page.locator('.-mediaRow img[draggable="true"]').first();
         this.draftCard = page.getByText('No account');
         this.closeSaveDraftPopup = page.locator('#DraftSavedPopover [aria-label="Close Draft saved"]');
@@ -36,7 +37,9 @@ exports.PlannerPage = class PlannerPage {
     async dragAndDropCard(message) {
         const nextDayDate = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'eeee, d MMMM');
         const nextDayTime = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'ha');
+
         await this.plannerButton.click();
+        await this.page.waitForLoadState();
 
         await expect(this.page.getByText(message)).toBeVisible;
 
@@ -44,10 +47,10 @@ exports.PlannerPage = class PlannerPage {
         const destination = this.page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at ${nextDayTime}` });
         await this.page.waitForTimeout(1000);
 
+
         await source.hover();
         await this.page.mouse.down();
 
-        await destination.hover();
         await destination.hover();
         await destination.hover();
 
@@ -67,6 +70,7 @@ exports.PlannerPage = class PlannerPage {
         await this.plannerButton.click();
         await this.page.waitForLoadState();
         await this.addMediaButton.click();
+        await this.termsOfServiceWall.click();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.firstFreeImage).toHaveJSProperty('complete', true);
         await expect(this.firstFreeImage).not.toHaveJSProperty('naturalWidth', 0);
