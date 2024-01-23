@@ -20,8 +20,11 @@ exports.ComposePage = class ComposePage {
         this.openCalendarButton = page.getByLabel('Open calendar');
         this.nextMonthButton = page.getByLabel('Go to next month');
         this.firstDayOfNextMonth = page.locator('(//button[contains(@class, "rdp-day") and text()="1"])[1]');
-        this.twitterVideoPreviewSelector =this.page.locator('.rc-Composer .vk-TwitterPreview .vk-VideoContainer');
-        this.twitterPreviewtext = this.page.locator('.vk-TwitterPreview .vk-ContentBody');
+        this.twitterVideoPreviewSelector = page.locator('.rc-Composer .vk-TwitterPreview .vk-VideoContainer');
+        this.facebookVideoPreviewSelector = page.locator('.rc-Composer .vk-FacebookPreview .vk-VideoContainer .vk-VideoPlayer');
+        this.twitterPreviewText = this.page.locator('.vk-TwitterPreview .vk-ContentBody');
+        this.facebookPreviewText = this.page.locator('.vk-FacebookPreview .vk-ContentBody');
+        this.exitButton = this.page.getByRole('button', { name: 'Exit tutorial' });
     }
     async selectComposeButton() {
         await expect(this.composeButton).toBeVisible;
@@ -65,7 +68,7 @@ exports.ComposePage = class ComposePage {
     }
 
     async verifyTwitterPreview(text) {
-        await expect(this.twitterPreviewtext).toContainText(`${text}`);
+        await expect(this.twitterPreviewText).toContainText(`${text}`);
     }
 
     async verifyTwitterVideoPreview() {
@@ -75,6 +78,14 @@ exports.ComposePage = class ComposePage {
     async verifyTwitterImagePreview() {
         await expect(this.twitterPreviewSingleImage).toHaveJSProperty('complete', true);
         await expect(this.twitterPreviewSingleImage).not.toHaveJSProperty('naturalWidth', 0);
+    }
+
+    async verifyFacebookVideoPreview() {
+        await expect(this.facebookVideoPreviewSelector).toHaveCount(1);
+    }
+
+    async verifyFacebookPreview(text) {
+        await expect(this.facebookPreviewText).toContainText(`${text}`);
     }
 
     async selectMessageScheduleDate() {
