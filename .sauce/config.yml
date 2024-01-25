@@ -35,20 +35,27 @@ suites:
     params:
       browserName: "chromium"
       project: "chromium"
-  - name: "[Playwright] Planner Tests"
+  - name: "[Playwright] Composer Tests_Firefox"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['tests/planner/.*.js']
+    testMatch: ['tests/composer/.*.js']
     params:
-      browserName: "chromium"
-      project: "chromium"
-  - name: "[Playwright] Test API Calls" #This suite will be removed eventually
+      browserName: "firefox"
+      project: "firefox"
+  - name: "[Playwright] Composer Tests_Safari"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['tests/apiCalls/.*.js']
+    testMatch: [ 'tests/composer/.*.js' ]
     params:
-      browserName: "chromium"
-      project: "chromium"
+      browserName: "webkit"
+      project: "webkit"
+#  - name: "[Playwright] Test API Calls" #This suite will be removed eventually
+#    platformName: "Windows 11"
+#    screenResolution: "1920x1080"
+#    testMatch: ['tests/apiCalls/.*.js']
+#    params:
+#      browserName: "chromium"
+#      project: "chromium"
 #  - name: "Webkit Win"
 #     platformName: "Windows 11"
 #     screenResolution: "1440x900"
