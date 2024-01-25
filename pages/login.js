@@ -58,7 +58,5 @@ exports.LoginPage = class LoginPage {
     async signInSkipOnboarding(member) {
         await this.signIn(member);
         await this.page.goto('/dashboard#home');
-
-        return this;
     }
 };
