@@ -28,7 +28,7 @@ test('Schedule message with video using composer', async ({ page }) => {
     await loginPage.signIn('pw_send_now_video');
     await page.context().browser().browserType();
     await composePage.selectComposeButton();
-    await  composePage.exitButton.click();
+    await composePage.exitButton.click();
     await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, 'schedule_video').username);
     await composePage.writeMessage(composeText);
     await composePage.verifyFacebookPreview(composeText);

@@ -51,9 +51,9 @@ exports.ComposePage = class ComposePage {
 
     async writeMessage(message) {
             await this.page.waitForLoadState('networkidle');
+            await this.page.keyboard.press('Escape');
             await this.messageArea.click();
             await this.page.keyboard.type(message);
-            await this.page.keyboard.press('Enter');
             await expect(this.page.locator('.vk-Loader')).toHaveCount(0);
     }
 
