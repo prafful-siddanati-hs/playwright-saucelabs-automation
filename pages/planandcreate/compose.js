@@ -1,4 +1,5 @@
-const { expect, devices} = require('@playwright/test');
+const { expect } = require('@playwright/test');
+
 exports.ComposePage = class ComposePage {
     constructor(page) {
         this.page = page;
