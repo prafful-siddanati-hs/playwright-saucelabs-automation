@@ -5,12 +5,6 @@ const {getObjectByName} = require("../../globals");
 const {SetUpEnterpriseUser} = require("../../custom-commands/setUpEnterpriseUser")
 const {LoginPage} = require("../../pages/login");
 
-// /** @type {import('@playwright/test').Page} */
-// let page;
-// test.beforeEach(async ({ browser }) => {
-//     page = await browser.newPage();
-// });
-
 test.afterEach(async ({ page }) => {
     const cleanUp = new tearDown();
 
