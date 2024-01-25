@@ -43,8 +43,8 @@ suites:
       browserName: "firefox"
       project: "firefox"
   - name: "[Playwright] Composer Tests_Safari"
-    platformName: "Windows 11"
-    screenResolution: "1920x1080"
+    platformName: "macOS 13"
+    screenResolution: "1280x960"
     testMatch: [ 'tests/composer/.*.js' ]
     params:
       browserName: "webkit"
