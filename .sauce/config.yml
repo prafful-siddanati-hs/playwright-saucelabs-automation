@@ -35,6 +35,13 @@ suites:
     params:
       browserName: "chromium"
       project: "chromium"
+  - name: "[Playwright] Composer Tests"
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: [ 'tests/composer/.*.js' ]
+    params:
+      browserName: "firefox"
+      project: "firefox"
   - name: "[Playwright] Planner Tests"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
@@ -49,6 +56,13 @@ suites:
     params:
       browserName: "chromium"
       project: "chromium"
+  - name: "[Playwright] firefox Tests"
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: [ 'tests/composer/schedule_message_with_video.spec.js' ]
+    params:
+      browserName: "firefox"
+      project: "firefox"
 #  - name: "Webkit Win"
 #     platformName: "Windows 11"
 #     screenResolution: "1440x900"

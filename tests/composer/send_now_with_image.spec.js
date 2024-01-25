@@ -18,26 +18,24 @@ test.afterEach(async ({ page }) => {
     await page.close();
 });
 
-test('Send now message using composer', async ({page}) => {
-    let orgName = 'send_now_org_' + Math.floor(Math.random() * 10000);
-    const composeText = 'Send text '+ + Math.floor(Math.random() * 1000);
-
+test('Send now message with image using composer', async ({page}) => {
+    const composeText = 'Send Image '+ + Math.floor(Math.random() * 1000);
+    let orgName = 'send_now_org_image' + Math.floor(Math.random() * 10000);
     let accounts = {
-        twitter: []
+        plan_create_facebookpage: []
     };
-    accounts.twitter.push("twitter_send"); //Push no.of Twitter accounts to enterprise user
-
+    accounts.plan_create_facebookpage.push("fb_send_image"); //Push no.of Twitter accounts to enterprise user
     const loginPage = new LoginPage(page);
     const composePage = new ComposePage(page);
     const userSetUp = new SetUpEnterpriseUser();
 
-    await userSetUp.setUpEnterpriseUser(orgName, 'pw_send_now', accounts);
-    await loginPage.signInSkipOnboarding('pw_send_now');
-
+    await userSetUp.setUpEnterpriseUser(orgName, 'pw_send_now_image', accounts);
+    await loginPage.signInSkipOnboarding('pw_send_now_image');
     await composePage.selectComposeButton();
-    await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, `${accounts.twitter}`).username);
-    await expect(page.locator('.vk-TwitterPreview .vk-Name')).toHaveCount(1);
+    await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, 'fb_send_image').username);
     await composePage.writeMessage(composeText);
-    await composePage.verifyTwitterPreview(composeText);
+    await composePage.uploadFile('test_data/publisher/images/coffee.jpg');
+    await composePage.verifyFacebookImagePreview();
+    await composePage.verifyFacebookPreview(composeText);
     await composePage.sendNow();
 });

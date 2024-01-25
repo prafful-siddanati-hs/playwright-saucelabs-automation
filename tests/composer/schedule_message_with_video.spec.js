@@ -15,7 +15,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Schedule message with video using composer', async ({ page }) => {
-    const composeText = `Schedule New Compose Message With Video! ${Date.now()}`;
+    const composeText = 'Video '+ + Math.floor(Math.random() * 1000);
 
     const createNewUser = new createUser();
     const addFixture = new getFixture();
@@ -26,7 +26,7 @@ test('Schedule message with video using composer', async ({ page }) => {
     await addFixture.command('schedule_video','plan_create_facebookpage', true, 180);
 
     await loginPage.signIn('pw_send_now_video');
-
+    await page.context().browser().browserType();
     await composePage.selectComposeButton();
     await  composePage.exitButton.click();
     await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, 'schedule_video').username);
