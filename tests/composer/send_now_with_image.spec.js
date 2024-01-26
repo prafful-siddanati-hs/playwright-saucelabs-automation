@@ -12,7 +12,7 @@ test.afterEach(async ({ page }) => {
     await page.close();
 });
 
-test.skip('Send now message with image using composer', async ({page}) => {
+test('Send now message with image using composer', async ({page}) => {
     const composeText = 'Send Image '+ + Math.floor(Math.random() * 1000);
     let orgName = 'send_now_org_image' + Math.floor(Math.random() * 10000);
     let accounts = {

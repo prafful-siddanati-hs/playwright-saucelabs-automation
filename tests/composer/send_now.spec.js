@@ -12,7 +12,7 @@ test.afterEach(async ({ page }) => {
     await page.close();
 });
 
-test.skip('Send now message using composer', async ({page}) => {
+test('Send now message using composer', async ({page}) => {
     let orgName = 'send_now_org_' + Math.floor(Math.random() * 10000);
     const composeText = 'Send text '+ + Math.floor(Math.random() * 1000);
 
