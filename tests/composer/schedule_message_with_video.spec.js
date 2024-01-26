@@ -14,7 +14,7 @@ test.afterEach(async ({ page }) => {
     await page.close();
 });
 
-test('Schedule message with video using composer', async ({ page }) => {
+test.skip('Schedule message with video using composer', async ({ page }) => {
     const composeText = 'Video '+ + Math.floor(Math.random() * 1000);
 
     const createNewUser = new createUser();

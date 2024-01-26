@@ -28,21 +28,21 @@ npm:
     - date-fns-tz
     - events
 suites:
-  - name: "[Playwright] Composer Tests"
+  - name: "[Playwright] Chrome Tests"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
     testMatch: ['tests/composer/.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
-  - name: "[Playwright] Composer Tests_Firefox"
+  - name: "[Playwright] Firefox Tests"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
     testMatch: ['tests/composer/.*.js']
     params:
       browserName: "firefox"
       project: "firefox"
-  - name: "[Playwright] Composer Tests_Safari"
+  - name: "[Playwright] Safari Tests"
     platformName: "macOS 13"
     screenResolution: "1280x960"
     testMatch: [ 'tests/composer/.*.js' ]
