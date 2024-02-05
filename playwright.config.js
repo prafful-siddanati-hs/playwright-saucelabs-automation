@@ -23,7 +23,7 @@ module.exports = defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 1 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : 4,
+  workers: process.env.CI ? 1 : 5,
   timeout: 60 * 3 * 1000,
   expect: {
     /**
@@ -79,51 +79,51 @@ module.exports = defineConfig({
     },
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'],
-      viewport: { width: 1920, height: 1080 },
-      saucelabs: {
-        username: getEnv('SAUCE_USERNAME', ''),
-        access_key: getEnv('SAUCE_ACCESS_KEY', ''),
-        launchOptions: {
-          args: [
-            '--headless',
-            '--no-sandbox',
-            '--ignore-certificate-errors',
-            '--allow-insecure-localhost',
-            '--disable-infobars'
-          ]
-        },
-        contextOptions: {
-          ignoreHTTPSErrors: true,
-          viewport: { width: 1920, height: 1080 },
-        },
-        video: 'on-first-retry'
-      }
-     },
+      use: { 
+        ...devices['Desktop Firefox'],
+        saucelabs: {
+          username: getEnv('SAUCE_USERNAME', ''),
+          access_key: getEnv('SAUCE_ACCESS_KEY', ''),
+          launchOptions: {
+            args: [
+              '--headless',
+              '--no-sandbox',
+              '--ignore-certificate-errors',
+              '--allow-insecure-localhost',
+              '--disable-infobars'
+            ]
+          },
+          contextOptions: {
+            ignoreHTTPSErrors: true,
+            viewport: { width: 1920, height: 1080 },
+          },
+          video: 'on-first-retry'
+        }
+      },
     },
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'],
-      viewport: { width: 1920, height: 1440 },
-      saucelabs: {
-        username: getEnv('SAUCE_USERNAME', ''),
-        access_key: getEnv('SAUCE_ACCESS_KEY', ''),
-        launchOptions: {
-          args: [
-            '--headless',
-            '--no-sandbox',
-            '--ignore-certificate-errors',
-            '--allow-insecure-localhost',
-            '--disable-infobars'
-          ]
-        },
-        contextOptions: {
-          ignoreHTTPSErrors: true,
-          viewport: { width: 1920, height: 1080 },
-        },
-        video: 'on-first-retry'
-      }
-     },
+      use: { 
+        ...devices['Desktop Safari'],
+        saucelabs: {
+          username: getEnv('SAUCE_USERNAME', ''),
+          access_key: getEnv('SAUCE_ACCESS_KEY', ''),
+          launchOptions: {
+            args: [
+              '--headless',
+              '--no-sandbox',
+              '--ignore-certificate-errors',
+              '--allow-insecure-localhost',
+              '--disable-infobars'
+            ]
+          },
+          contextOptions: {
+            ignoreHTTPSErrors: true,
+            viewport: { width: 1920, height: 1080 },
+          },
+          video: 'on-first-retry'
+        }
+      },
     },
   ],
 

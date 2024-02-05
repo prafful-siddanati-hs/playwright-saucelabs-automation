@@ -4,6 +4,9 @@ const {MemberOverViewPage} = require("../../pages/memberOverview");
 const {LinkPresetsManagePage} = require("../../pages/planandcreate/linkPresetsManage");
 const {SetUpEnterpriseUser} = require("../../custom-commands/setUpEnterpriseUser")
 const {LoginPage} = require("../../pages/login");
+const getFixture = require("../../custom-commands/getFixture");
+const createOrg = require("../../custom-commands/createOrg");
+const addSocialToOrg = require("../../custom-commands/addSocialToOrg");
 
 test.afterEach(async ({ page }) => {
     const cleanUp = new tearDown();
@@ -14,17 +17,15 @@ test.afterEach(async ({ page }) => {
 
 test('Bitly link shortener creation', async ({ page }) => {
     let orgName = 'Bit_ly_org_' + Math.floor(Math.random() * 10000);
-    let accounts = {
-        twitter: []
-    };
-    accounts.twitter.push("twitter_bit_ly"); //Push no.of Twitter accounts to enterprise user
+    const addFixture = new getFixture();
+    const createNewOrg = new createOrg();
+    await addFixture.command('bit_ly_user', 'enterprise', false, 300);
+    await createNewOrg.command(orgName);
 
     const loginPage = new LoginPage(page);
     const memberPage = new MemberOverViewPage(page);
     const linkPresetsManagePage = new LinkPresetsManagePage(page);
-    const userSetUp = new SetUpEnterpriseUser();
 
-    await userSetUp.setUpEnterpriseUser(orgName,'bit_ly_user', accounts);
     await loginPage.signInSkipOnboarding('bit_ly_user');
 
     await memberPage.visitMember();

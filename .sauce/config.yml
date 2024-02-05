@@ -28,41 +28,48 @@ npm:
     - date-fns-tz
     - events
 suites:
-  # - name: "[Playwright] Composer Tests"
-  #   platformName: "Windows 11"
-  #   screenResolution: "1920x1080"
-  #   testMatch: ['tests/composer/.*.js']
-  #   params:
-  #     browserName: "chromium"
-  #     project: "chromium"
-  # - name: "[Playwright] Planner Tests"
-  #   platformName: "Windows 11"
-  #   screenResolution: "1920x1080"
-  #   testMatch: ['tests/planner/.*.js']
-  #   params:
-  #     browserName: "chromium"
-  #     project: "chromium"
-  - name: "[Playwright] Test API Calls" #This suite will be removed eventually
+  - name: "[Playwright] Composer Tests"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['tests/apiCalls/accountLocking.spec.js']
+    testMatch: ['tests/composer/.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
-  - name: "[Playwright] Test API Calls Firefox" #This suite will be removed eventually
+  - name: "[Playwright] Chrome Tests"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['tests/apiCalls/accountLocking.spec.js']
+    testMatch: ['tests/composer/.*.js']
+    params:
+      browserName: "chromium"
+      project: "chromium"
+  - name: "[Playwright] Firefox Tests"
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: ['tests/composer/.*.js']
     params:
       browserName: "firefox"
       project: "firefox"
-  - name: "[Playwright] Test API Calls Safari" #This suite will be removed eventually
+  - name: "[Playwright] Safari Tests"
     platformName: "macOS 13"
-    screenResolution: "1920x1440"
-    testMatch: ['tests/apiCalls/accountLocking.spec.js']
+    screenResolution: "1280x960"
+    testMatch: [ 'tests/composer/.*.js' ]
     params:
       browserName: "webkit"
       project: "webkit"
+  - name: "[Playwright] Planner Tests"
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: ['tests/planner/.*.js']
+    params:
+      browserName: "chromium"
+      project: "chromium"
+#  - name: "[Playwright] Test API Calls" #This suite will be removed eventually
+#    platformName: "Windows 11"
+#    screenResolution: "1920x1080"
+#    testMatch: ['tests/apiCalls/.*.js']
+#    params:
+#      browserName: "chromium"
+#      project: "chromium"
 #  - name: "Webkit Win"
 #     platformName: "Windows 11"
 #     screenResolution: "1440x900"

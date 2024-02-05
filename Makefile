@@ -25,7 +25,7 @@ stop-tunnel:
 	@$(killcmd)
 
 run-test : dynamodb-setup-for-saucelabs
-	npx saucectl run --select-suite "$$SUITE_NAME" --show-console-log --ccy 6
+	npx saucectl run --ccy 4 --select-suite "${SUITE_NAME}" --show-console-log
 
 dynamodb-setup-for-saucelabs:
 	@profile="build-ci-aws-creds" \
