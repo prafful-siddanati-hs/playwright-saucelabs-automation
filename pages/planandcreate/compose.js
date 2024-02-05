@@ -11,6 +11,7 @@ exports.ComposePage = class ComposePage {
         this.snPilltext = page.locator('.vk-PillText');
         this.composerHeader = page.locator('.vk-ComposerHeader');
         this.twitterPreviewSingleImage = page.locator('.vk-TwitterPreview .vk-MediaImg');
+        this.facebookPreviewSingleImage = page.locator('.vk-FacebookPreview .vk-MediaImg');
         this.messageArea = page.getByLabel('Text');
         this.scheduleLaterButton = page.getByRole('button', { name: 'Schedule for later' });
         this.scheduleDone = page.getByRole('button', { name: 'Done' });
@@ -25,6 +26,7 @@ exports.ComposePage = class ComposePage {
         this.twitterPreviewText = this.page.locator('.vk-TwitterPreview .vk-ContentBody');
         this.facebookPreviewText = this.page.locator('.vk-FacebookPreview .vk-ContentBody');
         this.exitButton = this.page.getByRole('button', { name: 'Exit tutorial' });
+        this.feCallOuts = this.page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
     }
     async selectComposeButton() {
         await expect(this.composeButton).toBeVisible;
@@ -32,6 +34,7 @@ exports.ComposePage = class ComposePage {
         await this.composeButton.click();
         await this.postButton.click()
         await expect(this.composeScreen).toBeVisible;
+        await this.page.waitForLoadState('networkidle');
     }
     async selectSocialProfile(name) {
         const profileSelectorItem = this.page.getByTestId('MessageEditArea').getByText(`${name}`).first();
@@ -47,8 +50,11 @@ exports.ComposePage = class ComposePage {
     }
 
     async writeMessage(message) {
-        await this.messageArea.click();
-        await this.messageArea.fill(message);
+            await this.page.waitForLoadState('networkidle');
+            await this.page.keyboard.press('Escape');
+            await this.messageArea.click();
+            await this.page.keyboard.type(message);
+            await expect(this.page.locator('.vk-Loader')).toHaveCount(0);
     }
 
     async schedule() {
@@ -56,15 +62,18 @@ exports.ComposePage = class ComposePage {
         await this.scheduleDone.click();
         await this.scheduleButton.click();
         await expect(this.scheduleButton).not.toBeVisible;
+        await expect(this.feCallOuts).toHaveCount(1);
     }
 
     async sendNow() {
         await this.postNowButton.click();
         await expect(this.postNowButton).not.toBeVisible;
+        await expect(this.feCallOuts).toHaveCount(1);
     }
 
     async verifySocialProfileSelected(name) {
         await expect(this.snPilltext).toContainText(`${name}`);
+        await expect(this.page.locator('.vk-Loader')).toHaveCount(0);
     }
 
     async verifyTwitterPreview(text) {
@@ -78,6 +87,11 @@ exports.ComposePage = class ComposePage {
     async verifyTwitterImagePreview() {
         await expect(this.twitterPreviewSingleImage).toHaveJSProperty('complete', true);
         await expect(this.twitterPreviewSingleImage).not.toHaveJSProperty('naturalWidth', 0);
+    }
+
+    async verifyFacebookImagePreview() {
+        await expect(this.facebookPreviewSingleImage).toHaveJSProperty('complete', true);
+        await expect(this.facebookPreviewSingleImage).not.toHaveJSProperty('naturalWidth', 0);
     }
 
     async verifyFacebookVideoPreview() {
