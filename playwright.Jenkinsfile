@@ -2,7 +2,7 @@
 
 @Library('hootsuite@6') _
 
-slackChannel = "#publisher-automation"
+slackChannel = "#blackhole"
 
 jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_PlanCreate/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
 
@@ -14,13 +14,11 @@ properties(
             )
         ),
         parameters([
-            string(name: 'SUITE_NAME', defaultValue: '[Playwright] Composer Tests', description: 'Composer tests'),
-            string(name: 'SUITE_NAME', defaultValue: '[Playwright] Planner Tests', description: 'Planner tests'),
+            string(name: 'SUITE_NAME', defaultValue: 'Composer', description: 'Composer tests'),
         ]),
         pipelineTriggers(
             [parameterizedCron('''
-                30 15,17,21,23 * * 1-4 %SUITE_NAME=[Playwright] Composer Tests
-                20 13,15,21,23 * * 1-4 %SUITE_NAME=[Playwright] Planner Tests
+                30 15,17,21,23 * * 1-4 %SUITE_NAME=Composer
                 ''')] //Testing a few cron builds
         )
     ]
@@ -39,14 +37,16 @@ def pod = declarePod {
 }
 
 def suiteNameParam = params.SUITE_NAME
+println("suite name param:, ${suiteNameParam}")
 
 pod {
     execWrapper {
         stage ('Run test suites via saucelabs') {
             try {
                 //Refer to https://github.hootops.com/hootsuite/jenkins-shared-libraries/blob/6/vars/runPlaywrightTestsViaSaucelabs.groovy for usage directions
-                def optionalParam = [:]
+                def optionalParam = [branch:"test_make_regex"]
                 def suiteNamesList = ["${suiteNameParam}"]
+                println("suiteNamesList, ${suiteNamesList}")
                 runPlaywrightTestsViaSaucelabs(optionalParam, suiteNamesList)
             }
             catch(err) {
