@@ -79,47 +79,51 @@ module.exports = defineConfig({
     },
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-      saucelabs: {
-        username: getEnv('SAUCE_USERNAME', ''),
-        access_key: getEnv('SAUCE_ACCESS_KEY', ''),
-        launchOptions: {
-          args: [
-            '--headless',
-            '--no-sandbox',
-            '--ignore-certificate-errors',
-            '--allow-insecure-localhost',
-            '--disable-infobars'
-          ]
-        },
-        contextOptions: {
-          ignoreHTTPSErrors: true,
-          viewport: { width: 1920, height: 1080 },
-        },
-        video: 'on-first-retry'
-      }
+      use: { 
+        ...devices['Desktop Firefox'],
+        saucelabs: {
+          username: getEnv('SAUCE_USERNAME', ''),
+          access_key: getEnv('SAUCE_ACCESS_KEY', ''),
+          launchOptions: {
+            args: [
+              '--headless',
+              '--no-sandbox',
+              '--ignore-certificate-errors',
+              '--allow-insecure-localhost',
+              '--disable-infobars'
+            ]
+          },
+          contextOptions: {
+            ignoreHTTPSErrors: true,
+            viewport: { width: 1920, height: 1080 },
+          },
+          video: 'on-first-retry'
+        }
+      },
     },
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-      saucelabs: {
-        username: getEnv('SAUCE_USERNAME', ''),
-        access_key: getEnv('SAUCE_ACCESS_KEY', ''),
-        launchOptions: {
-          args: [
-            '--headless',
-            '--no-sandbox',
-            '--ignore-certificate-errors',
-            '--allow-insecure-localhost',
-            '--disable-infobars'
-          ]
-        },
-        contextOptions: {
-          ignoreHTTPSErrors: true,
-          viewport: { width: 1920, height: 1080 },
-        },
-        video: 'on-first-retry'
-      }
+      use: { 
+        ...devices['Desktop Safari'],
+        saucelabs: {
+          username: getEnv('SAUCE_USERNAME', ''),
+          access_key: getEnv('SAUCE_ACCESS_KEY', ''),
+          launchOptions: {
+            args: [
+              '--headless',
+              '--no-sandbox',
+              '--ignore-certificate-errors',
+              '--allow-insecure-localhost',
+              '--disable-infobars'
+            ]
+          },
+          contextOptions: {
+            ignoreHTTPSErrors: true,
+            viewport: { width: 1920, height: 1080 },
+          },
+          video: 'on-first-retry'
+        }
+      },
     },
   ],
 
