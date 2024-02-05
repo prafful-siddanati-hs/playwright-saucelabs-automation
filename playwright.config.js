@@ -119,7 +119,7 @@ module.exports = defineConfig({
           },
           contextOptions: {
             ignoreHTTPSErrors: true,
-            viewport: { width: 1920, height: 1080 },
+            viewport: { width: 1920, height: 1440 },
           },
           video: 'on-first-retry'
         }

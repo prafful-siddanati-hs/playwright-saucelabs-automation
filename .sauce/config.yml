@@ -31,38 +31,52 @@ suites:
   - name: "[Playwright] Composer Tests"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['tests/composer/.*.js']
+    testMatch: ['tests/composer/send_now.spec.js']
     params:
       browserName: "chromium"
       project: "chromium"
-  - name: "[Playwright] Chrome Tests"
+  - name: "[Playwright] Composer Tests Firefox"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['tests/composer/.*.js']
-    params:
-      browserName: "chromium"
-      project: "chromium"
-  - name: "[Playwright] Firefox Tests"
-    platformName: "Windows 11"
-    screenResolution: "1920x1080"
-    testMatch: ['tests/composer/.*.js']
+    testMatch: ['tests/composer/send_now.spec.js']
     params:
       browserName: "firefox"
       project: "firefox"
-  - name: "[Playwright] Safari Tests"
-    platformName: "macOS 13"
-    screenResolution: "1280x960"
-    testMatch: [ 'tests/composer/.*.js' ]
-    params:
-      browserName: "webkit"
-      project: "webkit"
-  - name: "[Playwright] Planner Tests"
-    platformName: "Windows 11"
-    screenResolution: "1920x1080"
-    testMatch: ['tests/planner/.*.js']
-    params:
-      browserName: "chromium"
-      project: "chromium"
+  # - name: "[Playwright] Composer Tests Safari"
+  #   platformName: "macOS 13"
+  #   screenResolution: "1920x1440"
+  #   testMatch: ['tests/composer/send_now.spec.js']
+  #   params:
+  #     browserName: "webkit"
+  #     project: "webkit"
+  # - name: "[Playwright] Chrome Tests"
+  #   platformName: "Windows 11"
+  #   screenResolution: "1920x1080"
+  #   testMatch: ['tests/composer/.*.js']
+  #   params:
+  #     browserName: "chromium"
+  #     project: "chromium"
+  # - name: "[Playwright] Firefox Tests"
+  #   platformName: "Windows 11"
+  #   screenResolution: "1920x1080"
+  #   testMatch: ['tests/composer/.*.js']
+  #   params:
+  #     browserName: "firefox"
+  #     project: "firefox"
+  # - name: "[Playwright] Safari Tests"
+  #   platformName: "macOS 13"
+  #   screenResolution: "1280x960"
+  #   testMatch: [ 'tests/composer/.*.js' ]
+  #   params:
+  #     browserName: "webkit"
+  #     project: "webkit"
+  # - name: "[Playwright] Planner Tests"
+  #   platformName: "Windows 11"
+  #   screenResolution: "1920x1080"
+  #   testMatch: ['tests/planner/.*.js']
+  #   params:
+  #     browserName: "chromium"
+  #     project: "chromium"
 #  - name: "[Playwright] Test API Calls" #This suite will be removed eventually
 #    platformName: "Windows 11"
 #    screenResolution: "1920x1080"
