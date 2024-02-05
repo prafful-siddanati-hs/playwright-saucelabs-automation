@@ -49,6 +49,13 @@ suites:
     params:
       browserName: "webkit"
       project: "webkit"
+  - name: "[Playwright] Planner Tests"
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: ['tests/planner/.*.js']
+    params:
+      browserName: "chromium"
+      project: "chromium"
 #  - name: "[Playwright] Test API Calls" #This suite will be removed eventually
 #    platformName: "Windows 11"
 #    screenResolution: "1920x1080"
