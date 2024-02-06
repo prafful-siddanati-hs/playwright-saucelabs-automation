@@ -14,8 +14,8 @@ properties(
             )
         ),
         parameters([
-            string(name: 'SUITE_NAME', defaultValue: '[Playwright] Composer Tests', description: 'Composer tests'),
-            string(name: 'SUITE_NAME', defaultValue: '[Playwright] Planner Tests', description: 'Planner tests'),
+            string(name: 'SUITE_NAME', defaultValue: 'Composer Chrome Tests', description: 'Composer tests'),
+            string(name: 'SUITE_NAME', defaultValue: 'Planner Chrome Tests', description: 'Planner tests'),
         ]),
         pipelineTriggers(
             [parameterizedCron('''
@@ -52,11 +52,11 @@ pod {
             catch(err) {
                 echo "BUILD FAILURE"
                 println(err.toString())
-                slackSend color: '#C85960', channel: slackChannel, 
+                slackSend color: '#C85960', channel: slackChannel,
                         message: " :playwright-logo: *[P&C Playwright tests]*\n *Suite Name:* _${suiteNameParam}_ - Failed! :warning: \n" +
                             " *Jenkins URL:* ${jenkinsUrl} \n"
                 currentBuild.result = "FAILURE"
-                throw err            
+                throw err
             }
         }
     }
@@ -66,7 +66,7 @@ def execWrapper(Closure c) {
     try {
         c()
         echo "Build Completed"
-    } 
+    }
     catch (e) {
         throw e
   }

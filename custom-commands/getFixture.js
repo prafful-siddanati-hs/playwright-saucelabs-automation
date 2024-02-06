@@ -278,6 +278,7 @@ class getFixture extends events.EventEmitter {
 
         } catch (err) {
             console.assert(false, `${this.step} ${err}`);
+            throw err;
         } finally {
             //Update global storage with fixture array so that addSocialToOrg() & tearDown() can access it.
             if (!global.fixture) {

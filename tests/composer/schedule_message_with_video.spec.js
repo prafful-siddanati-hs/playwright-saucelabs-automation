@@ -22,10 +22,10 @@ test('Schedule message with video using composer', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const composePage = new ComposePage(page);
 
-    await createNewUser.command('pw_send_now_video', 'professional');
+    await createNewUser.command('pw_schedule_video', 'professional');
     await addFixture.command('schedule_video','plan_create_facebookpage', true, 180);
 
-    await loginPage.signIn('pw_send_now_video');
+    await loginPage.signIn('pw_schedule_video');
     await composePage.selectComposeButton();
     await composePage.exitButton.click();
     await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, 'schedule_video').username);
