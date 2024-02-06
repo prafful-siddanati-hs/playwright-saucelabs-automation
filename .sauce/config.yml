@@ -28,55 +28,41 @@ npm:
     - date-fns-tz
     - events
 suites:
-  - name: "[Playwright] Composer Tests"
+  - name: "Composer Chrome Tests"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
     testMatch: ['tests/composer/.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
-  - name: "[Playwright] Chrome Tests"
-    platformName: "Windows 11"
-    screenResolution: "1920x1080"
-    testMatch: ['tests/composer/.*.js']
-    params:
-      browserName: "chromium"
-      project: "chromium"
-  - name: "[Playwright] Firefox Tests"
+  - name: "Composer Firefox Tests"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
     testMatch: ['tests/composer/.*.js']
     params:
       browserName: "firefox"
       project: "firefox"
-  - name: "[Playwright] Safari Tests"
+  - name: "Safari Composer Tests"
     platformName: "macOS 13"
     screenResolution: "1280x960"
     testMatch: [ 'tests/composer/.*.js' ]
     params:
       browserName: "webkit"
       project: "webkit"
-  - name: "[Playwright] Planner Tests"
+  - name: "Planner Chrome Tests"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
     testMatch: ['tests/planner/.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
-#  - name: "[Playwright] Test API Calls" #This suite will be removed eventually
-#    platformName: "Windows 11"
-#    screenResolution: "1920x1080"
-#    testMatch: ['tests/apiCalls/.*.js']
-#    params:
-#      browserName: "chromium"
-#      project: "chromium"
-#  - name: "Webkit Win"
-#     platformName: "Windows 11"
-#     screenResolution: "1440x900"
-#     testMatch: ['.*.js']
-#     params:
-#       browserName: "webkit"
-#       project: "webkit"
+  - name: "Test API Calls" #This suite will be removed eventually
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: ['tests/apiCalls/.*.js']
+    params:
+      browserName: "chromium"
+      project: "chromium"
 
 # Controls what artifacts to fetch when the suites have finished.
 artifacts:

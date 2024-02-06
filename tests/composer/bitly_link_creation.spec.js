@@ -2,11 +2,9 @@ const { test, expect} = require('@playwright/test');
 const tearDown = require('../../custom-commands/tearDown');
 const {MemberOverViewPage} = require("../../pages/memberOverview");
 const {LinkPresetsManagePage} = require("../../pages/planandcreate/linkPresetsManage");
-const {SetUpEnterpriseUser} = require("../../custom-commands/setUpEnterpriseUser")
 const {LoginPage} = require("../../pages/login");
 const getFixture = require("../../custom-commands/getFixture");
 const createOrg = require("../../custom-commands/createOrg");
-const addSocialToOrg = require("../../custom-commands/addSocialToOrg");
 
 test.afterEach(async ({ page }) => {
     const cleanUp = new tearDown();
@@ -30,6 +28,6 @@ test('Bitly link shortener creation', async ({ page }) => {
 
     await memberPage.visitMember();
     await memberPage.selectLinkSettingButton();
-    await linkPresetsManagePage.selectShortenerProvider('Bit.ly')
-    await linkPresetsManagePage.createBitlyShortener(`New Bit.ly ${Date.now()}`)
+    await linkPresetsManagePage.selectShortenerProvider('Bit.ly');
+    await linkPresetsManagePage.createBitlyShortener(`New Bit.ly ${Date.now()}`);
 });
