@@ -19,8 +19,8 @@ properties(
         ]),
         pipelineTriggers(
             [parameterizedCron('''
-                30 15,17,21,23 * * 1-4 %SUITE_NAME=[Playwright] Composer Tests
-                20 13,15,21,23 * * 1-4 %SUITE_NAME=[Playwright] Planner Tests
+                30 15,17,21,23 * * 1-4 %SUITE_NAME=Composer Chrome Tests
+                20 13,15,21,23 * * 1-4 %SUITE_NAME=Planner Chrome Tests
                 ''')] //Testing a few cron builds
         )
     ]
