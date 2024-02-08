@@ -42,7 +42,7 @@ suites:
     params:
       browserName: "firefox"
       project: "firefox"
-  - name: "Safari Composer Tests"
+  - name: "Composer Safari Tests"
     platformName: "macOS 13"
     screenResolution: "1280x960"
     testMatch: [ 'tests/composer/.*.js' ]
