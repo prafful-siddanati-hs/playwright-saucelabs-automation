@@ -8,7 +8,7 @@ sauce:
   concurrency: 10 # Controls how many suites are executed at the same time.
   metadata:
     tags:
-      - e2e
+      - arbiter
   launchOrder: fail rate
 playwright:
   version: package.json # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/#supported-testing-platforms for a list of supported versions.
@@ -28,41 +28,55 @@ npm:
     - date-fns-tz
     - events
 suites:
-  - name: "Composer Chrome Tests"
+  - name: "composer chrome"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
     testMatch: ['tests/composer/send_now.spec.js']
     params:
       browserName: "chromium"
       project: "chromium"
-  - name: "Composer Firefox Tests"
+  - name: "composer firefox"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['tests/composer/.*.js']
+    testMatch: ['tests/composer/send_now_with_image.spec.js']
     params:
       browserName: "firefox"
       project: "firefox"
-  - name: "Composer Safari Tests"
+  - name: "composer safari"
     platformName: "macOS 13"
     screenResolution: "1280x960"
     testMatch: [ 'tests/composer/.*.js' ]
     params:
       browserName: "webkit"
       project: "webkit"
-  - name: "Planner Chrome Tests"
+  - name: "planner chrome"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['tests/planner/.*.js']
+    testMatch: ['tests/planner/approvals/.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
-  - name: "Test API Calls" #This suite will be removed eventually
+  - name: "planner firefox"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['tests/apiCalls/.*.js']
+    testMatch: ['tests/planner/approvals/.*.js']
+    params:
+      browserName: "firefox"
+      project: "firefox"
+  - name: "apiCalls chrome" #This suite will be removed eventually
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: ['tests/apiCalls/scheduleAndDeleteViaApi.spec.js']
     params:
       browserName: "chromium"
       project: "chromium"
+  - name: "apiCalls firefox" #This suite will be removed eventually
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: ['tests/apiCalls/scheduleAndDeleteViaApi.spec.js']
+    params:
+      browserName: "firefox"
+      project: "firefox"
 
 # Controls what artifacts to fetch when the suites have finished.
 artifacts:

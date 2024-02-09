@@ -1,30 +1,10 @@
 #!groovy
 
-@Library('hootsuite@6') _
+@Library('hootsuite@PUB-31661') _
 
 slackChannel = "#publisher-automation"
 
 jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_PlanCreate/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
-
-properties(
-    [
-        buildDiscarder(
-            logRotator(
-                numToKeepStr: '100'
-            )
-        ),
-        parameters([
-            string(name: 'SUITE_NAME', defaultValue: 'Composer Chrome Tests', description: 'Composer tests'),
-            string(name: 'SUITE_NAME', defaultValue: 'Planner Chrome Tests', description: 'Planner tests'),
-        ]),
-        pipelineTriggers(
-            [parameterizedCron('''
-                30 15,17,21,23 * * 1-4 %SUITE_NAME=Composer Chrome Tests
-                20 13,15,21,23 * * 1-4 %SUITE_NAME=Planner Chrome Tests
-                ''')] //Testing a few cron builds
-        )
-    ]
-)
 
 def pod = declarePod {
     name = 'playwright'
@@ -38,16 +18,15 @@ def pod = declarePod {
     }
 }
 
-def suiteNameParam = params.SUITE_NAME
-
 pod {
     execWrapper {
         stage ('Run test suites via saucelabs') {
             try {
                 //Refer to https://github.hootops.com/hootsuite/jenkins-shared-libraries/blob/6/vars/runPlaywrightTestsViaSaucelabs.groovy for usage directions
-                def optionalParam = [:]
-                def suiteNamesList = ["${suiteNameParam}"]
-                runPlaywrightTestsViaSaucelabs(optionalParam, suiteNamesList)
+                def optionalParam = [branch:"test_arbiter"]
+                def browserList = ["chrome","firefox"]
+                def arbiterListId = 253
+                runPlaywrightTestsViaSaucelabs(optionalParam, arbiterListId, browserList)
             }
             catch(err) {
                 echo "BUILD FAILURE"
