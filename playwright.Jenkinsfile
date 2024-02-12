@@ -32,7 +32,7 @@ pod {
                 echo "BUILD FAILURE"
                 println(err.toString())
                 slackSend color: '#C85960', channel: slackChannel,
-                        message: " :playwright-logo: *[P&C Playwright tests]*\n *Suite Name:* _${suiteNameParam}_ - Failed! :warning: \n" +
+                        message: " :playwright-logo: *[P&C Playwright tests]*\n- Failed! :warning: \n" +
                             " *Jenkins URL:* ${jenkinsUrl} \n"
                 currentBuild.result = "FAILURE"
                 throw err
@@ -50,7 +50,8 @@ def execWrapper(Closure c) {
         throw e
   }
   finally {
-    archiveArtifacts artifacts: '**/*.png', allowEmptyArchive: true
-    archiveArtifacts artifacts: '**/sauce-test-report.json', allowEmptyArchive: true
+    echo "Build Finished"
+    //archiveArtifacts artifacts: '**/*.png', allowEmptyArchive: true
+    //archiveArtifacts artifacts: '**/sauce-test-report.json', allowEmptyArchive: true
   }
 }
