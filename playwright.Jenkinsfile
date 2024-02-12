@@ -26,7 +26,7 @@ pod {
                 def optionalParam = [branch:"test_arbiter"]
                 def browserList = ["chrome","firefox"]
                 def arbiterListId = 253
-                runPlaywrightTestsViaSaucelabs(optionalParam, arbiterListId, browserList)
+                parallel runPlaywrightTestsViaSaucelabs(optionalParam, arbiterListId, browserList)
             }
             catch(err) {
                 echo "BUILD FAILURE"
@@ -50,8 +50,7 @@ def execWrapper(Closure c) {
         throw e
   }
   finally {
-    echo "Build Finished"
-    //archiveArtifacts artifacts: '**/*.png', allowEmptyArchive: true
-    //archiveArtifacts artifacts: '**/sauce-test-report.json', allowEmptyArchive: true
+    archiveArtifacts artifacts: '**/*.png', allowEmptyArchive: true
+    archiveArtifacts artifacts: '**/sauce-test-report.json', allowEmptyArchive: true
   }
 }
