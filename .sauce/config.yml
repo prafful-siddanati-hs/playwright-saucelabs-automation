@@ -38,7 +38,7 @@ suites:
   - name: "composer firefox"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['tests/composer/send_now_with_image.spec.js']
+    testMatch: ['tests/composer/send_now.spec.js']
     params:
       browserName: "firefox"
       project: "firefox"

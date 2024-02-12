@@ -50,6 +50,7 @@ def execWrapper(Closure c) {
         throw e
   }
   finally {
+    echo "Archiving artifacts"
     archiveArtifacts artifacts: '**/*.png', allowEmptyArchive: true
     archiveArtifacts artifacts: '**/sauce-test-report.json', allowEmptyArchive: true
   }
