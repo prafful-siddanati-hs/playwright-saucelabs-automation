@@ -2,7 +2,7 @@
 
 @Library('hootsuite@PUB-31661') _
 
-slackChannel = "#publisher-automation"
+slackChannel = "#blackhole"
 
 jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_PlanCreate/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
 
@@ -25,14 +25,14 @@ pod {
                 //Refer to https://github.hootops.com/hootsuite/jenkins-shared-libraries/blob/6/vars/runPlaywrightTestsViaSaucelabs.groovy for usage directions
                 def optionalParam = [branch:"test_arbiter"]
                 def browserList = ["chrome","firefox"]
-                def arbiterListId = 253
-                parallel runPlaywrightTestsViaSaucelabs(optionalParam, arbiterListId, browserList)
+                def suiteNamesList = ["composer chrome", "planner chrome"]
+                parallel runPlaywrightTestsViaSaucelabs(optionalParam, suiteNamesList, browserList)
             }
             catch(err) {
                 echo "BUILD FAILURE"
                 println(err.toString())
                 slackSend color: '#C85960', channel: slackChannel,
-                        message: " :playwright-logo: *[P&C Playwright tests]*\n- Failed! :warning: \n" +
+                        message: " :playwright-logo: *[P&C Playwright tests]*\n Failed! :warning: \n" +
                             " *Jenkins URL:* ${jenkinsUrl} \n"
                 currentBuild.result = "FAILURE"
                 throw err
