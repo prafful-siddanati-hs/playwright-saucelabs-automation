@@ -25,7 +25,7 @@ pod {
                 //Refer to https://github.hootops.com/hootsuite/jenkins-shared-libraries/blob/6/vars/runPlaywrightTestsViaSaucelabs.groovy for usage directions
                 def optionalParam = [branch:"test_arbiter"]
                 def browserList = ["chrome","firefox"]
-                def suiteNamesList = ["composer chrome", "planner chrome"]
+                def suiteNamesList = ["composer", "planner"]
                 parallel runPlaywrightTestsViaSaucelabs(optionalParam, suiteNamesList, browserList)
             }
             catch(err) {
