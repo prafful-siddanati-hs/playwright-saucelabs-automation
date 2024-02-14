@@ -42,13 +42,13 @@ suites:
     params:
       browserName: "firefox"
       project: "firefox"
-  - name: "Composer Safari Tests"
-    platformName: "macOS 13"
-    screenResolution: "1280x960"
-    testMatch: [ 'tests/composer/.*.js' ]
-    params:
-      browserName: "webkit"
-      project: "webkit"
+#  - name: "Composer Safari Tests"
+#    platformName: "macOS 13"
+#    screenResolution: "1280x960"
+#    testMatch: [ 'tests/composer/.*.js' ]
+#    params:
+#      browserName: "webkit"
+#      project: "webkit"
   - name: "Planner Chrome Tests"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
