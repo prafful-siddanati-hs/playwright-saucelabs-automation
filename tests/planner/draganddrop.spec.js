@@ -13,18 +13,14 @@ const tearDown = require('../../custom-commands/tearDown');
 
 /** @type {import('@playwright/test').Page} */
 let page;
-test.beforeAll(async ({ browser }) => {
-    page = await browser.newPage();
-});
-
-test.afterAll(async () => {
+test.afterEach(async ({ page }) => {
     const cleanUp = new tearDown();
 
     await cleanUp.command();
     await page.close();
 });
 
-test('Drag and drop card on week view', async ({}) => {
+test('Drag and drop card on week view', async ({page}) => {
     const createNewUser = new createUser();
     const addFixture = new getFixture();
     const loginPage = new LoginPage(page);
@@ -53,11 +49,17 @@ test('Drag and drop card on week view', async ({}) => {
         }
     );
 
-  await plannerPage.dragAndDropCard(composeText);
+  await plannerPage.dragAndDropCard(composeText, scheduleTime.getHours(), global.member[0].memberId);
 });
 
-test('drag and drop media from side pane on week view', async ({}) => {
+test('drag and drop media from side pane on week view', async ({page}) => {
+    const createNewUser = new createUser();
+    const loginPage = new LoginPage(page);
     const plannerPage = new PlannerPage(page);
+
+    await createNewUser.command('dnd_media', 'professional');
+
+    await loginPage.signIn('dnd_media');
 
     await plannerPage.dragAndDropMedia();
     await page.close();

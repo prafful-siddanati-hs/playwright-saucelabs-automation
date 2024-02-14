@@ -46,7 +46,7 @@ test('Verify scheduled message in week view', async ({ page }) => {
     );
 
     await plannerPage.visit();
-    await plannerPage.verifyScheduledMessage(message);
+    await plannerPage.verifyScheduledMessage(message, scheduleTime.getHours());
     await plannerPage.showPreviewPane(message);
 });
 
