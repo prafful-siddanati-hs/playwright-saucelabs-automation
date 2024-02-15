@@ -1,0 +1,69 @@
+apiVersion: v1alpha
+kind: playwright
+sauce:
+  region: us-west-1
+  tunnel:
+    name: 'sauce-playwright-tunnel'
+    owner: '$SAUCE_USERNAME'
+  concurrency: 10 # Controls how many suites are executed at the same time.
+  metadata:
+    tags:
+      - arbiter
+  launchOrder: fail rate
+playwright:
+  version: package.json # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/#supported-testing-platforms for a list of supported versions.
+  configFile: playwright.config.js # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/yaml/#configfile for a list of supported configuration files.
+# Controls what files are available in the context of a test run (unless explicitly excluded by .sauceignore).
+rootDir: ./
+env:
+  AWS_SDK_LOAD_CONFIG: 1
+  AWS_SHARED_CREDENTIALS_FILE: ".aws-session.saucelabs.ini"
+  AWS_CONFIG_FILE: ".aws-config.saucelabs.ini"
+npm:
+  dependencies:
+    - hsdynamodb
+    - hsapi
+    - underscore
+    - date-fns
+    - date-fns-tz
+    - events
+suites:
+  - name: "Planner Chrome"
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: ['tests/planner/.*.js']
+    params:
+      browserName: "chromium"
+      project: "chromium"
+  - name: "Planner Firefox"
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: ['tests/planner/.*.js']
+    params:
+      browserName: "firefox"
+      project: "firefox"
+  - name: "Planner Approvals - Chrome"
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: ['tests/planner/approvals/.*.js']
+    params:
+      browserName: "chromium"
+      project: "chromium"
+  - name: "Planner Approvals - Firefox"
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: ['tests/planner/approvals/.*.js']
+    params:
+      browserName: "firefox"
+      project: "firefox"
+
+# Controls what artifacts to fetch when the suites have finished.
+artifacts:
+  cleanup: true
+  download:
+    when: always
+    match:
+      - console.log
+      - 'sauce-test-report.json'
+      - '*.png'
+    directory: ./artifacts/

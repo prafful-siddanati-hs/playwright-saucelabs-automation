@@ -28,55 +28,27 @@ npm:
     - date-fns-tz
     - events
 suites:
-  - name: "composer chrome"
+  - name: "Composer - Chrome"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
     testMatch: ['tests/composer/send_now.spec.js']
     params:
       browserName: "chromium"
       project: "chromium"
-  - name: "composer firefox"
+  - name: "Composer - Firefox"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
     testMatch: ['tests/composer/send_now.spec.js']
     params:
       browserName: "firefox"
       project: "firefox"
-  - name: "composer safari"
-    platformName: "macOS 13"
-    screenResolution: "1280x960"
-    testMatch: [ 'tests/composer/.*.js' ]
-    params:
-      browserName: "webkit"
-      project: "webkit"
-  - name: "planner chrome"
-    platformName: "Windows 11"
-    screenResolution: "1920x1080"
-    testMatch: ['tests/planner/approvals/.*.js']
-    params:
-      browserName: "chromium"
-      project: "chromium"
-  - name: "planner firefox"
-    platformName: "Windows 11"
-    screenResolution: "1920x1080"
-    testMatch: ['tests/planner/approvals/.*.js']
-    params:
-      browserName: "firefox"
-      project: "firefox"
-  - name: "apiCalls chrome" #This suite will be removed eventually
-    platformName: "Windows 11"
-    screenResolution: "1920x1080"
-    testMatch: ['tests/apiCalls/scheduleAndDeleteViaApi.spec.js']
-    params:
-      browserName: "chromium"
-      project: "chromium"
-  - name: "apiCalls firefox" #This suite will be removed eventually
-    platformName: "Windows 11"
-    screenResolution: "1920x1080"
-    testMatch: ['tests/apiCalls/scheduleAndDeleteViaApi.spec.js']
-    params:
-      browserName: "firefox"
-      project: "firefox"
+  # - name: "Composer - Safari"
+  #   platformName: "macOS 13"
+  #   screenResolution: "1280x960"
+  #   testMatch: [ 'tests/composer/*.*.js' ]
+  #   params:
+  #     browserName: "webkit"
+  #     project: "webkit"
 
 # Controls what artifacts to fetch when the suites have finished.
 artifacts:

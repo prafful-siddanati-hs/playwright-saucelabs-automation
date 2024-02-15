@@ -6,6 +6,26 @@ slackChannel = "#blackhole"
 
 jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_PlanCreate/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
 
+properties(
+    [
+        buildDiscarder(
+            logRotator(
+                numToKeepStr: '100'
+            )
+        ),
+        parameters([
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer.config.yml', description: 'Composer tests on chrome'),
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/planner.config.yml', description: 'Planner tests on chrome'),
+        ]),
+        pipelineTriggers(
+            [parameterizedCron('''
+                30 15,17,21,23 * * 1-4 %CONFIG_FILE=.sauce/composer.config.yml
+                20 13,15,21,23 * * 1-4 %CONFIG_FILE=.sauce/planner.config.yml
+                ''')] //Testing a few cron builds
+        )
+    ]
+)
+
 def pod = declarePod {
     name = 'playwright'
     vault {}
@@ -18,15 +38,16 @@ def pod = declarePod {
     }
 }
 
+def configFileParam = params.CONFIG_FILE
+
 pod {
     execWrapper {
         stage ('Run test suites via saucelabs') {
             try {
                 //Refer to https://github.hootops.com/hootsuite/jenkins-shared-libraries/blob/6/vars/runPlaywrightTestsViaSaucelabs.groovy for usage directions
                 def optionalParam = [branch:"test_arbiter"]
-                def browserList = ["chrome","firefox"]
-                def suiteNamesList = ["composer", "planner"]
-                parallel runPlaywrightTestsViaSaucelabs(optionalParam, suiteNamesList, browserList)
+                def configFile = ["${configFileParam}"]
+                runPlaywrightTestsViaSaucelabs(optionalParam, configFile)
             }
             catch(err) {
                 echo "BUILD FAILURE"
@@ -50,7 +71,6 @@ def execWrapper(Closure c) {
         throw e
   }
   finally {
-    echo "Archiving artifacts"
     archiveArtifacts artifacts: '**/*.png', allowEmptyArchive: true
     archiveArtifacts artifacts: '**/sauce-test-report.json', allowEmptyArchive: true
   }
