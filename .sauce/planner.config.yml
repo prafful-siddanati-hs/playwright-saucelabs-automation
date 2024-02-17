@@ -8,7 +8,9 @@ sauce:
   concurrency: 10 # Controls how many suites are executed at the same time.
   metadata:
     tags:
-      - arbiter
+      - regression
+      - planner
+      - manage approvals
   launchOrder: fail rate
 playwright:
   version: package.json # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/#supported-testing-platforms for a list of supported versions.

@@ -45,7 +45,7 @@ pod {
         stage ('Run test suites via saucelabs') {
             try {
                 //Refer to https://github.hootops.com/hootsuite/jenkins-shared-libraries/blob/6/vars/runPlaywrightTestsViaSaucelabs.groovy for usage directions
-                def optionalParam = [branch:"test_arbiter"]
+                def optionalParam = [branch:"use_configFile", suiteName: "Planner Approvals - Chrome"]
                 def configFile = ["${configFileParam}"]
                 runPlaywrightTestsViaSaucelabs(optionalParam, configFile)
             }

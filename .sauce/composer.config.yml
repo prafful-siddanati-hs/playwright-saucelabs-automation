@@ -8,7 +8,8 @@ sauce:
   concurrency: 10 # Controls how many suites are executed at the same time.
   metadata:
     tags:
-      - arbiter
+      - regression
+      - composer
   launchOrder: fail rate
 playwright:
   version: package.json # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/#supported-testing-platforms for a list of supported versions.
@@ -31,24 +32,24 @@ suites:
   - name: "Composer - Chrome"
     platformName: "Windows 11"
     screenResolution: "1920x1080"
-    testMatch: ['tests/composer/send_now.spec.js']
+    testMatch: ['tests/composer/*.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
   - name: "Composer - Firefox"
     platformName: "Windows 11"
-    screenResolution: "1920x1080"
-    testMatch: ['tests/composer/send_now.spec.js']
+    screenResolution: "1400x1050"
+    testMatch: ['tests/composer/*.*.js']
     params:
       browserName: "firefox"
       project: "firefox"
-  # - name: "Composer - Safari"
-  #   platformName: "macOS 13"
-  #   screenResolution: "1280x960"
-  #   testMatch: [ 'tests/composer/*.*.js' ]
-  #   params:
-  #     browserName: "webkit"
-  #     project: "webkit"
+  - name: "Composer - Safari"
+    platformName: "macOS 13"
+    screenResolution: "1280x960"
+    testMatch: [ 'tests/composer/*.*.js' ]
+    params:
+      browserName: "webkit"
+      project: "webkit"
 
 # Controls what artifacts to fetch when the suites have finished.
 artifacts:
