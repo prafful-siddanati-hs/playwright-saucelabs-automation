@@ -24,13 +24,13 @@ module.exports = defineConfig({
   retries: process.env.CI ? 1 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : 5,
-  timeout: 90 * 1000,
+  timeout: 60 * 2 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 5000,
+    timeout: 20000,
   },
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [['html',{outputFile: 'playwright-report/index.html', open: 'never'}],

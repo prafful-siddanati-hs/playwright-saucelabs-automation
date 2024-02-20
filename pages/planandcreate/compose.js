@@ -62,13 +62,13 @@ exports.ComposePage = class ComposePage {
         await this.scheduleDone.click();
         await this.scheduleButton.click();
         await expect(this.scheduleButton).not.toBeVisible;
-        await expect(this.feCallOuts).toHaveCount(1, {timeout: 10000});
+        await expect(this.feCallOuts).toHaveCount(1);
     }
 
     async sendNow() {
         await this.postNowButton.click();
         await expect(this.postNowButton).not.toBeVisible;
-        await expect(this.feCallOuts).toHaveCount(1, {timeout: 10000});
+        await expect(this.feCallOuts).toHaveCount(1);
     }
 
     async verifySocialProfileSelected(name) {
@@ -81,7 +81,7 @@ exports.ComposePage = class ComposePage {
     }
 
     async verifyTwitterVideoPreview() {
-        await expect(this.twitterVideoPreviewSelector).toHaveCount(1, {timeout: 20000});
+        await expect(this.twitterVideoPreviewSelector).toHaveCount(1);
     }
 
     async verifyTwitterImagePreview() {
@@ -95,7 +95,7 @@ exports.ComposePage = class ComposePage {
     }
 
     async verifyFacebookVideoPreview() {
-        await expect(this.facebookVideoPreviewSelector).toHaveCount(1, {timeout: 20000});
+        await expect(this.facebookVideoPreviewSelector).toHaveCount(1);
     }
 
     async verifyFacebookPreview(text) {
