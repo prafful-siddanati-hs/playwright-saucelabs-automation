@@ -13,7 +13,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Send now message with image using composer', async ({page}) => {
-    const composeText = 'Send Image '+ + Math.floor(Math.random() * 1000);
+    const composeText = 'Send Image '+ + Math.floor(Math.random() * 10000);
     let orgName = 'send_now_org_image' + Math.floor(Math.random() * 10000);
     let accounts = {
         plan_create_facebookpage: []
