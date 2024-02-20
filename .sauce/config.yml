@@ -41,7 +41,7 @@ suites:
   - name: "Composer Firefox Tests"
     platformName: "Windows 11"
     screenResolution: "1400x1050"
-    testMatch: ['tests/composer/send_now.spec.js']
+    testMatch: ['tests/composer/.*.js']
     params:
       browserName: "firefox"
       project: "firefox"
@@ -50,7 +50,7 @@ suites:
   - name: "Composer Safari Tests"
     platformName: "macOS 13"
     screenResolution: "2048x1536"
-    testMatch: [ 'tests/composer/send_now.spec.js' ]
+    testMatch: [ 'tests/composer/.*.js' ]
     params:
       browserName: "webkit"
       project: "webkit"
@@ -63,6 +63,8 @@ suites:
 #    params:
 #      browserName: "chromium"
 #      project: "chromium"
+#      smartRetry:
+#        failedOnly: true
 #  - name: "Test API Calls" #This suite will be removed eventually
 #    platformName: "Windows 11"
 #    screenResolution: "1920x1080"
