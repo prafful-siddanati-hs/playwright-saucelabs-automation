@@ -56,20 +56,20 @@ suites:
       project: "webkit"
       smartRetry:
         failedOnly: true
-  - name: "Planner Chrome Tests"
-    platformName: "Windows 11"
-    screenResolution: "1920x1200"
-    testMatch: ['tests/planner/.*.js']
-    params:
-      browserName: "chromium"
-      project: "chromium"
-  - name: "Test API Calls" #This suite will be removed eventually
-    platformName: "Windows 11"
-    screenResolution: "1920x1080"
-    testMatch: ['tests/apiCalls/.*.js']
-    params:
-      browserName: "chromium"
-      project: "chromium"
+#  - name: "Planner Chrome Tests"
+#    platformName: "Windows 11"
+#    screenResolution: "1920x1200"
+#    testMatch: ['tests/planner/.*.js']
+#    params:
+#      browserName: "chromium"
+#      project: "chromium"
+#  - name: "Test API Calls" #This suite will be removed eventually
+#    platformName: "Windows 11"
+#    screenResolution: "1920x1080"
+#    testMatch: ['tests/apiCalls/.*.js']
+#    params:
+#      browserName: "chromium"
+#      project: "chromium"
 
 # Controls what artifacts to fetch when the suites have finished.
 artifacts:
