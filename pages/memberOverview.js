@@ -12,7 +12,7 @@ exports.MemberOverViewPage = class MemberOverViewPage {
     }
 
     async selectLinkSettingButton(){
-        await expect(this.linkSettingsButton).toHaveCount(1, {timeout: 10000});
+        await expect(this.linkSettingsButton).toHaveCount(1);
         await this.linkSettingsButton.click();
     }
 };
