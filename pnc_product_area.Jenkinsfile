@@ -4,7 +4,7 @@
 
 slackChannel = "#blackhole"
 
-jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_PlanCreate/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
+jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/PnC_Playwright_By_Product_Area/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
 
 properties(
     [
@@ -14,8 +14,8 @@ properties(
             )
         ),
         parameters([
-            choice(name: 'SUITE_NAME', choices: ['Composer - Chrome', 'Composer - Safari', 'Planner - Chrome', 'Planner - Safari', 'Planner Approvals - Chrome'], description: 'Planner tests on chrome'),
-            choice(name: 'CONFIG_FILE', choices: ['.sauce/composer.config.yml', '.sauce/planner.config.yml', '.sauce/config.yml'], description: 'Select a config file'),
+            choice(name: 'SUITE_NAME', choices: ['Composer - Chrome', 'Composer - Safari', 'Planner - Chrome', 'Planner - Safari', 'Planner Approvals - Chrome'], description: 'Select a suite to run'),
+            choice(name: 'CONFIG_FILE', choices: ['.sauce/composer.config.yml', '.sauce/planner.config.yml', '.sauce/config.yml'], description: 'Select the corresponding config file'),
         ]),
     ]
 )
@@ -35,7 +35,7 @@ def pod = declarePod {
 def configFile = params.CONFIG_FILE
 def suiteName = params.SUITE_NAME
 
-echo "Running ${suiteName} with config file ${configFile}"
+echo "Running: ${suiteName}, with config file: ${configFile}"
 
 pod {
     execWrapper {
