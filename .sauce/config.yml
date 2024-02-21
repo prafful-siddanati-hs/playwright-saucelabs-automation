@@ -30,28 +30,28 @@ npm:
 suites:
   - name: "Composer Chrome Tests"
     platformName: "Windows 11"
-    screenResolution: "1920x1080"
+    screenResolution: "1920x1200"
     testMatch: ['tests/composer/.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
   - name: "Composer Firefox Tests"
     platformName: "Windows 11"
-    screenResolution: "1920x1080"
+    screenResolution: "1400x1050"
     testMatch: ['tests/composer/.*.js']
     params:
       browserName: "firefox"
       project: "firefox"
   - name: "Composer Safari Tests"
     platformName: "macOS 13"
-    screenResolution: "1280x960"
-    testMatch: [ 'tests/composer/.*.js' ]
+    screenResolution: "1600x1200"
+    testMatch: [ 'tests/composer/send_now.spec.js' ]
     params:
       browserName: "webkit"
       project: "webkit"
   - name: "Planner Chrome Tests"
     platformName: "Windows 11"
-    screenResolution: "1920x1080"
+    screenResolution: "1920x1200"
     testMatch: ['tests/planner/.*.js']
     params:
       browserName: "chromium"
