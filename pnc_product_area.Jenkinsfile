@@ -32,17 +32,17 @@ def pod = declarePod {
     }
 }
 
-def configFile = params.CONFIG_FILE
-def suiteName = params.SUITE_NAME
+def configFileParam = params.CONFIG_FILE
+def suiteNameParam = params.SUITE_NAME
 
-echo "Running: ${suiteName}, with config file: ${configFile}"
+echo "Running: ${suiteNameParam}, with config file: ${configFileParam}"
 
 pod {
     execWrapper {
         stage ('Run test suites via saucelabs') {
             try {
                 //Refer to https://github.hootops.com/hootsuite/jenkins-shared-libraries/blob/6/vars/runPlaywrightTestsViaSaucelabs.groovy for usage directions
-                def optionalParam = [branch:"use_configFile", suiteName: "${suiteName}"]
+                def optionalParam = [branch:"use_configFile", suiteName: "${suiteNameParam}"]
                 def configFile = ["${configFileParam}"]
                 runPlaywrightTestsViaSaucelabs(optionalParam, configFile)
             }
@@ -50,7 +50,7 @@ pod {
                 echo "BUILD FAILURE"
                 println(err.toString())
                 slackSend color: '#C85960', channel: slackChannel,
-                        message: " :playwright-logo: *[P&C Playwright tests]*\n *Suite Name:* _${suiteName}_ - Failed! :warning: \n" +
+                        message: " :playwright-logo: *[P&C Playwright tests]*\n *Suite Name:* _${suiteNameParam}_ - Failed! :warning: \n" +
                             " *Jenkins URL:* ${jenkinsUrl} \n"
                 currentBuild.result = "FAILURE"
                 throw err
