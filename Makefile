@@ -1,7 +1,7 @@
 procs = $(shell ps -ef | grep 'bin/sc' | grep -v grep | awk '{ print $$2 ; }')
 killcmd = $(if $(procs), "kill" "-9" $(procs), "echo" "no matching processes")
 # Pass sauce config file path. Default value is set to .sauce/config.yml
-CONFIG_FILE ?= .sauce/planner.config.yml
+CONFIG_FILE ?= .sauce/config.yml
 # Pass the suite name from the config file passed above. Default value set to " " - indicates all suites
 SUITE_NAME ?=
 

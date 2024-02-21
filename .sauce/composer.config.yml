@@ -31,21 +31,21 @@ npm:
 suites:
   - name: "Composer - Chrome"
     platformName: "Windows 11"
-    screenResolution: "1920x1080"
+    screenResolution: "1920x1200"
     testMatch: ['tests/composer/*.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
-  - name: "Composer - Firefox"
-    platformName: "Windows 11"
-    screenResolution: "1400x1050"
-    testMatch: ['tests/composer/*.*.js']
-    params:
-      browserName: "firefox"
-      project: "firefox"
+  # - name: "Composer - Firefox"
+  #   platformName: "Windows 11"
+  #   screenResolution: "1400x1050"
+  #   testMatch: ['tests/composer/*.*.js']
+  #   params:
+  #     browserName: "firefox"
+  #     project: "firefox"
   - name: "Composer - Safari"
     platformName: "macOS 13"
-    screenResolution: "1280x960"
+    screenResolution: "1600x1200"
     testMatch: [ 'tests/composer/*.*.js' ]
     params:
       browserName: "webkit"

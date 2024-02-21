@@ -29,20 +29,20 @@ npm:
     - date-fns-tz
     - events
 suites:
-  - name: "Planner Chrome"
+  - name: "Planner - Chrome"
     platformName: "Windows 11"
-    screenResolution: "1920x1080"
+    screenResolution: "1920x1200"
     testMatch: ['tests/planner/.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
-  - name: "Planner Firefox"
-    platformName: "Windows 11"
-    screenResolution: "1920x1080"
+  - name: "Planner - Safari"
+    platformName: "macOS 13"
+    screenResolution: "1600x1200"
     testMatch: ['tests/planner/.*.js']
     params:
-      browserName: "firefox"
-      project: "firefox"
+      browserName: "webkit"
+      project: "webkit"
 
 # Controls what artifacts to fetch when the suites have finished.
 artifacts:
