@@ -14,7 +14,7 @@ properties(
             )
         ),
         parameters([
-            choice(name: 'SUITE_NAME', choices: ['Composer - Chrome', 'Composer - Safari', 'Planner - Chrome', 'Planner - Safari', 'Planner Approvals - Chrome'], description: 'Select a suite to run'),
+            choice(name: 'SUITE_NAME', choices: ['Composer - Chrome', 'Composer - Safari', 'Planner - Chrome', 'Planner - Safari', 'API Tests - Chrome'], description: 'Select a suite to run'),
             choice(name: 'CONFIG_FILE', choices: ['.sauce/composer.config.yml', '.sauce/planner.config.yml', '.sauce/config.yml'], description: 'Select the corresponding config file'),
         ]),
     ]

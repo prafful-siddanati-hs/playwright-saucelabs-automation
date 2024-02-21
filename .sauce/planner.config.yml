@@ -10,7 +10,6 @@ sauce:
     tags:
       - regression
       - planner
-      - manage approvals
   launchOrder: fail rate
 playwright:
   version: package.json # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/#supported-testing-platforms for a list of supported versions.
@@ -41,20 +40,6 @@ suites:
     platformName: "Windows 11"
     screenResolution: "1920x1080"
     testMatch: ['tests/planner/.*.js']
-    params:
-      browserName: "firefox"
-      project: "firefox"
-  - name: "Planner Approvals - Chrome"
-    platformName: "Windows 11"
-    screenResolution: "1920x1080"
-    testMatch: ['tests/planner/approvals/.*.js']
-    params:
-      browserName: "chromium"
-      project: "chromium"
-  - name: "Planner Approvals - Firefox"
-    platformName: "Windows 11"
-    screenResolution: "1920x1080"
-    testMatch: ['tests/planner/approvals/.*.js']
     params:
       browserName: "firefox"
       project: "firefox"

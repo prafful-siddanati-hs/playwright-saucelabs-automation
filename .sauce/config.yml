@@ -30,6 +30,13 @@ suites:
     params:
       browserName: "firefox"
       project: "firefox"
+  - name: "API Tests - Chrome" # Demo test
+    platformName: "Windows 11"
+    screenResolution: "1440x900"
+    testMatch: ['tests/apiCalls/accountLocking.spec.js']
+    params:
+      browserName: "chromium"
+      project: "chromium"
 # Controls what artifacts to fetch when the suites have finished.
 # artifacts:
 #   download:
