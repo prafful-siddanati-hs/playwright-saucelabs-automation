@@ -15,7 +15,7 @@ properties(
         ),
         parameters([
             choice(name: 'SUITE_NAME', choices: ['Composer - Chrome', 'Composer - Safari', 'Planner - Chrome', 'Planner - Safari', 'API Tests - Chrome'], description: 'Select a suite to run'),
-            choice(name: 'CONFIG_FILE', choices: ['.sauce/composer.config.yml', '.sauce/planner.config.yml', '.sauce/config.yml'], description: 'Select the corresponding config file'),
+            choice(name: 'CONFIG_FILE', choices: ['.sauce/composer_regression.config.yml', '.sauce/planner_regression.config.yml', '.sauce/config.yml'], description: 'Select the corresponding config file'),
         ]),
     ]
 )
@@ -42,7 +42,7 @@ pod {
         stage ('Run test suites via saucelabs') {
             try {
                 //Refer to https://github.hootops.com/hootsuite/jenkins-shared-libraries/blob/6/vars/runPlaywrightTestsViaSaucelabs.groovy for usage directions
-                def optionalParam = [branch:"use_configFile", suiteName: "${suiteNameParam}"]
+                def optionalParam = [suiteName: "${suiteNameParam}"]
                 def configFile = ["${configFileParam}"]
                 runPlaywrightTestsViaSaucelabs(optionalParam, configFile)
             }

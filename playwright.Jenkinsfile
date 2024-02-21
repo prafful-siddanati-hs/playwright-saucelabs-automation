@@ -14,13 +14,13 @@ properties(
             )
         ),
         parameters([
-            string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer.config.yml', description: 'Composer tests on chrome'),
-            string(name: 'CONFIG_FILE', defaultValue: '.sauce/planner.config.yml', description: 'Planner tests on chrome'),
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer_regression.config.yml', description: 'Composer tests on chrome'),
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/planner_regression.config.yml', description: 'Planner tests on chrome'),
         ]),
         pipelineTriggers(
             [parameterizedCron('''
-                30 15,17,21,23 * * 1-4 %CONFIG_FILE=.sauce/composer.config.yml
-                20 13,15,21,23 * * 1-4 %CONFIG_FILE=.sauce/planner.config.yml
+                30 15,17,21,23 * * 1-4 %CONFIG_FILE=.sauce/composer_regression.config.yml
+                20 13,15,21,23 * * 1-4 %CONFIG_FILE=.sauce/planner_regression.config.yml
                 ''')] //Testing a few cron builds
         )
     ]
@@ -45,7 +45,7 @@ pod {
         stage ('Run test suites via saucelabs') {
             try {
                 //Refer to https://github.hootops.com/hootsuite/jenkins-shared-libraries/blob/6/vars/runPlaywrightTestsViaSaucelabs.groovy for usage directions
-                def optionalParam = [branch:"use_configFile"]
+                def optionalParam = []
                 def configFile = ["${configFileParam}"]
                 runPlaywrightTestsViaSaucelabs(optionalParam, configFile)
             }
