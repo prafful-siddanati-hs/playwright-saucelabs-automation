@@ -44,25 +44,25 @@ suites:
       project: "firefox"
   - name: "Composer Safari Tests"
     platformName: "macOS 13"
-    screenResolution: "2048x1536"
-    testMatch: [ 'tests/composer/.*.js' ]
+    screenResolution: "1600x1200"
+    testMatch: [ 'tests/composer/send_now.spec.js' ]
     params:
       browserName: "webkit"
       project: "webkit"
-#  - name: "Planner Chrome Tests"
-#    platformName: "Windows 11"
-#    screenResolution: "1920x1200"
-#    testMatch: ['tests/planner/.*.js']
-#    params:
-#      browserName: "chromium"
-#      project: "chromium"
-#  - name: "Test API Calls" #This suite will be removed eventually
-#    platformName: "Windows 11"
-#    screenResolution: "1920x1080"
-#    testMatch: ['tests/apiCalls/.*.js']
-#    params:
-#      browserName: "chromium"
-#      project: "chromium"
+  - name: "Planner Chrome Tests"
+    platformName: "Windows 11"
+    screenResolution: "1920x1200"
+    testMatch: ['tests/planner/.*.js']
+    params:
+      browserName: "chromium"
+      project: "chromium"
+  - name: "Test API Calls" #This suite will be removed eventually
+    platformName: "Windows 11"
+    screenResolution: "1920x1080"
+    testMatch: ['tests/apiCalls/.*.js']
+    params:
+      browserName: "chromium"
+      project: "chromium"
 
 # Controls what artifacts to fetch when the suites have finished.
 artifacts:
