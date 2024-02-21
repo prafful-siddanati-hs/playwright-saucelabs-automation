@@ -35,8 +35,8 @@ suites:
     screenResolution: "1440x900"
     testMatch: ['tests/apiCalls/accountLocking.spec.js']
     params:
-      browserName: "chromium"
-      project: "chromium"
+      browserName: "firefox"
+      project: "firefox"
 # Controls what artifacts to fetch when the suites have finished.
 # artifacts:
 #   download:

@@ -23,8 +23,8 @@ module.exports = defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 1 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 4 : undefined,
-  timeout: 60 * 3 * 1000,
+  workers: process.env.CI ? 1 : 5,
+  timeout: 60 * 2 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
@@ -79,7 +79,7 @@ module.exports = defineConfig({
     },
     {
       name: 'firefox',
-      use: { 
+      use: {
         ...devices['Desktop Firefox'],
         saucelabs: {
           username: getEnv('SAUCE_USERNAME', ''),
@@ -103,7 +103,7 @@ module.exports = defineConfig({
     },
     {
       name: 'webkit',
-      use: { 
+      use: {
         ...devices['Desktop Safari'],
         saucelabs: {
           username: getEnv('SAUCE_USERNAME', ''),

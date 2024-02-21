@@ -26,7 +26,24 @@ exports.PlannerPage = class PlannerPage {
         await this.viewWeekToggle.click();
     }
 
-    async verifyScheduledMessage(text) {
+    async loadLazyRenderedCards(hour) {
+        await this.page.evaluate(isExpanded => {
+            const row = document.querySelector(isExpanded ? `[data-hour="${hour}"]` : '.vk-Row')
+            // Cards are lazy rendered, so we need to scroll up for the cards to render
+            row?.scrollIntoView({ block: 'start' })
+        })
+        this.page.locator(`[data-hour="${hour}"]`).hover();
+    }
+
+    async hideNativePosts(memberId) {
+        this.page.evaluate(function (id) {
+            return (window.localStorage.setItem(`${id}.pnc_preferences_is_native_posts_shown_filter`, 'false'));
+        }, [memberId]);
+
+    }
+
+    async verifyScheduledMessage(text, hour) {
+        await this.loadLazyRenderedCards(hour)
         await expect(this.page.getByText(text)).toBeVisible;
     }
 
@@ -34,23 +51,27 @@ exports.PlannerPage = class PlannerPage {
         await this.page.getByText(text).click();
     }
 
-    async dragAndDropCard(message) {
+    async dragAndDropCard(message, hour, id) {
         const nextDayDate = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'eeee, d MMMM');
         const nextDayTime = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'ha');
 
         await this.plannerButton.click();
         await this.page.waitForLoadState();
 
+        await this.hideNativePosts(id);
+        await this.loadLazyRenderedCards(hour);
         await expect(this.page.getByText(message)).toBeVisible;
+
 
         const source = this.page.getByText(message);
         const destination = this.page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at ${nextDayTime}` });
-        await this.page.waitForTimeout(1000);
+        await this.page.waitForTimeout(2000);
 
 
         await source.hover();
         await this.page.mouse.down();
 
+        await destination.hover();
         await destination.hover();
         await destination.hover();
 
@@ -71,6 +92,7 @@ exports.PlannerPage = class PlannerPage {
         await this.page.waitForLoadState();
         await this.addMediaButton.click();
         await this.termsOfServiceWall.click();
+
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.firstFreeImage).toHaveJSProperty('complete', true);
         await expect(this.firstFreeImage).not.toHaveJSProperty('naturalWidth', 0);
