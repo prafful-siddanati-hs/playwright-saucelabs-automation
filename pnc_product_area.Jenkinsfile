@@ -14,15 +14,9 @@ properties(
             )
         ),
         parameters([
-            string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer.config.yml', description: 'Composer tests on chrome'),
-            string(name: 'CONFIG_FILE', defaultValue: '.sauce/planner.config.yml', description: 'Planner tests on chrome'),
+            choice(name: 'SUITE_NAME', choices: ['Composer - Chrome', 'Composer - Safari', 'Planner - Chrome', 'Planner - Safari', 'Planner Approvals - Chrome'], description: 'Planner tests on chrome'),
+            choice(name: 'CONFIG_FILE', choices: ['.sauce/composer.config.yml', '.sauce/planner.config.yml', '.sauce/config.yml'], description: 'Select a config file'),
         ]),
-        pipelineTriggers(
-            [parameterizedCron('''
-                30 15,17,21,23 * * 1-4 %CONFIG_FILE=.sauce/composer.config.yml
-                20 13,15,21,23 * * 1-4 %CONFIG_FILE=.sauce/planner.config.yml
-                ''')] //Testing a few cron builds
-        )
     ]
 )
 
@@ -38,14 +32,17 @@ def pod = declarePod {
     }
 }
 
-def configFileParam = params.CONFIG_FILE
+def configFile = params.CONFIG_FILE
+def suiteName = params.SUITE_NAME
+
+echo "Running ${suiteName} with config file ${configFile}"
 
 pod {
     execWrapper {
         stage ('Run test suites via saucelabs') {
             try {
                 //Refer to https://github.hootops.com/hootsuite/jenkins-shared-libraries/blob/6/vars/runPlaywrightTestsViaSaucelabs.groovy for usage directions
-                def optionalParam = [branch:"use_configFile"]
+                def optionalParam = [branch:"use_configFile", suiteName: "${suiteName}"]
                 def configFile = ["${configFileParam}"]
                 runPlaywrightTestsViaSaucelabs(optionalParam, configFile)
             }
@@ -53,7 +50,7 @@ pod {
                 echo "BUILD FAILURE"
                 println(err.toString())
                 slackSend color: '#C85960', channel: slackChannel,
-                        message: " :playwright-logo: *[P&C Playwright tests]*\n Failed! :warning: \n" +
+                        message: " :playwright-logo: *[P&C Playwright tests]*\n *Suite Name:* _${suiteName}_ - Failed! :warning: \n" +
                             " *Jenkins URL:* ${jenkinsUrl} \n"
                 currentBuild.result = "FAILURE"
                 throw err
