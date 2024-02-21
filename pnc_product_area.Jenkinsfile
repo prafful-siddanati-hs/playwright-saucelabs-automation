@@ -1,8 +1,8 @@
 #!groovy
 
-@Library('hootsuite@PUB-31661') _
+@Library('hootsuite@6') _
 
-slackChannel = "#blackhole"
+slackChannel = "#publisher-automation"
 
 jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/PnC_Playwright_By_Product_Area/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
 
