@@ -4,7 +4,7 @@
 
 slackChannel = "#publisher-automation"
 
-jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_PlanCreate/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
+jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/PnC_Playwright_By_Product_Area/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
 
 properties(
     [
@@ -14,15 +14,9 @@ properties(
             )
         ),
         parameters([
-            string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer_regression.config.yml', description: 'Composer tests on chrome'),
-            string(name: 'CONFIG_FILE', defaultValue: '.sauce/planner_regression.config.yml', description: 'Planner tests on chrome'),
+            choice(name: 'SUITE_NAME', choices: ['Composer - Chrome', 'Composer - Safari', 'Planner - Chrome', 'Planner - Safari', 'API Tests - Chrome'], description: 'Select a suite to run'),
+            choice(name: 'CONFIG_FILE', choices: ['.sauce/composer_regression.config.yml', '.sauce/planner_regression.config.yml', '.sauce/config.yml'], description: 'Select the corresponding config file'),
         ]),
-        pipelineTriggers(
-            [parameterizedCron('''
-                30 15,17,21,23 * * 1-4 %CONFIG_FILE=.sauce/composer_regression.config.yml
-                20 13,15,21,23 * * 1-4 %CONFIG_FILE=.sauce/planner_regression.config.yml
-                ''')] //Testing a few cron builds
-        )
     ]
 )
 
@@ -39,13 +33,16 @@ def pod = declarePod {
 }
 
 def configFileParam = params.CONFIG_FILE
+def suiteNameParam = params.SUITE_NAME
+
+echo "Running: ${suiteNameParam}, with config file: ${configFileParam}"
 
 pod {
     execWrapper {
         stage ('Run test suites via saucelabs') {
             try {
                 //Refer to https://github.hootops.com/hootsuite/jenkins-shared-libraries/blob/6/vars/runPlaywrightTestsViaSaucelabs.groovy for usage directions
-                def optionalParam = []
+                def optionalParam = [suiteName: "${suiteNameParam}"]
                 def configFile = ["${configFileParam}"]
                 runPlaywrightTestsViaSaucelabs(optionalParam, configFile)
             }
@@ -53,7 +50,7 @@ pod {
                 echo "BUILD FAILURE"
                 println(err.toString())
                 slackSend color: '#C85960', channel: slackChannel,
-                        message: " :playwright-logo: *[P&C Playwright tests]*\n Failed! :warning: \n" +
+                        message: " :playwright-logo: *[P&C Playwright tests]*\n *Suite Name:* _${suiteNameParam}_ - Failed! :warning: \n" +
                             " *Jenkins URL:* ${jenkinsUrl} \n"
                 currentBuild.result = "FAILURE"
                 throw err

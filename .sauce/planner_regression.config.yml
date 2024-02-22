@@ -8,39 +8,49 @@ sauce:
   concurrency: 10 # Controls how many suites are executed at the same time.
   metadata:
     tags:
-      - e2e
-      - other tag
+      - regression
+      - planner
+  launchOrder: fail rate
 playwright:
   version: package.json # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/#supported-testing-platforms for a list of supported versions.
   configFile: playwright.config.js # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/yaml/#configfile for a list of supported configuration files.
 # Controls what files are available in the context of a test run (unless explicitly excluded by .sauceignore).
 rootDir: ./
+env:
+  AWS_SDK_LOAD_CONFIG: 1
+  AWS_SHARED_CREDENTIALS_FILE: ".aws-session.saucelabs.ini"
+  AWS_CONFIG_FILE: ".aws-config.saucelabs.ini"
+npm:
+  dependencies:
+    - hsdynamodb
+    - hsapi
+    - underscore
+    - date-fns
+    - date-fns-tz
+    - events
 suites:
-  - name: "Chromium Mac"
-    platformName: "macOS 12"
-    screenResolution: "1440x900"
-    testMatch: ['.*.js']
-    params:
-      browserName: "chromium"
-      project: "chromium" # Runs the project that's defined in `playwright.config.js`
-  - name: "Firefox Win"
+  - name: "Planner - Chrome"
     platformName: "Windows 11"
-    screenResolution: "1440x900"
-    testMatch: ['.*.js']
-    params:
-      browserName: "firefox"
-      project: "firefox"
-  - name: "API Tests - Chrome" # Demo test suite
-    platformName: "Windows 11"
-    screenResolution: "1440x900"
-    testMatch: ['tests/apiCalls/enterpriseUserTest.spec.js']
+    screenResolution: "1920x1200"
+    testMatch: ['tests/planner/.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
+  - name: "Planner - Safari"
+    platformName: "macOS 13"
+    screenResolution: "1600x1200"
+    testMatch: ['tests/planner/.*.js']
+    params:
+      browserName: "webkit"
+      project: "webkit"
+
 # Controls what artifacts to fetch when the suites have finished.
-# artifacts:
-#   download:
-#     when: always
-#     match:
-#       - console.log
-#     directory: ./artifacts/
+artifacts:
+  cleanup: true
+  download:
+    when: always
+    match:
+      - console.log
+      - 'sauce-test-report.json'
+      - '*.png'
+    directory: ./artifacts/

@@ -1,7 +1,9 @@
 procs = $(shell ps -ef | grep 'bin/sc' | grep -v grep | awk '{ print $$2 ; }')
 killcmd = $(if $(procs), "kill" "-9" $(procs), "echo" "no matching processes")
-#Pass Suite name from .sauce/config.yml. Default value is set to [Playwright] Planner Tests
-SUITE_NAME ?= [Playwright] Planner Tests
+# Pass sauce config file path. Default value is set to .sauce/config.yml
+CONFIG_FILE ?= .sauce/config.yml
+# Pass the suite name from the config file passed above. Default value set to " " - indicates all suites
+SUITE_NAME ?=
 
 install:
 	rm -rf node_modules || true
@@ -24,8 +26,12 @@ stop-tunnel:
 	@echo 'sauce tunnel processId: ['$(procs)'] stopped'
 	@$(killcmd)
 
-run-test : dynamodb-setup-for-saucelabs
-	npx saucectl run --ccy 4 --select-suite "${SUITE_NAME}" --show-console-log
+run-test: dynamodb-setup-for-saucelabs
+	if [ -z "${SUITE_NAME}" ]; then \
+		npx saucectl run -c ${CONFIG_FILE} --ccy 4 --show-console-log; \
+	else \
+		npx saucectl run -c ${CONFIG_FILE} --select-suite "${SUITE_NAME}" --show-console-log; \
+	fi
 
 dynamodb-setup-for-saucelabs:
 	@profile="build-ci-aws-creds" \
