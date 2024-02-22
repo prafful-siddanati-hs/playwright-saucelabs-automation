@@ -66,39 +66,11 @@ module.exports = {
                 globalData[i].teams.push(team);
                 orgFound = true;
                 break;
-            } 
+            }
         }
-        
+
         if(!orgFound) {
             console.log('Unable to find global organization object to add a team to.');
         }
-    },
-
-    /**
-     * Function to add a member into a team.
-     *
-     * @param {string}     organization    Name of the organization you are adding to.
-     * @param {string}     team            Team to add to.
-     * @param {object}     member          Member to add.
-     * @return {object}    storage         All accounts or the specified account.
-     */
-    addTeamMember: function (organization, team, member) {
-        let i = arr.findIndex((item) => {
-            return item.name === organization;
-        });
-
-        if (i === -1) {
-            throw new Error('Unable to find global organization object to add member to.');
-        }
-
-        let j = arr[i].teams.findIndex((item) => {
-            return item.name === team;
-        });
-
-        if (j === -1) {
-            throw new Error('Unable to find global team object to add member to.');
-        }
-
-        arr[i].teams[j].members.push(member);
     }
 };
