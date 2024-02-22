@@ -14,7 +14,7 @@ module.exports = {
     testOrgPrefix: 'TEMP_ORG_',
     isOrgSafeToDelete: function (org, memberId, testOrgPrefix) {
         const DO_NOT_DELETE_STAGING_ORG = [1866699];
-        
+
         let orgInWhiteList = DO_NOT_DELETE_STAGING_ORG.includes(org.id);
         let orgNameHasPrefix = org.name.startsWith(testOrgPrefix);
         let isOrgOwner = org.paymentMemberId === memberId;
@@ -49,5 +49,53 @@ module.exports = {
             }
         }
         return `No object data found for ${name}`;
+    },
+
+    /**
+     * Function to add a team into an organization.
+     *
+     * @param {string}     organization    Name of the organization you are adding to.
+     * @param {object}     team            Team to add.
+     * @return {object}    storage         All accounts or the specified account.
+     */
+    addTeam: function (globalData, organization, team) {
+
+        for (let i = 0; i < globalData.length; i++) {
+            if (globalData[i].organization === organization) {
+                return globalData[i];
+            } else {
+                return 'Unable to find global organization object to add team to.';
+            }
+        }
+
+        globalData.teams.push(team);
+    },
+
+    /**
+     * Function to add a member into a team.
+     *
+     * @param {string}     organization    Name of the organization you are adding to.
+     * @param {string}     team            Team to add to.
+     * @param {object}     member          Member to add.
+     * @return {object}    storage         All accounts or the specified account.
+     */
+    addTeamMember: function (organization, team, member) {
+        let i = arr.findIndex((item) => {
+            return item.name === organization;
+        });
+
+        if (i === -1) {
+            throw new Error('Unable to find global organization object to add member to.');
+        }
+
+        let j = arr[i].teams.findIndex((item) => {
+            return item.name === team;
+        });
+
+        if (j === -1) {
+            throw new Error('Unable to find global team object to add member to.');
+        }
+
+        arr[i].teams[j].members.push(member);
     }
 };
