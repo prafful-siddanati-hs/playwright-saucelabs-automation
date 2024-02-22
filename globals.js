@@ -52,23 +52,26 @@ module.exports = {
     },
 
     /**
-     * Function to add a team into an organization.
+     * Function to add data from createTeam to organization in global storage.
      *
+     * @param {string}     globalData      Data pushed to Playwright's global.organization
      * @param {string}     organization    Name of the organization you are adding to.
      * @param {object}     team            Team to add.
      * @return {object}    storage         All accounts or the specified account.
      */
     addTeam: function (globalData, organization, team) {
-
+        let orgFound = false;
         for (let i = 0; i < globalData.length; i++) {
-            if (globalData[i].organization === organization) {
-                return globalData[i];
-            } else {
-                return 'Unable to find global organization object to add team to.';
-            }
+            if (globalData[i].name === organization) {
+                globalData[i].teams.push(team);
+                orgFound = true;
+                break;
+            } 
         }
-
-        globalData.teams.push(team);
+        
+        if(!orgFound) {
+            console.log('Unable to find global organization object to add a team to.');
+        }
     },
 
     /**

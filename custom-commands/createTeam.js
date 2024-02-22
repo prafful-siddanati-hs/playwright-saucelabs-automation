@@ -1,6 +1,6 @@
 const events = require('events');
 const Teams = require('hsapi').teamsService;
-const {hasResponseErrors, tops_skyline, testOrgPrefix, getObjectByName} = require("../globals");
+const {hasResponseErrors, tops_skyline, testOrgPrefix, getObjectByName, addTeam} = require("../globals");
 
 /**
  * Creates a new member object in member service, dashboard, and billing service and adds user to globals.
@@ -69,7 +69,7 @@ class createTeam extends events.EventEmitter {
             };
 
             let team = await teams.createNewTeam(parseInt(o.paymentMemberId), body);
-            this.checkResponse(team, `${team.name} / ID: ${team.id}`);
+            this.checkResponse(team, `Team ${team.name} created. / Team Id: ${team.id}`);
 
             team.members = []; // Create an array to store members in.
             t = team;
@@ -77,7 +77,8 @@ class createTeam extends events.EventEmitter {
         } catch (err) {
             throw new Error(`Failed to create team: ${JSON.stringify(err)}`);
         } finally {
-            this.global.addTeam(global.organization, o.name, t);
+            //Update organization object in global storage to include team details.
+            addTeam(global.organization, o.name, t);
             this.emit('complete');
         }
         return this;
