@@ -13,32 +13,32 @@ const MPS = require('hsapi').messagePublishingService;
  */
 
 class deleteScheduledMessageById extends events.EventEmitter {
-    constructor() {
-        super ();
-    }
+	constructor() {
+		super ();
+	}
 
-    async command(member, messageId, callback) {
-        const mps = new MPS(service_message_publishing);
+	async command(member, messageId, callback) {
+		const mps = new MPS(service_message_publishing);
 
-        try {
-            const data = await mps.deleteScheduledMessageById(member, messageId);
+		try {
+			const data = await mps.deleteScheduledMessageById(member, messageId);
 
-            if (data) {
-                throw new Error(`Request did not delete scheduled message. Error code ${data.errors[0].codes}`);
-            }
+			if (data) {
+				throw new Error(`Request did not delete scheduled message. Error code ${data.errors[0].codes}`);
+			}
 
-            if (typeof callback === 'function') {
-                callback.call(this.data);
-            }
+			if (typeof callback === 'function') {
+				callback.call(this.data);
+			}
 
-        } catch (err) {
-            console.assert(false, `Error deleting scheduled message. ${err}`);
-        } finally {
-            this.emit('complete');
-        }
+		} catch (err) {
+			console.assert(false, `Error deleting scheduled message. ${err}`);
+		} finally {
+			this.emit('complete');
+		}
 
-        return this;
-    }
+		return this;
+	}
 }
 
 module.exports = deleteScheduledMessageById;

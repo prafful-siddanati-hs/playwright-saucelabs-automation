@@ -33,7 +33,7 @@ suites:
   - name: "API Tests - Chrome" # Demo test suite
     platformName: "Windows 11"
     screenResolution: "1440x900"
-    testMatch: ['tests/apiCalls/enterpriseUserTest.spec.js']
+    testMatch: ['tests/apiCalls/accountLocking.spec.js']
     params:
       browserName: "chromium"
       project: "chromium"

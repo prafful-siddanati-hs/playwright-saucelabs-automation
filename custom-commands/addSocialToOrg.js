@@ -11,67 +11,67 @@ const { som_bridge, testOrgPrefix, hasResponseErrors, getObjectByName  } = requi
  */
 
 class addSocialToOrg extends events.EventEmitter {
-    constructor() {
-        super();
-        this.step = '';
-    }
+	constructor() {
+		super();
+		this.step = '';
+	}
 
-    async command(socialProfile, organization) {
-        let s;
-        let o;
-        let response = [];
+	async command(socialProfile, organization) {
+		let s;
+		let o;
+		let response = [];
 
-        try {
-            if (!socialProfile || typeof (socialProfile) != 'string') {
-                throw new Error('Please specify a social profile to add to the organization.');
-            }
+		try {
+			if (!socialProfile || typeof (socialProfile) != 'string') {
+				throw new Error('Please specify a social profile to add to the organization.');
+			}
 
-            s = getObjectByName(global.fixture, socialProfile);
+			s = getObjectByName(global.fixture, socialProfile);
 
-            if (!s.isSocialProfile) {
-                throw new Error('Fixture specified is not a Social Profile.');
-            }
+			if (!s.isSocialProfile) {
+				throw new Error('Fixture specified is not a Social Profile.');
+			}
 
-            if ((!organization) && (global.organization.length === 0)){
-                throw new Error('No organization found. Please create one using createOrg().');
-            }
+			if ((!organization) && (global.organization.length === 0)){
+				throw new Error('No organization found. Please create one using createOrg().');
+			}
 
-            if (typeof organization === 'string') {
-                let orgName = testOrgPrefix + organization;
-                o = getObjectByName(global.organization, orgName);
-            } else {
-                o = global.organization[0];
-            }
-        
-            let socialProfiles = new SocialProfiles(som_bridge);
+			if (typeof organization === 'string') {
+				let orgName = testOrgPrefix + organization;
+				o = getObjectByName(global.organization, orgName);
+			} else {
+				o = global.organization[0];
+			}
 
-            console.log('Adding social profile to organization:');
+			let socialProfiles = new SocialProfiles(som_bridge);
 
-            response = await socialProfiles.addSocialProfile(
-                s.socialProfile.userId,
-                s.socialProfile.username,
-                s.socialProfile.type,
-                s.socialProfile.auth1,
-                s.socialProfile.auth2,
-                {
-                    organizationId: o.id,
-                    externalId: s.socialProfile.userId
-                });
-        } catch (err) {
-            console.log(false, JSON.stringify(err));
-        } finally {
-            if (!hasResponseErrors(response)) {
-                s.socialProfile.socialProfileId = response.socialProfileId;
-                s.socialProfile.isSecurePost = response.isSecurePost;
-                s.socialProfile.isReauthRequired = response.isReauthRequired;
-                console.log(true, `Social profile ${s.socialProfile.username} has been added to ${o.name} with Org Id: ${o.id}`);
-            } else {
-                console.log(false, JSON.stringify(response));
-            }
-            this.emit('Complete');
-        }
-        return this;
-    }
-};
+			console.log('Adding social profile to organization:');
+
+			response = await socialProfiles.addSocialProfile(
+				s.socialProfile.userId,
+				s.socialProfile.username,
+				s.socialProfile.type,
+				s.socialProfile.auth1,
+				s.socialProfile.auth2,
+				{
+					organizationId: o.id,
+					externalId: s.socialProfile.userId
+				});
+		} catch (err) {
+			console.log(false, JSON.stringify(err));
+		} finally {
+			if (!hasResponseErrors(response)) {
+				s.socialProfile.socialProfileId = response.socialProfileId;
+				s.socialProfile.isSecurePost = response.isSecurePost;
+				s.socialProfile.isReauthRequired = response.isReauthRequired;
+				console.log(true, `Social profile ${s.socialProfile.username} has been added to ${o.name} with Org Id: ${o.id}`);
+			} else {
+				console.log(false, JSON.stringify(response));
+			}
+			this.emit('Complete');
+		}
+		return this;
+	}
+}
 
 module.exports = addSocialToOrg;

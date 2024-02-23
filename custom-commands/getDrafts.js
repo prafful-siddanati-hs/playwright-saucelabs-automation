@@ -11,45 +11,45 @@ const DRAFT = require('hsapi').draftsService;
  */
 
 class getDrafts extends events.EventEmitter {
-    constructor() {
-        super ();
-    }
+	constructor() {
+		super ();
+	}
 
-    async command(memberId) {
-        let draft = new DRAFT(service_drafts);
-        let drafts = [];
+	async command(memberId, callback) {
+		let draft = new DRAFT(service_drafts);
+		let drafts = [];
 
-        try {
-            const data = await draft.getDrafts(memberId);
+		try {
+			const data = await draft.getDrafts(memberId);
 
-            if (!data) {
-                throw new Error(`Request did not return draft messages. Error code ${data.errors[0].codes}`);
-            }
+			if (!data) {
+				throw new Error(`Request did not return draft messages. Error code ${data.errors[0].codes}`);
+			}
 
-            if (data.drafts.length === 0) {
-                console.log('There are no draft messages for given member Id');
-            }
+			if (data.drafts.length === 0) {
+				console.log('There are no draft messages for given member Id');
+			}
 
-            if (data.drafts.length !== 0) {
-                console.log('Residual draft messages');
-                drafts = data.drafts;
-                data.drafts.forEach((d) => {
-                    console.log(`SN ID: ${d.socialProfileIds} / Draft ID: ${d.draft.id} / Text: ${d.draft.message.text}`);
-                });
-            }
+			if (data.drafts.length !== 0) {
+				console.log('Residual draft messages');
+				drafts = data.drafts;
+				data.drafts.forEach((d) => {
+					console.log(`SN ID: ${d.socialProfileIds} / Draft ID: ${d.draft.id} / Text: ${d.draft.message.text}`);
+				});
+			}
 
-            if (typeof callback === 'function') {
-                callback.call(this.data);
-            }
+			if (typeof callback === 'function') {
+				callback.call(this.data);
+			}
 
-        } catch (err) {
-            console.assert(false, `Error retrieving draft messages. ${err}`);
-        } finally {
-            this.emit('complete');
-        }
+		} catch (err) {
+			console.assert(false, `Error retrieving draft messages. ${err}`);
+		} finally {
+			this.emit('complete');
+		}
 
-        return drafts;
-    }
+		return drafts;
+	}
 }
 
 module.exports = getDrafts;
