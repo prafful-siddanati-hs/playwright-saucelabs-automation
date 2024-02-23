@@ -81,3 +81,18 @@ Complete set of command line options can be found in [playwright documents](http
 
 # Jenkins Job
 Jenkins job for this repository can be found at [Dashboard/Playwright_PlanCreate](https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_PlanCreate/)
+
+# Writing playwright tests / Code Practices
+
+## Structure
+
+All tests should be written in the format `tests/{PortofolioFolder}/{testFileName}.js/ts`. Reusable test commands (such as `login()`) and selectors of elements (such as `#loginEmailInput`) should be added to the `pages` directory. Lastly, reusable functions to validate, command, and assert in tests should be added to the [Playwright-Custom-Commands](https://github.hootops.com/hootsuite/playwright-saucelabs-automation/tree/master/custom-commands).
+
+## Naming of test files, page objects files
+
+(TBD)
+
+## Running lint checker
+
+This playwright repository is configured with [eslint](https://github.hootops.com/hootsuite/playwright-saucelabs-automation/blob/master/.eslintrc.js) to check and enforce certain coding standards.
+You can run eslint for whole project using `yarn lint` or alternatively for individual test files using `npx eslint tests/testFolder/testFileName.js`. To fix any warnings and errors run `yarn lint-fix`.
