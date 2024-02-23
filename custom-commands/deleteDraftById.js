@@ -12,32 +12,32 @@ const DRAFT = require('hsapi').draftsService;
  * @return {function} this      Returning this allows commands to be chained
  */
 class deleteDraftById extends events.EventEmitter {
-    constructor() {
-        super ();
-    }
+	constructor() {
+		super ();
+	}
 
-    async command(memberId, draftId) {
-        let draft = new DRAFT(service_drafts);
+	async command(memberId, draftId, callback) {
+		let draft = new DRAFT(service_drafts);
 
-        try {
-            const data = await draft.deleteDraftById(memberId, draftId);
+		try {
+			const data = await draft.deleteDraftById(memberId, draftId);
 
-            if (!data.id) {
-                throw new Error(`Request did not delete draft message. Error code ${data.body.details[0].value}`);
-            }
+			if (!data.id) {
+				throw new Error(`Request did not delete draft message. Error code ${data.body.details[0].value}`);
+			}
 
-            if (typeof callback === 'function') {
-                callback.call(this.data);
-            }
+			if (typeof callback === 'function') {
+				callback.call(this.data);
+			}
 
-        } catch (err) {
-            console.assert(false, `Error deleting draft message. ${err}`);
-        } finally {
-            this.emit('complete');
-        }
+		} catch (err) {
+			console.assert(false, `Error deleting draft message. ${err}`);
+		} finally {
+			this.emit('complete');
+		}
 
-        return this;
-    }
+		return this;
+	}
 }
 
 module.exports = deleteDraftById;

@@ -1,66 +1,64 @@
 // @ts-check
 const { test } = require('@playwright/test');
-const { formatISO, addHours, addDays, subDays } = require('date-fns');
-const {LoginPage} = require("../../pages/login");
-const {PlannerPage} = require("../../pages/planandcreate/planner");
-const fs = require('fs');
-const scheduleV3Message = require("../../custom-commands/scheduleV3Message");
-const createUser = require("../../custom-commands/createUser");
-const getFixture = require("../../custom-commands/getFixture");
-const {getObjectByName} = require("../../globals");
+const { formatISO, addHours } = require('date-fns');
+const {LoginPage} = require('../../pages/login');
+const {PlannerPage} = require('../../pages/planandcreate/planner');
+const scheduleV3Message = require('../../custom-commands/scheduleV3Message');
+const createUser = require('../../custom-commands/createUser');
+const getFixture = require('../../custom-commands/getFixture');
+const {getObjectByName} = require('../../globals');
 const tearDown = require('../../custom-commands/tearDown');
 
 
 /** @type {import('@playwright/test').Page} */
-let page;
 test.afterEach(async ({ page }) => {
-    const cleanUp = new tearDown();
+	const cleanUp = new tearDown();
 
-    await cleanUp.command();
-    await page.close();
+	await cleanUp.command();
+	await page.close();
 });
 
 test('Drag and drop card on week view', async ({page}) => {
-    const createNewUser = new createUser();
-    const addFixture = new getFixture();
-    const loginPage = new LoginPage(page);
-    const plannerPage = new PlannerPage(page);
-    const createScheduleMessage = new scheduleV3Message();
+	const createNewUser = new createUser();
+	const addFixture = new getFixture();
+	const loginPage = new LoginPage(page);
+	const plannerPage = new PlannerPage(page);
+	const createScheduleMessage = new scheduleV3Message();
 
-    await createNewUser.command('dnd_user', 'professional');
-    await addFixture.command('twitter_dnd','twitter', true, 300);
+	await createNewUser.command('dnd_user', 'professional');
+	await addFixture.command('twitter_dnd','twitter', true, 300);
 
-    await loginPage.signIn('dnd_user');
+	await loginPage.signIn('dnd_user');
 
-    const scheduleTime = addHours(new Date(), 1);
-    const composeText = `test drag and drop card on planner week view ${Date.now()}`;
+	const scheduleTime = addHours(new Date(), 1);
+	const composeText = `test drag and drop card on planner week view ${Date.now()}`;
 
-    /* Create a scheduled message */
-    await createScheduleMessage.command(
-        parseInt(global.member[0].memberId, 10),
-        {
-            messages: [
-                {
-                    socialProfileId: getObjectByName(global.fixture, 'twitter_dnd').socialProfile.socialProfileId,
-                    text: composeText,
-                    scheduledSendTime: formatISO(scheduleTime)
-                }
-            ]
-        }
-    );
+	/* Create a scheduled message */
+	await createScheduleMessage.command(
+		parseInt(global.member[0].memberId, 10),
+		{
+			messages: [
+				{
+					socialProfileId: getObjectByName(global.fixture, 'twitter_dnd').socialProfile.socialProfileId,
+					text: composeText,
+					scheduledSendTime: formatISO(scheduleTime)
+				}
+			]
+		}
+	);
 
-  await plannerPage.dragAndDropCard(composeText, scheduleTime.getHours(), global.member[0].memberId);
+	await plannerPage.dragAndDropCard(composeText, scheduleTime.getHours(), global.member[0].memberId);
 });
 
 test('drag and drop media from side pane on week view', async ({page}) => {
-    const createNewUser = new createUser();
-    const loginPage = new LoginPage(page);
-    const plannerPage = new PlannerPage(page);
+	const createNewUser = new createUser();
+	const loginPage = new LoginPage(page);
+	const plannerPage = new PlannerPage(page);
 
-    await createNewUser.command('dnd_media', 'professional');
+	await createNewUser.command('dnd_media', 'professional');
 
-    await loginPage.signIn('dnd_media');
+	await loginPage.signIn('dnd_media');
 
-    await plannerPage.dragAndDropMedia();
-    await page.close();
+	await plannerPage.dragAndDropMedia();
+	await page.close();
 });

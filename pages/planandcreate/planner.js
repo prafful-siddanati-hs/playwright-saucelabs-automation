@@ -4,112 +4,112 @@ const { utcToZonedTime } = require('date-fns-tz');
 const timeZone = 'America/Vancouver';
 
 exports.PlannerPage = class PlannerPage {
-    constructor(page) {
-        this.page = page;
-        this.plannerButton = page.getByLabel('Planner', { exact: true });
-        this.deleteButton = page.getByTestId('DeleteButton');
-        this.sidePaneCloseButton = page.getByTestId('CloseButton');
-        this.deletePostButton = page.getByRole('button', { name: 'Delete post' });
-        this.addMediaButton = page.getByTestId('ContentButton');
-        this.termsOfServiceWall = page.locator('.vk-TermsOfServiceWall button');
-        this.firstFreeImage = page.locator('.-mediaRow img[draggable="true"]').first();
-        this.draftCard = page.getByText('No account');
-        this.closeSaveDraftPopup = page.locator('#DraftSavedPopover [aria-label="Close Draft saved"]');
-        this.viewWeekToggle = page.locator('.vk-Planner .vk-ViewToggleBar [aria-label= "View weekly planner"]');
-    }
+	constructor(page) {
+		this.page = page;
+		this.plannerButton = page.getByLabel('Planner', { exact: true });
+		this.deleteButton = page.getByTestId('DeleteButton');
+		this.sidePaneCloseButton = page.getByTestId('CloseButton');
+		this.deletePostButton = page.getByRole('button', { name: 'Delete post' });
+		this.addMediaButton = page.getByTestId('ContentButton');
+		this.termsOfServiceWall = page.locator('.vk-TermsOfServiceWall button');
+		this.firstFreeImage = page.locator('.-mediaRow img[draggable="true"]').first();
+		this.draftCard = page.getByText('No account');
+		this.closeSaveDraftPopup = page.locator('#DraftSavedPopover [aria-label="Close Draft saved"]');
+		this.viewWeekToggle = page.locator('.vk-Planner .vk-ViewToggleBar [aria-label= "View weekly planner"]');
+	}
 
-    async visit() {
-        await this.page.goto('/dashboard#/planner');
-    }
+	async visit() {
+		await this.page.goto('/dashboard#/planner');
+	}
 
-    async selectWeekView() {
-        await this.viewWeekToggle.click();
-    }
+	async selectWeekView() {
+		await this.viewWeekToggle.click();
+	}
 
-    async loadLazyRenderedCards(hour) {
-        await this.page.evaluate(isExpanded => {
-            const row = document.querySelector(isExpanded ? `[data-hour="${hour}"]` : '.vk-Row')
-            // Cards are lazy rendered, so we need to scroll up for the cards to render
-            row?.scrollIntoView({ block: 'start' })
-        })
-        this.page.locator(`[data-hour="${hour}"]`).hover();
-    }
+	async loadLazyRenderedCards(hour) {
+		await this.page.evaluate(isExpanded => {
+			const row = document.querySelector(isExpanded ? `[data-hour="${hour}"]` : '.vk-Row');
+			// Cards are lazy rendered, so we need to scroll up for the cards to render
+			row?.scrollIntoView({ block: 'start' });
+		});
+		this.page.locator(`[data-hour="${hour}"]`).hover();
+	}
 
-    async hideNativePosts(memberId) {
-        this.page.evaluate(function (id) {
-            return (window.localStorage.setItem(`${id}.pnc_preferences_is_native_posts_shown_filter`, 'false'));
-        }, [memberId]);
+	async hideNativePosts(memberId) {
+		this.page.evaluate(function (id) {
+			return (window.localStorage.setItem(`${id}.pnc_preferences_is_native_posts_shown_filter`, 'false'));
+		}, [memberId]);
 
-    }
+	}
 
-    async verifyScheduledMessage(text, hour) {
-        await this.loadLazyRenderedCards(hour)
-        await expect(this.page.getByText(text)).toBeVisible;
-    }
+	async verifyScheduledMessage(text, hour) {
+		await this.loadLazyRenderedCards(hour);
+		await expect(this.page.getByText(text)).toBeVisible;
+	}
 
-    async showPreviewPane(text) {
-        await this.page.getByText(text).click();
-    }
+	async showPreviewPane(text) {
+		await this.page.getByText(text).click();
+	}
 
-    async dragAndDropCard(message, hour, id) {
-        const nextDayDate = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'eeee, d MMMM');
-        const nextDayTime = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'ha');
+	async dragAndDropCard(message, hour, id) {
+		const nextDayDate = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'eeee, d MMMM');
+		const nextDayTime = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'ha');
 
-        await this.plannerButton.click();
-        await this.page.waitForLoadState();
+		await this.plannerButton.click();
+		await this.page.waitForLoadState();
 
-        await this.hideNativePosts(id);
-        await this.loadLazyRenderedCards(hour);
-        await expect(this.page.getByText(message)).toBeVisible;
-
-
-        const source = this.page.getByText(message);
-        const destination = this.page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at ${nextDayTime}` });
-        await this.page.waitForTimeout(2000);
+		await this.hideNativePosts(id);
+		await this.loadLazyRenderedCards(hour);
+		await expect(this.page.getByText(message)).toBeVisible;
 
 
-        await source.hover();
-        await this.page.mouse.down();
+		const source = this.page.getByText(message);
+		const destination = this.page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at ${nextDayTime}` });
+		await this.page.waitForTimeout(2000);
 
-        await destination.hover();
-        await destination.hover();
-        await destination.hover();
 
-        await this.page.mouse.up();
-        await this.page.waitForTimeout(1000);
+		await source.hover();
+		await this.page.mouse.down();
 
-        await this.page.getByText(message).click();
+		await destination.hover();
+		await destination.hover();
+		await destination.hover();
 
-        await this.deleteButton.click();
-        await this.deletePostButton.click();
-        await this.page.waitForTimeout(1000);
-        await expect(this.page.getByText(message)).not.toBeVisible;
-    }
+		await this.page.mouse.up();
+		await this.page.waitForTimeout(1000);
 
-    async dragAndDropMedia() {
-        const nextDayDate = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'eeee, d MMMM');
-        await this.plannerButton.click();
-        await this.page.waitForLoadState();
-        await this.addMediaButton.click();
-        await this.termsOfServiceWall.click();
+		await this.page.getByText(message).click();
 
-        await this.page.waitForLoadState('domcontentloaded');
-        await expect(this.firstFreeImage).toHaveJSProperty('complete', true);
-        await expect(this.firstFreeImage).not.toHaveJSProperty('naturalWidth', 0);
+		await this.deleteButton.click();
+		await this.deletePostButton.click();
+		await this.page.waitForTimeout(1000);
+		await expect(this.page.getByText(message)).not.toBeVisible;
+	}
 
-        const source = this.firstFreeImage;
-        const destination = this.page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at 12AM` });
+	async dragAndDropMedia() {
+		const nextDayDate = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'eeee, d MMMM');
+		await this.plannerButton.click();
+		await this.page.waitForLoadState();
+		await this.addMediaButton.click();
+		await this.termsOfServiceWall.click();
 
-        await source.dragTo(destination);
+		await this.page.waitForLoadState('domcontentloaded');
+		await expect(this.firstFreeImage).toHaveJSProperty('complete', true);
+		await expect(this.firstFreeImage).not.toHaveJSProperty('naturalWidth', 0);
 
-        await this.page.waitForTimeout(2000);
-        await expect(this.closeSaveDraftPopup).toBeVisible;
-        await this.sidePaneCloseButton.click();
-        await expect(this.draftCard).toBeVisible;
-        await this.draftCard.click();
+		const source = this.firstFreeImage;
+		const destination = this.page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at 12AM` });
 
-        await this.deleteButton.click();
-        await this.deletePostButton.click();
-        await this.page.waitForTimeout(1000);
-    }
+		await source.dragTo(destination);
+
+		await this.page.waitForTimeout(2000);
+		await expect(this.closeSaveDraftPopup).toBeVisible;
+		await this.sidePaneCloseButton.click();
+		await expect(this.draftCard).toBeVisible;
+		await this.draftCard.click();
+
+		await this.deleteButton.click();
+		await this.deletePostButton.click();
+		await this.page.waitForTimeout(1000);
+	}
 };

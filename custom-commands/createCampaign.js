@@ -1,5 +1,5 @@
 const events = require('events');
-const {service_trail} = require("../globals");
+const {service_trail} = require('../globals');
 const TRAIL = require('hsapi').trailService;
 
 /**
@@ -14,34 +14,34 @@ const TRAIL = require('hsapi').trailService;
  */
 
 class createCampaign extends events.EventEmitter {
-    constructor() {
-        super();
-    }
+	constructor() {
+		super();
+	}
 
-    async command(memberId, options, callback) {
-        const trail = new TRAIL(service_trail);
+	async command(memberId, options, callback) {
+		const trail = new TRAIL(service_trail);
 
-        try {
-            const data = await trail.createCampaign(memberId, options);
+		try {
+			const data = await trail.createCampaign(memberId, options);
 
-            if (!data || data.statusCode > 200) {
-                throw new Error(`Request did not return a campaign ID. Error code ${data.errors[0].errorCode}`);
-            }
+			if (!data || data.statusCode > 200) {
+				throw new Error(`Request did not return a campaign ID. Error code ${data.errors[0].errorCode}`);
+			}
 
-            console.log(data !== undefined, `CAMPAIGN ID: ${data.id} / CAMPAIGN Name: ${data.name}`);
+			console.log(data !== undefined, `CAMPAIGN ID: ${data.id} / CAMPAIGN Name: ${data.name}`);
 
-            if (typeof callback === 'function') {
-                callback.call(this.data);
-            }
+			if (typeof callback === 'function') {
+				callback.call(this.data);
+			}
 
-        } catch (err) {
-            console.assert(false, `Error creating a campaign. ${err}`);
-        } finally {
-            this.emit('complete');
-        }
+		} catch (err) {
+			console.assert(false, `Error creating a campaign. ${err}`);
+		} finally {
+			this.emit('complete');
+		}
 
-        return this;
-    }
+		return this;
+	}
 }
 
 module.exports = createCampaign;

@@ -14,33 +14,33 @@ const DRAFT = require('hsapi').draftsService;
  */
 
 class draftMessage extends events.EventEmitter {
-    constructor() {
-        super ();
-    }
+	constructor() {
+		super ();
+	}
 
-    async command(memberId, options) {
-        let draft = new DRAFT(service_drafts);
+	async command(memberId, options, callback) {
+		let draft = new DRAFT(service_drafts);
 
-        try {
-            const data = await draft.draftMessage(memberId, options);
-            if (!data || !data.draft || !data.draft.id) {
-                throw new Error(`Request did not return draft messages. Error code ${data.errors[0].codes}`);
-            }
+		try {
+			const data = await draft.draftMessage(memberId, options);
+			if (!data || !data.draft || !data.draft.id) {
+				throw new Error(`Request did not return draft messages. Error code ${data.errors[0].codes}`);
+			}
 
-            console.log(data !== undefined, `SN ID: ${data.draft.message.messages[0].snId} / Draft ID: ${data.draft.id} / Text: ${data.draft.message.text}`);
+			console.log(data !== undefined, `SN ID: ${data.draft.message.messages[0].snId} / Draft ID: ${data.draft.id} / Text: ${data.draft.message.text}`);
 
-            if (typeof callback === 'function') {
-                callback.call(this.data);
-            }
+			if (typeof callback === 'function') {
+				callback.call(this.data);
+			}
 
-        } catch (err) {
-            console.assert(false, `Error while drafting a message. ${err}`);
-        } finally {
-            this.emit('complete');
-        }
+		} catch (err) {
+			console.assert(false, `Error while drafting a message. ${err}`);
+		} finally {
+			this.emit('complete');
+		}
 
-        return this;
-    }
+		return this;
+	}
 }
 
 module.exports = draftMessage;

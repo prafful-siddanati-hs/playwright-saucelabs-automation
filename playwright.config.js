@@ -10,127 +10,127 @@ const { defineConfig, devices } = require('@playwright/test');
  */
 
 function getEnv (key, defaultValue) {
-  let v = process.env[key] || '';
-  return v !== '' ? v : defaultValue;
+	let v = process.env[key] || '';
+	return v !== '' ? v : defaultValue;
 }
 
 module.exports = defineConfig({
-  testDir: './tests',
-  /* Run tests in files in parallel */
-  fullyParallel: true,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
-  /* Retry on CI only */
-  retries: process.env.CI ? 1 : 1,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : 5,
-  timeout: 60 * 2 * 1000,
-  expect: {
-    /**
+	testDir: './tests',
+	/* Run tests in files in parallel */
+	fullyParallel: true,
+	/* Fail the build on CI if you accidentally left test.only in the source code. */
+	forbidOnly: !!process.env.CI,
+	/* Retry on CI only */
+	retries: process.env.CI ? 1 : 1,
+	/* Opt out of parallel tests on CI. */
+	workers: process.env.CI ? 1 : 5,
+	timeout: 60 * 2 * 1000,
+	expect: {
+		/**
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 20000,
-  },
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['html',{outputFile: 'playwright-report/index.html', open: 'never'}],
-              ['json', {outputFile: 'test-results/test_result.json'}]],
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  use: {
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'https://staging.hootsuite.com/',
+		timeout: 20000,
+	},
+	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
+	reporter: [['html',{outputFile: 'playwright-report/index.html', open: 'never'}],
+		['json', {outputFile: 'test-results/test_result.json'}]],
+	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+	use: {
+		/* Base URL to use in actions like `await page.goto('/')`. */
+		baseURL: 'https://staging.hootsuite.com/',
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
-    ignoreHTTPSErrors: true,
-    screenshot: 'only-on-failure',
-    timezoneId: 'America/Vancouver',
-    video: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
-    longTimeout: 30 * 1000,
-  },
-  outputDir: 'screenshots',
+		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+		trace: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
+		ignoreHTTPSErrors: true,
+		screenshot: 'only-on-failure',
+		timezoneId: 'America/Vancouver',
+		video: process.env.CI ? 'on-first-retry' : 'retain-on-failure',
+		longTimeout: 30 * 1000,
+	},
+	outputDir: 'screenshots',
 
-  /* Configure projects for major browsers */
-  projects: [
-    {
-      name: 'chromium',
-      use: {
-        ...devices['Desktop Chrome'],
-        saucelabs: {
-          username: getEnv('SAUCE_USERNAME', ''),
-          access_key: getEnv('SAUCE_ACCESS_KEY', ''),
-          launchOptions: {
-            args: [
-              '--headless',
-              '--no-sandbox',
-              '--ignore-certificate-errors',
-              '--allow-insecure-localhost',
-              '--disable-infobars'
-            ]
-          },
-          contextOptions: {
-            ignoreHTTPSErrors: true,
-            viewport: { width: 1920, height: 1080 },
-          },
-          video: 'on-first-retry'
-        }
-      },
-    },
-    {
-      name: 'firefox',
-      use: {
-        ...devices['Desktop Firefox'],
-        saucelabs: {
-          username: getEnv('SAUCE_USERNAME', ''),
-          access_key: getEnv('SAUCE_ACCESS_KEY', ''),
-          launchOptions: {
-            args: [
-              '--headless',
-              '--no-sandbox',
-              '--ignore-certificate-errors',
-              '--allow-insecure-localhost',
-              '--disable-infobars'
-            ]
-          },
-          contextOptions: {
-            ignoreHTTPSErrors: true,
-            viewport: { width: 1920, height: 1080 },
-          },
-          video: 'on-first-retry'
-        }
-      },
-    },
-    {
-      name: 'webkit',
-      use: {
-        ...devices['Desktop Safari'],
-        saucelabs: {
-          username: getEnv('SAUCE_USERNAME', ''),
-          access_key: getEnv('SAUCE_ACCESS_KEY', ''),
-          launchOptions: {
-            args: [
-              '--headless',
-              '--no-sandbox',
-              '--ignore-certificate-errors',
-              '--allow-insecure-localhost',
-              '--disable-infobars'
-            ]
-          },
-          contextOptions: {
-            ignoreHTTPSErrors: true,
-            viewport: { width: 1920, height: 1080 },
-          },
-          video: 'on-first-retry'
-        }
-      },
-    },
-  ],
+	/* Configure projects for major browsers */
+	projects: [
+		{
+			name: 'chromium',
+			use: {
+				...devices['Desktop Chrome'],
+				saucelabs: {
+					username: getEnv('SAUCE_USERNAME', ''),
+					access_key: getEnv('SAUCE_ACCESS_KEY', ''),
+					launchOptions: {
+						args: [
+							'--headless',
+							'--no-sandbox',
+							'--ignore-certificate-errors',
+							'--allow-insecure-localhost',
+							'--disable-infobars'
+						]
+					},
+					contextOptions: {
+						ignoreHTTPSErrors: true,
+						viewport: { width: 1920, height: 1080 },
+					},
+					video: 'on-first-retry'
+				}
+			},
+		},
+		/* {
+			name: 'firefox',
+			use: {
+				...devices['Desktop Firefox'],
+				saucelabs: {
+					username: getEnv('SAUCE_USERNAME', ''),
+					access_key: getEnv('SAUCE_ACCESS_KEY', ''),
+					launchOptions: {
+						args: [
+							'--headless',
+							'--no-sandbox',
+							'--ignore-certificate-errors',
+							'--allow-insecure-localhost',
+							'--disable-infobars'
+						]
+					},
+					contextOptions: {
+						ignoreHTTPSErrors: true,
+						viewport: { width: 1920, height: 1080 },
+					},
+					video: 'on-first-retry'
+				}
+			},
+		},
+		{
+			name: 'webkit',
+			use: {
+				...devices['Desktop Safari'],
+				saucelabs: {
+					username: getEnv('SAUCE_USERNAME', ''),
+					access_key: getEnv('SAUCE_ACCESS_KEY', ''),
+					launchOptions: {
+						args: [
+							'--headless',
+							'--no-sandbox',
+							'--ignore-certificate-errors',
+							'--allow-insecure-localhost',
+							'--disable-infobars'
+						]
+					},
+					contextOptions: {
+						ignoreHTTPSErrors: true,
+						viewport: { width: 1920, height: 1080 },
+					},
+					video: 'on-first-retry'
+				}
+			},
+		}, */
+	],
 
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://127.0.0.1:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
+	/* Run your local dev server before starting the tests */
+	// webServer: {
+	//   command: 'npm run start',
+	//   url: 'http://127.0.0.1:3000',
+	//   reuseExistingServer: !process.env.CI,
+	// },
 });
 
