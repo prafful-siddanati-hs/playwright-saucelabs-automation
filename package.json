@@ -9,9 +9,14 @@
     "lint": "eslint . --ext .js,.ts",
     "lint-fix": "eslint . --fix"
   },
-  "pre-commit": [
-    "lint"
-  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git"

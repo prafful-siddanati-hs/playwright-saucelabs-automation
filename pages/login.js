@@ -1,5 +1,4 @@
 const { expect } = require('@playwright/test');
-const { defaultPassword } = require('../globals.js');
 const {getObjectByName} = require('../globals');
 
 exports.LoginPage = class LoginPage {
