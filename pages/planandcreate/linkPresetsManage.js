@@ -23,7 +23,7 @@ exports.LinkPresetsManagePage = class LinkPresetsManagePage {
 		await page1.waitForLoadState('networkidle');
 		await page1.getByLabel('Email').click();
 		await page1.getByLabel('Email').fill('prafful.siddanati+testaccount@hootsuite.com');
-		await page1.getByLabel('Password', { exact: true }).click();  
+		await page1.getByLabel('Password', { exact: true }).click();
 		await page1.getByLabel('Password', { exact: true }).fill('tKq54RWaw362');
 		await page1.getByRole('button', { name: 'Log in' }).click();
 		await page1.getByRole('button', { name: 'Allow' }).click();
