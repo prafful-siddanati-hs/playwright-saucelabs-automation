@@ -71,7 +71,7 @@ Refer to the [Jenkinsfile](https://github.hootops.com/hootsuite/playwright-sauce
 To have faster debugging feedback, you can run test against local browser. Here is a example you can run locally
 
 ```bash
-npx playwright test tests/testName.js --headed
+npx playwright test -c playwright.config.js tests/testName.js --headed
 ```
 
 Some of the other most frequently used options are:
