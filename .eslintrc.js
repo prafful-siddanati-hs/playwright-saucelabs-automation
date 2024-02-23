@@ -4,9 +4,15 @@ const ERROR = 2;
 
 module.exports = {
 	'env': {
-		'browser': true,
+		'node': true,
 		'commonjs': true,
 		'es2021': true
+	},
+	'globals': {
+		'browser': true,
+		'hs': true,
+		'document': true,
+		'window': true,
 	},
 	'extends': [
 		'eslint:recommended',
