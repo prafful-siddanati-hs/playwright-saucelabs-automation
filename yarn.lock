@@ -86,6 +86,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@one-ini/wasm@0.1.1":
+  version "0.1.1"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/@one-ini/wasm/-/wasm-0.1.1.tgz"
+  integrity sha512-XuySG1E38YScSJoMlqovLru4KTUNSjgVTIjyh7qMX6aNN5HY5Ct5LhRJdxO79JtTzKfzV/bnWpz+zquYrISsvw==
+
 "@playwright/test@^1.38.1":
   version "1.38.1"
   resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/@playwright/test/-/test-1.38.1.tgz"
@@ -400,6 +405,11 @@ combined-stream@^1.0.8:
   dependencies:
     delayed-stream "~1.0.0"
 
+commander@^10.0.0:
+  version "10.0.1"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/commander/-/commander-10.0.1.tgz"
+  integrity sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==
+
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/concat-map/-/concat-map-0.0.1.tgz"
@@ -494,10 +504,29 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
+editorconfig@^1.0.2:
+  version "1.0.4"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/editorconfig/-/editorconfig-1.0.4.tgz"
+  integrity sha512-L9Qe08KWTlqYMVvMcTIvMAdl1cDUubzRNYL+WfA4bLDMHe4nemKkpmYzkznE1FwLKu0EEmy6obgQKzMJrg4x9Q==
+  dependencies:
+    "@one-ini/wasm" "0.1.1"
+    commander "^10.0.0"
+    minimatch "9.0.1"
+    semver "^7.5.3"
+
 escape-string-regexp@^4.0.0:
   version "4.0.0"
   resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz"
   integrity sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
+
+eslint-plugin-editorconfig@^4.0.3:
+  version "4.0.3"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/eslint-plugin-editorconfig/-/eslint-plugin-editorconfig-4.0.3.tgz"
+  integrity sha512-5YeDxm6mlv75DrTbRBK9Jw2ogqhjiz8ZCvv9bkuz/MXq0603q9FpQvQlamtas4bX1Gji4YcksY7dq7stPeGaLQ==
+  dependencies:
+    editorconfig "^1.0.2"
+    eslint "^8.40.0"
+    klona "^2.0.4"
 
 eslint-scope@^7.2.2:
   version "7.2.2"
@@ -512,7 +541,7 @@ eslint-visitor-keys@^3.3.0, eslint-visitor-keys@^3.4.1, eslint-visitor-keys@^3.4
   resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz"
   integrity sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag==
 
-"eslint@^6.0.0 || ^7.0.0 || >=8.0.0", eslint@^8.56.0:
+"eslint@^6.0.0 || ^7.0.0 || >=8.0.0", eslint@^8.40.0, eslint@^8.56.0:
   version "8.56.0"
   resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/eslint/-/eslint-8.56.0.tgz"
   integrity sha512-Go19xM6T9puCOWntie1/P997aXxFsOi37JIHRWI514Hc6ZnaHGKY9xFhrU65RT6CcBEzZoGG1e6Nq+DT04ZtZQ==
@@ -976,6 +1005,11 @@ keyv@^4.5.3:
   dependencies:
     json-buffer "3.0.1"
 
+klona@^2.0.4:
+  version "2.0.6"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/klona/-/klona-2.0.6.tgz"
+  integrity sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==
+
 levn@^0.4.1:
   version "0.4.1"
   resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/levn/-/levn-0.4.1.tgz"
@@ -1034,6 +1068,13 @@ minimatch@^3.0.5, minimatch@^3.1.1, minimatch@^3.1.2:
   integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
   dependencies:
     brace-expansion "^1.1.7"
+
+minimatch@9.0.1:
+  version "9.0.1"
+  resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/minimatch/-/minimatch-9.0.1.tgz"
+  integrity sha512-0jWhJpD/MdhPXwPuiRkCbfYfSKp2qnn2eOc279qI7f+osl/l+prKSrvhg157zSYvx/1nmgn2NqdT6k2Z7zSH9w==
+  dependencies:
+    brace-expansion "^2.0.1"
 
 minimatch@9.0.3:
   version "9.0.3"
@@ -1243,7 +1284,7 @@ sax@>=0.6.0, sax@1.2.1:
   resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/sax/-/sax-1.2.1.tgz"
   integrity sha512-8I2a3LovHTOpm7NV5yOyO8IHqgVsfK4+UuySrXU8YXkSRX7k6hCV9b3HrkKCr3nMpgj+0bmocaJJWpvp1oc7ZA==
 
-semver@^7.5.4:
+semver@^7.5.3, semver@^7.5.4:
   version "7.6.0"
   resolved "https://artifactory.hootops.com:443/artifactory/api/npm/hootsuite-npm/semver/-/semver-7.6.0.tgz"
   integrity sha512-EnwXhrlwXMk9gKu5/flx5sv/an57AkRplG3hTK68W7FRDN+k+OWBj65M7719OkA82XLBxrcX0KSHj+X5COhOVg==

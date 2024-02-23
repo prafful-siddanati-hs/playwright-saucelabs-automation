@@ -58,6 +58,13 @@ module.exports = {
 
 		'no-unused-expressions': [OFF],
 		'no-useless-escape': [OFF],
+		'no-extra-boolean-cast': [WARN],
+		'no-extra-semi': [WARN],
+		'no-func-assign': [ERROR],
+		'no-inner-declarations': [OFF],
+		'no-trailing-spaces': [WARN],
+		'no-nested-ternary': [WARN], //Use ternary operator only if absolutely necessary
+		'no-mixed-spaces-and-tabs': [WARN],
 
 		//Typescipt specific rules
 		'@typescript-eslint/no-unused-vars': [WARN],

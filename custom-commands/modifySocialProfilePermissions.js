@@ -89,13 +89,13 @@ class modifySocialProfilePermissions extends events.EventEmitter {
 			console.log(`Modifying ${user.name}(${user.memberId})'s permissions for ${profile.username}`);
 
 			this.step = 'Get social profile';
-            
+
 			let socialProfileResult = await socialProfiles.getSocialProfile(profile.type, optionalData);
-                
+
 			this.checkResponse(socialProfileResult, 'Found social profile');
 
 			this.step = 'Changing permissions for social profile';
-            
+
 			let socialProfileId = socialProfileResult[Object.keys(socialProfileResult)[0]].socialProfileId;
 			let memberResult = memberPermissions.editSocialProfilePermissions(parseInt(user.memberId), parseInt(socialProfileId), {permissionPreset: permissionPreset});
 			this.checkResponse(memberResult, `Changed permissions to ${permissionPreset}`);

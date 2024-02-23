@@ -42,7 +42,7 @@ class addSocialToOrg extends events.EventEmitter {
 			} else {
 				o = global.organization[0];
 			}
-        
+
 			let socialProfiles = new SocialProfiles(som_bridge);
 
 			console.log('Adding social profile to organization:');

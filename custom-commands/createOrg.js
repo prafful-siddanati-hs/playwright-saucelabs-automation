@@ -56,7 +56,7 @@ class createOrg extends events.EventEmitter {
 			if (!name || typeof name !== 'string') {
 				throw new Error('Please enter a name for the organization.');
 			}
-            
+
 			let u = (global.fixture)[0];
 			let hsUsers = [u];
 
@@ -67,7 +67,7 @@ class createOrg extends events.EventEmitter {
 			} else {
 				throw new Error('You must have a pro or enterprise user before creating an organization.');
 			}
-            
+
 			let pwTestMemberId = parseInt(u.memberId);
 			let orgs = new Organizations(tops_skyline);
 			let organizationMembers = new OrganizationMembers(tops_skyline);
@@ -81,9 +81,9 @@ class createOrg extends events.EventEmitter {
 
 			if (existingOrgs.data.length > 0) {
 				let existingOrgData = Object.values(existingOrgs.data);
-    
+
 				console.log(`Member is already in ${existingOrgData.length} orgs. Removing orgs before creating new one`);
-    
+
 				let deletedOrgs = existingOrgData.map((org) => {
 					if (isOrgSafeToDelete(org, pwTestMemberId, testOrgPrefix)) {
 						console.log(`Deleting Org ${org.name}: / Org Id: ${org.id} / Payment Member Id: ${org.paymentMemberId}`);
@@ -92,12 +92,12 @@ class createOrg extends events.EventEmitter {
 						throw new Error(`Org safety check failed: Skipping org ${org.id} deletion`);
 					}
 				});
-    
+
 				this.step = 'Deleting Organizations';
 				let deleted = await Promise.all(deletedOrgs);
 				this.checkResponse(deleted, 'Hootsuite organizations deleted.');
 			}
-            
+
 			this.step = 'Creating new Organization';
 			try {
 				createdOrg = await orgs.createOrganization(orgName, pwTestMemberId);
