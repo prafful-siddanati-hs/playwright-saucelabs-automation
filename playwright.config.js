@@ -76,7 +76,7 @@ module.exports = defineConfig({
 				}
 			},
 		},
-		/* {
+		{
 			name: 'firefox',
 			use: {
 				...devices['Desktop Firefox'],
@@ -123,7 +123,7 @@ module.exports = defineConfig({
 					video: 'on-first-retry'
 				}
 			},
-		}, */
+		},
 	],
 
 	/* Run your local dev server before starting the tests */
