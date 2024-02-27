@@ -1,5 +1,5 @@
 const { expect } = require('@playwright/test');
-const { format, addDays } = require('date-fns');
+const { format, addDays, startOfWeek, addWeeks } = require('date-fns');
 const { utcToZonedTime } = require('date-fns-tz');
 const timeZone = 'America/Vancouver';
 
@@ -16,6 +16,7 @@ exports.PlannerPage = class PlannerPage {
 		this.draftCard = page.getByText('No account');
 		this.closeSaveDraftPopup = page.locator('#DraftSavedPopover [aria-label="Close Draft saved"]');
 		this.viewWeekToggle = page.locator('.vk-Planner .vk-ViewToggleBar [aria-label= "View weekly planner"]');
+		this.navigateToNextWeek = page.locator('.vk-Planner .vk-NextButton');
 	}
 
 	async visit() {
@@ -30,7 +31,7 @@ exports.PlannerPage = class PlannerPage {
 		await this.page.evaluate(isExpanded => {
 			const row = document.querySelector(isExpanded ? `[data-hour="${hour}"]` : '.vk-Row');
 			// Cards are lazy rendered, so we need to scroll up for the cards to render
-			row?.scrollIntoView({ block: 'start' });
+			row?.scrollIntoView({ block: 'start', behavior: 'instant' });
 		});
 		this.page.locator(`[data-hour="${hour}"]`).hover();
 	}
@@ -42,9 +43,16 @@ exports.PlannerPage = class PlannerPage {
 
 	}
 
+	//This can be used to prevent planner from auto scrolling to a recommended time slot.
+	async hideRecommendedTimes(memberId) {
+		this.page.evaluate(function (id) {
+			return (window.localStorage.setItem(`${id}.pnc_preferences_is_recommended_times_to_post_shown_filter`, 'false'));
+		}, [memberId]);
+	}
+
 	async verifyScheduledMessage(text, hour) {
 		await this.loadLazyRenderedCards(hour);
-		await expect(this.page.getByText(text)).toBeVisible;
+		await expect(this.page.getByText(text)).toBeVisible();
 	}
 
 	async showPreviewPane(text) {
@@ -52,21 +60,22 @@ exports.PlannerPage = class PlannerPage {
 	}
 
 	async dragAndDropCard(message, hour, id) {
-		const nextDayDate = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'eeee, d MMMM');
-		const nextDayTime = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'ha');
+		const nextDayDate = format(utcToZonedTime(addDays(startOfWeek(addWeeks(new Date(), 1)), 1), timeZone), 'eeee, d MMMM');
+		const nextDayTime = format(utcToZonedTime(addDays(startOfWeek(addWeeks(new Date(), 1)), 1), timeZone), 'ha');
 
 		await this.plannerButton.click();
 		await this.page.waitForLoadState();
 
 		await this.hideNativePosts(id);
+		await this.hideRecommendedTimes(id);
+		await expect(this.page.getByLabel('Next week')).toBeVisible();
+		await this.navigateToNextWeek.click();
 		await this.loadLazyRenderedCards(hour);
-		await expect(this.page.getByText(message)).toBeVisible;
-
+		await expect(this.page.getByText(message)).toBeVisible();
 
 		const source = this.page.getByText(message);
 		const destination = this.page.getByRole('gridcell', { name: `0 posts, ${nextDayDate} at ${nextDayTime}` });
-		await this.page.waitForTimeout(2000);
-
+		await this.page.waitForTimeout(1500);
 
 		await source.hover();
 		await this.page.mouse.down();
@@ -76,14 +85,14 @@ exports.PlannerPage = class PlannerPage {
 		await destination.hover();
 
 		await this.page.mouse.up();
-		await this.page.waitForTimeout(1000);
+		await this.page.waitForTimeout(1500);
 
 		await this.page.getByText(message).click();
 
 		await this.deleteButton.click();
 		await this.deletePostButton.click();
 		await this.page.waitForTimeout(1000);
-		await expect(this.page.getByText(message)).not.toBeVisible;
+		await expect(this.page.getByText(message)).not.toBeVisible();
 	}
 
 	async dragAndDropMedia() {
@@ -103,9 +112,9 @@ exports.PlannerPage = class PlannerPage {
 		await source.dragTo(destination);
 
 		await this.page.waitForTimeout(2000);
-		await expect(this.closeSaveDraftPopup).toBeVisible;
+		await expect(this.closeSaveDraftPopup).toBeVisible();
 		await this.sidePaneCloseButton.click();
-		await expect(this.draftCard).toBeVisible;
+		await expect(this.draftCard).toBeVisible();
 		await this.draftCard.click();
 
 		await this.deleteButton.click();

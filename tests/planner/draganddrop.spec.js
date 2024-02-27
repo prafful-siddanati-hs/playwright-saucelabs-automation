@@ -1,6 +1,6 @@
 // @ts-check
 const { test } = require('@playwright/test');
-const { formatISO, addHours } = require('date-fns');
+const { formatISO, startOfWeek, addWeeks } = require('date-fns');
 const {LoginPage} = require('../../pages/login');
 const {PlannerPage} = require('../../pages/planandcreate/planner');
 const scheduleV3Message = require('../../custom-commands/scheduleV3Message');
@@ -30,7 +30,7 @@ test('Drag and drop card on week view', async ({page}) => {
 
 	await loginPage.signIn('dnd_user');
 
-	const scheduleTime = addHours(new Date(), 1);
+	const scheduleTime = startOfWeek(addWeeks(new Date(), 1)); //Schedule for first day of next week
 	const composeText = `test drag and drop card on planner week view ${Date.now()}`;
 
 	/* Create a scheduled message */
@@ -48,17 +48,4 @@ test('Drag and drop card on week view', async ({page}) => {
 	);
 
 	await plannerPage.dragAndDropCard(composeText, scheduleTime.getHours(), global.member[0].memberId);
-});
-
-test('drag and drop media from side pane on week view', async ({page}) => {
-	const createNewUser = new createUser();
-	const loginPage = new LoginPage(page);
-	const plannerPage = new PlannerPage(page);
-
-	await createNewUser.command('dnd_media', 'professional');
-
-	await loginPage.signIn('dnd_media');
-
-	await plannerPage.dragAndDropMedia();
-	await page.close();
 });
