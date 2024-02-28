@@ -52,7 +52,7 @@ pod {
             catch(err) {
                 echo "BUILD FAILURE"
                 println(err.toString())
-                def testList = configFileParam.split("/")[2].split("_")[0]
+                def testList = configFileParam.split("/")[1].split("_")[0].capitalize()
                 slackSend color: '#C85960', channel: slackChannel,
                         message: " :playwright-logo: *[P&C Playwright tests]*\n _${testList}_ - Failed! :warning: \n" +
                             " *Jenkins URL:* ${jenkinsUrl} \n"
