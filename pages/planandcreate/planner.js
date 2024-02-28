@@ -1,7 +1,7 @@
 const { expect } = require('@playwright/test');
 const { format, addDays, startOfWeek, addWeeks } = require('date-fns');
 const { utcToZonedTime } = require('date-fns-tz');
-const timeZone = 'America/Vancouver';
+const timeZone = 'America/Toronto';
 
 exports.PlannerPage = class PlannerPage {
 	constructor(page) {
