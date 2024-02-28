@@ -32,6 +32,7 @@ suites:
   - name: "Composer - Chrome"
     platformName: "Windows 11"
     screenResolution: "1920x1200"
+    timeZone: 'Vancouver'
     testMatch: ['tests/composer/*.*.js']
     params:
       browserName: "chromium"
@@ -46,6 +47,7 @@ suites:
   - name: "Composer - Safari"
     platformName: "macOS 13"
     screenResolution: "1600x1200"
+    timeZone: 'Vancouver'
     testMatch: [ 'tests/composer/*.*.js' ]
     params:
       browserName: "webkit"
