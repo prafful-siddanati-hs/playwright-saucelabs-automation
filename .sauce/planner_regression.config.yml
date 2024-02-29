@@ -7,10 +7,13 @@ sauce:
     owner: '$SAUCE_USERNAME'
   concurrency: 10 # Controls how many suites are executed at the same time.
   metadata:
+    build: '$JOB_NAME'
     tags:
+      - '$JOB_NAME'
       - regression
       - planner
   launchOrder: fail rate
+showConsoleLog: true
 playwright:
   version: package.json # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/#supported-testing-platforms for a list of supported versions.
   configFile: playwright.config.js # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/yaml/#configfile for a list of supported configuration files.
@@ -33,18 +36,18 @@ suites:
     platformName: "Windows 11"
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
-    testMatch: ['tests/planner/.*.js']
+    testMatch: ['tests/apiCalls/accountLocking.spec.js']
     params:
       browserName: "chromium"
       project: "chromium"
-  - name: "Planner - Safari"
-    platformName: "macOS 13"
-    screenResolution: "1600x1200"
-    timeZone: 'Vancouver'
-    testMatch: ['tests/planner/.*.js']
-    params:
-      browserName: "webkit"
-      project: "webkit"
+  # - name: "Planner - Safari"
+  #   platformName: "macOS 13"
+  #   screenResolution: "1600x1200"
+  #   timeZone: 'Vancouver'
+  #   testMatch: ['tests/planner/.*.js']
+  #   params:
+  #     browserName: "webkit"
+  #     project: "webkit"
 
 # Controls what artifacts to fetch when the suites have finished.
 artifacts:

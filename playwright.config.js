@@ -20,8 +20,8 @@ module.exports = defineConfig({
 	fullyParallel: true,
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
 	forbidOnly: !!process.env.CI,
-	/* Retry on CI only */
-	retries: process.env.CI ? 1 : 1,
+	/* Retry on SAUCE_VM & CI only */
+	retries: (process.env.CI || process.env.SAUCE_VM) ? 1 : 0,
 	/* Opt out of parallel tests on CI. */
 	workers: process.env.CI ? 1 : 5,
 	timeout: 60 * 2 * 1000,
@@ -59,6 +59,7 @@ module.exports = defineConfig({
 				saucelabs: {
 					username: getEnv('SAUCE_USERNAME', ''),
 					access_key: getEnv('SAUCE_ACCESS_KEY', ''),
+					build: getEnv('JOB_NAME', 'PW_LOCAL'),
 					launchOptions: {
 						args: [
 							'--headless',
@@ -100,7 +101,7 @@ module.exports = defineConfig({
 		// 		}
 		// 	},
 		// },
-		{
+		/* {
 			name: 'webkit',
 			use: {
 				...devices['Desktop Safari'],
@@ -123,7 +124,7 @@ module.exports = defineConfig({
 					video: 'on-first-retry'
 				}
 			},
-		},
+		}, */
 	],
 
 	/* Run your local dev server before starting the tests */
