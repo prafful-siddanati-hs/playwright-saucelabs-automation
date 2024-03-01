@@ -18,10 +18,6 @@ module.exports = {
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended'
 	],
-	'ignorePatterns': [
-		'node_modules/*',
-		'playwright-report/*'
-	],
 	'overrides': [
 		{
 			'env': {
