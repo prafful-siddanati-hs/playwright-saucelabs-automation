@@ -26,7 +26,7 @@ module.exports = {
 			return false;
 		}
 	},
-	// Check whether or not HSAPI responded with error
+	// Check whether HSAPI responded with error
 	hasResponseErrors: function (res) {
 		if (typeof res !== 'object') {
 			console.log('Unable to parse response object.');
@@ -34,6 +34,20 @@ module.exports = {
 		}
 		// Check for errors in the body and non-200 status codes.
 		return ((res.body && res.body.errors) || (res.statusCode && res.statusCode !== 200));
+	},
+
+	plan_create: {
+		getComposeMessage: function () {
+			const MESSAGE = [
+				'Draft',
+				'Compose',
+				'D$a#t_',
+				'C@mP0se',
+				'12abXY!%',
+				'comporTeste'
+			];
+			return MESSAGE[Math.floor(Math.random() * MESSAGE.length)];
+		}
 	},
 	/**
          * Function to get object from Playwright's global storage
