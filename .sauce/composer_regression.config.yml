@@ -7,7 +7,9 @@ sauce:
     owner: '$SAUCE_USERNAME'
   concurrency: 10 # Controls how many suites are executed at the same time.
   metadata:
+    build: '$JOB_NAME-$BUILD_NUMBER'
     tags:
+      - '$JOB_BASE_NAME'
       - regression
       - composer
   launchOrder: fail rate
