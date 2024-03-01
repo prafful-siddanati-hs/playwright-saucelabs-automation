@@ -4,8 +4,6 @@ exports.ComposePage = class ComposePage {
 	constructor(page) {
 		this.page = page;
 		this.composeButton = page.getByLabel('Composer', { exact: true });
-		// this.postButton = page.locator('div.animated-secondary button[aria-label=\'Post\']');
-
 		this.postButton = page.locator('div.animated-secondary').getByLabel('Post');
 		this.composeScreen = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal');
 		this.profileDropDown = page.getByPlaceholder('Select a social account');
