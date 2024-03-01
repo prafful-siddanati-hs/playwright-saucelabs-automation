@@ -49,9 +49,10 @@ pod {
             catch(err) {
                 echo "BUILD FAILURE"
                 println(err.toString())
+                def sauceUrl = "<${getSaucelabsBuildUrl()}| Saucelabs URL>"
                 slackSend color: '#C85960', channel: slackChannel,
                         message: " :playwright-logo: *[P&C Playwright tests]*\n *Suite Name:* _${suiteNameParam}_ - Failed! :warning: \n" +
-                            " *Jenkins URL:* ${jenkinsUrl} \n"
+                            " Jenkins URL: ${jenkinsUrl} \n" + " ${sauceUrl} :saucelabs_new:"
                 currentBuild.result = "FAILURE"
                 throw err
             }
