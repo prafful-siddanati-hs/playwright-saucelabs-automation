@@ -28,9 +28,9 @@ stop-tunnel:
 
 run-test: dynamodb-setup-for-saucelabs
 	if [ -z "${SUITE_NAME}" ]; then \
-		npx saucectl run -c ${CONFIG_FILE} --ccy 4 --show-console-log; \
+		npx saucectl run -c ${CONFIG_FILE} --ccy 4; \
 	else \
-		npx saucectl run -c ${CONFIG_FILE} --select-suite "${SUITE_NAME}" --show-console-log; \
+		npx saucectl run -c ${CONFIG_FILE} --select-suite "${SUITE_NAME}"; \
 	fi
 
 dynamodb-setup-for-saucelabs:
