@@ -68,10 +68,10 @@ Refer to the [Jenkinsfile](https://github.hootops.com/hootsuite/playwright-sauce
 
 ### Run tests on local machine
 
-To have faster debugging feedback, you can run test against local browser. Here is a example you can run locally
+To have faster debugging feedback, you can run test against local Chrome browser. Here is a example you can run locally
 
 ```bash
-npx playwright test -c playwright.config.js tests/testName.js --headed
+npx playwright test -c playwright.config.js tests/testName.js --headed --project chromium
 ```
 
 Some of the other most frequently used options are:

@@ -58,4 +58,8 @@ exports.LoginPage = class LoginPage {
 		await this.signIn(member);
 		await this.page.goto('/dashboard#home');
 	}
+
+	async verifySocialNetwork(name) {
+		await expect(this.page.locator(`//*[contains(@id, "social-profiles-tab")]//*[text()="${name}"]`)).toBeVisible();
+	}
 };
