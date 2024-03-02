@@ -37,8 +37,6 @@ test('Create and edit draft using composer', async ({ page }) => {
 	await draftPage.visit();
 	await expect(draftPage.draftItem).toHaveCount(0);
 
-	console.log(draftText, 'text');
-
 	await composePage.selectComposeButton();
 	await composePage.exitButton.click();
 	await composePage.verifySocialProfileSelected(profile);
