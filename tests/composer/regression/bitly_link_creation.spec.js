@@ -1,10 +1,10 @@
 const { test } = require('@playwright/test');
-const tearDown = require('../../custom-commands/tearDown');
-const {MemberOverViewPage} = require('../../pages/memberOverview');
-const {LinkPresetsManagePage} = require('../../pages/planandcreate/linkPresetsManage');
-const {LoginPage} = require('../../pages/login');
-const getFixture = require('../../custom-commands/getFixture');
-const createOrg = require('../../custom-commands/createOrg');
+const tearDown = require('../../../custom-commands/tearDown');
+const {MemberOverViewPage} = require('../../../pages/memberOverview');
+const {LinkPresetsManagePage} = require('../../../pages/planandcreate/linkPresetsManage');
+const {LoginPage} = require('../../../pages/login');
+const getFixture = require('../../../custom-commands/getFixture');
+const createOrg = require('../../../custom-commands/createOrg');
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
