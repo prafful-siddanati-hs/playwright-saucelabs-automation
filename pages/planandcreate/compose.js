@@ -10,6 +10,7 @@ exports.ComposePage = class ComposePage {
 		this.snContentItems = page.locator('.vk-ContentItems');
 		this.snPilltext = page.locator('.vk-PillText');
 		this.composerHeader = page.locator('.vk-ComposerHeader');
+		this.previewNetworkType = page.locator('.vk-ComposerModal .vk-MessagePreviewHeader .vk-NetworkType');
 		this.twitterPreviewSingleImage = page.locator('.vk-TwitterPreview .vk-MediaImg');
 		this.facebookPreviewSingleImage = page.locator('.vk-FacebookPreview .vk-MediaImg');
 		this.messageArea = page.getByTestId('MessageEditArea').getByLabel('Text');
@@ -22,14 +23,18 @@ exports.ComposePage = class ComposePage {
 		this.openCalendarButton = page.getByLabel('Open calendar');
 		this.nextMonthButton = page.getByLabel('Go to next month');
 		this.firstDayOfNextMonth = page.locator('(//button[contains(@class, "rdp-day") and text()="1"])[1]');
+		this.mediaOverLay = page.locator('.vk-ComposerModal  .vk-MediaAttachmentThumbnailCard');
 		this.twitterVideoPreviewSelector = page.locator('.rc-Composer .vk-TwitterPreview .vk-VideoContainer');
 		this.facebookVideoPreviewSelector = page.locator('.rc-Composer .vk-FacebookPreview .vk-VideoContainer .vk-VideoPlayer');
-		this.twitterPreviewText = this.page.locator('.vk-TwitterPreview .vk-ContentBody');
-		this.facebookPreviewText = this.page.locator('.vk-FacebookPreview .vk-ContentBody');
-		this.exitButton = this.page.getByRole('button', { name: 'Exit tutorial' });
-		this.feCallOuts = this.page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
-		this.moreButton = this.page.getByLabel('more', { exact: true });
-		this.saveDraftFromDropdown = this.page.getByRole('button', { name: 'Save draft', exact: true });
+		this.instagramReelVideoPreviewSelector = page.getByTestId('preview-container').locator('.vk-InstagramReelPreview .vk-StreamlinedVideo');
+		this.twitterPreviewText = page.locator('.vk-TwitterPreview .vk-ContentBody');
+		this.facebookPreviewText = page.locator('.vk-FacebookPreview .vk-ContentBody');
+		this.instagramPreviewText = page.getByTestId('preview-container').getByLabel('Instagram post preview');
+		this.instagramReelPreviewText = page.getByTestId('preview-container').locator('.vk-InstagramReelPreview');
+		this.exitButton = page.getByRole('button', { name: 'Exit tutorial' });
+		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
+		this.moreButton = page.getByLabel('more', { exact: true });
+		this.saveDraftFromDropdown = page.getByRole('button', { name: 'Save draft', exact: true });
 	}
 	async selectComposeButton() {
 		await expect(this.composeButton).toBeVisible();
@@ -49,6 +54,7 @@ exports.ComposePage = class ComposePage {
 
 	async uploadFile(name) {
 		await this.page.setInputFiles('.vk-MediaUpload input[type="file"]',`${name}`);
+		await expect(this.mediaOverLay).toBeVisible();
 	}
 
 	async writeMessage(message) {
@@ -101,6 +107,21 @@ exports.ComposePage = class ComposePage {
 
 	async verifyFacebookPreview(text) {
 		await expect(this.facebookPreviewText).toContainText(`${text}`);
+	}
+
+	async verifyInstagramPreview(text) {
+		await expect(this.instagramPreviewText).toContainText(`${text}`);
+		await expect(this.previewNetworkType).toContainText('Instagram Post');
+	}
+
+	async verifyInstagramReelPreview(text) {
+		await expect(this.instagramReelPreviewText).toContainText(`${text}`);
+	}
+
+	async verifyInstagramReelVideoPreview() {
+		await expect(this.previewNetworkType).toContainText('Instagram Reel');
+		await expect(this.instagramReelVideoPreviewSelector).toHaveCount(1);
+		await this.page.waitForLoadState('domcontentloaded');
 	}
 
 	async selectMessageScheduleDate() {

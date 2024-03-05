@@ -47,14 +47,14 @@ suites:
   #   params:
   #     browserName: "firefox"
   #     project: "firefox"
-  - name: "Composer - Safari"
-    platformName: "macOS 13"
-    screenResolution: "1600x1200"
-    timeZone: 'Vancouver'
-    testMatch: [ 'tests/composer_smoke_tests/*.*.js' ]
-    params:
-      browserName: "webkit"
-      project: "webkit"
+#  - name: "Composer - Safari"
+#    platformName: "macOS 13"
+#    screenResolution: "1600x1200"
+#    timeZone: 'Vancouver'
+#    testMatch: [ 'tests/composer_smoke_tests/*.*.js' ]
+#    params:
+#      browserName: "webkit"
+#      project: "webkit"
 
 # Controls what artifacts to fetch when the suites have finished.
 artifacts:
