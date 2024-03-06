@@ -32,7 +32,7 @@ npm:
     - date-fns-tz
     - events
 suites:
-  - name: "Planner - Chrome"
+  - name: "Planner_Regression - Chrome"
     platformName: "Windows 11"
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
@@ -40,7 +40,7 @@ suites:
     params:
       browserName: "chromium"
       project: "chromium"
-  - name: "Planner - Safari"
+  - name: "Planner_Regression - Safari"
     platformName: "macOS 13"
     screenResolution: "1600x1200"
     timeZone: 'Vancouver'
