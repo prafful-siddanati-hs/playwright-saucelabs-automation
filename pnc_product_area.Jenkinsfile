@@ -15,7 +15,7 @@ properties(
         ),
         parameters([
             choice(name: 'SUITE_NAME', choices: ['Composer_Smoke - Chrome', 'Composer_Smoke - Safari', 'Planner_Regression - Chrome', 'Planner_Regression - Safari'], description: 'Select a suite to run'),
-            choice(name: 'Feature', choices: ['composer_smoke','composer_regression', 'planner_regression'], description: 'Select product feature'),
+            choice(name: 'FEATURE', choices: ['composer_smoke','composer_regression', 'planner_regression'], description: 'Select product feature'),
         ]),
     ]
 )
@@ -32,7 +32,7 @@ def pod = declarePod {
     }
 }
 
-def configFileParam = ".sauce/${params.CONFIG_FILE}.config.yml"
+def configFileParam = ".sauce/${params.FEATURE}.config.yml"
 def suiteNameParam = params.SUITE_NAME
 
 echo "Running: ${suiteNameParam}, with config file: ${configFileParam}"
@@ -41,7 +41,6 @@ pod {
     execWrapper {
         stage ('Run test suites via saucelabs') {
             try {
-            println configFileParam
                 //Refer to https://github.hootops.com/hootsuite/jenkins-shared-libraries/blob/6/vars/runPlaywrightTestsViaSaucelabs.groovy for usage directions
                 def optionalParams = [suiteName: "${suiteNameParam}"]
                 def configFile = ["${configFileParam}"]
