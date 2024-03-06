@@ -32,7 +32,7 @@ npm:
     - date-fns-tz
     - events
 suites:
-  - name: "Composer - Chrome"
+  - name: "Composer_Smoke - Chrome"
     platformName: "Windows 11"
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
@@ -40,14 +40,14 @@ suites:
     params:
       browserName: "chromium"
       project: "chromium"
-  # - name: "Composer - Firefox"
+  # - name: "Composer_Smoke - Firefox"
   #   platformName: "Windows 11"
   #   screenResolution: "1400x1050"
   #   testMatch: ['tests/composer/*.*.js']
   #   params:
   #     browserName: "firefox"
   #     project: "firefox"
-#  - name: "Composer - Safari"
+#  - name: "Composer_Smoke - Safari"
 #    platformName: "macOS 13"
 #    screenResolution: "1600x1200"
 #    timeZone: 'Vancouver'
