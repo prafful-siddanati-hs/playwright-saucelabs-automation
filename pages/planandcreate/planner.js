@@ -1,6 +1,8 @@
 const { expect } = require('@playwright/test');
-const { format, addDays, startOfWeek, addWeeks } = require('date-fns');
+const { format, formatISO, addDays, startOfWeek, addWeeks, subDays } = require('date-fns');
 const { utcToZonedTime } = require('date-fns-tz');
+const deleteScheduledMessageById = require('../../custom-commands/deleteScheduledMesssagesById');
+const getScheduledMessages = require('../../custom-commands/getScheduledMessages');
 const timeZone = 'America/Toronto';
 
 exports.PlannerPage = class PlannerPage {
@@ -121,4 +123,33 @@ exports.PlannerPage = class PlannerPage {
 		await this.deletePostButton.click();
 		await this.page.waitForTimeout(1000);
 	}
+
+	async deleteScheduleMessagesViaAPI(memberId) {
+		const getAllScheduledMessages = new getScheduledMessages();
+		const deleteScheduledMessages = new deleteScheduledMessageById();
+		const startTime = subDays(new Date(), 5);
+		const endTime = addDays(new Date(), 15);
+		let messagesToDelete = [];
+		/* Get list of messages & delete them by messageId */
+		await getAllScheduledMessages.command(
+			parseInt(memberId, 10),
+			formatISO(startTime),
+			formatISO(endTime),
+			NaN,
+			'SCHEDULED',
+			15).then(
+			response =>
+				messagesToDelete = response);
+
+		let messageIdsToDelete = messagesToDelete.map(message => Number(message.id));
+
+		if (messageIdsToDelete.length !== 0) {
+			console.log('Deleting scheduled messages');
+			for (const messageId of messageIdsToDelete) {
+				console.log(`Deleting message ID: ${messageId}`);
+				await deleteScheduledMessages.command(parseInt(memberId, 10), messageId);
+			}
+		}
+	}
+
 };
