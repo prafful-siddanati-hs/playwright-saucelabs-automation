@@ -30,7 +30,7 @@ test('Schedule message with video using composer', async ({ page }) => {
 	await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, 'schedule_video').username);
 	await composePage.writeMessage(composeText);
 	await composePage.verifyFacebookPreview(composeText);
-	await composePage.uploadFile('test_data/publisher/videos/video_2.mp4');
+	await composePage.uploadMediaFile('test_data/publisher/videos');
 	await composePage.verifyFacebookVideoPreview();
 	await composePage.selectMessageScheduleDate();
 });
