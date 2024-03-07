@@ -56,16 +56,10 @@ exports.ComposePage = class ComposePage {
 
 	async uploadMediaFile(testDataImagesFolder) {
 		try {
-			// Get random media file
 			const randomFile = await getRandomMediaFile(testDataImagesFolder);
-
-			// Concatenate directory path with random file name
 			const filePath = join(testDataImagesFolder, randomFile);
 
-			// Set input files
 			await this.page.setInputFiles('.vk-MediaUpload input[type="file"]', filePath);
-
-			// Wait for media overlay to be visible
 			await expect(this.mediaOverLay).toBeVisible();
 		} catch (error) {
 			console.error('Error:', error);
