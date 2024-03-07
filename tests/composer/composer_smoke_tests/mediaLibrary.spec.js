@@ -1,10 +1,10 @@
 const {test, expect} = require('@playwright/test');
-const tearDown = require('../../custom-commands/tearDown');
-const getFixture = require('../../custom-commands/getFixture');
-const { LoginPage } = require('../../pages/login');
-const { getObjectByName, plan_create } = require('../../globals');
-const { PlannerPage } = require('../../pages/planandcreate/planner');
-const { ComposePage } = require('../../pages/planandcreate/compose');
+const tearDown = require('../../../custom-commands/tearDown');
+const getFixture = require('../../../custom-commands/getFixture');
+const { LoginPage } = require('../../../pages/login');
+const { getObjectByName, plan_create } = require('../../../globals');
+const { PlannerPage } = require('../../../pages/planandcreate/planner');
+const { ComposePage } = require('../../../pages/planandcreate/compose');
 let twitterAccount, fbAccount, memberId;
 
 /* Test to schedule a message using media library upload */
@@ -65,5 +65,9 @@ test('Schedule with image from media library', async ({page}) => {
 
 	await test.step('Schedule the message', async () => {
 		await composePage.selectMessageScheduleDate();
+	});
+
+	await test.step('Delete created scheduled messages via API', async () => {
+		await plannerPage.deleteScheduleMessagesViaAPI(memberId);
 	});
 });
