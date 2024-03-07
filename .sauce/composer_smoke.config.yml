@@ -36,14 +36,14 @@ suites:
     platformName: "Windows 11"
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
-    testMatch: ['tests/composer_smoke_tests/*.*.js']
+    testMatch: ['tests/composer/composer_smoke_tests/*.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
   # - name: "Composer_Smoke - Firefox"
   #   platformName: "Windows 11"
   #   screenResolution: "1400x1050"
-  #   testMatch: ['tests/composer/*.*.js']
+  #   testMatch: ['tests/composer/composer_smoke_tests/*.*.js']
   #   params:
   #     browserName: "firefox"
   #     project: "firefox"
@@ -51,7 +51,7 @@ suites:
 #    platformName: "macOS 13"
 #    screenResolution: "1600x1200"
 #    timeZone: 'Vancouver'
-#    testMatch: [ 'tests/composer_smoke_tests/*.*.js' ]
+#    testMatch: [ 'tests/composer/composer_smoke_tests/*.*.js' ]
 #    params:
 #      browserName: "webkit"
 #      project: "webkit"
