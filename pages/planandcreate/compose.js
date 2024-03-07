@@ -9,8 +9,8 @@ exports.ComposePage = class ComposePage {
 		this.postButton = page.locator('div.animated-secondary').getByLabel('Post');
 		this.composeScreen = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal');
 		this.profileDropDown = page.locator('[aria-label="Select a social account (required)"]');
-		this.snContentItems = page.locator('.vk-ContentItems');
-		this.snPilltext = page.locator('.vk-PillText');
+		this.snContentItems = page.locator('.vk-ComposerModal .vk-ContentItems');
+		this.snPilltext = page.locator('.vk-ComposerModal .vk-PillText');
 		this.composerHeader = page.locator('.vk-ComposerHeader');
 		this.previewNetworkType = page.locator('.vk-ComposerModal .vk-MessagePreviewHeader .vk-NetworkType');
 		this.genericPreviewSingleImage = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-MediaImg');
