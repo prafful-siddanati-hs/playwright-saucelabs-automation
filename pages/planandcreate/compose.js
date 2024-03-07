@@ -6,18 +6,19 @@ exports.ComposePage = class ComposePage {
 		this.composeButton = page.getByLabel('Composer', { exact: true });
 		this.postButton = page.locator('div.animated-secondary').getByLabel('Post');
 		this.composeScreen = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal');
-		this.profileDropDown = page.getByPlaceholder('Select a social account');
+		this.profileDropDown = page.locator('[aria-label="Select a social account (required)"]');
 		this.snContentItems = page.locator('.vk-ContentItems');
 		this.snPilltext = page.locator('.vk-PillText');
 		this.composerHeader = page.locator('.vk-ComposerHeader');
 		this.previewNetworkType = page.locator('.vk-ComposerModal .vk-MessagePreviewHeader .vk-NetworkType');
+		this.genericPreviewSingleImage = page.locator('.vk-GenericPreview .vk-MediaImg');
 		this.twitterPreviewSingleImage = page.locator('.vk-TwitterPreview .vk-MediaImg');
 		this.facebookPreviewSingleImage = page.locator('.vk-FacebookPreview .vk-MediaImg');
 		this.messageArea = page.getByTestId('MessageEditArea').getByLabel('Text');
 		this.scheduleLaterButton = page.getByRole('button', { name: 'Schedule for later' });
 		this.scheduleDone = page.getByRole('button', { name: 'Done' });
 		this.scheduleDoneButton = page.getByTestId('schedule-post-done-btn');
-		this.scheduleButton = page.getByRole('button', { name: 'Schedule', exact: true });
+		this.scheduleButton = page.locator('button:has-text("Schedule")');
 		this.saveChangesButton = page.getByRole('button', { name: 'Save changes' });
 		this.postNowButton = page.getByRole('button', { name: 'Post now', exact: true });
 		this.openCalendarButton = page.getByLabel('Open calendar');
@@ -27,6 +28,7 @@ exports.ComposePage = class ComposePage {
 		this.twitterVideoPreviewSelector = page.locator('.rc-Composer .vk-TwitterPreview .vk-VideoContainer');
 		this.facebookVideoPreviewSelector = page.locator('.rc-Composer .vk-FacebookPreview .vk-VideoContainer .vk-VideoPlayer');
 		this.instagramReelVideoPreviewSelector = page.getByTestId('preview-container').locator('.vk-InstagramReelPreview .vk-StreamlinedVideo');
+		this.genericPreviewText = page.locator('.vk-MessagePreviewArea .vk-GenericPreview .vk-PreviewMessageText');
 		this.twitterPreviewText = page.locator('.vk-TwitterPreview .vk-ContentBody');
 		this.facebookPreviewText = page.locator('.vk-FacebookPreview .vk-ContentBody');
 		this.instagramPreviewText = page.getByTestId('preview-container').getByLabel('Instagram post preview');
@@ -35,6 +37,14 @@ exports.ComposePage = class ComposePage {
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 		this.moreButton = page.getByLabel('more', { exact: true });
 		this.saveDraftFromDropdown = page.getByRole('button', { name: 'Save draft', exact: true });
+		this.mediaLibraryButton = page.getByLabel('Media library', { exact: true });
+		this.mediaLibraryCloseButton = page.getByRole('button', { name: 'Close media library'});
+		this.termsOfServiceWall = page.locator('.vk-TermsOfServiceWall button');
+		this.mediaSearchBox = page.getByPlaceholder('Search media');
+		this.loadingBars = page.locator('[data-testid="bouncing-bars-loader-wrapper"]');
+		this.mediaContent = page.locator('.-mediaContent');
+		this.firstImage = page.locator('.-mediaRow');
+		this.mediaThumbnail = page.locator('.rc-MediaLibrary .-mediaContainer .MediaThumbnail');
 	}
 	async selectComposeButton() {
 		await expect(this.composeButton).toBeVisible();
@@ -43,6 +53,7 @@ exports.ComposePage = class ComposePage {
 		await this.postButton.click();
 		await expect(this.composeScreen).toBeVisible();
 	}
+
 	async selectSocialProfile(name) {
 		const profileSelectorItem = this.page.getByTestId('MessageEditArea').getByText(`${name}`).first();
 
@@ -50,6 +61,7 @@ exports.ComposePage = class ComposePage {
 		await expect(this.snContentItems).toBeVisible();
 		await profileSelectorItem.click();
 		await this.composerHeader.click();
+		await this.verifySocialProfileSelected(name);
 	}
 
 	async uploadFile(name) {
@@ -79,8 +91,17 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async verifySocialProfileSelected(name) {
-		await expect(this.snPilltext).toContainText(`${name}`);
+		await this.page.waitForSelector(`text="${name}"`);
 		await expect(this.page.locator('.vk-Loader')).toHaveCount(0);
+	}
+
+	async verifyGenericPreview(text) {
+		await expect(this.genericPreviewText).toContainText(`${text}`);
+	}
+
+	async verifyGenericImagePreview() {
+		await expect(this.genericPreviewSingleImage).toHaveJSProperty('complete', true);
+		await expect(this.genericPreviewSingleImage).not.toHaveJSProperty('naturalWidth', 0);
 	}
 
 	async verifyTwitterPreview(text) {
@@ -134,6 +155,7 @@ exports.ComposePage = class ComposePage {
 		await this.scheduleDoneButton.click();
 		await this.scheduleButton.click();
 		await expect(this.scheduleButton).not.toBeVisible();
+		await expect(this.feCallOuts).not.toBeVisible();
 	}
 
 	async updateDraft(text) {
@@ -150,5 +172,37 @@ exports.ComposePage = class ComposePage {
 		await this.moreButton.click();
 		await this.saveDraftFromDropdown.click();
 		await expect(this.composeScreen).not.toBeVisible();
+	}
+
+	async openMediaLibrary() {
+		await this.mediaLibraryButton.click();
+		await this.page.waitForTimeout(1000);
+		if (await this.termsOfServiceWall.isVisible()) {
+			await this.termsOfServiceWall.click();
+		}
+	}
+
+	async searchMediaLibrary(searchTerm) {
+		await this.mediaSearchBox.click();
+		await this.mediaSearchBox.fill(searchTerm);
+		await expect(this.loadingBars).not.toBeVisible();
+	}
+
+	async attachImageFromMediaLibrary(numImages) {
+		let randomImage;
+		await expect(this.mediaContent).toBeVisible();
+		await expect(this.firstImage.nth(0)).toBeVisible();
+		for (let i = 0; i < numImages; i ++) {
+			randomImage = Math.floor(Math.random() * 15) + 1;
+			const image = await this.mediaThumbnail.nth(randomImage);
+			if (await image.isVisible()) {
+				await image.click();
+				await this.page.waitForTimeout(1000);
+			}
+		}
+	}
+
+	async closeMediaLibrary() {
+		await this.mediaLibraryCloseButton.click();
 	}
 };

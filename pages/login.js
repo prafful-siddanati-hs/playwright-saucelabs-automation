@@ -34,7 +34,7 @@ exports.LoginPage = class LoginPage {
 		await this.emailAddress.fill(user.email);
 		await this.password.fill(user.password);
 		await this.loginSubmit.click();
-		await expect(this.emailAddress).not.toBeVisible;
+		await expect(this.emailAddress).not.toBeVisible();
 		await this.page.waitForLoadState();
 	}
 
@@ -44,13 +44,13 @@ exports.LoginPage = class LoginPage {
 		await this.emailAddress.fill(email);
 		await this.password.fill(password);
 		await this.loginSubmit.click();
-		await expect(this.emailAddress).not.toBeVisible;
+		await expect(this.emailAddress).not.toBeVisible();
 		await this.page.waitForLoadState();
 	}
 
 	async logout() {
 		await this.page.goto('/logout');
-		await expect(this.emailAddress).toBeVisible;
+		await expect(this.emailAddress).toBeVisible();
 	}
 
 	// Redirect to dashboard home after login to skip any onboarding

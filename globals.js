@@ -47,7 +47,12 @@ module.exports = {
 				'comporTeste'
 			];
 			return MESSAGE[Math.floor(Math.random() * MESSAGE.length)];
-		}
+		},
+
+		mediaSearchTerms: function () {
+			const SEARCH_TERM = ['dog', 'owl', 'snow', 'music', 'nature', 'bee'];
+			return SEARCH_TERM[Math.floor(Math.random() * SEARCH_TERM.length)];
+		},
 	},
 	/**
          * Function to get object from Playwright's global storage
