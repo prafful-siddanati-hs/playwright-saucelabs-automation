@@ -4,7 +4,7 @@ const {ComposePage} = require('../../../pages/planandcreate/compose');
 const {getObjectByName, plan_create} = require('../../../globals');
 const {LoginPage} = require('../../../pages/login');
 const getFixture = require('../../../custom-commands/getFixture');
-
+let profile;
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
 
@@ -19,9 +19,10 @@ test('Send instagram reel message using composer', async ({ page }) => {
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 
-	await addFixture.command('Igb_reel_send', 'pro_user_composer', true, 300);
-
-	const profile = getObjectByName(global.fixture, 'Igb_reel_send').instagramBusiness.username;
+	await test.step('Setup user & accounts', async () => {
+		await addFixture.command('Igb_reel_send', 'pro_user_composer', true, 300);
+		profile = getObjectByName(global.fixture, 'Igb_reel_send').instagramBusiness.username;
+	});
 
 	await test.step('Login as pro user', async () => {
 		await loginPage.signIn('Igb_reel_send');

@@ -3,6 +3,7 @@ const tearDown = require('../../../custom-commands/tearDown');
 const {PinPage} = require('../../../pages/planandcreate/pin');
 const {LoginPage} = require('../../../pages/login');
 const getFixture = require('../../../custom-commands/getFixture');
+const {getObjectByName} = require('../../../globals');
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -18,7 +19,9 @@ test('Send pinterest message using composer', async ({ page }) => {
 	const loginPage = new LoginPage(page);
 	const pinPage = new PinPage(page);
 
-	await addFixture.command('pin_send', 'enterprise_user_composer', true, 300);
+	await test.step('Setup user & accounts', async () => {
+		await addFixture.command('pin_send', 'enterprise_user_composer', true, 300);
+	});
 
 	await test.step('Login as pro user', async () => {
 		await loginPage.signIn('pin_send');

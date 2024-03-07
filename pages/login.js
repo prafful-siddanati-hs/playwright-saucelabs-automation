@@ -35,6 +35,7 @@ exports.LoginPage = class LoginPage {
 		await this.password.fill(user.password);
 		await this.loginSubmit.click();
 		await expect(this.emailAddress).not.toBeVisible();
+		await this.page.goto('/dashboard#/home');
 		await this.page.waitForLoadState();
 	}
 
