@@ -13,7 +13,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Send instagram reel message using composer', async ({ page }) => {
-	const sendText = plan_create.getComposeMessage() + ' ' + Math.floor(Math.random() * 1000);
+	const sendText = 'Send IGB' + ' ' + Math.floor(Math.random() * 1000);
 
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
@@ -31,7 +31,7 @@ test('Send instagram reel message using composer', async ({ page }) => {
 	await composePage.verifySocialProfileSelected(profile);
 	await composePage.writeMessage(sendText);
 	await composePage.verifyInstagramPreview(sendText);
-	await composePage.uploadFile('test_data/publisher/videos/video_2.mp4');
+	await composePage.uploadMediaFile('test_data/publisher/videos');
 	await composePage.verifyInstagramReelVideoPreview();
 	await composePage.verifyInstagramReelPreview(sendText);
 	await composePage.sendNow();

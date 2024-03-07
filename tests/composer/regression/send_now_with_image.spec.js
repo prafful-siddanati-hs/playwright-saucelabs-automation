@@ -28,7 +28,7 @@ test('Send now message with image using composer', async ({page}) => {
 	await composePage.selectComposeButton();
 	await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, 'fb_send_image').username);
 	await composePage.writeMessage(composeText);
-	await composePage.uploadFile('test_data/publisher/images/coffee.jpg');
+	await composePage.uploadMediaFile('test_data/publisher/images');
 	await composePage.verifyFacebookImagePreview();
 	await composePage.verifyFacebookPreview(composeText);
 	await composePage.sendNow();

@@ -1,4 +1,6 @@
 const { expect } = require('@playwright/test');
+const {getRandomMediaFile} = require('../../globals');
+const {join} = require('node:path');
 
 exports.ComposePage = class ComposePage {
 	constructor(page) {
@@ -64,9 +66,16 @@ exports.ComposePage = class ComposePage {
 		await this.verifySocialProfileSelected(name);
 	}
 
-	async uploadFile(name) {
-		await this.page.setInputFiles('.vk-MediaUpload input[type="file"]',`${name}`);
-		await expect(this.mediaOverLay).toBeVisible();
+	async uploadMediaFile(testDataImagesFolder) {
+		try {
+			const randomFile = await getRandomMediaFile(testDataImagesFolder);
+			const filePath = join(testDataImagesFolder, randomFile);
+
+			await this.page.setInputFiles('.vk-MediaUpload input[type="file"]', filePath);
+			await expect(this.mediaOverLay).toBeVisible();
+		} catch (error) {
+			console.error('Error:', error);
+		}
 	}
 
 	async writeMessage(message) {

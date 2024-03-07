@@ -1,4 +1,5 @@
 // globals.js
+const fs = require('fs');
 
 module.exports = {
 	som: 'https://som-staging.hootops.com:504',
@@ -53,6 +54,20 @@ module.exports = {
 			const SEARCH_TERM = ['dog', 'owl', 'snow', 'music', 'nature', 'bee'];
 			return SEARCH_TERM[Math.floor(Math.random() * SEARCH_TERM.length)];
 		},
+	},
+
+	getRandomMediaFile: function(directoryPath) {
+		return new Promise((resolve, reject) => {
+			fs.readdir(directoryPath, (err, files) => {
+				if (err) {
+					reject(err);
+					return;
+				}
+				const randomIndex = Math.floor(Math.random() * files.length);
+				const randomFile = files[randomIndex];
+				resolve(randomFile);
+			});
+		});
 	},
 	/**
          * Function to get object from Playwright's global storage
