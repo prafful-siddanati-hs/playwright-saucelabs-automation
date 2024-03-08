@@ -54,6 +54,16 @@ module.exports = {
 			const SEARCH_TERM = ['dog', 'owl', 'snow', 'music', 'nature', 'bee'];
 			return SEARCH_TERM[Math.floor(Math.random() * SEARCH_TERM.length)];
 		},
+
+		getLinkedinMention: function () {
+			const MENTIONS = [
+				'Composer Staging Page Two',
+				'catsRUs',
+				'Hootsuite Academy',
+				'Hootsuite Test Page!'
+			];
+			return MENTIONS[Math.floor(Math.random() * MENTIONS.length)];
+		},
 	},
 
 	getRandomMediaFile: function(directoryPath) {

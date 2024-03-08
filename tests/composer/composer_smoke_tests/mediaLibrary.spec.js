@@ -29,8 +29,8 @@ test('Schedule with image from media library', async ({page}) => {
 
 	await test.step('Login as pro user', async () => {
 		await loginPage.signIn('mediaLibrary_schedule');
-		const isVisible = await loginPage.streamsView.isVisible() || await loginPage.welcomeSelector.isVisible();
-		await expect(isVisible).toBeTruthy();
+		const isViewVisible = await loginPage.streamsView.isVisible() || await loginPage.welcomeSelector.isVisible();
+		await expect(isViewVisible).toBeTruthy();
 	});
 
 	await test.step('Delete residual scheduled messages via API', async () => {

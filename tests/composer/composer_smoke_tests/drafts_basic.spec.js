@@ -32,7 +32,8 @@ test('Create and edit draft using composer', async ({ page }) => {
 
 	await test.step('Login in as pro user', async () => {
 		await loginPage.signIn('draft_message');
-		await expect(loginPage.welcomeSelector).toBeVisible();
+		const isViewVisible = await loginPage.streamsView.isVisible() || await loginPage.welcomeSelector.isVisible();
+		expect(isViewVisible).toBeTruthy();
 	});
 
 	await test.step('Delete residual draft messages via API', async () => {

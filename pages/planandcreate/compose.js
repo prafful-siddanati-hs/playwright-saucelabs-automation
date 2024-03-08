@@ -4,6 +4,7 @@ const {join} = require('node:path');
 const getScheduledMessages = require('../../custom-commands/getScheduledMessages');
 const deleteScheduledMessageById = require('../../custom-commands/deleteScheduledMesssagesById');
 const { addMonths, startOfMonth, addDays, formatISO} = require('date-fns');
+const assert = require('assert');
 
 exports.ComposePage = class ComposePage {
 	constructor(page) {
@@ -40,6 +41,8 @@ exports.ComposePage = class ComposePage {
 		this.facebookPreviewText = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody');
 		this.instagramPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').getByLabel('Instagram post preview');
 		this.instagramReelPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').locator('.vk-InstagramReelPreview');
+		this.linkedInPreviewText = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-ContentBody');
+		this.linkedInMentionLink = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-ContentBody .vk-MessageMention');
 		this.exitButton = page.getByRole('button', { name: 'Exit tutorial' });
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 		this.moreButton = page.getByLabel('more', { exact: true });
@@ -52,6 +55,7 @@ exports.ComposePage = class ComposePage {
 		this.mediaContent = page.locator('.-mediaContent');
 		this.firstImage = page.locator('.-mediaRow');
 		this.mediaThumbnail = page.locator('.rc-MediaLibrary .-mediaContainer .MediaThumbnail');
+		this.mentionsList = page.locator('.vk-NewMentionsList');
 	}
 	async selectComposeButton() {
 		await expect(this.composeButton).toBeVisible();
@@ -156,6 +160,16 @@ exports.ComposePage = class ComposePage {
 		await this.page.waitForLoadState('domcontentloaded');
 	}
 
+	async verifyLinkedInPreview(text) {
+		await expect(this.linkedInPreviewText).toContainText(`${text}`);
+	}
+
+	async verifyLinkedInMentionPreview(mentionName) {
+		await this.linkedInMentionLink.isVisible();
+		assert((await this.linkedInMentionLink.textContent()).includes(mentionName), 'Mention name not found on LinkedIn preview');
+		assert((await this.linkedInMentionLink.getAttribute('href')).includes('https://www.linkedin.com/company'), 'Incorrect href value in LinkedIn preview');
+	}
+
 	async selectMessageScheduleDate() {
 		await this.scheduleLaterButton.click();
 		await expect(this.openCalendarButton).toHaveCount(1);
@@ -214,6 +228,14 @@ exports.ComposePage = class ComposePage {
 
 	async closeMediaLibrary() {
 		await this.mediaLibraryCloseButton.click();
+	}
+
+	async selectMention(mentionName) {
+		const mentionItem = this.page.locator('div').filter({hasText: new RegExp(`^${mentionName}$`)});
+
+		await this.mentionsList.isVisible();
+		await mentionItem.isVisible();
+		await mentionItem.click();
 	}
 
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {
