@@ -8,6 +8,8 @@ exports.LoginPage = class LoginPage {
 		this.emailAddress = page.locator('#loginEmailInput');
 		this.password = page.locator('#loginPasswordInput');
 		this.loginSubmit = page.getByRole('button', { name: 'Sign in', exact: true });
+		this.streamsView = page.locator('#stream-migration-root');
+		this.welcomeSelector = page.getByRole('heading', { name: 'Welcome back,' });
 	}
 
 	async visit() {
@@ -35,8 +37,8 @@ exports.LoginPage = class LoginPage {
 		await this.password.fill(user.password);
 		await this.loginSubmit.click();
 		await expect(this.emailAddress).not.toBeVisible();
-		await this.page.goto('/dashboard#/home');
 		await this.page.waitForLoadState();
+		await this.page.waitForLoadState('networkidle');
 	}
 
 	async login(email, password) {

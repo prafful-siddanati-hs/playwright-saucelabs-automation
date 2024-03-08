@@ -25,7 +25,7 @@ test('Send pinterest message using composer', async ({ page }) => {
 
 	await test.step('Login as pro user', async () => {
 		await loginPage.signIn('pin_send');
-		await expect(page.getByRole('heading', {name: 'Welcome back,'})).toBeVisible();
+		await expect(loginPage.welcomeSelector).toBeVisible();
 	});
 
 	await test.step('Select pin button from gloabel navigator', async () => {
