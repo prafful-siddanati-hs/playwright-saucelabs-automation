@@ -20,7 +20,6 @@ test('Schedule with image from media library', async ({page}) => {
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
-	const plannerPage = new PlannerPage(page);
 
 	await test.step('Setup user & accounts', async () => {
 		await addFixture.command('mediaLibrary_schedule', 'pro_user_composer', true, 300);
@@ -36,7 +35,7 @@ test('Schedule with image from media library', async ({page}) => {
 	});
 
 	await test.step('Delete residual scheduled messages via API', async () => {
-		await plannerPage.deleteScheduleMessagesViaAPI(memberId);
+		await composePage.deleteComposeScheduledMessagesForNextMonthViaAPI(memberId);
 	});
 
 	await test.step('Select new compose button', async () => {
@@ -73,6 +72,7 @@ test('Schedule with image from media library', async ({page}) => {
 	});
 
 	await test.step('Delete created scheduled messages via API', async () => {
-		await plannerPage.deleteScheduleMessagesViaAPI(memberId);
+		await composePage.deleteComposeScheduledMessagesForNextMonthViaAPI(memberId);
 	});
+
 });

@@ -1,8 +1,10 @@
 const { expect } = require('@playwright/test');
 const {getRandomMediaFile} = require('../../globals');
 const {join} = require('node:path');
-
-exports.ComposePage = class ComposePage {
+const getScheduledMessages = require('../../custom-commands/getScheduledMessages');
+const deleteScheduledMessageById = require('../../custom-commands/deleteScheduledMesssagesById');
+//const {subDays, addDays, formatISO} = require('date-fns');
+const { addMonths, startOfMonth, endOfMonth, addDays, formatISO} = require('date-fns');exports.ComposePage = class ComposePage {
 	constructor(page) {
 		this.page = page;
 		this.composeButton = page.getByLabel('Composer', { exact: true });
@@ -211,5 +213,35 @@ exports.ComposePage = class ComposePage {
 
 	async closeMediaLibrary() {
 		await this.mediaLibraryCloseButton.click();
+	}
+
+	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {
+		const getAllScheduledMessages = new getScheduledMessages();
+		const deleteScheduledMessages = new deleteScheduledMessageById();
+		const nextMonthStart = startOfMonth(addMonths(new Date(), 1));
+		let startTime = nextMonthStart;
+		let endTime = addDays(nextMonthStart, 9); // 10th day of the month
+
+		let messagesToDelete = [];
+		/* Get list of messages & delete them by messageId */
+		await getAllScheduledMessages.command(
+			parseInt(memberId, 10),
+			formatISO(startTime),
+			formatISO(endTime),
+			NaN,
+			'SCHEDULED',
+			15).then(
+			response =>
+				messagesToDelete = response);
+
+		let messageIdsToDelete = messagesToDelete.map(message => Number(message.id));
+
+		if (messageIdsToDelete.length !== 0) {
+			console.log('Deleting scheduled messages');
+			for (const messageId of messageIdsToDelete) {
+				console.log(`Deleting message ID: ${messageId}`);
+				await deleteScheduledMessages.command(parseInt(memberId, 10), messageId);
+			}
+		}
 	}
 };
