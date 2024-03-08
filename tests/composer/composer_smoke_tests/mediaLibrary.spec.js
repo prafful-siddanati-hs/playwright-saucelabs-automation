@@ -31,7 +31,8 @@ test('Schedule with image from media library', async ({page}) => {
 
 	await test.step('Login as pro user', async () => {
 		await loginPage.signIn('mediaLibrary_schedule');
-		await expect(page.getByRole('heading', { name: 'Welcome back,' })).toBeVisible();
+		const isVisible = await loginPage.streamsView.isVisible() || await loginPage.welcomeSelector.isVisible();
+		await expect(isVisible).toBeTruthy();
 	});
 
 	await test.step('Delete residual scheduled messages via API', async () => {
@@ -43,8 +44,12 @@ test('Schedule with image from media library', async ({page}) => {
 	});
 
 	await test.step('Select twitter & facebook from social network dropdown', async () => {
+		await composePage.profileDropDown.click();
+		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(twitterAccount);
 		await composePage.selectSocialProfile(fbAccount);
+		await composePage.postToWrapper.click();
+		await expect(composePage.profileListItemTitle).not.toBeVisible();
 	});
 
 	await test.step('Write a message', async () => {

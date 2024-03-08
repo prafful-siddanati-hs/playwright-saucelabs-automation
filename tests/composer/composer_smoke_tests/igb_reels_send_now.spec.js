@@ -26,7 +26,7 @@ test('Send instagram reel message using composer', async ({ page }) => {
 
 	await test.step('Login as pro user', async () => {
 		await loginPage.signIn('Igb_reel_send');
-		await expect(page.getByRole('heading', { name: 'Welcome back,' })).toBeVisible();
+		await expect(loginPage.welcomeSelector).toBeVisible();
 	});
 
 	await test.step('Select compose button', async () => {
@@ -34,8 +34,11 @@ test('Send instagram reel message using composer', async ({ page }) => {
 	});
 
 	await test.step('Select IGB account from social network picker', async () => {
+		await composePage.profileDropDown.click();
+		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(profile);
-		await composePage.verifySocialProfileSelected(profile);
+		await composePage.postToWrapper.click();
+		await expect(composePage.profileListItemTitle).not.toBeVisible();
 	});
 
 	await test.step('Write a message and verify its preview', async () => {

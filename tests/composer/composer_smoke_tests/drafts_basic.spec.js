@@ -32,7 +32,7 @@ test('Create and edit draft using composer', async ({ page }) => {
 
 	await test.step('Login in as pro user', async () => {
 		await loginPage.signIn('draft_message');
-		await expect(page.getByRole('heading', { name: 'Welcome back,' })).toBeVisible();
+		await expect(loginPage.welcomeSelector).toBeVisible();
 	});
 
 	await test.step('Delete residual draft messages via API', async () => {
@@ -49,8 +49,11 @@ test('Create and edit draft using composer', async ({ page }) => {
 	});
 
 	await test.step('Select twitter profile from social network dropdown', async () => {
+		await composePage.profileDropDown.click();
+		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(profile);
-		await composePage.verifySocialProfileSelected(profile);
+		await composePage.postToWrapper.click();
+		await expect(composePage.profileListItemTitle).not.toBeVisible();
 	});
 
 	await test.step('Compose and save as draft', async () => {

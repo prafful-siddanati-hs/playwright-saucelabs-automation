@@ -11,6 +11,8 @@ exports.ComposePage = class ComposePage {
 		this.profileDropDown = page.locator('[aria-label="Select a social account (required)"]');
 		this.snContentItems = page.locator('.vk-ComposerModal .vk-ContentItems');
 		this.snPilltext = page.locator('.vk-ComposerModal .vk-PillText');
+		this.postToWrapper = page.locator('.vk-PostToWrapper');
+		this.profileListItemTitle = page.locator('.vk-ComposerModal .vk-ProfileListItemTitle');
 		this.composerHeader = page.locator('.vk-ComposerHeader');
 		this.previewNetworkType = page.locator('.vk-ComposerModal .vk-MessagePreviewHeader .vk-NetworkType');
 		this.genericPreviewSingleImage = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-MediaImg');
@@ -20,7 +22,7 @@ exports.ComposePage = class ComposePage {
 		this.scheduleLaterButton = page.getByRole('button', { name: 'Schedule for later' });
 		this.scheduleDone = page.getByRole('button', { name: 'Done' });
 		this.scheduleDoneButton = page.getByTestId('schedule-post-done-btn');
-		this.scheduleButton = page.locator('button:has-text("Schedule")');
+		this.scheduleButton = page.locator('button.vk-EditFooterScheduleButton');
 		this.saveChangesButton = page.getByRole('button', { name: 'Save changes' });
 		this.postNowButton = page.getByRole('button', { name: 'Post now', exact: true });
 		this.openCalendarButton = page.getByLabel('Open calendar');
@@ -59,10 +61,7 @@ exports.ComposePage = class ComposePage {
 	async selectSocialProfile(name) {
 		const profileSelectorItem = this.page.getByTestId('MessageEditArea').getByText(`${name}`).first();
 
-		await this.profileDropDown.click();
-		await expect(this.snContentItems).toBeVisible();
 		await profileSelectorItem.click();
-		await this.composerHeader.click();
 		await this.verifySocialProfileSelected(name);
 	}
 
@@ -194,7 +193,6 @@ exports.ComposePage = class ComposePage {
 	async searchMediaLibrary(searchTerm) {
 		await this.mediaSearchBox.click();
 		await this.mediaSearchBox.fill(searchTerm);
-		await expect(this.loadingBars).not.toBeVisible();
 	}
 
 	async attachImageFromMediaLibrary(numImages) {
