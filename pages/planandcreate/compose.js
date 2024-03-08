@@ -3,8 +3,7 @@ const {getRandomMediaFile} = require('../../globals');
 const {join} = require('node:path');
 const getScheduledMessages = require('../../custom-commands/getScheduledMessages');
 const deleteScheduledMessageById = require('../../custom-commands/deleteScheduledMesssagesById');
-//const {subDays, addDays, formatISO} = require('date-fns');
-const { addMonths, startOfMonth, endOfMonth, addDays, formatISO} = require('date-fns');exports.ComposePage = class ComposePage {
+const { addMonths, startOfMonth, addDays, formatISO} = require('date-fns');exports.ComposePage = class ComposePage {
 	constructor(page) {
 		this.page = page;
 		this.composeButton = page.getByLabel('Composer', { exact: true });

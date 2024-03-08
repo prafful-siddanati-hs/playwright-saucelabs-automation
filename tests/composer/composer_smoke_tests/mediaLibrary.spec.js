@@ -3,7 +3,6 @@ const tearDown = require('../../../custom-commands/tearDown');
 const getFixture = require('../../../custom-commands/getFixture');
 const { LoginPage } = require('../../../pages/login');
 const { getObjectByName, plan_create } = require('../../../globals');
-const { PlannerPage } = require('../../../pages/planandcreate/planner');
 const { ComposePage } = require('../../../pages/planandcreate/compose');
 let twitterAccount, fbAccount, memberId;
 
