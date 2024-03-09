@@ -40,7 +40,6 @@ exports.BulkComposePage = class BulkComposePage {
 
 	async countOfPostsOnBulkComposer(num) {
 		const postCountHeader = this.page.locator('div').filter({ hasText: new RegExp(` ${num} posts$`)});
-
 		await postCountHeader.isVisible();
 	}
 
