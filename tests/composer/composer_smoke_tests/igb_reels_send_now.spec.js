@@ -25,8 +25,7 @@ test('Send instagram reel message using composer', async ({ page }) => {
 	});
 
 	await test.step('Login as pro user', async () => {
-		await loginPage.signIn('Igb_reel_send');
-		await expect(loginPage.welcomeSelector).toBeVisible();
+		await loginPage.signInAsProUser('Igb_reel_send');
 	});
 
 	await test.step('Select compose button', async () => {
