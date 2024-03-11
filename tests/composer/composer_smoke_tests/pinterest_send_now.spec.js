@@ -3,7 +3,6 @@ const tearDown = require('../../../custom-commands/tearDown');
 const {PinPage} = require('../../../pages/planandcreate/pin');
 const {LoginPage} = require('../../../pages/login');
 const getFixture = require('../../../custom-commands/getFixture');
-const {getObjectByName} = require('../../../globals');
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -28,7 +27,7 @@ test('Send pinterest message using composer', async ({ page }) => {
 		await expect(loginPage.welcomeSelector).toBeVisible();
 	});
 
-	await test.step('Select pin button from gloabel navigator', async () => {
+	await test.step('Select pin button from global navigator', async () => {
 		await pinPage.selectPinButton();
 	});
 
