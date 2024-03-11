@@ -22,7 +22,6 @@ test('Schedule a message using bulk composer', async ({ page }) => {
 	await test.step('Setup user & account', async () => {
 		await addFixture.command('bulk_composer_basic', 'enterprise_user_composer', true, 300);
 		fbAccount = getObjectByName(global.fixture, 'bulk_composer_basic').facebookPage.username;
-		console.log(fbAccount);
 	});
 
 	await test.step('Login as enterprise user', async () => {
