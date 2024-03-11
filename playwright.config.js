@@ -41,7 +41,7 @@ module.exports = defineConfig({
 		baseURL: 'https://staging.hootsuite.com/',
 
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-		trace: (process.env.CI || process.env.SAUCE_VM) ? 'retry-with-trace' : 'retain-on-failure',
+		trace: (process.env.CI || process.env.SAUCE_VM) ? 'retry-with-trace' : 'on',
 		ignoreHTTPSErrors: true,
 		screenshot: 'only-on-failure',
 		timezoneId: 'America/Vancouver',

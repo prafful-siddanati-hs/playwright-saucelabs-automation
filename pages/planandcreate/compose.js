@@ -29,6 +29,7 @@ exports.ComposePage = class ComposePage {
 		this.scheduleButton = page.locator('button.vk-EditFooterScheduleButton');
 		this.saveChangesButton = page.getByRole('button', { name: 'Save changes' });
 		this.postNowButton = page.getByRole('button', { name: 'Post now', exact: true });
+		this.saveToContentLibraryButton = page.getByRole('button', { name: 'Save to content library' });
 		this.openCalendarButton = page.getByLabel('Open calendar');
 		this.nextMonthButton = page.getByLabel('Go to next month');
 		this.firstDayOfNextMonth = page.locator('(//button[contains(@class, "rdp-day") and text()="1"])[1]');
@@ -202,6 +203,12 @@ exports.ComposePage = class ComposePage {
 		await this.moreButton.click();
 		await this.saveDraftFromDropdown.click();
 		await expect(this.composeScreen).not.toBeVisible();
+	}
+
+	async saveToContentLibrary() {
+		await this.moreButton.click();
+		await expect(this.saveToContentLibraryButton).toBeVisible();
+		await this.saveToContentLibraryButton.click();
 	}
 
 	async openMediaLibrary() {
