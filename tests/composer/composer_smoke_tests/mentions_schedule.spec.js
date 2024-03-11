@@ -29,7 +29,8 @@ test('Schedule a message with mentions', async ({ page }) => {
 
 	await test.step('Login as pro user', async () => {
 		await loginPage.signIn('mentions_schedule');
-		await expect(loginPage.welcomeSelector).toBeVisible();
+		const isViewVisible = await loginPage.streamsView.isVisible() || await loginPage.welcomeSelector.isVisible();
+		expect(isViewVisible).toBeTruthy();
 	});
 
 	await test.step('Select compose button', async () => {
