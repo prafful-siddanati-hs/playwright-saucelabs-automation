@@ -57,6 +57,9 @@ exports.ComposePage = class ComposePage {
 		this.firstImage = page.locator('.-mediaRow');
 		this.mediaThumbnail = page.locator('.rc-MediaLibrary .-mediaContainer .MediaThumbnail');
 		this.mentionsList = page.locator('.vk-NewMentionsList');
+		this.twitterTab = page.getByLabel('Twitter content');
+		this.linkedInTab = page.getByLabel('LinkedIn content');
+		this.facebookPageTab =  page.getByLabel('Facebook content');
 	}
 	async selectComposeButton() {
 		await expect(this.composeButton).toBeVisible();
