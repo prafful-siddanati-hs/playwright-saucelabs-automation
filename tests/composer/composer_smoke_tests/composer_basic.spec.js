@@ -5,7 +5,7 @@ const { LoginPage } = require('../../../pages/login');
 const { getObjectByName, plan_create } = require('../../../globals');
 const { ComposePage } = require('../../../pages/planandcreate/compose');
 const { PlannerPage } = require('../../../pages/planandcreate/planner');
-let memberId, fbAccount, liAccount;
+let memberId, fbAccount, twAccount;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -22,14 +22,13 @@ test('Composer basic validations', async ({ page }) => {
 	const plannerPage = new PlannerPage(page);
 
 	await test.step('Setup user & accounts', async () => {
-		await addFixture.command('composer_basic', 'enterprise_user_composer', true, 300);
-		liAccount = getObjectByName(global.fixture, 'composer_basic').linkedinCompany.username;
+		await addFixture.command('composer_basic', 'pro_user_composer', true, 300);
+		twAccount = getObjectByName(global.fixture, 'composer_basic').twitter.username;
 		fbAccount = getObjectByName(global.fixture, 'composer_basic').facebookPage.username;
 		memberId = global.member[0].memberId;
-		console.log(memberId);
 	});
 
-	await test.step('Login as an enterprise user', async () => {
+	await test.step('Login as pro user', async () => {
 		await loginPage.signIn('composer_basic');
 	});
 
@@ -37,10 +36,10 @@ test('Composer basic validations', async ({ page }) => {
 		await composePage.selectComposeButton();
 	});
 
-	await test.step('Select facebook & linkedin account', async () => {
+	await test.step('Select facebook & twitter account', async () => {
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
-		await composePage.selectSocialProfile(liAccount);
+		await composePage.selectSocialProfile(twAccount);
 		await composePage.selectSocialProfile(fbAccount);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
@@ -52,9 +51,9 @@ test('Composer basic validations', async ({ page }) => {
 
 	await test.step('Verify preview for each network tab', async () => {
 		await composePage.verifyGenericPreview(composeBasicText);
-		await expect(composePage.linkedInTab).toBeVisible();
-		composePage.linkedInTab.click();
-		await composePage.verifyLinkedInPreview(composeBasicText);
+		await expect(composePage.twitterTab).toBeVisible();
+		composePage.twitterTab.click();
+		await composePage.verifyTwitterPreview(composeBasicText);
 		await expect(composePage.facebookPageTab).toBeVisible();
 		composePage.facebookPageTab.click();
 		await composePage.verifyFacebookPreview(composeBasicText);
