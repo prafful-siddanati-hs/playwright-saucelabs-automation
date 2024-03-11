@@ -50,6 +50,7 @@ exports.ComposePage = class ComposePage {
 		this.mediaLibraryButton = page.getByLabel('Media library', { exact: true });
 		this.mediaLibraryCloseButton = page.getByRole('button', { name: 'Close media library'});
 		this.termsOfServiceWall = page.locator('.vk-TermsOfServiceWall button');
+		this.mediaLibraryRetryError= page.getByTestId('MediaLibraryErrorRetry');
 		this.mediaSearchBox = page.getByPlaceholder('Search media');
 		this.loadingBars = page.locator('[data-testid="bouncing-bars-loader-wrapper"]');
 		this.mediaContent = page.locator('.-mediaContent');
@@ -205,6 +206,7 @@ exports.ComposePage = class ComposePage {
 		if (await this.termsOfServiceWall.isVisible()) {
 			await this.termsOfServiceWall.click();
 		}
+		await expect(this.mediaLibraryRetryError).not.toBeVisible(); //Ensure a media library error is not displayed.
 	}
 
 	async searchMediaLibrary(searchTerm) {
