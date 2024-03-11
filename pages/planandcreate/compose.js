@@ -107,7 +107,8 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async verifySocialProfileSelected(name) {
-		await this.page.waitForSelector(`text="${name}"`);
+		const pillText = this.page.locator(`//*[contains(@class, "vk-PillText") and text()="${name}"]`);
+		await expect(pillText).toBeVisible();
 		await expect(this.page.locator('.vk-Loader')).toHaveCount(0);
 	}
 

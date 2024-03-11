@@ -22,7 +22,7 @@ test('Send pinterest message using composer', async ({ page }) => {
 		await addFixture.command('pin_send', 'enterprise_user_composer', true, 300);
 	});
 
-	await test.step('Login as pro user', async () => {
+	await test.step('Login as enterprise user', async () => {
 		await loginPage.signIn('pin_send');
 		await expect(loginPage.welcomeSelector).toBeVisible();
 	});

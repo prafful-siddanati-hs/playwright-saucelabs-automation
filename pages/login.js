@@ -62,6 +62,12 @@ exports.LoginPage = class LoginPage {
 		await this.page.goto('/dashboard#home');
 	}
 
+	async signInAsProUser(member) {
+		await this.signIn(member);
+		const isViewVisible = await this.streamsView.isVisible() || await this.welcomeSelector.isVisible();
+		await expect(isViewVisible).toBeTruthy();
+	}
+
 	async verifySocialNetwork(name) {
 		await expect(this.page.locator(`//*[contains(@id, "social-profiles-tab")]//*[text()="${name}"]`)).toBeVisible();
 	}
