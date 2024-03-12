@@ -38,7 +38,6 @@ exports.LoginPage = class LoginPage {
 		await this.loginSubmit.click();
 		await expect(this.emailAddress).not.toBeVisible();
 		await this.page.waitForLoadState();
-		await this.page.waitForLoadState('networkidle');
 	}
 
 	async login(email, password) {

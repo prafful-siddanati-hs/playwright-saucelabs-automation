@@ -4,6 +4,7 @@ const tearDown = require('../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../pages/login');
 const { ComposePage } = require('../../../pages/planandcreate/compose');
 const { getObjectByName, plan_create } = require('../../../globals');
+const {PlannerPage} = require('../../../pages/planandcreate/planner');
 let linkedInAccount, memberId;
 
 test.afterEach(async ({ page }) => {
@@ -20,6 +21,7 @@ test('Schedule a message with mentions', async ({ page }) => {
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
+	const plannerPage = new PlannerPage(page);
 
 	await test.step('Setup user & account', async () => {
 		await addFixture.command('mentions_schedule', 'pro_user_composer', true, 300);
@@ -28,7 +30,7 @@ test('Schedule a message with mentions', async ({ page }) => {
 	});
 
 	await test.step('Login as pro user', async () => {
-		await loginPage.signInAsProUser('mentions_schedule');
+		await loginPage.signIn('mentions_schedule');
 	});
 
 	await test.step('Select compose button', async () => {
@@ -58,10 +60,10 @@ test('Schedule a message with mentions', async ({ page }) => {
 	});
 
 	await test.step('Schedule the message', async () => {
-		await composePage.selectMessageScheduleDate();
+		await composePage.schedule();
 	});
 
 	await test.step('Delete scheduled message via API', async () => {
-		await composePage.deleteComposeScheduledMessagesForNextMonthViaAPI(memberId);
+		await plannerPage.deleteScheduleMessagesViaAPI(memberId);
 	});
 });

@@ -31,7 +31,7 @@ test('Create and edit draft using composer', async ({ page }) => {
 	});
 
 	await test.step('Login in as pro user', async () => {
-		await loginPage.signInAsProUser('draft_message');
+		await loginPage.signIn('draft_message');
 	});
 
 	await test.step('Delete residual draft messages via API', async () => {
