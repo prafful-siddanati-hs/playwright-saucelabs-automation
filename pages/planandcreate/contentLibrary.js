@@ -6,12 +6,15 @@ exports.ContentLibraryPage = class ContentLibraryPage {
 		this.contentLibrarySection = page.locator('#publisherSection');
 		this.createContentLibBtn = page.getByText('Create Content Library');
 		this.libNameInput = page.getByRole('textbox');
-		this.createBtn = page.getByLabel('Create Library');
+		this.createBtn = page.getByRole('button', { name: 'Create' });
 		this.uploadAssetsButton = page.getByRole('button', { name: 'Upload Assets'});
 		this.createAssetPopup = page.locator('#createAsset');
 		this.selectLibraryButton = page.locator('button').filter({ hasText: 'Select a Content Library…' });
 		this.addAssetButton = page.getByRole('button', { name: 'Add new asset' });
-
+		this.addTeamBtn = page.getByLabel('Create Library').getByRole('listitem').locator('div');
+		this.librarySelectBtn = page.getByLabel('Select a library');
+		this.editLibraryBtn = page.getByRole('option', { name: 'Edit Library...' });
+		this.removeLibraryBtn = page.getByRole('button', { name: 'Remove' });
 	}
 
 	async visit() {
@@ -19,16 +22,17 @@ exports.ContentLibraryPage = class ContentLibraryPage {
 		await expect(this.contentLibrarySection).toBeVisible();
 	}
 
-	async createContentLibrary(libraryName) {
+	async createContentLibrary(libraryName, teamName) {
+		const selectTeam = this.page.getByRole('option', { name: `${teamName}` }).locator('div');
 		await expect(this.createContentLibBtn).toBeVisible();
 		await this.createContentLibBtn.click();
 		await this.createContentLibBtn.click();
 		await expect(this.libNameInput).toBeVisible();
 		await this.libNameInput.click();
 		await this.libNameInput.fill(libraryName);
-		//TODO:Select team (first item from the list)
+		await this.addTeamBtn.click();
+		await selectTeam.click();
 		await expect(this.createBtn).toBeEnabled();
-		await this.createBtn.click();
 		await this.createBtn.click();
 		await expect(this.uploadAssetsButton).toBeVisible();
 	}
@@ -41,7 +45,22 @@ exports.ContentLibraryPage = class ContentLibraryPage {
 		await libToSelect.click();
 		await expect(this.addAssetButton).toBeEnabled();
 		await this.addAssetButton.click();
+	}
 
+	async verifyContentLibraryTemplate(templateText) {
+		const clTemplate = this.page.locator(`text=${templateText}`);
+		await clTemplate.isVisible();
+	}
 
+	async deleteContentLibrary() {
+		await expect(this.librarySelectBtn).toBeVisible();
+		await this.librarySelectBtn.click();
+		await this.editLibraryBtn.click();
+		await expect(this.removeLibraryBtn).toBeVisible();
+		await this.removeLibraryBtn.click();
+		this.page.on('dialog', async dialog => {
+			await dialog.accept();
+		});
+		await this.removeLibraryBtn.click();
 	}
 };

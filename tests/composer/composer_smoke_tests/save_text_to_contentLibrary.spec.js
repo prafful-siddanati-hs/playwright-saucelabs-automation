@@ -16,6 +16,7 @@ test.afterEach(async ({ page }) => {
 
 test('Save text data to content library', async ({ page }) => {
 	let pwCLOrg = 'PW_contentLib_Org_'.concat(Math.floor(Math.random() * 10000));
+	const pwCLTeam = 'PW_CL_TEAM';
 	const pwCLText = 'CL text only template';
 	const pwContentLibraryName = 'Playwright Content Library';
 	const setUpEnterpriseUser = new SetUpEnterpriseUser();
@@ -31,7 +32,7 @@ test('Save text data to content library', async ({ page }) => {
 
 	await test.step('Setup enterprise user, team &  account', async () => {
 		await setUpEnterpriseUser.setUpEnterpriseUser(pwCLOrg, 'pw_save_text_cl', accounts);
-		await createNewTeam.command('PW_CL_TEAM');
+		await createNewTeam.command(pwCLTeam);
 	});
 
 	await test.step('Login as test enterprise user', async () => {
@@ -43,7 +44,7 @@ test('Save text data to content library', async ({ page }) => {
 	});
 
 	await test.step('Create new content library', async() => {
-		await contentLibraryPage.createContentLibrary(pwContentLibraryName);
+		await contentLibraryPage.createContentLibrary(pwContentLibraryName, pwCLTeam);
 	});
 
 	await test.step('Open composer', async () => {
@@ -65,14 +66,11 @@ test('Save text data to content library', async ({ page }) => {
 	});
 
 	await test.step('Verify template was created', async () => {
-
+		await contentLibraryPage.verifyContentLibraryTemplate(pwCLText);
 	});
 
 	await test.step('Delete the content library template', async () => {
-
+		await contentLibraryPage.deleteContentLibrary();
+		await expect(contentLibraryPage.createContentLibBtn).toBeVisible();
 	});
-
-
-	await page.waitForTimeout(70000);
-
 });
