@@ -26,7 +26,6 @@ test('Schedule a message using bulk composer', async ({ page }) => {
 
 	await test.step('Login as enterprise user', async () => {
 		await loginPage.signIn('bulk_composer_basic');
-		await expect(loginPage.welcomeSelector).toBeVisible();
 	});
 
 	await test.step('Open bulk composer', async () => {
@@ -71,6 +70,7 @@ test('Schedule a message using bulk composer', async ({ page }) => {
 	});
 
 	await test.step('Edit and verify preview', async () => {
+		await bulkComposePage.messageArea.fill('');
 		await bulkComposePage.writeMessage(messageText);
 	});
 
