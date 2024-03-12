@@ -4,6 +4,7 @@ const getFixture = require('../../../custom-commands/getFixture');
 const { LoginPage } = require('../../../pages/login');
 const { getObjectByName, plan_create } = require('../../../globals');
 const { ComposePage } = require('../../../pages/planandcreate/compose');
+const {PlannerPage} = require('../../../pages/planandcreate/planner');
 let twitterAccount, fbAccount, memberId;
 
 /* Test to schedule a message using media library upload */
@@ -19,6 +20,7 @@ test('Schedule with image from media library', async ({page}) => {
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
+	const plannerPage = new PlannerPage(page);
 
 	await test.step('Setup user & accounts', async () => {
 		await addFixture.command('mediaLibrary_schedule', 'pro_user_composer', true, 300);
@@ -28,7 +30,7 @@ test('Schedule with image from media library', async ({page}) => {
 	});
 
 	await test.step('Login as pro user', async () => {
-		await loginPage.signInAsProUser('mediaLibrary_schedule');
+		await loginPage.signIn('mediaLibrary_schedule');
 	});
 
 	await test.step('Delete residual scheduled messages via API', async () => {
@@ -65,11 +67,11 @@ test('Schedule with image from media library', async ({page}) => {
 	});
 
 	await test.step('Schedule the message', async () => {
-		await composePage.selectMessageScheduleDate();
+		await composePage.schedule();
 	});
 
 	await test.step('Delete created scheduled messages via API', async () => {
-		await composePage.deleteComposeScheduledMessagesForNextMonthViaAPI(memberId);
+		await plannerPage.deleteScheduleMessagesViaAPI(memberId);
 	});
 
 });
