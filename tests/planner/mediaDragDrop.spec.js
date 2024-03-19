@@ -1,5 +1,5 @@
 //@ts-check
-const { test, expect} = require('@playwright/test');
+const { test} = require('@playwright/test');
 const {LoginPage} = require('../../pages/login');
 const {PlannerPage} = require('../../pages/planandcreate/planner');
 const createUser = require('../../custom-commands/createUser');
