@@ -2,7 +2,7 @@
 
 @Library('hootsuite@6') _
 
-slackChannel = "#publisher-web-alerts"
+slackChannel = "#publisher-automation"
 
 jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_Composer_Smoke_Tests/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
 
