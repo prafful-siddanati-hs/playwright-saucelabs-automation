@@ -52,6 +52,12 @@ exports.PlannerPage = class PlannerPage {
 		}, [memberId]);
 	}
 
+	async switchToExpandedView(memberId) {
+		this.page.evaluate(function (id) {
+			return (window.localStorage.setItem(`${id}.pnc_preferences_last_used_week_filter`, 'WEEK_EXPANDED'));
+		}, [memberId]);
+	}
+
 	async verifyScheduledMessage(text, hour) {
 		await this.loadLazyRenderedCards(hour);
 		await expect(this.page.getByText(text)).toBeVisible();
@@ -64,9 +70,6 @@ exports.PlannerPage = class PlannerPage {
 	async dragAndDropCard(message, hour, id) {
 		const nextDayDate = format(utcToZonedTime(addDays(startOfWeek(addWeeks(new Date(), 1)), 1), timeZone), 'eeee, d MMMM');
 		const nextDayTime = format(utcToZonedTime(addDays(startOfWeek(addWeeks(new Date(), 1)), 1), timeZone), 'ha');
-
-		await this.plannerButton.click();
-		await this.page.waitForLoadState();
 
 		await this.hideNativePosts(id);
 		await this.hideRecommendedTimes(id);
@@ -99,8 +102,7 @@ exports.PlannerPage = class PlannerPage {
 
 	async dragAndDropMedia() {
 		const nextDayDate = format(utcToZonedTime(addDays(new Date(), 1), timeZone), 'eeee, d MMMM');
-		await this.plannerButton.click();
-		await this.page.waitForLoadState();
+
 		await this.addMediaButton.click();
 		await this.termsOfServiceWall.click();
 

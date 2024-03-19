@@ -107,6 +107,7 @@ exports.ComposePage = class ComposePage {
 	async sendNow() {
 		await this.postNowButton.click();
 		await expect(this.postNowButton).not.toBeVisible();
+		await expect(this.composeScreen).not.toBeVisible();
 		await expect(this.feCallOuts).toHaveCount(1);
 	}
 

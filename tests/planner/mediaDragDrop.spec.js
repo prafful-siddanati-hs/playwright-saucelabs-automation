@@ -1,5 +1,5 @@
 //@ts-check
-const { test } = require('@playwright/test');
+const { test, expect} = require('@playwright/test');
 const {LoginPage} = require('../../pages/login');
 const {PlannerPage} = require('../../pages/planandcreate/planner');
 const createUser = require('../../custom-commands/createUser');
@@ -19,7 +19,11 @@ test('Drag and drop media from media panel', async ({page}) => {
 
 	await createNewUser.command('dnd_media', 'professional');
 
-	await loginPage.signIn('dnd_media');
+	await loginPage.signInAsProUser('dnd_media');
+
+	await plannerPage.plannerButton.click();
+	await page.waitForLoadState();
+	await plannerPage.switchToExpandedView(global.member[0].memberId);
 
 	await plannerPage.dragAndDropMedia();
 	await page.close();

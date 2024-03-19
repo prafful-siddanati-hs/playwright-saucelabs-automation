@@ -24,7 +24,7 @@ test('Bitly link shortener creation', async ({ page }) => {
 	const memberPage = new MemberOverViewPage(page);
 	const linkPresetsManagePage = new LinkPresetsManagePage(page);
 
-	await loginPage.signInSkipOnboarding('bit_ly_user');
+	await loginPage.signIn('bit_ly_user');
 
 	await memberPage.visitMember();
 	await memberPage.selectLinkSettingButton();

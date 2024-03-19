@@ -63,8 +63,13 @@ exports.LoginPage = class LoginPage {
 
 	async signInAsProUser(member) {
 		await this.signIn(member);
-		const isViewVisible = await this.streamsView.isVisible() || await this.welcomeSelector.isVisible();
-		await expect(isViewVisible).toBeTruthy();
+
+		const isViewVisible = await Promise.race([
+			this.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
+			this.welcomeSelector.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+		]);
+
+		expect(isViewVisible).toBeTruthy();
 	}
 
 	async verifySocialNetwork(name) {
