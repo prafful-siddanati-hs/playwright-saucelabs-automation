@@ -1,4 +1,4 @@
-const { test } = require('@playwright/test');
+const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../custom-commands/tearDown');
 const {MemberOverViewPage} = require('../../../pages/memberOverview');
 const {LinkPresetsManagePage} = require('../../../pages/planandcreate/linkPresetsManage');
@@ -25,6 +25,11 @@ test('Bitly link shortener creation', async ({ page }) => {
 	const linkPresetsManagePage = new LinkPresetsManagePage(page);
 
 	await loginPage.signInSkipOnboarding('bit_ly_user');
+	const isViewVisible = await Promise.race([
+		loginPage.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
+		loginPage.welcomeSelector.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+	]);
+	expect(isViewVisible).toBeTruthy();
 
 	await memberPage.visitMember();
 	await memberPage.selectLinkSettingButton();

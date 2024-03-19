@@ -28,7 +28,7 @@ test('Drag and drop card on week view', async ({page}) => {
 	await createNewUser.command('dnd_user', 'professional');
 	await addFixture.command('twitter_dnd','twitter', true, 300);
 
-	await loginPage.signIn('dnd_user');
+	await loginPage.signInAsProUser('dnd_user');
 
 	const scheduleTime = startOfWeek(addWeeks(new Date(), 1)); //Schedule for first day of next week
 	const composeText = `test drag and drop card on planner week view ${Date.now()}`;
@@ -46,6 +46,10 @@ test('Drag and drop card on week view', async ({page}) => {
 			]
 		}
 	);
+
+	await plannerPage.plannerButton.click();
+	await page.waitForLoadState();
+	await plannerPage.switchToExpandedView(global.member[0].memberId);
 
 	await plannerPage.dragAndDropCard(composeText, scheduleTime.getHours(), global.member[0].memberId);
 });
