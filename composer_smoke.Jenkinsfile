@@ -1,4 +1,4 @@
-!#groovy
+#!groovy
 
 @Library('hootsuite@6') _
 
