@@ -37,6 +37,7 @@ suites:
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
     testMatch: ['tests/composer/composer_smoke_tests/*.*.js']
+    numShards: 4
     params:
       browserName: "chromium"
       project: "chromium"

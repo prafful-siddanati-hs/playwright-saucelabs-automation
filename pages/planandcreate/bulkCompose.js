@@ -16,7 +16,7 @@ exports.BulkComposePage = class BulkComposePage {
 		this.bulkComposerError = page.locator('.vk-MessageColumn h1');
 		this.firstMessageItem = page.getByTestId('messageItemTop').first();
 		this.messageArea = page.getByTestId('MessageEditArea').getByLabel('Text');
-		this.scheduleButton = page.locator('button.vk-EditFooterScheduleButton');
+		this.scheduleButton = page.getByRole('button', { name: 'Schedule', exact: true });
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 	}
 
