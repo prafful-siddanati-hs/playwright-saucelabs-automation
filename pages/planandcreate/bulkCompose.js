@@ -50,6 +50,12 @@ exports.BulkComposePage = class BulkComposePage {
 		await expect(this.page.locator('.vk-Loader')).toHaveCount(0);
 	}
 
+	async verifyFacebookPreview(message) {
+		const facebookPreview = this.page.locator(`//div[contains(@class, "rc-MessageEditText")] //div[contains(@class, "public-DraftEditor-content")]//span[contains(text(), '${message}')]`);
+
+		await expect(facebookPreview).toBeVisible();
+	}
+
 	async schedule() {
 		await this.scheduleButton.click();
 		await expect(this.scheduleButton).not.toBeVisible();

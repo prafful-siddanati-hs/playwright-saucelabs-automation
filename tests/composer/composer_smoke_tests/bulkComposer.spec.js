@@ -72,6 +72,7 @@ test('Schedule a message using bulk composer', async ({ page }) => {
 	await test.step('Edit and verify preview', async () => {
 		await bulkComposePage.messageArea.fill('');
 		await bulkComposePage.writeMessage(messageText);
+		await bulkComposePage.verifyFacebookPreview(messageText);
 	});
 
 	await test.step('Schedule the first message', async () => {
