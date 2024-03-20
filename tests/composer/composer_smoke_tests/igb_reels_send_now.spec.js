@@ -46,7 +46,8 @@ test('Send instagram reel message using composer', async ({ page }) => {
 	});
 
 	await test.step('Upload video file', async () => {
-		await composePage.uploadMediaFile('test_data/publisher/videos');
+		await page.setInputFiles('.vk-MediaUpload input[type="file"]', 'test_data/publisher/videos/video_2.mp4');
+		await expect(composePage.mediaOverLay).toBeVisible();
 	});
 
 	await test.step('Verify video and text preview', async () => {
