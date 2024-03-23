@@ -26,6 +26,12 @@ test('Schedule a message using bulk composer', async ({ page }) => {
 
 	await test.step('Login as enterprise user', async () => {
 		await loginPage.signIn('bulk_composer_basic');
+		const isViewVisible = await Promise.race([
+			loginPage.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
+			loginPage.welcomeSelector.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+		]);
+
+		expect(isViewVisible).toBeTruthy();
 	});
 
 	await test.step('Open bulk composer', async () => {
@@ -48,7 +54,7 @@ test('Schedule a message using bulk composer', async ({ page }) => {
 
 	await test.step('Review the posts', async () => {
 		await expect(bulkComposePage.reviewPostsButton).toBeEnabled();
-		bulkComposePage.reviewPostsButton.click();
+		await bulkComposePage.reviewPostsButton.click();
 	});
 
 	await test.step('Verify message dashboard & edit area are displayed', async () => {
