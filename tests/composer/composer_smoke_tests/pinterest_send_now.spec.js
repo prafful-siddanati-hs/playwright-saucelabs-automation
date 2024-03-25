@@ -23,7 +23,7 @@ test('Send pinterest message using composer', async ({ page }) => {
 	});
 
 	await test.step('Login as enterprise user', async () => {
-		await loginPage.signIn('pin_send');
+		await loginPage.signInSkipOnboarding('pin_send');
 	});
 
 	await test.step('Select pin button from global navigator', async () => {
