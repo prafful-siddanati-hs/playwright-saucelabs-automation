@@ -20,6 +20,7 @@ exports.ContentLibraryPage = class ContentLibraryPage {
 	async visit() {
 		await this.page.goto('/dashboard#/publisher/contentlibrary');
 		await expect(this.contentLibrarySection).toBeVisible();
+		await this.page.waitForLoadState('networkidle');
 	}
 
 	async createContentLibrary(libraryName, teamName) {
