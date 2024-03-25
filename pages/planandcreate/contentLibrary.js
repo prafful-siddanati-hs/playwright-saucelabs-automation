@@ -25,9 +25,10 @@ exports.ContentLibraryPage = class ContentLibraryPage {
 	async createContentLibrary(libraryName, teamName) {
 		const selectTeam = this.page.getByRole('option', { name: `${teamName}` }).locator('div');
 		await expect(this.createContentLibBtn).toBeVisible();
-		await this.createContentLibBtn.click();
+		await this.createContentLibBtn.hover();
 		await this.createContentLibBtn.click();
 		await expect(this.libNameInput).toBeVisible();
+		await this.libNameInput.hover();
 		await this.libNameInput.click();
 		await this.libNameInput.fill(libraryName);
 		await this.addTeamBtn.click();
