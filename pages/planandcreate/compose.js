@@ -61,6 +61,7 @@ exports.ComposePage = class ComposePage {
 		this.twitterTab = page.getByLabel('Twitter content');
 		this.linkedInTab = page.getByLabel('LinkedIn content');
 		this.facebookPageTab =  page.getByLabel('Facebook content');
+		this.videoRemoveButton = page.locator('.rc-Composer .videoThumbnail .vk-MediaThumbnailDelete');
 	}
 	async selectComposeButton() {
 		await expect(this.composeButton).toBeVisible();
