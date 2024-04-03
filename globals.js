@@ -64,6 +64,20 @@ module.exports = {
 			];
 			return MENTIONS[Math.floor(Math.random() * MENTIONS.length)];
 		},
+
+		getRandomUrl: function () {
+			const URLS = [
+				'cbc.ca',
+				'reddit.com',
+				'facebook.com',
+				'x.com',
+				'instagram.com',
+				'pinterest.com',
+				'linkedin.com',
+				'slack.com'
+			];
+			return URLS[Math.floor(Math.random() * URLS.length)];
+		},
 	},
 
 	getRandomMediaFile: function(directoryPath) {
