@@ -174,11 +174,8 @@ exports.ComposePage = class ComposePage {
 
 	async verifyLinkInFacebookPagePreview(text) {
 		await expect(this.facebookMessageLink).toBeVisible();
-		const href = await this.facebookMessageLink.getAttribute('href');
-		const innerText = await this.facebookMessageLink.innerText();
-
-		expect(href).toContain(text);
-		expect(innerText).toContain(text);
+		expect(await this.facebookMessageLink.getAttribute('href')).toContain(text);
+		expect(await this.facebookMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyInstagramPreview(text) {
