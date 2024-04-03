@@ -17,19 +17,19 @@ test.afterEach(async ({ page }) => {
 
 test('Verify links settings on composer', async ({ page }) => {
 	const url = plan_create.getRandomUrl();
-	const linkText = `Verify link settings ${Math.floor(Math.random() * 100)} ${url} `;
+	const linkText = `Link settings ${url} ${Math.floor(Math.random() * 100)} `;
 	const createNewUser = new createUser();
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 
 	await test.step('Create user & add social network', async () => {
-		await createNewUser.command('link_settings', 'professional');
+		await createNewUser.command('pw_link_settings', 'professional');
 		await addFixture.command('fb_link_settings', 'plan_create_facebookpage', true, 300);
 	});
 
 	await test.step('Login as pro user', async () => {
-		await loginPage.signIn('link_settings');
+		await loginPage.signIn('pw_link_settings');
 	});
 
 	await test.step('Select new compose button', async () => {
@@ -80,7 +80,7 @@ test('Verify links settings on composer', async ({ page }) => {
 	});
 
 	await test.step('Select a date to schedule the message', async () => {
-		await page.waitForTimeout(1500);
+		await page.waitForTimeout(1000);
 		await composePage.selectMessageScheduleDate();
 	});
 });

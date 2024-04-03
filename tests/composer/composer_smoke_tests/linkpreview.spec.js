@@ -16,7 +16,7 @@ test.afterEach(async ({ page }) => {
 
 test('Verify link preview on composer', async ({ page }) => {
 	const url = plan_create.getRandomUrl();
-	const messageText = `Verify link preview ${Math.floor(Math.random() * 100)} ${url} `;
+	const messageText = `Link previews ${url} ${Math.floor(Math.random() * 100)} `;
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
