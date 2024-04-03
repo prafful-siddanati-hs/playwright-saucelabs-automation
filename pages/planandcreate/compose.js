@@ -78,10 +78,16 @@ exports.ComposePage = class ComposePage {
 		this.linkSettingsCutomTracker = page.getByRole('option', { name: 'Custom' });
 		this.trackingParametersTable = page.getByTestId('TrackingParametersTable');
 		this.linkSettingsAddParameterButton = page.getByTestId('AddParameterButton');
+		this.parameterName = page.getByTestId('CompoundParameterNameInput-0');
+		this.parameterValue = page.getByTestId('CompoundParameterValueInput-0-0');
 		this.linkShortener = page.getByTestId('Ow.ly-select-item');
 		this.linkSettingsApplyButton = page.getByTestId('ApplyPresetButton');
-
+		this.manageLinkPreset = page.getByRole('option', { name: 'Manage link presets' });
+		this.shortenWithOwlyCaption = page.getByTestId('owlyText').locator('div');
+		this.editAppliedLinkPreset = page.getByTestId('MessageEditArea').getByRole('button', { name: 'Edit' });
+		this.selectLinkDropdown = page.getByTestId('Select a link-select').locator('div').first();
 	}
+
 	async selectComposeButton() {
 		await expect(this.composeButton).toBeVisible();
 		await this.composeButton.click();
@@ -285,6 +291,29 @@ exports.ComposePage = class ComposePage {
 		await expect(this.addTrackingButton).toBeVisible();
 		await this.addTrackingButton.click();
 		await expect(this.linkSettingsModal).toBeVisible();
+	}
+
+	async selectLink(url) {
+		const linkToSelect = this.page.getByRole('option', { name: `${url}` });
+		await expect(this.selectLinkDropdown).toBeVisible();
+		await this.selectLinkDropdown.click();
+		await expect(linkToSelect).toBeVisible();
+		await linkToSelect.click();
+	}
+
+	async selectTracker(tracker) {
+		const linkSettingsTracker = this.page.getByRole('option', { name: `${tracker}`});
+		await expect(this.linkSettingsTrackerDropdown).toBeVisible();
+		await this.linkSettingsTrackerDropdown.click();
+		await linkSettingsTracker.click();
+	}
+
+	async setTrackingParameter(parameterName, parameterValue) {
+		await expect(this.trackingParametersTable).toBeVisible();
+		await expect(this.parameterName).toBeVisible();
+		await this.parameterName.fill(parameterName);
+		await expect(this.parameterValue).toBeVisible();
+		await this.parameterValue.fill(parameterValue);
 	}
 
 	async closeComposer() {
