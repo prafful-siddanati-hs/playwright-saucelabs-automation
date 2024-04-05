@@ -50,7 +50,7 @@ exports.ComposePage = class ComposePage {
 		this.exitButton = page.getByRole('button', { name: 'Exit tutorial' });
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 		this.moreButton = page.getByLabel('more', { exact: true });
-		this.saveDraftFromDropdown = page.getByRole('button', { name: 'Save draft', exact: true });
+		this.saveDraftFromDropdown = page.getByRole('button', { name: 'Save as draft', exact: true });
 		this.mediaLibraryButton = page.getByLabel('Media library', { exact: true });
 		this.mediaLibraryCloseButton = page.getByRole('button', { name: 'Close media library'});
 		this.termsOfServiceWall = page.locator('.vk-TermsOfServiceWall button');
@@ -86,6 +86,8 @@ exports.ComposePage = class ComposePage {
 		this.shortenWithOwlyCaption = page.getByTestId('owlyText').locator('div');
 		this.editAppliedLinkPreset = page.getByTestId('MessageEditArea').getByRole('button', { name: 'Edit' });
 		this.selectLinkDropdown = page.getByTestId('Select a link-select').locator('div').first();
+		this.linkShortener = page.getByTestId('Ow.ly-select-item');
+		this.linkSettingsApplyButton = page.getByTestId('ApplyPresetButton');
 	}
 
 	async selectComposeButton() {
@@ -233,7 +235,6 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async saveDraft() {
-		await this.moreButton.click();
 		await this.saveDraftFromDropdown.click();
 		await expect(this.composeScreen).not.toBeVisible();
 	}
