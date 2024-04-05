@@ -20,6 +20,17 @@ exports.BulkComposePage = class BulkComposePage {
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 	}
 
+	async setDarkLaunchCookies() {
+		const url = this.page.url();
+		await this.page.context().addCookies([
+			{
+				name: 'PUB_BULK_COMPOSER',
+				value: '1',
+				url: url,
+			}
+		]);
+	}
+
 	async visit() {
 		await this.page.goto('/dashboard#/publisher/bulkcomposer');
 		await expect(this.bulkComposer).toBeVisible();
