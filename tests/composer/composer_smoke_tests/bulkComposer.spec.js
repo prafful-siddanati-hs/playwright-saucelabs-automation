@@ -34,6 +34,10 @@ test('Schedule a message using bulk composer', async ({ page }) => {
 		expect(isViewVisible).toBeTruthy();
 	});
 
+	await test.step('Set darklaunch cookies', async () => {
+		await bulkComposePage.setDarkLaunchCookies();
+	});
+
 	await test.step('Open bulk composer', async () => {
 		await bulkComposePage.visit();
 	});
