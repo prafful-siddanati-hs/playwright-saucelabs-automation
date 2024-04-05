@@ -1,9 +1,13 @@
+const { expect } = require('@playwright/test');
 exports.LinkPresetsManagePage = class LinkPresetsManagePage {
 	constructor(page) {
 		this.page = page;
-		this.createNewLinkSettings = page.locator('.rc-LinkSettingsManagementArea .-createNewLinkSettings');
+		this.createNewLinkSettings = page.getByRole('button', { name: 'Create new link settings' });
 		this.createBitlyButton = page.getByRole('button', { name: 'Add new Bit.ly shortener' });
 		this.shortenerInput = page.locator('.rc-TextInput input');
+		this.backButton = page.getByLabel('Back to previous screen');
+		this.moreOptionsButton = page.getByLabel('More options');
+		this.editOption = page.locator('#linkSettingsManagementAreaMountPoint').getByRole('button', { name: 'Edit' });
 	}
 
 	async  selectShortenerProvider(name) {
@@ -28,5 +32,27 @@ exports.LinkPresetsManagePage = class LinkPresetsManagePage {
 		await page1.getByRole('button', { name: 'Log in' }).click();
 		await page1.getByRole('button', { name: 'Allow' }).click();
 		await page1.close();
+	}
+
+	async clickCreateLinkPresetButton() {
+		await expect(this.createNewLinkSettings).toBeVisible();
+		await this.createNewLinkSettings.click();
+	}
+
+	async verifyPresetInLinkSettings(presetName) {
+		const createdLinkPreset = this.page.getByRole('rowheader', { name: `${presetName}` });
+		await createdLinkPreset.isVisible();
+	}
+
+	async editPreset() {
+		await expect(this.moreOptionsButton).toBeVisible();
+		await this.moreOptionsButton.click();
+		await expect(this.editOption).toBeVisible();
+		await this.editOption.click();
+	}
+
+	async closeLinkPresetManage() {
+		await expect(this.backButton).toBeVisible();
+		await this.backButton.click();
 	}
 };
