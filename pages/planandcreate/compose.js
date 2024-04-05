@@ -40,6 +40,9 @@ exports.ComposePage = class ComposePage {
 		this.genericPreviewText = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-PreviewMessageText');
 		this.twitterPreviewText = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-ContentBody');
 		this.facebookPreviewText = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody');
+		this.facebookMessageLink = page.locator('.vk-FacebookPreview .vk-ContentBody a');
+		this.facebookLinkPreviewTitle = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
+		this.facebookLinkPreviewSource = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-Source');
 		this.instagramPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').getByLabel('Instagram post preview');
 		this.instagramReelPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').locator('.vk-InstagramReelPreview');
 		this.linkedInPreviewText = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-ContentBody');
@@ -62,6 +65,22 @@ exports.ComposePage = class ComposePage {
 		this.linkedInTab = page.getByLabel('LinkedIn content');
 		this.facebookPageTab =  page.getByLabel('Facebook content');
 		this.videoRemoveButton = page.locator('.rc-Composer .videoThumbnail .vk-MediaThumbnailDelete');
+		this.exitComposerButton = page.getByLabel('Exit Composer');
+		this.discardPost = page.getByRole('button', { name: 'Discard post' });
+		this.addTrackingButton = page.getByRole('button', { name: 'Add tracking' });
+		this.linkSettingsModal = page.getByLabel('Apply Link Settings modal');
+		this.presetSelectDropdown = page.getByTestId('Preset-select');
+		this.linkSettingsNoTracker = page.getByText('Tracking: No Tracking');
+		this.linkSettingsNoShortner = page.getByText('Shortener: No Shortener');
+		this.customizePresetButton = page.getByTestId('CustomizePresetButton');
+		this.linkSettingsShortenerDropdown = page.getByLabel('No Shortener');
+		this.linkSettingsTrackerDropdown = page.getByLabel('No Tracking');
+		this.linkSettingsCutomTracker = page.getByRole('option', { name: 'Custom' });
+		this.trackingParametersTable = page.getByTestId('TrackingParametersTable');
+		this.linkSettingsAddParameterButton = page.getByTestId('AddParameterButton');
+		this.linkShortener = page.getByTestId('Ow.ly-select-item');
+		this.linkSettingsApplyButton = page.getByTestId('ApplyPresetButton');
+
 	}
 	async selectComposeButton() {
 		await expect(this.composeButton).toBeVisible();
@@ -151,6 +170,12 @@ exports.ComposePage = class ComposePage {
 
 	async verifyFacebookPreview(text) {
 		await expect(this.facebookPreviewText).toContainText(`${text}`);
+	}
+
+	async verifyLinkInFacebookPagePreview(text) {
+		await expect(this.facebookMessageLink).toBeVisible();
+		expect(await this.facebookMessageLink.getAttribute('href')).toContain(text);
+		expect(await this.facebookMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyInstagramPreview(text) {
@@ -250,6 +275,18 @@ exports.ComposePage = class ComposePage {
 		await this.mentionsList.isVisible();
 		await mentionItem.isVisible();
 		await mentionItem.click();
+	}
+
+	async openLinkSettingsDialog() {
+		await expect(this.addTrackingButton).toBeVisible();
+		await this.addTrackingButton.click();
+		await expect(this.linkSettingsModal).toBeVisible();
+	}
+
+	async closeComposer() {
+		await this.exitComposerButton.click();
+		await expect(this.discardPost).toBeVisible();
+		await this.discardPost.click();
 	}
 
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {
