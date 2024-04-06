@@ -40,7 +40,8 @@ exports.ComposePage = class ComposePage {
 		this.genericPreviewText = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-PreviewMessageText');
 		this.twitterPreviewText = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-ContentBody');
 		this.facebookPreviewText = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody');
-		this.facebookMessageLink = page.locator('.vk-FacebookPreview .vk-ContentBody a');
+		this.twitterMessageLink = page.locator('.rc-Composer .vk-TwitterPreview .vk-ContentBody a');
+		this.facebookMessageLink = page.locator('.rc-Composer .vk-FacebookPreview .vk-ContentBody a');
 		this.facebookLinkPreviewTitle = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
 		this.facebookLinkPreviewSource = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-Source');
 		this.instagramPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').getByLabel('Instagram post preview');
@@ -180,6 +181,12 @@ exports.ComposePage = class ComposePage {
 		await expect(this.facebookPreviewText).toContainText(`${text}`);
 	}
 
+	async verifyLinkInTwitterPreview(text) {
+		await expect(this.twitterMessageLink).toBeVisible();
+		expect(await this.twitterMessageLink.getAttribute('href')).toContain(text);
+		expect(await this.twitterMessageLink.innerText()).toContain(text);
+	}
+
 	async verifyLinkInFacebookPagePreview(text) {
 		await expect(this.facebookMessageLink).toBeVisible();
 		expect(await this.facebookMessageLink.getAttribute('href')).toContain(text);
@@ -216,6 +223,7 @@ exports.ComposePage = class ComposePage {
 		await expect(this.openCalendarButton).toHaveCount(1);
 		await this.openCalendarButton.hover();
 		await this.openCalendarButton.click();
+		await this.nextMonthButton.hover();
 		await this.nextMonthButton.click();
 		await this.firstDayOfNextMonth.click();
 		await this.scheduleDoneButton.click();

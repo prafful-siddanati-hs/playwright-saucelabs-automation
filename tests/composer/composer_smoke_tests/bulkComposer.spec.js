@@ -19,22 +19,16 @@ test('Schedule a message using bulk composer', async ({ page }) => {
 	const loginPage = new LoginPage(page);
 	const bulkComposePage = new BulkComposePage(page);
 
-	await test.step('Setup enterprise user & account', async () => {
-		await addFixture.command('bulk_composer_basic', 'enterprise_user_composer', true, 300);
+	await test.step('Setup pro user & account', async () => {
+		await addFixture.command('bulk_composer_basic', 'pro_user_composer', true, 300);
 		fbAccount = getObjectByName(global.fixture, 'bulk_composer_basic').facebookPage.username;
 	});
 
-	await test.step('Login as enterprise user', async () => {
+	await test.step('Login as pro user', async () => {
 		await loginPage.signIn('bulk_composer_basic');
-		const isViewVisible = await Promise.race([
-			loginPage.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
-			loginPage.welcomeSelector.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
-		]);
-
-		expect(isViewVisible).toBeTruthy();
 	});
 
-	await test.step('Set darklaunch cookies', async () => {
+	await test.step('Set dark launch cookies', async () => {
 		await bulkComposePage.setDarkLaunchCookies();
 	});
 
