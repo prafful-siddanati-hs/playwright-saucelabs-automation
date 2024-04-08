@@ -15,7 +15,7 @@ properties(
         ),
         parameters([
             choice(name: 'SUITE_NAME', choices: ['Composer_Smoke - Chrome', 'Composer_Smoke - Safari', 'Planner_Regression - Chrome', 'Planner_Regression - Safari'], description: 'Select a suite to run'),
-            choice(name: 'FEATURE', choices: ['composer_smoke','composer_regression', 'planner_regression'], description: 'Select product feature'),
+            choice(name: 'FEATURE', choices: ['composer_smoke', 'planner_regression'], description: 'Select product feature'),
         ]),
     ]
 )
