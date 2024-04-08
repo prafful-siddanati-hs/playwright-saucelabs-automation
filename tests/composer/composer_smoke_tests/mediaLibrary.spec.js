@@ -34,7 +34,7 @@ test('Schedule with image from media library', async ({page}) => {
 	});
 
 	await test.step('Delete residual scheduled messages via API', async () => {
-		await composePage.deleteComposeScheduledMessagesForNextMonthViaAPI(memberId);
+		await plannerPage.deleteScheduleMessagesViaAPI(memberId);
 	});
 
 	await test.step('Select new compose button', async () => {

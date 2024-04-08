@@ -1,15 +1,16 @@
 const { test, expect } = require('@playwright/test');
 const tearDown = require('../../../custom-commands/tearDown');
+const getFixture = require('../../../custom-commands/getFixture');
 const {getObjectByName} = require('../../../globals');
 const { LoginPage } = require('../../../pages/login');
 const { ComposePage } = require('../../../pages/planandcreate/compose');
-const { SetUpEnterpriseUser } = require('../../../custom-commands/setUpEnterpriseUser');
+const {PlannerPage} = require('../../../pages/planandcreate/planner');
 const URL = 'slack.com';
 const URL2 = 'https://www.facebook.com';
 const TRACKER = 'Adobe Analytics';
 const PARAMETER_NAME = 'utm';
 const PARAMETER_VALUE = 'value';
-
+let fbAccount, memberId;
 /* Test to apply tracking parameters to links. */
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -19,31 +20,37 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Track applied linksettings', async ({ page }) => {
-	let linkSettingsTrackOrg = 'PW_linkSettings_Track_'.concat(Math.floor(Math.random() * 1000));
 	const linkSettingTrackText = `Track links! ${URL} and ${URL2} ${Math.floor(Math.random() * 1000)} `;
-	const setUpEnterpriseUser = new SetUpEnterpriseUser();
-	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
+	const addFixture = new getFixture();
+	const loginPage = new LoginPage(page);
+	const plannerPage = new PlannerPage(page);
 
-	let accounts = {
-		plan_create_facebookpage: []
-	};
-	accounts.plan_create_facebookpage.push('pw_fb_link_track');
-
-	await test.step('Setup enterprise user & accounts', async () => {
-		await setUpEnterpriseUser.setUpEnterpriseUser(linkSettingsTrackOrg, 'pw_link_track', accounts);
+	await test.step('Setup enterprise user & account', async () => {
+		await addFixture.command('pw_link_track', 'enterprise_user_composer', true, 300);
+		fbAccount = getObjectByName(global.fixture, 'pw_link_track').facebookPage.username;
+		memberId = global.member[0].memberId;
 	});
 
 	await test.step('Login as enterprise user', async () => {
-		await loginPage.signInSkipOnboarding('pw_link_track');
+		await loginPage.signIn('pw_link_track');
+		const isViewVisible = await Promise.race([
+			loginPage.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
+			loginPage.welcomeSelector.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+		]);
+
+		expect(isViewVisible).toBeTruthy();
 	});
 
 	await test.step('Select new compose button', async () => {
 		await composePage.selectComposeButton();
 	});
 
-	await test.step('Verify facebook is selected on social network picker', async () => {
-		await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, 'pw_fb_link_track').username);
+	await test.step('Select facebook page from social network dropdown', async () => {
+		await composePage.profileDropDown.click();
+		await expect(composePage.snContentItems).toBeVisible();
+		await composePage.selectSocialProfile(fbAccount);
+		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
 	});
 
@@ -87,7 +94,11 @@ test('Track applied linksettings', async ({ page }) => {
 	});
 
 	await test.step('Schedule the message', async () => {
-		await page.waitForTimeout(1000);
-		await composePage.selectMessageScheduleDate();
+		await composePage.schedule();
 	});
+
+	await test.step('Delete created scheduled messages via API', async () => {
+		await plannerPage.deleteScheduleMessagesViaAPI(memberId);
+	});
+
 });

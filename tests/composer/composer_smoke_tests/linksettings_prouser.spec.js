@@ -2,12 +2,13 @@ const { test, expect } = require('@playwright/test');
 const tearDown = require('../../../custom-commands/tearDown');
 const getFixture = require('../../../custom-commands/getFixture');
 const { LoginPage } = require('../../../pages/login');
-const createUser = require('../../../custom-commands/createUser');
 const { getObjectByName, plan_create } = require('../../../globals');
 const { ComposePage } = require('../../../pages/planandcreate/compose');
+const {PlannerPage} = require('../../../pages/planandcreate/planner');
 const SHORTENER = 'https://ow.ly';
+let twAccount, memberId;
 
-/* Test to verfy link settings on composer. */
+/* Test to verify link settings on composer. */
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
 
@@ -18,14 +19,15 @@ test.afterEach(async ({ page }) => {
 test('Verify links settings on composer', async ({ page }) => {
 	const url = plan_create.getRandomUrl();
 	const linkText = `Link settings ${url} ${Math.floor(Math.random() * 100)} `;
-	const createNewUser = new createUser();
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
+	const plannerPage = new PlannerPage(page);
 
 	await test.step('Create user & add social network', async () => {
-		await createNewUser.command('pw_link_settings', 'professional');
-		await addFixture.command('fb_link_settings', 'plan_create_facebookpage', true, 300);
+		await addFixture.command('pw_link_settings', 'pro_user_composer', true, 300);
+		twAccount = getObjectByName(global.fixture, 'pw_link_settings').twitter.username;
+		memberId = global.member[0].memberId;
 	});
 
 	await test.step('Login as pro user', async () => {
@@ -34,11 +36,13 @@ test('Verify links settings on composer', async ({ page }) => {
 
 	await test.step('Select new compose button', async () => {
 		await composePage.selectComposeButton();
-		await composePage.exitButton.click();
 	});
 
-	await test.step('Verify facebook is selected on social network picker', async () => {
-		await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, 'fb_link_settings').username);
+	await test.step('Select twitter from social network dropdown', async () => {
+		await composePage.profileDropDown.click();
+		await expect(composePage.snContentItems).toBeVisible();
+		await composePage.selectSocialProfile(twAccount);
+		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
 	});
 
@@ -74,13 +78,17 @@ test('Verify links settings on composer', async ({ page }) => {
 	});
 
 	await test.step('Verify the shortened url is updated in preview', async () => {
-		await composePage.verifyFacebookPreview(SHORTENER);
-		await expect(composePage.facebookPreviewText).not.toContainText(url);
-		await composePage.verifyLinkInFacebookPagePreview(SHORTENER);
+		await composePage.verifyTwitterPreview(SHORTENER);
+		await expect(composePage.twitterPreviewText).not.toContainText(url);
+		await composePage.verifyLinkInTwitterPreview(SHORTENER);
 	});
 
-	await test.step('Select a date to schedule the message', async () => {
-		await page.waitForTimeout(1000);
-		await composePage.selectMessageScheduleDate();
+	await test.step('Schedule the message', async () => {
+		await composePage.schedule();
 	});
+
+	await test.step('Delete created scheduled messages via API', async () => {
+		await plannerPage.deleteScheduleMessagesViaAPI(memberId);
+	});
+
 });
