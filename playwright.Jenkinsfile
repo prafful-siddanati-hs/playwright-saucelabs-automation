@@ -14,12 +14,10 @@ properties(
             )
         ),
         parameters([
-            string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer_regression.config.yml', description: 'Composer tests on chrome'),
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/planner_regression.config.yml', description: 'Planner tests on chrome'),
         ]),
         pipelineTriggers(
             [parameterizedCron('''
-                30 15,17,21,23 * * 1-5 %CONFIG_FILE=.sauce/composer_regression.config.yml
                 20 13,15,21,23 * * 1-5 %CONFIG_FILE=.sauce/planner_regression.config.yml
                 ''')]
         )
