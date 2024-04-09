@@ -19,6 +19,9 @@ exports.PlannerPage = class PlannerPage {
 		this.closeSaveDraftPopup = page.locator('#DraftSavedPopover [aria-label="Close Draft saved"]');
 		this.viewWeekToggle = page.locator('.vk-Planner .vk-ViewToggleBar [aria-label= "View weekly planner"]');
 		this.navigateToNextWeek = page.locator('.vk-Planner .vk-NextButton');
+		this.editButton = page.getByTestId('EditButton');
+		this.moreActions = page.getByLabel('More actions');
+		this.duplicateButton = page.locator('//*[contains(@class,"vk-AdditionalActions")]//*[text()="Duplicate"]');
 	}
 
 	async visit() {
@@ -59,12 +62,30 @@ exports.PlannerPage = class PlannerPage {
 	}
 
 	async verifyScheduledMessage(text, hour) {
-		await this.loadLazyRenderedCards(hour);
+		if (hour) {
+			await this.loadLazyRenderedCards(hour);
+		}
 		await expect(this.page.getByText(text)).toBeVisible();
 	}
 
 	async showPreviewPane(text) {
 		await this.page.getByText(text).click();
+	}
+
+	async verifyTextInPreviewPane(text) {
+		const previewPaneMessageText = this.page.getByTestId('Preview').getByText(text);
+		await expect(previewPaneMessageText).toBeVisible();
+	}
+
+	async editFromPreviewPane() {
+		await expect(this.editButton).toBeVisible();
+		await this.editButton.click();
+	}
+
+	async duplicateFromPreviewPane() {
+		await this.moreActions.click();
+		await expect(this.duplicateButton).toBeVisible();
+		await this.duplicateButton.click();
 	}
 
 	async dragAndDropCard(message, hour, id) {

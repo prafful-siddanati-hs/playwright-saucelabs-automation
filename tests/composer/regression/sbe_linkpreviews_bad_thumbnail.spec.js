@@ -1,3 +1,7 @@
+/**
+ * [https://hootsuite.atlassian.net/browse/SBE-5648]
+ * Test to verify that a link with bad thumbnail displays a warning in composer.
+ */
 const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../custom-commands/tearDown');
 const getFixture = require('../../../custom-commands/getFixture');
@@ -13,10 +17,6 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-/**
- * [https://hootsuite.atlassian.net/browse/SBE-5648]
- * Test to verify that a link with bad thumbnail displays a warning in composer.
- */
 test('Link containing bad thumbnail in composer', async ({ page }) => {
 	const sbe_url = 'https://www.charteredaccountantsanz.com/news-and-analysis/insights/research-and-insights/recruiting-early-stage-talent';
 	const composeText = `Bad thumbnail link ${sbe_url} `.concat(Math.floor(Math.random() * 1000));

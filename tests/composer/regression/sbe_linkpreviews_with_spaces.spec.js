@@ -1,3 +1,7 @@
+/**
+ * [https://hootsuite.atlassian.net/browse/SBE-5657]
+ * Test to verify link previews are generated correctly when the link contains a space.
+ */
 const { test,expect } = require('@playwright/test');
 const { SetUpEnterpriseUser } = require('../../../custom-commands/setUpEnterpriseUser.js');
 const tearDown = require('../../../custom-commands/tearDown.js');
@@ -13,10 +17,6 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-/**
- * [https://hootsuite.atlassian.net/browse/SBE-5657]
- * Test to verify link previews are generated correctly when the link contains a space.
- */
 test('Link preview with space', async ({page}) => {
 	let orgName = 'pw_spaced_linkPreview_' + Math.floor(Math.random() * 10000);
 	const spaces_url = plan_create.getRandomUrlWithSpaces();
