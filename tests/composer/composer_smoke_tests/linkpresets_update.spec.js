@@ -6,6 +6,8 @@ const { ComposePage } = require('../../../pages/planandcreate/compose');
 const { SetUpEnterpriseUser } = require('../../../custom-commands/setUpEnterpriseUser');
 const { LinkPresetsCreatePage } = require('../../../pages/planandcreate/linkPresetsCreate');
 const { LinkPresetsManagePage } = require('../../../pages/planandcreate/linkPresetsManage');
+const createOrg = require('../../../custom-commands/createOrg');
+const getFixture = require('../../../custom-commands/getFixture');
 const URL = 'https://slack.com';
 const TRACKER = 'Google Analytics';
 const SHORTENER = 'Ow.ly';
@@ -23,32 +25,40 @@ test('Update link presets', async ({ page }) => {
 	let presetName = `PW Link Preset ${Date.now()}`;
 	let firstEdit = presetName.concat('--edit');
 	let secondEdit = firstEdit.concat('--secondEdit');
-	const linkPresetText = `Try link preset ${URL} ${Math.floor(Math.random() * 100)} `;
-	const setUpEnterpriseUser = new SetUpEnterpriseUser();
+	let linkPresetText = `Try link preset ${URL} ${Math.floor(Math.random() * 100)} `;
+
+	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const linkPresetCreatePage = new LinkPresetsCreatePage(page);
 	const linkPresetsManagePage = new LinkPresetsManagePage(page);
-
-	let accounts = {
-		twitter: []
-	};
-	accounts.twitter.push('pw_tw_link_presets');
+	const createNewOrg = new createOrg();
 
 	await test.step('Setup enterprise user & accounts', async () => {
-		await setUpEnterpriseUser.setUpEnterpriseUser(linkPresetsOrg, 'pw_link_presets', accounts);
+		await addFixture.command('link_presets_update', 'enterprise_user_composer', true, 300);
+		await createNewOrg.command(linkPresetsOrg);
 	});
 
 	await test.step('Login as enterprise user', async () => {
-		await loginPage.signInSkipOnboarding('pw_link_presets');
+		await loginPage.signInSkipOnboarding('link_presets_update');
+
+		const isViewVisible = await Promise.race([
+			loginPage.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
+			loginPage.welcomeSelector.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+		]);
+
+		expect(isViewVisible).toBeTruthy();
 	});
 
 	await test.step('Select new compose button', async () => {
 		await composePage.selectComposeButton();
 	});
 
-	await test.step('Verify twitter is selected on social network picker', async () => {
-		await composePage.verifySocialProfileSelected(getObjectByName(global.fixture, 'pw_tw_link_presets').username);
+	await test.step('Select facebook page from social network dropdown', async () => {
+		await composePage.profileDropDown.click();
+		await expect(composePage.snContentItems).toBeVisible();
+		await composePage.selectSocialProfile(getObjectByName(global.fixture, 'link_presets_update').facebookPage.username);
+		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
 	});
 
@@ -119,8 +129,8 @@ test('Update link presets', async ({ page }) => {
 	});
 
 	await test.step('Verify link settings are applied', async () => {
-		await composePage.verifyTwitterPreview(SHORTENER.toLowerCase());
-		await expect(composePage.twitterPreviewText).not.toContainText(URL);
+		await composePage.verifyFacebookPreview(SHORTENER.toLowerCase());
+		await expect(composePage.facebookPreviewText).not.toContainText(URL);
 		await expect(composePage.shortenWithOwlyCaption).toContainText('--edit');
 	});
 
@@ -147,7 +157,7 @@ test('Update link presets', async ({ page }) => {
 	});
 
 	await test.step('Verify updated preset is applied on composer', async () => {
-		await composePage.verifyTwitterPreview(SHORTENER.toLowerCase());
+		await composePage.verifyFacebookPreview(SHORTENER.toLowerCase());
 		await expect(composePage.shortenWithOwlyCaption).toContainText('--secondEdit');
 	});
 });
