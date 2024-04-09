@@ -41,12 +41,17 @@ exports.ComposePage = class ComposePage {
 		this.twitterPreviewText = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-ContentBody');
 		this.facebookPreviewText = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody');
 		this.twitterMessageLink = page.locator('.rc-Composer .vk-TwitterPreview .vk-ContentBody a');
+		this.twitterLinkPreviewTitle = page.locator('.rc-Composer .vk-TwitterPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
+		this.twitterLinkPreviewSource = page.locator('.rc-Composer .vk-TwitterPreview .vk-MessageLinkPreview .vk-Source');
 		this.facebookMessageLink = page.locator('.rc-Composer .vk-FacebookPreview .vk-ContentBody a');
 		this.facebookLinkPreviewTitle = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
 		this.facebookLinkPreviewSource = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-Source');
 		this.instagramPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').getByLabel('Instagram post preview');
 		this.instagramReelPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').locator('.vk-InstagramReelPreview');
 		this.linkedInPreviewText = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-ContentBody');
+		this.linkedInMessageLink = page.locator('.rc-Composer .vk-LinkedInPreview .vk-ContentBody a');
+		this.linkedinLinkPreviewTitle = page.locator('.rc-Composer .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
+		this.linkedinLinkPreviewSource = page.locator('.rc-Composer .vk-LinkedInPreview .vk-MessageLinkPreview .vk-Source');
 		this.linkedInMentionLink = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-ContentBody .vk-MessageMention');
 		this.exitButton = page.getByRole('button', { name: 'Exit tutorial' });
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
@@ -89,6 +94,8 @@ exports.ComposePage = class ComposePage {
 		this.selectLinkDropdown = page.getByTestId('Select a link-select').locator('div').first();
 		this.linkShortener = page.getByTestId('Ow.ly-select-item');
 		this.linkSettingsApplyButton = page.getByTestId('ApplyPresetButton');
+		this.badLinkThumbnailWarning = page.getByRole('heading', { name: 'This website is preventing us from displaying image previews. Please upload a custom thumbnail.' });
+		this.twitterLinkPreviewCustomizationInfo = page.getByRole('heading', { name: 'Link preview customization is not supported by Twitter' });
 	}
 
 	async selectComposeButton() {
@@ -216,6 +223,12 @@ exports.ComposePage = class ComposePage {
 		await this.linkedInMentionLink.isVisible();
 		assert((await this.linkedInMentionLink.textContent()).includes(mentionName), 'Mention name not found on LinkedIn preview');
 		assert((await this.linkedInMentionLink.getAttribute('href')).includes('https://www.linkedin.com/company'), 'Incorrect href value in LinkedIn preview');
+	}
+
+	async verifyLinkInLinkedinPagePreview(text) {
+		await expect(this.linkedInMessageLink).toBeVisible();
+		expect(await this.linkedInMessageLink.getAttribute('href')).toContain(text);
+		expect(await this.linkedInMessageLink.innerText()).toContain(text);
 	}
 
 	async selectMessageScheduleDate() {

@@ -78,6 +78,17 @@ module.exports = {
 			];
 			return URLS[Math.floor(Math.random() * URLS.length)];
 		},
+
+		getRandomUrlWithSpaces: function () {
+			const URLS = [
+				'https://www.canada.ca/en/global-affairs/news/2023/08/negotiations-launched-for-canada---ukraine-bilateral-security-commitments.html',
+				'https://www.canada.ca/fr/sante-canada/nouvelles/2023/07/le-gouvernement-du-canada-investit-plus-de-5-millions-de-dollars-pour-soutenir-les-soins-a-domicile-et-en-milieu-communautaire-ainsi-que-les-servic.html',
+				'https://www.canada.ca/en/global-affairs/news/2023/08/canada-imposes-new-sanctions-against-lebanese-nationals0.html',
+				'https://www.canada.ca/en/global-affairs/news/2023/08/canada-imposes-additional-sanctions-on-third-anniversary-of-belaruss-fraudulent-presidential-elections.html',
+				'https://www.canada.ca/en/global-affairs/news/2023/08/minister-joly-to-travel-to-slovenia-north-macedonia-and-albania.html',
+			];
+			return URLS[Math.floor(Math.random() * URLS.length)];
+		},
 	},
 
 	getRandomMediaFile: function(directoryPath) {
