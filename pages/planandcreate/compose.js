@@ -204,13 +204,13 @@ exports.ComposePage = class ComposePage {
 
 	async verifyLinkInTwitterPreview(text) {
 		await expect(this.twitterMessageLink).toBeVisible();
-		expect(await this.twitterMessageLink.getAttribute('href')).toContain(text);
+		expect(await this.twitterMessageLink).toHaveAttribute('href', text);
 		expect(await this.twitterMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyLinkInFacebookPagePreview(text) {
 		await expect(this.facebookMessageLink).toBeVisible();
-		expect(await this.facebookMessageLink.getAttribute('href')).toContain(text);
+		expect(await this.facebookMessageLink).toHaveAttribute('href', text);
 		expect(await this.facebookMessageLink.innerText()).toContain(text);
 	}
 
@@ -234,8 +234,8 @@ exports.ComposePage = class ComposePage {
 	}
 	async verifyFacebookMentionPreview(mentionName) {
 		await this.facebookMentionLink.isVisible();
-		assert((await this.facebookMentionLink.textContent()).includes(mentionName), 'Mention name not found on LinkedIn preview');
-		assert((await this.facebookMentionLink.getAttribute('href')).includes('https://www.facebook.com/'), 'Incorrect href value in LinkedIn preview');
+		assert((await this.facebookMentionLink.textContent()).includes(mentionName), 'Mention name not found on Facebook preview');
+		assert((await this.facebookMentionLink.getAttribute('href')).includes('https://www.facebook.com/'), 'Incorrect href value in Facebook preview');
 	}
 	async verifyLinkedInMentionPreview(mentionName) {
 		await this.linkedInMentionLink.isVisible();
@@ -245,7 +245,7 @@ exports.ComposePage = class ComposePage {
 
 	async verifyLinkInLinkedinPagePreview(text) {
 		await expect(this.linkedInMessageLink).toBeVisible();
-		expect(await this.linkedInMessageLink.getAttribute('href')).toContain(text);
+		expect(await this.linkedInMessageLink).toHaveAttribute('href', text);
 		expect(await this.linkedInMessageLink.innerText()).toContain(text);
 	}
 
