@@ -55,6 +55,27 @@ module.exports = {
 			return SEARCH_TERM[Math.floor(Math.random() * SEARCH_TERM.length)];
 		},
 
+		getFaceBookPageMention: function () {
+			const MENTIONS = [
+				'AlexT Hoot Shop',
+				'hoot_rm_business',
+				'Hootrm\'s Catz',
+				'Brandon is not Awesome',
+				'BrandonEats',
+				'John Owly Art'
+			];
+			return MENTIONS[Math.floor(Math.random() * MENTIONS.length)];
+		},
+
+		getTikTokMention: function () {
+			const MENTIONS = [
+				'@hootjd',
+				'@hoot_ps',
+				'@r2d2_test'
+			];
+			return MENTIONS[Math.floor(Math.random() * MENTIONS.length)];
+		},
+
 		getLinkedinMention: function () {
 			const MENTIONS = [
 				'Composer Staging Page Two',
