@@ -43,7 +43,7 @@ exports.ComposePage = class ComposePage {
 		this.twitterMessageLink = page.locator('.rc-Composer .vk-TwitterPreview .vk-ContentBody a');
 		this.twitterLinkPreviewTitle = page.locator('.rc-Composer .vk-TwitterPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
 		this.twitterLinkPreviewSource = page.locator('.rc-Composer .vk-TwitterPreview .vk-MessageLinkPreview .vk-Source');
-		this.facebookMessageLink = page.locator('.rc-Composer .vk-FacebookPreview .vk-ContentBody a');
+		this.facebookMessageLink = page.locator('.rc-Composer .vk-FacebookPreview .vk-ContentBody .vk-MessageLink');
 		this.facebookLinkPreviewTitle = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
 		this.facebookLinkPreviewSource = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-Source');
 		this.instagramPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').getByLabel('Instagram post preview');
@@ -53,6 +53,7 @@ exports.ComposePage = class ComposePage {
 		this.linkedinLinkPreviewTitle = page.locator('.rc-Composer .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
 		this.linkedinLinkPreviewSource = page.locator('.rc-Composer .vk-LinkedInPreview .vk-MessageLinkPreview .vk-Source');
 		this.linkedInMentionLink = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-ContentBody .vk-MessageMention');
+		this.facebookMentionLink = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody .vk-MessageMention');
 		this.exitButton = page.getByRole('button', { name: 'Exit tutorial' });
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 		this.moreButton = page.getByLabel('more', { exact: true });
@@ -99,7 +100,18 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async selectComposeButton() {
-		await expect(this.composeButton).toBeVisible();
+		const composeButton = await this.page.waitForSelector('button.vk-NewPostButton', { state: 'attached', timeout: 10000 });
+
+		// If compose button is not present, refresh the page
+		if (!composeButton) {
+			console.log('Compose button not present, refreshing page.');
+			await this.page.reload();
+			// Add a wait time to ensure the page has finished reloading
+			await this.page.waitForTimeout(2000);
+		}
+
+		// Assert that the compose button is present
+		expect(composeButton).not.toBeNull();
 		await this.composeButton.click();
 		await this.composeButton.click();
 		await this.postButton.click();
@@ -218,7 +230,11 @@ exports.ComposePage = class ComposePage {
 	async verifyLinkedInPreview(text) {
 		await expect(this.linkedInPreviewText).toContainText(`${text}`);
 	}
-
+	async verifyFacebookMentionPreview(mentionName) {
+		await this.facebookMentionLink.isVisible();
+		assert((await this.facebookMentionLink.textContent()).includes(mentionName), 'Mention name not found on LinkedIn preview');
+		assert((await this.facebookMentionLink.getAttribute('href')).includes('https://www.facebook.com/'), 'Incorrect href value in LinkedIn preview');
+	}
 	async verifyLinkedInMentionPreview(mentionName) {
 		await this.linkedInMentionLink.isVisible();
 		assert((await this.linkedInMentionLink.textContent()).includes(mentionName), 'Mention name not found on LinkedIn preview');
@@ -299,7 +315,7 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async selectMention(mentionName) {
-		const mentionItem = this.page.locator('div').filter({hasText: new RegExp(`^${mentionName}$`)});
+		const mentionItem = this.page.locator('div').filter({hasText: new RegExp(`^${mentionName}$`)}).first();
 
 		await this.mentionsList.isVisible();
 		await mentionItem.isVisible();
