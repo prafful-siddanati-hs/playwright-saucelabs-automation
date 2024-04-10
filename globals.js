@@ -100,6 +100,14 @@ module.exports = {
 			return URLS[Math.floor(Math.random() * URLS.length)];
 		},
 
+		getSBETestUrl: function () {
+			const URLS = [
+				'https://www.scottish-enterprise.com'
+				//Add more URLs here which are logged via SBE tickets
+			];
+			return URLS[Math.floor(Math.random() * URLS.length)];
+		},
+
 		getRandomUrlWithSpaces: function () {
 			const URLS = [
 				'https://www.canada.ca/en/global-affairs/news/2023/08/negotiations-launched-for-canada---ukraine-bilateral-security-commitments.html',

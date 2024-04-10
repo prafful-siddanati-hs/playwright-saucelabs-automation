@@ -1,5 +1,6 @@
 /**
  * [https://hootsuite.atlassian.net/browse/SBE-5648]
+ * [https://hootsuite.atlassian.net/browse/SBE-6234]
  * Test to verify that a link with bad thumbnail displays a warning in composer.
  */
 const { test, expect} = require('@playwright/test');

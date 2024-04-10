@@ -3,7 +3,6 @@ const tearDown = require('../../../custom-commands/tearDown');
 const {getObjectByName} = require('../../../globals');
 const { LoginPage } = require('../../../pages/login');
 const { ComposePage } = require('../../../pages/planandcreate/compose');
-const { SetUpEnterpriseUser } = require('../../../custom-commands/setUpEnterpriseUser');
 const { LinkPresetsCreatePage } = require('../../../pages/planandcreate/linkPresetsCreate');
 const { LinkPresetsManagePage } = require('../../../pages/planandcreate/linkPresetsManage');
 const createOrg = require('../../../custom-commands/createOrg');
