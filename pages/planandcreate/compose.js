@@ -146,7 +146,9 @@ exports.ComposePage = class ComposePage {
 
 	async schedule() {
 		await this.scheduleLaterButton.click();
-		await this.scheduleDone.click();
+		await expect(this.scheduleButton).toBeVisible();
+		await this.scheduleDoneButton.hover();
+		await this.scheduleDoneButton.click();
 		await this.scheduleButton.click();
 		await expect(this.scheduleButton).not.toBeVisible();
 		await expect(this.feCallOuts).toHaveCount(1);
