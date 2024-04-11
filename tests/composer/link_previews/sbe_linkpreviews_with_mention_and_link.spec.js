@@ -66,7 +66,7 @@ test('Link preview with mention followed by link', async ({page}) => {
 		await composePage.verifyLinkInFacebookPagePreview(url);
 		await composePage.verifyFacebookMentionPreview(fbMention);
 		// await expect(composePage.facebookLinkPreviewTitle).toBeVisible();  // This is failing due to a bug in the product
-		// await expect(composePage.facebookLinkPreviewSource).toHaveText(url);
+		// await expect(composePage.facebookLinkPreviewSource).toContainText(url);
 	});
 
 	await test.step('Close composer', async () => {
