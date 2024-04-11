@@ -15,6 +15,9 @@ exports.ContentLibraryPage = class ContentLibraryPage {
 		this.librarySelectBtn = page.getByLabel('Select a library');
 		this.editLibraryBtn = page.getByRole('option', { name: 'Edit Library...' });
 		this.removeLibraryBtn = page.getByRole('button', { name: 'Remove' });
+		this.firstCLCard = page.locator('.cardItem').first();
+		this.composeWithTemplate = page.getByRole('button', { name: 'Compose', exact: true });
+		this.clSuccessCallout = page.getByText('Saved to the Content Library');
 	}
 
 	async visit() {
@@ -47,6 +50,8 @@ exports.ContentLibraryPage = class ContentLibraryPage {
 		await libToSelect.click();
 		await expect(this.addAssetButton).toBeEnabled();
 		await this.addAssetButton.click();
+		await expect(this.clSuccessCallout).toBeVisible();
+		await expect(this.clSuccessCallout).toHaveCount(1);
 	}
 
 	async verifyContentLibraryTemplate(templateText) {
@@ -64,5 +69,13 @@ exports.ContentLibraryPage = class ContentLibraryPage {
 			await dialog.accept();
 		});
 		await this.removeLibraryBtn.click();
+	}
+
+	async selectContentLibraryTemplateToCompose(templateText) {
+		await expect(this.page.getByText(templateText)).toBeVisible();
+		await expect(this.firstCLCard).toBeVisible();
+		await this.firstCLCard.click();
+		await expect(this.composeWithTemplate).toBeVisible();
+		await this.composeWithTemplate.click();
 	}
 };
