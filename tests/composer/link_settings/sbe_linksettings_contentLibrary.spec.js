@@ -144,8 +144,4 @@ test('Link settings via content library template', async ({ page }) => {
 	await test.step('Verify link settings on preview pane', async () => {
 		await plannerPage.verifyTextInPreviewPane(clLinkText.concat(`?${PARAMETER_NAME}=${PARAMETER_VALUE}`));
 	});
-
-	await test.step('Delete created scheduled messages via API', async () => {
-		await plannerPage.deleteScheduleMessagesViaAPI(memberId);
-	});
 });
