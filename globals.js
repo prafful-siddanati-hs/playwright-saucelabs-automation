@@ -89,9 +89,9 @@ module.exports = {
 		getRandomUrl: function () {
 			const URLS = [
 				'cbc.ca',
-				'reddit.com',
-				'facebook.com',
-				'x.com',
+				'ndtv.com',
+				'cnn.com',
+				'hootsuite.com',
 				'instagram.com',
 				'pinterest.com',
 				'linkedin.com',
