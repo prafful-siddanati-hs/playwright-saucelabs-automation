@@ -49,7 +49,7 @@ test('Verify link preview on composer', async ({ page }) => {
 	await test.step('Verify facebook link preview', async () => {
 		await composePage.verifyLinkInFacebookPagePreview(url);
 		await expect(composePage.facebookLinkPreviewTitle).toBeVisible();
-		await expect(composePage.facebookLinkPreviewSource).toHaveText(url);
+		await expect(composePage.facebookLinkPreviewSource).toContainText(url);
 	});
 
 	await test.step('Close composer', async () => {

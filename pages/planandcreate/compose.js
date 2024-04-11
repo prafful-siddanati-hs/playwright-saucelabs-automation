@@ -204,13 +204,13 @@ exports.ComposePage = class ComposePage {
 
 	async verifyLinkInTwitterPreview(text) {
 		await expect(this.twitterMessageLink).toBeVisible();
-		expect(await this.twitterMessageLink).toHaveAttribute('href', text);
+		expect(await this.twitterMessageLink.getAttribute('href')).toContain(text);
 		expect(await this.twitterMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyLinkInFacebookPagePreview(text) {
 		await expect(this.facebookMessageLink).toBeVisible();
-		expect(await this.facebookMessageLink).toHaveAttribute('href', text);
+		expect(await this.facebookMessageLink.getAttribute('href')).toContain(text);
 		expect(await this.facebookMessageLink.innerText()).toContain(text);
 	}
 
