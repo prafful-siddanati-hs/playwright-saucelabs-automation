@@ -22,6 +22,7 @@ exports.PlannerPage = class PlannerPage {
 		this.editButton = page.getByTestId('EditButton');
 		this.moreActions = page.getByLabel('More actions');
 		this.duplicateButton = page.locator('//*[contains(@class,"vk-AdditionalActions")]//*[text()="Duplicate"]');
+		this.exitOnboardingPopover = page.locator('#walkthrough-root .vk-OnboardingPopoverExit');
 	}
 
 	async visit() {
@@ -86,6 +87,11 @@ exports.PlannerPage = class PlannerPage {
 		await this.moreActions.click();
 		await expect(this.duplicateButton).toBeVisible();
 		await this.duplicateButton.click();
+	}
+
+	async weekViewPostCountHeader(num) {
+		const postCountHeader = this.page.locator(`//*[contains(@data-testid,"NumContent")][text()=${num}]`);
+		await postCountHeader.isVisible();
 	}
 
 	async dragAndDropCard(message, hour, id) {

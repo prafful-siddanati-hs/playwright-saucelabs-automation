@@ -38,6 +38,7 @@ exports.ComposePage = class ComposePage {
 		this.facebookVideoPreviewSelector = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-VideoContainer .vk-VideoPlayer');
 		this.instagramReelVideoPreviewSelector = page.getByTestId('preview-container').locator('.vk-InstagramReelPreview .vk-StreamlinedVideo');
 		this.genericPreviewText = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-PreviewMessageText');
+		this.basePreviewLayout = page.locator('.vk-PreviewBaseLayout');
 		this.twitterPreviewText = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-ContentBody');
 		this.facebookPreviewText = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody');
 		this.twitterMessageLink = page.locator('.rc-Composer .vk-TwitterPreview .vk-ContentBody a');
@@ -54,6 +55,9 @@ exports.ComposePage = class ComposePage {
 		this.linkedinLinkPreviewSource = page.locator('.rc-Composer .vk-LinkedInPreview .vk-MessageLinkPreview .vk-Source');
 		this.linkedInMentionLink = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-ContentBody .vk-MessageMention');
 		this.facebookMentionLink = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody .vk-MessageMention');
+		this.twitterHashtagLink = page.locator('.vk-TwitterPreview .vk-ContentBody .vk-MessageHashtag');
+		this.tiktokHashtagLink = page.locator('.vk-TikTokPreview .vk-MessageText .vk-MessageHashtag');
+		this.instagramHashtagLink = page.locator('.vk-InstagramReelPreview .vk-MessageHashtag');
 		this.exitButton = page.getByRole('button', { name: 'Exit tutorial' });
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 		this.moreButton = page.getByLabel('more', { exact: true });
@@ -71,6 +75,8 @@ exports.ComposePage = class ComposePage {
 		this.twitterTab = page.getByLabel('Twitter content');
 		this.linkedInTab = page.getByLabel('LinkedIn content');
 		this.facebookPageTab =  page.getByLabel('Facebook content');
+		this.tiktokTab = page.getByLabel('TikTok content');
+		this.instagramTab = page.getByLabel('Instagram content');
 		this.videoRemoveButton = page.locator('.rc-Composer .videoThumbnail .vk-MediaThumbnailDelete');
 		this.exitComposerButton = page.getByLabel('Exit Composer');
 		this.discardPost = page.getByRole('button', { name: 'Discard post' });
@@ -232,6 +238,7 @@ exports.ComposePage = class ComposePage {
 	async verifyLinkedInPreview(text) {
 		await expect(this.linkedInPreviewText).toContainText(`${text}`);
 	}
+
 	async verifyFacebookMentionPreview(mentionName) {
 		await this.facebookMentionLink.isVisible();
 		assert((await this.facebookMentionLink.textContent()).includes(mentionName), 'Mention name not found on Facebook preview');
@@ -247,6 +254,24 @@ exports.ComposePage = class ComposePage {
 		await expect(this.linkedInMessageLink).toBeVisible();
 		expect(await this.linkedInMessageLink).toHaveAttribute('href', text);
 		expect(await this.linkedInMessageLink.innerText()).toContain(text);
+	}
+
+	async verifyHashtagInTwitterPreview(hashtag) {
+		await expect(this.twitterHashtagLink).toBeVisible();
+		assert((await this.twitterHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Twitter preview');
+		assert((await this.twitterHashtagLink.getAttribute('href')).includes(`https://twitter.com/hashtag/${hashtag}`), 'Incorrect href value in Twitter preview');
+	}
+
+	async verifyTiktokHashtagPreview(hashtag) {
+		await expect(this.tiktokHashtagLink).toBeVisible();
+		assert((await this.tiktokHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Tiktok preview');
+		assert((await this.tiktokHashtagLink.getAttribute('href')).includes(`https://www.tiktok.com/tag/${hashtag}`), 'Incorrect href value in Tiktok preview');
+	}
+
+	async verifyInstagramHashtagPreview(hashtag) {
+		await expect(this.instagramHashtagLink).toBeVisible();
+		assert((await this.instagramHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Instagram preview');
+		assert((await this.instagramHashtagLink.getAttribute('href')).includes(`https://www.instagram.com/explore/tags/${hashtag}`), 'Incorrect href value in Instagram preview');
 	}
 
 	async selectMessageScheduleDate() {
