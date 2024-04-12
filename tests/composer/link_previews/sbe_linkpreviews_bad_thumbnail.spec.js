@@ -19,7 +19,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Link containing bad thumbnail in composer', async ({ page }) => {
-	const sbe_url = 'https://www.charteredaccountantsanz.com/news-and-analysis/insights/research-and-insights/recruiting-early-stage-talent';
+	const sbe_url = 'https://www.kijiji.ca/b-dogs-puppies/vancouver/c126l1700287';
 	const composeText = `Bad thumbnail link ${sbe_url} `.concat(Math.floor(Math.random() * 1000));
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
@@ -49,6 +49,8 @@ test('Link containing bad thumbnail in composer', async ({ page }) => {
 	await test.step('Write a message', async () => {
 		await composePage.writeMessage(composeText);
 	});
+
+	await page.pause();
 
 	await test.step('Verify linkedin link preview', async () => {
 		await composePage.verifyLinkedInPreview(composeText);
