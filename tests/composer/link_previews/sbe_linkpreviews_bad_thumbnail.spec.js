@@ -50,8 +50,6 @@ test('Link containing bad thumbnail in composer', async ({ page }) => {
 		await composePage.writeMessage(composeText);
 	});
 
-	await page.pause();
-
 	await test.step('Verify linkedin link preview', async () => {
 		await composePage.verifyLinkedInPreview(composeText);
 		await composePage.verifyLinkInLinkedinPagePreview(sbe_url);
