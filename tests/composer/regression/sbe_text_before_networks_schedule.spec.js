@@ -67,7 +67,7 @@ test('Enter text before selecting networks and schedule', async ({ page }) => {
 		await expect(composePage.facebookPreviewText.last()).toHaveText(textbeforeNetworks);
 	});
 
-	await test.step('Select the schedule button', async () => {
+	await test.step('Schedule the post', async () => {
 		await composePage.schedule();
 	});
 
