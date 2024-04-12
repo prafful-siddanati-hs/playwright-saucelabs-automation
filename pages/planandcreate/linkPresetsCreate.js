@@ -25,6 +25,7 @@ exports.LinkPresetsCreatePage = class LinkPresetsCreatePage {
 	async setShortener(linkPresetShortenerName) {
 		const linkPresetShortener = this.page.getByRole('button', { name: `${linkPresetShortenerName}`, exact: true });
 		await expect(this.linkPresetShortenerDropdown).toBeVisible();
+		await this.linkPresetShortenerDropdown.hover();
 		await this.linkPresetShortenerDropdown.click();
 		await linkPresetShortener.click();
 	}

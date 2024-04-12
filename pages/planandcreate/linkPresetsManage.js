@@ -6,7 +6,7 @@ exports.LinkPresetsManagePage = class LinkPresetsManagePage {
 		this.createBitlyButton = page.getByRole('button', { name: 'Add new Bit.ly shortener' });
 		this.shortenerInput = page.locator('.rc-TextInput input');
 		this.backButton = page.getByLabel('Back to previous screen');
-		this.moreOptionsButton = page.getByLabel('More options');
+		this.moreOptionsButton = page.locator('.-presetActions [aria-label="More options"]');
 		this.editOption = page.locator('#linkSettingsManagementAreaMountPoint').getByRole('button', { name: 'Edit' });
 	}
 
