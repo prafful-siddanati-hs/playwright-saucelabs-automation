@@ -1,4 +1,3 @@
-
 /**
  * [https://hootsuite.atlassian.net/browse/SBE-6261]
  * Test to check that Tiktok & IB Reels hashtags are hyperlinked correctly.
