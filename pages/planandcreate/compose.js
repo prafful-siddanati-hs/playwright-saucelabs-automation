@@ -103,6 +103,7 @@ exports.ComposePage = class ComposePage {
 		this.linkSettingsApplyButton = page.getByTestId('ApplyPresetButton');
 		this.badLinkThumbnailWarning = page.getByRole('heading', { name: 'This website is preventing us from displaying image previews. Please upload a custom thumbnail.' });
 		this.twitterLinkPreviewCustomizationInfo = page.getByRole('heading', { name: 'Link preview customization is not supported by Twitter' });
+		this.twitterCharacterLimitError = page.getByTestId('banner-container').locator('div').filter({ hasText: 'Your text exceeds the character limit for Twitter' }).first();
 	}
 
 	async selectComposeButton() {

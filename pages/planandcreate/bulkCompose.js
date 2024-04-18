@@ -41,6 +41,12 @@ exports.BulkComposePage = class BulkComposePage {
 		await profileSelectorItem.click();
 	}
 
+	async verifySocialProfileSelected(name) {
+		const pillText = this.page.locator(`//*[contains(@class, "vk-PillText") and text()="${name}"]`);
+		await expect(pillText).toBeVisible();
+		await expect(this.page.locator('.vk-Loader')).toHaveCount(0);
+	}
+
 	async uploadCsvFile(csvFilePath) {
 		try {
 			await this.page.setInputFiles('.vk-FileSelector input[type="file"]', csvFilePath);
@@ -67,10 +73,17 @@ exports.BulkComposePage = class BulkComposePage {
 		await expect(facebookPreview).toBeVisible();
 	}
 
+	async verifyTwitterPreview(message) {
+		const twitterPreview = this.page.locator(`//div[contains(@class, "rc-MessageEditText")] //div[contains(@class, "public-DraftEditor-content")]//span[contains(text(), '${message}')]`);
+
+		await expect(twitterPreview).toBeVisible();
+	}
+
 	async schedule() {
+		await expect(this.scheduleButton).toBeVisible();
+		await this.scheduleButton.hover();
 		await this.scheduleButton.click();
 		await expect(this.scheduleButton).not.toBeVisible();
 		await expect(this.feCallOuts).toHaveCount(1);
 	}
-
 };
