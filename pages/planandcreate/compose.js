@@ -108,7 +108,6 @@ exports.ComposePage = class ComposePage {
 	async selectComposeButton() {
 		await this.page.waitForSelector('button.vk-NewPostButton').then(() => {
 			console.log('Compose button present');
-			expect(this.page.composeButton).not.toBeNull();
 		}).catch(async () => {
 			console.log('Compose button not present, refreshing page.');
 			await this.page.reload();
@@ -116,6 +115,7 @@ exports.ComposePage = class ComposePage {
 			await this.page.waitForTimeout(2000);
 			expect(this.page.composeButton).not.toBeNull();
 		});
+
 		// Assert that the compose button is present
 		await this.composeButton.click();
 		await this.composeButton.click();
