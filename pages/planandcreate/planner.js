@@ -24,6 +24,7 @@ exports.PlannerPage = class PlannerPage {
 		this.duplicateButton = page.locator('//*[contains(@class,"vk-AdditionalActions")]//*[text()="Duplicate"]');
 		this.exitOnboardingPopover = page.locator('#walkthrough-root .vk-OnboardingPopoverExit');
 		this.linkedinPreviewPdf = page.locator('.vk-Planner .vk-DetailPane .vk-LinkedInPreview .vk-PdfContainer .vk-PdfDocument');
+		this.pdfCardIcon = page.locator('//*[contains(@data-testid,"MediaStateText")][text()="PDF"]');
 	}
 
 	async visit() {

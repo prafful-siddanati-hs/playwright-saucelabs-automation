@@ -72,6 +72,9 @@ exports.ComposePage = class ComposePage {
 		this.mediaContent = page.locator('.-mediaContent');
 		this.firstImage = page.locator('.-mediaRow');
 		this.mediaThumbnail = page.locator('.rc-MediaLibrary .-mediaContainer .MediaThumbnail');
+		this.altTextButton = page.getByLabel('Edit alternative text');
+		this.editImageButton = page.getByLabel('Edit image');
+		this.editVideButton = page.getByLabel('Edit video');
 		this.mentionsList = page.locator('.vk-NewMentionsList');
 		this.twitterTab = page.getByLabel('Twitter content');
 		this.linkedInTab = page.getByLabel('LinkedIn content');
@@ -79,6 +82,8 @@ exports.ComposePage = class ComposePage {
 		this.tiktokTab = page.getByLabel('TikTok content');
 		this.instagramTab = page.getByLabel('Instagram content');
 		this.videoRemoveButton = page.locator('.rc-Composer .videoThumbnail .vk-MediaThumbnailDelete');
+		this.imageRemoveButton = page.locator('.rc-Composer .imageThumbnail .vk-MediaThumbnailDelete');
+		this.pdfRemoveButton = page.locator('.rc-Composer .pdfThumbnail .vk-MediaThumbnailDelete');
 		this.exitComposerButton = page.getByLabel('Exit Composer');
 		this.discardPost = page.getByRole('button', { name: 'Discard post' });
 		this.addTrackingButton = page.getByRole('button', { name: 'Add tracking' });
@@ -132,13 +137,22 @@ exports.ComposePage = class ComposePage {
 		await this.verifySocialProfileSelected(name);
 	}
 
-	async uploadMediaFile(testDataImagesFolder) {
+	/**
+	 * Uploads a media file to the page.If `filePath` is not provided, a random media file from `testDataFolder` will be selected.
+	*/
+	async uploadMediaFile(testDataFolder, filePath = '') {
 		try {
-			const randomFile = await getRandomMediaFile(testDataImagesFolder);
-			const filePath = join(testDataImagesFolder, randomFile);
+			if (filePath === '') {
+				const randomFile = await getRandomMediaFile(testDataFolder);
+				filePath = join(testDataFolder, randomFile);
+			}
 
 			await this.page.setInputFiles('.vk-MediaUpload input[type="file"]', filePath);
-			await expect(this.mediaOverLay).toBeVisible();
+			//Handle cases when more than one media file is uploaded
+			const mulitpleMediaOverlays = Array.from(await this.mediaOverLay);
+			await Promise.all(mulitpleMediaOverlays.map(async (overlay) => {
+				await expect(overlay).toBeVisible();
+			}));
 		} catch (error) {
 			console.error('Error:', error);
 		}

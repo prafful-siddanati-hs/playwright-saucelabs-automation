@@ -10,7 +10,6 @@ const { LoginPage } = require('../../../pages/login');
 const { getObjectByName } = require('../../../globals');
 const { BulkComposePage } = require('../../../pages/planandcreate/bulkCompose');
 const { ComposePage } = require('../../../pages/planandcreate/compose');
-let twAccount;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -30,8 +29,6 @@ test('Adjust text limit in bulk composer', async ({ page }) => {
 	await test.step('Setup user & account', async () => {
 		await createNewUser.command('bulk_composer_text_limit', 'professional');
 		await addFixture.command('tw_bc_text_limit','twitter', true, 300);
-		twAccount = getObjectByName(global.fixture, 'tw_bc_text_limit').socialProfile.username;
-		console.log('twAccount:', twAccount);
 	});
 
 	await test.step('Login as pro user', async () => {

@@ -73,9 +73,9 @@ test('Schedule LinkedIn PDF post', async ({page}) => {
 		await composePage.schedule();
 	});
 
-	await page.pause();
 	await test.step('Verify scheduled message in planner preview pane', async () => {
 		await expect(composePage.feCallOuts).not.toBeVisible();
+		await expect(plannerPage.pdfCardIcon).toBeVisible();
 		await plannerPage.verifyTextInPreviewPane(pdfText);
 		await plannerPage.verifyPDFInPreviewPane();
 	});
