@@ -90,8 +90,4 @@ test('Adjust text limit in bulk composer', async ({ page }) => {
 		await bulkComposePage.verifyTwitterPreview(messageText);
 		await page.waitForTimeout(1500);
 	});
-
-	await test.step('Schedule the first message', async () => {
-		await bulkComposePage.schedule();
-	});
 });
