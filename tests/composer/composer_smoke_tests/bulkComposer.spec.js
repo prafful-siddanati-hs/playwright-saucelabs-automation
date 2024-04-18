@@ -38,7 +38,7 @@ test('Schedule a message using bulk composer', async ({ page }) => {
 
 	await test.step('Upload csv file', async () => {
 		await expect(bulkComposePage.csvUploadButton).toBeVisible();
-		await bulkComposePage.uploadCsvFile('test_data/publisher/bulk_upload.csv');
+		await bulkComposePage.uploadCsvFile('test_data/publisher/csv/bulk_upload.csv');
 		await expect(bulkComposePage.csvRemoveButton).toBeVisible();
 	});
 
