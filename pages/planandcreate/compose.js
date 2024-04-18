@@ -54,6 +54,7 @@ exports.ComposePage = class ComposePage {
 		this.linkedinLinkPreviewTitle = page.locator('.rc-Composer .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
 		this.linkedinLinkPreviewSource = page.locator('.rc-Composer .vk-LinkedInPreview .vk-MessageLinkPreview .vk-Source');
 		this.linkedInMentionLink = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-ContentBody .vk-MessageMention');
+		this.linkedInPdfPreview = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-PdfContainer .vk-PdfDocument');
 		this.facebookMentionLink = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody .vk-MessageMention');
 		this.twitterHashtagLink = page.locator('.vk-TwitterPreview .vk-ContentBody .vk-MessageHashtag');
 		this.tiktokHashtagLink = page.locator('.vk-TikTokPreview .vk-MessageText .vk-MessageHashtag');
@@ -273,6 +274,11 @@ exports.ComposePage = class ComposePage {
 		await expect(this.instagramHashtagLink).toBeVisible();
 		assert((await this.instagramHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Instagram preview');
 		assert((await this.instagramHashtagLink.getAttribute('href')).includes(`https://www.instagram.com/explore/tags/${hashtag}`), 'Incorrect href value in Instagram preview');
+	}
+
+	async verifyLinkedInPdfPreview() {
+		await expect(this.previewNetworkType).toContainText('LinkedIn');
+		await expect(this.linkedInPdfPreview).toBeVisible();
 	}
 
 	async selectMessageScheduleDate() {

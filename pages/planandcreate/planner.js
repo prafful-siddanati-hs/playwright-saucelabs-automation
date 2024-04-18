@@ -23,6 +23,7 @@ exports.PlannerPage = class PlannerPage {
 		this.moreActions = page.getByLabel('More actions');
 		this.duplicateButton = page.locator('//*[contains(@class,"vk-AdditionalActions")]//*[text()="Duplicate"]');
 		this.exitOnboardingPopover = page.locator('#walkthrough-root .vk-OnboardingPopoverExit');
+		this.linkedinPreviewPdf = page.locator('.vk-Planner .vk-DetailPane .vk-LinkedInPreview .vk-PdfContainer .vk-PdfDocument');
 	}
 
 	async visit() {
@@ -76,6 +77,11 @@ exports.PlannerPage = class PlannerPage {
 	async verifyTextInPreviewPane(text) {
 		const previewPaneMessageText = this.page.getByTestId('Preview').getByText(text);
 		await expect(previewPaneMessageText).toBeVisible();
+	}
+
+	async verifyPDFInPreviewPane() {
+		await expect(this.page.getByTestId('Preview')).toBeVisible();
+		await expect(this.linkedinPreviewPdf).toBeVisible();
 	}
 
 	async editFromPreviewPane() {
