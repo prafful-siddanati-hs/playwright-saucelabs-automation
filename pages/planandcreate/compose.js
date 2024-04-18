@@ -109,7 +109,7 @@ exports.ComposePage = class ComposePage {
 		await this.page.waitForSelector('button.vk-NewPostButton').then(() => {
 			console.log('Compose button present');
 			expect(this.page.composeButton).not.toBeNull();
-		}).catch(async e => {
+		}).catch(async () => {
 			console.log('Compose button not present, refreshing page.');
 			await this.page.reload();
 			// Add a wait time to ensure the page has finished reloading
