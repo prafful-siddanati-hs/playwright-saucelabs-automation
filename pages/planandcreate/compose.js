@@ -111,7 +111,7 @@ exports.ComposePage = class ComposePage {
 			expect(this.page.composeButton).not.toBeNull();
 		}).catch(async e => {
 			console.log('Compose button not present, refreshing page.');
-			await this.page.reload({waitUntil: 'networkidle'});
+			await this.page.reload();
 			// Add a wait time to ensure the page has finished reloading
 			await this.page.waitForTimeout(2000);
 			expect(this.page.composeButton).not.toBeNull();
