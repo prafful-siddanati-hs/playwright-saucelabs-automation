@@ -8,8 +8,8 @@ module.exports = {
 			id: '760593756030500868',
 			username: 'Taco_BlueJay',
 			password: 'Assword!',
-			auth1: '760593756030500868-QWX3syeBBdS5ONVIVJuxkBjbTfpxriU',
-			auth2: 'WZXWCZiuqoCTq7RIJekP2Ki5CVGCzpYN9XcGPifDhF2Fj',
+			auth1: '760593756030500868-FfOMkvHWDpwMr6CrjE0paAnHLnlFZJl',
+			auth2: 'kBxMgVOL2eZJoQaeRcmJbyCWEiiu85tFa3xWUi9I17hWM',
 			type: 'TWITTER'
 		},
 		{
@@ -17,8 +17,8 @@ module.exports = {
 			id: '760588503369469953',
 			username: 'Taco_Emu',
 			password: 'Assword!',
-			auth1: '760588503369469953-CmeM9JlozplRjDDr6g0liPxKzi2pHfS',
-			auth2: 'Nkgn8jWhjZpYtlezHW2U8VeX5FjuRmk8gSDGFjJ642yAb',
+			auth1: '760588503369469953-t0btTU8gIyz3bsRqTVEw7gvHJCQ5nxf',
+			auth2: 'K8K6dBmC6aem7I0ejhNPkDJQ6MDtjaNkQmpuVC48EBi62',
 			type: 'TWITTER'
 		},
 		{
@@ -26,8 +26,8 @@ module.exports = {
 			id: '760584192610541568',
 			username: 'Taco_Finch',
 			password: 'Assword!',
-			auth1: '760584192610541568-EmCTp8j3ETv6s4dC5TUg5CKANFJZI03',
-			auth2: 'zGVSpMzyGUpAWq34XfWxPrbPSpAESBQyQP4FSCWcH04bO',
+			auth1: '760584192610541568-bngRhktoZL9x6urPORIiHeei0PnBUxW',
+			auth2: '24Ki69XdnikhSg7Yw36OqX0LUkm5qBRbnTKv8vKTzQiDE',
 			type: 'TWITTER'
 		},
 		{
@@ -35,8 +35,8 @@ module.exports = {
 			id: '760582080086421505',
 			username: 'Taco_SNebouxii',
 			password: 'Assword!',
-			auth1: '760582080086421505-uvFvhAyywdeBteGxBvmtsVyFKhlqD1V',
-			auth2: 'B2Y8M1RSEWuUDmn74B6pxApTsQ7jiCjXV8VIiO03jGGmd',
+			auth1: '760582080086421505-u4sOVVu3lQlK3pgQva3YLsObVr89He5',
+			auth2: 'uvmaFjwCKKixVW5yzv7AdYbCVxr6ulZyTl6eaG3bCxxAp',
 			type: 'TWITTER'
 		},
 		{
@@ -44,8 +44,8 @@ module.exports = {
 			id: '760594707214798848',
 			username: 'Taco_Sparrow',
 			password: 'Assword!',
-			auth1: '760594707214798848-j1TRlYMTXtsONZ0tR8h6hwg0rTLKWYA',
-			auth2: 'ORq8U9Wao8CDmCwVUIFSJJyh5NTo3oz1UeT7huwmQRcZt',
+			auth1: '760594707214798848-92of1oCO5JmX2rnb2xMKuizCbi1pCvp',
+			auth2: 'nWCSApRcJoMyvbGqd35Yzv2hkylPNSiKTNpEEn6T7duiZ',
 			type: 'TWITTER'
 		},
 		{
@@ -53,8 +53,8 @@ module.exports = {
 			id: '760587289412055041',
 			username: 'Taco_Toucan',
 			password: 'Assword!',
-			auth1: '760587289412055041-DxwH8Pbg26XuN07uXTdhtw62LTywNlx',
-			auth2: 'RL7zGvQzHCYmvY6R34uB84nErUjjnvWZlVXv9GfLF8Iv8',
+			auth1: '760587289412055041-Jmv6DmT8RKLVpWm6wtwfbwPYxbf9PT1',
+			auth2: 'nWCSApRcJoMyvbGqd35Yzv2hkylPNSiKTNpEEn6T7duiZ',
 			type: 'TWITTER'
 		},
 		{
@@ -62,8 +62,8 @@ module.exports = {
 			id: '760592927089274881',
 			username: 'Taco_Woodpecker',
 			password: 'Assword!',
-			auth1: '760592927089274881-ITIAQlFsXaeU3GURgJwc96uvH9oxoMC',
-			auth2: 'SCMz13MUi8HVXUmQq4RFIBGHuOok8k6qvVYpQPXZPBRE5',
+			auth1: '760592927089274881-D3fe1YoprfS5KETjQJ1YXpKAXv2ZBVL',
+			auth2: '4ZftKBS5QLw9rt2SsBwOxEqLHhQlcyyiBXU34tZSPumjo',
 			type: 'TWITTER'
 		},
 		{
@@ -71,8 +71,8 @@ module.exports = {
 			id: '1670891447128846337',
 			username: 'hoot_taco_eagle',
 			password: 'Assword!',
-			auth1: '1670891447128846337-HNuThA9D6p1Pek09gUwU1ZGySUoopm',
-			auth2: 'GMS9TUXOUWSZVTHKnQKRuaiSe7qoj1QdgiHGDFnuBIUcS',
+			auth1: '1670891447128846337-Jq6QZMlaVbD7BnQYFZEwhAj23sENYY',
+			auth2: 'xk547lmOnxSze91lgylMjy4gvOg1YSMZuwoHbhZo9VuAy',
 			type: 'twitter'
 		},
 		{
@@ -80,8 +80,8 @@ module.exports = {
 			id: '1670889304598650881',
 			username: 'hoot_taco_hawk',
 			password: 'Assword!',
-			auth1: '1670889304598650881-6FWzGEBpCBsaObnJ605P4Qj5DgV3X7',
-			auth2: 'W6FRQCekwhUwfj92CnhTVekErGnf2mxuuqiLEirhtkXwj',
+			auth1: '670889304598650881-wSjlmqwIpirTBL0RShXBZn7yZ9ixae',
+			auth2: 'zSZFrNinLLVvr7W5q3kwPUME66dYdzmFKQJQiMmnTHR1J',
 			type: 'twitter'
 		},
 		{
@@ -89,8 +89,8 @@ module.exports = {
 			id: '1502377578597797890',
 			username: 'hoot_planner',
 			password: '!1Passw0rd',
-			auth1: '1502377578597797890-nPnApsRztoYDONKYm6LDbhSc2mgEsa',
-			auth2: 'WyyGY0XfbNPSVvoC7j3p3ErE2ePYPPnkSvZiPhheM8kx1',
+			auth1: '1502377578597797890-TWjilFpvjekBXhlpQaFsxGbJ380RIG',
+			auth2: 'Lm5ornOH0zEvQ8AU9IMN4DTV6Nq1LcjJ5itptRHh1to3h',
 			type: 'twitter'
 		},
 		{
@@ -98,8 +98,8 @@ module.exports = {
 			id: '1502381630802911232',
 			username: 'hoot_r2d2',
 			password: '!1Passw0rd',
-			auth1: '1502381630802911232-sAx5ah0E2GdX9KajHllCgbi5OkXn7Q',
-			auth2: 'wIgPUWpyVsAIGwEFMaVLjP3RkHz86dBBTHEdoeTpiF6ov',
+			auth1: '1502381630802911232-fk3Xx35ZdKyezeEtayUo9FjJrrpTtq',
+			auth2: 'kkfi0JUmR7CkLHYN6oGPSbooPrctziVWUVlQ6jK9AOdwM',
 			type: 'twitter'
 		},
 		{
