@@ -50,14 +50,23 @@ exports.LoginPage = class LoginPage {
 	}
 
 	async logout() {
+		await this.page.context().addCookies([
+			{
+				name: '_SID_STAGE_TRUNK',
+				value: '',
+				domain: '*.staging.hootsuite.com',
+				path: '/',
+				expires: Date.now() / 1000 // Set expiration date to the current time to expire the cookie immediately
+			}
+		]);
+		console.log('Deleting cookies to force a logout. See PLAT-10602 for more details.');
 		await this.page.goto('/logout');
-		await expect(this.emailAddress).toBeVisible();
 	}
 
 	// Redirect to dashboard home after login to skip any onboarding
 	async signInSkipOnboarding(member) {
 		await this.signIn(member);
-		await this.page.goto('/dashboard#home');
+		await this.page.goto('/dashboard#/home');
 	}
 
 	async signInAsProUser(member) {

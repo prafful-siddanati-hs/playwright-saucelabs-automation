@@ -27,6 +27,10 @@ exports.PlannerPage = class PlannerPage {
 		this.exitOnboardingPopover = page.locator('#walkthrough-root .vk-OnboardingPopoverExit');
 		this.linkedinPreviewPdf = page.locator('.vk-Planner .vk-DetailPane .vk-LinkedInPreview .vk-PdfContainer .vk-PdfDocument');
 		this.pdfCardIcon = page.locator('//*[contains(@data-testid,"MediaStateText")][text()="PDF"]');
+		this.detailPaneMessageStateText = page.locator('.vk-Planner .vk-DetailPane .vk-StateText');
+		this.viewApprovalHistory = page.getByLabel('View approval history');
+		this.closeApprovalHistoryModal = page.getByTestId('App').getByLabel('Close', { exact: true });
+		this.previewPaneApproveButton = page.getByTestId('ContextualActionsArea').getByLabel('Approve');
 	}
 
 	async visit() {

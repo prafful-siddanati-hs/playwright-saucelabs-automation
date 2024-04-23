@@ -338,7 +338,6 @@ exports.ComposePage = class ComposePage {
 		await expect(this.scheduleButton).not.toBeVisible();
 		await expect(this.feCallOuts).toHaveCount(1);
 	}
-
 	async openMediaLibrary() {
 		await this.mediaLibraryButton.click();
 		await this.page.waitForTimeout(1000);
