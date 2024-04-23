@@ -28,6 +28,7 @@ exports.ComposePage = class ComposePage {
 		this.scheduleDoneButton = page.getByTestId('schedule-post-done-btn');
 		this.scheduleButton = page.locator('button.vk-EditFooterScheduleButton');
 		this.saveChangesButton = page.getByRole('button', { name: 'Save changes' });
+		this.saveEditsButton = page.getByRole('button', { name: 'Save edits' });
 		this.postNowButton = page.getByRole('button', { name: 'Post now', exact: true });
 		this.saveToContentLibraryButton = page.getByRole('button', { name: 'Save to content library' });
 		this.openCalendarButton = page.getByLabel('Open calendar');
@@ -323,6 +324,19 @@ exports.ComposePage = class ComposePage {
 		await this.moreButton.click();
 		await expect(this.saveToContentLibraryButton).toBeVisible();
 		await this.saveToContentLibraryButton.click();
+	}
+
+	async saveEditedMessage() {
+		await this.saveEditsButton.click();
+		await expect(this.composeScreen).not.toBeVisible();
+	}
+
+	async scheduleDuplicateMessage() {
+		await expect(this.scheduleButton).toBeVisible();
+		await this.scheduleButton.hover();
+		await this.scheduleButton.click();
+		await expect(this.scheduleButton).not.toBeVisible();
+		await expect(this.feCallOuts).toHaveCount(1);
 	}
 
 	async openMediaLibrary() {

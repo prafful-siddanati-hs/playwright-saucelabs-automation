@@ -1,8 +1,10 @@
 const { expect } = require('@playwright/test');
 const { format, formatISO, addDays, startOfWeek, addWeeks, subDays } = require('date-fns');
 const { utcToZonedTime } = require('date-fns-tz');
+const { plan_create } = require('../../globals');
 const deleteScheduledMessageById = require('../../custom-commands/deleteScheduledMesssagesById');
 const getScheduledMessages = require('../../custom-commands/getScheduledMessages');
+const scheduleV3Message = require('../../custom-commands/scheduleV3Message');
 const timeZone = 'America/Toronto';
 
 exports.PlannerPage = class PlannerPage {
@@ -158,6 +160,21 @@ exports.PlannerPage = class PlannerPage {
 		await this.deleteButton.click();
 		await this.deletePostButton.click();
 		await this.page.waitForTimeout(1000);
+	}
+
+	async scheduleMessageWithPDF(memberId, snId, message, scheduleDate) {
+		const createMessage = new scheduleV3Message();
+		const options = {
+			messages: [
+				{
+					socialProfileId: snId,
+					text: message,
+					scheduledSendTime: scheduleDate,
+					mediaUrls: [plan_create.getRandomPDF()],
+				}
+			]
+		};
+		await createMessage.command(parseInt(memberId, 10), options);
 	}
 
 	async deleteScheduleMessagesViaAPI(memberId) {

@@ -38,6 +38,32 @@ module.exports = {
 	},
 
 	plan_create: {
+
+		pdfs: {
+			single_page:
+			{
+				bytes:83570,
+				fileName: 'single_page.pdf',
+				fileSource: 'Upload',
+				mimeType: 'application/pdf',
+				pages: 1,
+				status: 'ATTACHED',
+				url: 'https://hootsuite-video.s3.amazonaws.com/staging/13062818-r3urcWFm.pdf',
+				thumbnailUrl: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-12262804-4kFLS6Ca.jpeg'
+			},
+			multi_page:
+			{
+				bytes: 19408,
+				fileName: 'multi_page.pdf',
+				fileSource: 'Upload',
+				mimeType: 'application/pdf',
+				pages: 5,
+				status: 'ATTACHED',
+				url: 'https://hootsuite-video.s3.amazonaws.com/staging/13062818-v3F9uBSD.pdf',
+				thumbnailUrl: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-12262804-4kFLS6Ca.jpeg'
+			}
+		},
+
 		getComposeMessage: function () {
 			const MESSAGE = [
 				'Draft',
@@ -117,6 +143,12 @@ module.exports = {
 				'https://www.canada.ca/en/global-affairs/news/2023/08/minister-joly-to-travel-to-slovenia-north-macedonia-and-albania.html',
 			];
 			return URLS[Math.floor(Math.random() * URLS.length)];
+		},
+
+		getRandomPDF: function() {
+			const pdfs = Object.values(this.pdfs);
+			const randomIndex = Math.floor(Math.random() * pdfs.length);
+			return pdfs[randomIndex];
 		},
 	},
 
