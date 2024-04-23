@@ -80,7 +80,7 @@ module.exports = {
 			id: '1670889304598650881',
 			username: 'hoot_taco_hawk',
 			password: 'Assword!',
-			auth1: '670889304598650881-wSjlmqwIpirTBL0RShXBZn7yZ9ixae',
+			auth1: '1670889304598650881-wSjlmqwIpirTBL0RShXBZn7yZ9ixae',
 			auth2: 'zSZFrNinLLVvr7W5q3kwPUME66dYdzmFKQJQiMmnTHR1J',
 			type: 'twitter'
 		},
