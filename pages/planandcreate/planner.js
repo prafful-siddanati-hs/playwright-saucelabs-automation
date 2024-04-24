@@ -31,10 +31,14 @@ exports.PlannerPage = class PlannerPage {
 		this.viewApprovalHistory = page.getByLabel('View approval history');
 		this.closeApprovalHistoryModal = page.getByTestId('App').getByLabel('Close', { exact: true });
 		this.previewPaneApproveButton = page.getByTestId('ContextualActionsArea').getByLabel('Approve');
+		this.previewPaneRejectButton = page.getByTestId('ContextualActionsArea').getByLabel('Reject');
+		this.rejectModalInput = page.locator('.vk-MessageRejectModal input');
+		this.rejectModalRejectButton = page.locator('.vk-MessageRejectModal .vk-SubmitButton');
 	}
 
 	async visit() {
 		await this.page.goto('/dashboard#/planner');
+		await this.page.waitForURL('/dashboard#/planner');
 	}
 
 	async selectWeekView() {
@@ -166,7 +170,7 @@ exports.PlannerPage = class PlannerPage {
 		await this.page.waitForTimeout(1000);
 	}
 
-	async scheduleMessageWithPDF(memberId, snId, message, scheduleDate) {
+	async scheduleMessageWithPDF(memberId, snId, message, scheduleDate, reviewerId = false) {
 		const createMessage = new scheduleV3Message();
 		const options = {
 			messages: [
@@ -178,6 +182,9 @@ exports.PlannerPage = class PlannerPage {
 				}
 			]
 		};
+		if (reviewerId) {
+			options.messages[0].oneTimeReviewerId = parseInt(reviewerId, 10);
+		}
 		await createMessage.command(parseInt(memberId, 10), options);
 	}
 
