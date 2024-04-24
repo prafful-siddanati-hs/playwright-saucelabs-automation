@@ -5,7 +5,7 @@ CONFIG_FILE ?= .sauce/config.yml
 # Pass the suite name from the config file passed above. Default value set to " " - indicates all suites
 SUITE_NAME ?=
 
-DISABLED_TESTS ?=
+DISABLED_TESTS :=
 
 install:
 	rm -rf node_modules || true
