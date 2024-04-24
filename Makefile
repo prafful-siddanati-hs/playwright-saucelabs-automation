@@ -29,7 +29,15 @@ stop-tunnel:
 	@$(killcmd)
 
 run-test: dynamodb-setup-for-saucelabs
-	export DISABLED_TESTS = "${DISABLED_TESTS}"; \
+	# Check if the DISABLED_TESTS variable is defined
+    ifeq ($(DISABLED_TESTS),)
+        # Check if DISABLED_TESTS is not empty
+        ifneq ($(strip $(DISABLED_TESTS)),)
+            export DISABLED_TESTS := "$(DISABLED_TESTS)"; \
+        endif
+    endif
+
+
 	if [ -z "${SUITE_NAME}" ]; then \
 		npx saucectl run -c ${CONFIG_FILE} --ccy 4; \
 	else \
