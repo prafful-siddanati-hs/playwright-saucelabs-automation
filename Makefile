@@ -30,9 +30,9 @@ stop-tunnel:
 
 run-test: dynamodb-setup-for-saucelabs
 	# Check if DISABLED_TESTS is not empty
-	ifneq ($(DISABLED_TESTS),)
-		export DISABLED_TESTS := "$(DISABLED_TESTS)"; \
-	endif
+	if [ ! -z "$(DISABLED_TESTS)" ]; then \
+		export DISABLED_TESTS="$(DISABLED_TESTS)"; \
+	fi
 	if [ -z "${SUITE_NAME}" ]; then \
 		npx saucectl run -c ${CONFIG_FILE} --ccy 4; \
 	else \
