@@ -5,7 +5,7 @@ CONFIG_FILE ?= .sauce/composer_smoke.config.yml
 # Pass the suite name from the config file passed above. Default value set to " " - indicates all suites
 SUITE_NAME ?= Composer_Smoke - Chrome
 
-DISABLED_TESTS := []
+DISABLED_TESTS :=
 
 install:
 	rm -rf node_modules || true
@@ -29,7 +29,7 @@ stop-tunnel:
 	@$(killcmd)
 
 run-test: dynamodb-setup-for-saucelabs
-	export DISABLED_TESTS="$(DISABLED_TESTS)";
+	export DISABLED_TESTS="$(DISABLED_TESTS)"; \
 	if [ -z "${SUITE_NAME}" ]; then \
 		npx saucectl run -c ${CONFIG_FILE} --ccy 4; \
 	else \
