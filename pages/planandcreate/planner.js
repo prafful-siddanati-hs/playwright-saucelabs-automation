@@ -22,7 +22,7 @@ exports.PlannerPage = class PlannerPage {
 		this.viewWeekToggle = page.locator('.vk-Planner .vk-ViewToggleBar [aria-label= "View weekly planner"]');
 		this.navigateToNextWeek = page.locator('.vk-Planner .vk-NextButton');
 		this.editButton = page.getByTestId('EditButton');
-		this.moreActions = page.getByLabel('More actions');
+		this.moreActions = page.getByTestId('Dropdown').getByLabel('More actions');
 		this.duplicateButton = page.locator('//*[contains(@class,"vk-AdditionalActions")]//*[text()="Duplicate"]');
 		this.exitOnboardingPopover = page.locator('#walkthrough-root .vk-OnboardingPopoverExit');
 		this.linkedinPreviewPdf = page.locator('.vk-Planner .vk-DetailPane .vk-LinkedInPreview .vk-PdfContainer .vk-PdfDocument');

@@ -1,6 +1,8 @@
 const { expect } = require('@playwright/test');
 const deleteDraftById = require('../../custom-commands/deleteDraftById');
 const getDrafts = require('../../custom-commands/getDrafts');
+const draftMessage = require('../../custom-commands/draftMessage');
+const { plan_create } = require('../../globals');
 
 exports.DraftPage = class DraftPage {
 	constructor(page) {
@@ -57,5 +59,39 @@ exports.DraftPage = class DraftPage {
 		await this.deleteButtonOnSidePane.click();
 		await this.confirmationModalSubmitButton.click();
 		await expect(this.draftItem).toHaveCount(0);
+	}
+
+	/**
+	 * Creates a draft message via API by network.
+	 * 'draftScheduleTime' is an optional parameter to create either scheduled or unscheduled draft.
+	 */
+	async createDraftViaApiByNetwork(memberId, orgId, snId, message, socialNetwork, draftScheduleTime = null) {
+		const createDraft = new draftMessage();
+		const orgid = orgId ? orgId : null;
+
+		const draftOptions = {
+			socialProfileIds: [
+				parseInt(snId, 10)
+			],
+			organizationId: orgid,
+			scheduledDate: draftScheduleTime,
+			draftMessage: {
+				text: message,
+				messageType: 'draft',
+				publishingMode: 'IG_PUSH',
+				messages: [
+					{
+						message: message,
+						snType: socialNetwork.toUpperCase(),
+						snId: snId.toString()
+					}
+				],
+				attachments: [plan_create.getRandomPDF()]
+			}
+		};
+		if (draftScheduleTime) {
+			draftOptions.scheduledDate = draftScheduleTime;
+		}
+		await createDraft.command(parseInt(memberId, 10), draftOptions);
 	}
 };
