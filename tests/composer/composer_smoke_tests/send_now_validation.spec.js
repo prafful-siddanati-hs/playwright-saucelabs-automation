@@ -18,7 +18,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test.skip('Send now validations', async ({ page }) => {
+test('Send now validations', async ({ page }) => {
 	const composeBasicText = 'Send ' + Math.floor(Math.random() * 10000);
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);

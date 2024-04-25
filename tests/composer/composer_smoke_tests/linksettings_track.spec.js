@@ -19,7 +19,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test.skip('Track applied linksettings', async ({ page }) => {
+test('Track applied linksettings', async ({ page }) => {
 	const linkSettingTrackText = `Track links! ${URL} and ${URL2} ${Math.floor(Math.random() * 1000)} `;
 	const composePage = new ComposePage(page);
 	const addFixture = new getFixture();

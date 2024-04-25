@@ -14,7 +14,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test.skip('Composer basic validations', async ({ page }) => {
+test('Composer basic validations', async ({ page }) => {
 	const composeBasicText = `${plan_create.getComposeMessage().concat(' ' + Math.floor(Math.random() * 1000))}`;
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);

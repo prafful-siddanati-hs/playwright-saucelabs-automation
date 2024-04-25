@@ -19,7 +19,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test.skip('Update link presets', async ({ page }) => {
+test('Update link presets', async ({ page }) => {
 	let linkPresetsOrg = 'PW_linkPreset_Org_'.concat(Math.floor(Math.random() * 1000));
 	let presetName = `PW Link Preset ${Date.now()}`;
 	let firstEdit = presetName.concat('--edit');

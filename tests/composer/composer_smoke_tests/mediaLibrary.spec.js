@@ -15,7 +15,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test.skip('Schedule with image from media library', async ({page}) => {
+test('Schedule with image from media library', async ({page}) => {
 	const mediaText = `${plan_create.getComposeMessage()} ${Math.floor(Math.random() * 100)}`;
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);

@@ -15,7 +15,7 @@ test.afterEach(async ({ page }) => {
 });
 
 /* Test to schedule a message with mentions */
-test.skip('Schedule a message with mentions', async ({ page }) => {
+test('Schedule a message with mentions', async ({ page }) => {
 	const mentionsText = 'Mention & schedule ';
 	const liMention = plan_create.getLinkedinMention();
 	const addFixture = new getFixture();
