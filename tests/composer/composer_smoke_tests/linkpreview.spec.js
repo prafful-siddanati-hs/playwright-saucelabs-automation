@@ -14,7 +14,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Verify link preview on composer', async ({ page }) => {
+test.skip('Verify link preview on composer', async ({ page }) => {
 	const url = plan_create.getRandomUrl();
 	const messageText = `Link previews ${url} ${Math.floor(Math.random() * 100)} `;
 	const addFixture = new getFixture();

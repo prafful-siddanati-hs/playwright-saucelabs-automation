@@ -1,11 +1,11 @@
 procs = $(shell ps -ef | grep 'bin/sc' | grep -v grep | awk '{ print $$2 ; }')
 killcmd = $(if $(procs), "kill" "-9" $(procs), "echo" "no matching processes")
 # Pass sauce config file path. Default value is set to .sauce/config.yml
-CONFIG_FILE ?= .sauce/config.yml
+CONFIG_FILE ?= .sauce/composer_smoke.config.yml
 # Pass the suite name from the config file passed above. Default value set to " " - indicates all suites
-SUITE_NAME ?=
+SUITE_NAME ?= Composer_Smoke - Chrome
 
-DISABLED_TESTS ?=
+DISABLED_TESTS :=
 
 install:
 	rm -rf node_modules || true
@@ -29,7 +29,7 @@ stop-tunnel:
 	@$(killcmd)
 
 run-test: dynamodb-setup-for-saucelabs
-	export DISABLED_TESTS="$(DISABLED_TESTS)"; \
+	export DISABLED_TESTS='$(DISABLED_TESTS)'; \
 	if [ -z "${SUITE_NAME}" ]; then \
 		npx saucectl run -c ${CONFIG_FILE} --ccy 4; \
 	else \

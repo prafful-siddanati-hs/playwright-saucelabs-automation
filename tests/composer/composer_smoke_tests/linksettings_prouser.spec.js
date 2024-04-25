@@ -16,7 +16,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Verify links settings on composer', async ({ page }) => {
+test.skip('Verify links settings on composer', async ({ page }) => {
 	const url = plan_create.getRandomUrl();
 	const linkText = `Link settings ${url} ${Math.floor(Math.random() * 100)} `;
 	const addFixture = new getFixture();

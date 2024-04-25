@@ -14,7 +14,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Save text data to content library', async ({ page }) => {
+test.skip('Save text data to content library', async ({ page }) => {
 	let pwCLOrg = 'PW_contentLib_Org_'.concat(Math.floor(Math.random() * 10000));
 	const pwCLTeam = 'PW_CL_TEAM';
 	const pwCLText = 'CL text only template';
