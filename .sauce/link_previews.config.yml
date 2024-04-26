@@ -36,7 +36,7 @@ suites:
     platformName: "Windows 11"
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
-    testMatch: ['tests/composer/link_previews/sbe_linkpreviews_bad_thumbnail.spec.js']
+    testMatch: ['tests/composer/link_previews/*.*.js']
     numShards: 4
     params:
       browserName: "chromium"
