@@ -407,12 +407,6 @@ exports.ComposePage = class ComposePage {
 		await this.parameterValue.fill(parameterValue);
 	}
 
-	async closeComposer() {
-		await this.exitComposerButton.click();
-		await expect(this.discardPost).toBeVisible();
-		await this.discardPost.click();
-	}
-
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {
 		const getAllScheduledMessages = new getScheduledMessages();
 		const deleteScheduledMessages = new deleteScheduledMessageById();
