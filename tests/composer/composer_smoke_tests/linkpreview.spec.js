@@ -52,7 +52,4 @@ test('Verify link preview on composer', async ({ page }) => {
 		await expect(composePage.facebookLinkPreviewSource).toContainText(url);
 	});
 
-	await test.step('Close composer', async () => {
-		await composePage.closeComposer();
-	});
 });
