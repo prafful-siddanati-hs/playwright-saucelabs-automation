@@ -60,14 +60,14 @@ exports.PinPage = class PinPage {
 	}
 
 	async verifyPinPreview(text, url) {
-		await expect(this.pinterestPreview).toBeVisible();
-		await expect(this.previewDescription).toContainText(`${text}`);
-		await expect(this.previewWebsiteUrl).toContainText(`${url}`);
+		await expect(this.pinterestPreview, 'Pin preview is not visible').toBeVisible();
+		await expect(this.previewDescription, 'Pin description is not visible').toContainText(`${text}`);
+		await expect(this.previewWebsiteUrl, 'Pin website url is not visible').toContainText(`${url}`);
 	}
 
 	async sendNow() {
 		await this.postNowButton.click();
-		await expect(this.postNowButton).not.toBeVisible();
+		await expect(this.postNowButton, 'Pin send message failed').not.toBeVisible();
 		await expect(this.feCallOuts).toHaveCount(1);
 	}
 

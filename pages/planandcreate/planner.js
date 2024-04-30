@@ -78,7 +78,7 @@ exports.PlannerPage = class PlannerPage {
 		if (hour) {
 			await this.loadLazyRenderedCards(hour);
 		}
-		await expect(this.page.getByText(text)).toBeVisible();
+		await expect(this.page.getByText(text), 'Schedule message is not visible on planner').toBeVisible();
 	}
 
 	async showPreviewPane(text) {
@@ -87,22 +87,22 @@ exports.PlannerPage = class PlannerPage {
 
 	async verifyTextInPreviewPane(text) {
 		const previewPaneMessageText = this.page.getByTestId('Preview').getByText(text);
-		await expect(previewPaneMessageText).toBeVisible();
+		await expect(previewPaneMessageText, 'Message is not visible on planner preview pane').toBeVisible();
 	}
 
 	async verifyPDFInPreviewPane() {
-		await expect(this.page.getByTestId('Preview')).toBeVisible();
+		await expect(this.page.getByTestId('Preview'), 'Message with PDF is not visible on planner preview pane').toBeVisible();
 		await expect(this.linkedinPreviewPdf).toBeVisible();
 	}
 
 	async editFromPreviewPane() {
-		await expect(this.editButton).toBeVisible();
+		await expect(this.editButton, 'Edit button is not visible on planner preview pane').toBeVisible();
 		await this.editButton.click();
 	}
 
 	async duplicateFromPreviewPane() {
 		await this.moreActions.click();
-		await expect(this.duplicateButton).toBeVisible();
+		await expect(this.duplicateButton, 'Duplicate button is not visible on planner preview pane').toBeVisible();
 		await this.duplicateButton.click();
 	}
 
@@ -151,7 +151,7 @@ exports.PlannerPage = class PlannerPage {
 		await this.termsOfServiceWall.click();
 
 		await this.page.waitForLoadState('domcontentloaded');
-		await expect(this.firstFreeImage).toHaveJSProperty('complete', true);
+		await expect(this.firstFreeImage, 'First image on planner media library is not visible').toHaveJSProperty('complete', true);
 		await expect(this.firstFreeImage).not.toHaveJSProperty('naturalWidth', 0);
 
 		const source = this.firstFreeImage;
@@ -160,9 +160,9 @@ exports.PlannerPage = class PlannerPage {
 		await source.dragTo(destination);
 
 		await this.page.waitForTimeout(2000);
-		await expect(this.closeSaveDraftPopup).toBeVisible();
+		await expect(this.closeSaveDraftPopup, 'Save draft popup is not visible').toBeVisible();
 		await this.sidePaneCloseButton.click();
-		await expect(this.draftCard).toBeVisible();
+		await expect(this.draftCard, 'Draft card is not visible on planner').toBeVisible();
 		await this.draftCard.click();
 
 		await this.deleteButton.click();

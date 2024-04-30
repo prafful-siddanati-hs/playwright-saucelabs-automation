@@ -124,7 +124,7 @@ exports.ComposePage = class ComposePage {
 		}
 
 		await this.postButton.click();
-		await expect(this.composeScreen).toBeVisible();
+		await expect(this.composeScreen, 'should be navigated to composer full screen').toBeVisible();
 	}
 
 	async selectSocialProfile(name) {
@@ -148,7 +148,7 @@ exports.ComposePage = class ComposePage {
 			//Handle cases when more than one media file is uploaded
 			const mulitpleMediaOverlays = Array.from(await this.mediaOverLay);
 			await Promise.all(mulitpleMediaOverlays.map(async (overlay) => {
-				await expect(overlay).toBeVisible();
+				await expect(overlay, 'Media overlay should be visible').toBeVisible();
 			}));
 		} catch (error) {
 			console.error('Error:', error);
@@ -164,91 +164,91 @@ exports.ComposePage = class ComposePage {
 
 	async schedule() {
 		await this.scheduleLaterButton.click();
-		await expect(this.scheduleButton).toBeVisible();
+		await expect(this.scheduleButton, 'Schedule button should be visible').toBeVisible();
 		await this.scheduleDoneButton.hover();
 		await this.scheduleDoneButton.click();
 		await this.scheduleButton.click();
-		await expect(this.scheduleButton).not.toBeVisible();
+		await expect(this.scheduleButton, 'Schedule message failed from composer').not.toBeVisible();
 		await expect(this.feCallOuts).toHaveCount(1);
 	}
 
 	async sendNow() {
 		await this.postNowButton.click();
-		await expect(this.postNowButton).not.toBeVisible();
+		await expect(this.postNowButton, 'Send now message failed from composerBC').not.toBeVisible();
 		await expect(this.composeScreen).not.toBeVisible();
 		await expect(this.feCallOuts).toHaveCount(1);
 	}
 
 	async verifySocialProfileSelected(name) {
 		const pillText = this.page.locator(`//*[contains(@class, "vk-PillText") and text()="${name}"]`);
-		await expect(pillText).toBeVisible();
+		await expect(pillText, 'Social network is not selected').toBeVisible();
 		await expect(this.page.locator('.vk-Loader')).toHaveCount(0);
 	}
 
 	async verifyGenericPreview(text) {
-		await expect(this.genericPreviewText).toContainText(`${text}`);
+		await expect(this.genericPreviewText, 'Generic preview is not updated with text message on composer').toContainText(`${text}`);
 	}
 
 	async verifyGenericImagePreview() {
-		await expect(this.genericPreviewSingleImage).toHaveJSProperty('complete', true);
+		await expect(this.genericPreviewSingleImage, 'Generic preview is not updated with image on composer').toHaveJSProperty('complete', true);
 		await expect(this.genericPreviewSingleImage).not.toHaveJSProperty('naturalWidth', 0);
 	}
 
 	async verifyTwitterPreview(text) {
-		await expect(this.twitterPreviewText).toContainText(`${text}`);
+		await expect(this.twitterPreviewText, 'Twitter preview is not updated with text message on composer').toContainText(`${text}`);
 	}
 
 	async verifyTwitterVideoPreview() {
-		await expect(this.twitterVideoPreviewSelector).toHaveCount(1);
+		await expect(this.twitterVideoPreviewSelector, 'Twitter preview is not updated with video on composer').toHaveCount(1);
 	}
 
 	async verifyTwitterImagePreview() {
-		await expect(this.twitterPreviewSingleImage).toHaveJSProperty('complete', true);
+		await expect(this.twitterPreviewSingleImage, 'Twitter preview is not updated with image on composer').toHaveJSProperty('complete', true);
 		await expect(this.twitterPreviewSingleImage).not.toHaveJSProperty('naturalWidth', 0);
 	}
 
 	async verifyFacebookImagePreview() {
-		await expect(this.facebookPreviewSingleImage).toHaveJSProperty('complete', true);
+		await expect(this.facebookPreviewSingleImage, 'Facebook preview is not updated with image on composer').toHaveJSProperty('complete', true);
 		await expect(this.facebookPreviewSingleImage).not.toHaveJSProperty('naturalWidth', 0);
 	}
 
 	async verifyFacebookVideoPreview() {
-		await expect(this.facebookVideoPreviewSelector).toHaveCount(1);
+		await expect(this.facebookVideoPreviewSelector, 'Facebook preview is not updated with video on composer').toHaveCount(1);
 	}
 
 	async verifyFacebookPreview(text) {
-		await expect(this.facebookPreviewText).toContainText(`${text}`);
+		await expect(this.facebookPreviewText, 'Facebook preview is not updated with text on composer').toContainText(`${text}`);
 	}
 
 	async verifyLinkInTwitterPreview(text) {
-		await expect(this.twitterMessageLink).toBeVisible();
+		await expect(this.twitterMessageLink, 'Twitter preview is not updated with link preview on composer').toBeVisible();
 		expect(await this.twitterMessageLink.getAttribute('href')).toContain(text);
 		expect(await this.twitterMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyLinkInFacebookPagePreview(text) {
-		await expect(this.facebookMessageLink).toBeVisible();
+		await expect(this.facebookMessageLink, 'Facebook preview is not updated with link preview on composer').toBeVisible();
 		expect(await this.facebookMessageLink.getAttribute('href')).toContain(text);
 		expect(await this.facebookMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyInstagramPreview(text) {
-		await expect(this.instagramPreviewText).toContainText(`${text}`);
+		await expect(this.instagramPreviewText, 'Instagram post preview is not updated with text on composer').toContainText(`${text}`);
 		await expect(this.previewNetworkType).toContainText('Instagram Post');
 	}
 
 	async verifyInstagramReelPreview(text) {
-		await expect(this.instagramReelPreviewText).toContainText(`${text}`);
+		await expect(this.instagramReelPreviewText, 'Instagram reel preview is not updated with text on composer').toContainText(`${text}`);
 	}
 
 	async verifyInstagramReelVideoPreview() {
-		await expect(this.previewNetworkType).toContainText('Instagram Reel');
+		await expect(this.previewNetworkType, 'Instagram reel preview is not updated with video on composer').toContainText('Instagram Reel');
 		await expect(this.instagramReelVideoPreviewSelector).toHaveCount(1);
 		await this.page.waitForLoadState('domcontentloaded');
 	}
 
 	async verifyLinkedInPreview(text) {
-		await expect(this.linkedInPreviewText).toContainText(`${text}`);
+		await expect(this.linkedInPreviewText, 'Linkedin preview is not updated with text on composer').toContainText(`${text}`);
 	}
 
 	async verifyFacebookMentionPreview(mentionName) {
@@ -263,37 +263,37 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async verifyLinkInLinkedinPagePreview(text) {
-		await expect(this.linkedInMessageLink).toBeVisible();
+		await expect(this.linkedInMessageLink, 'Linkedin preview is not updated with link on composer').toBeVisible();
 		expect(await this.linkedInMessageLink).toHaveAttribute('href', text);
 		expect(await this.linkedInMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyHashtagInTwitterPreview(hashtag) {
-		await expect(this.twitterHashtagLink).toBeVisible();
+		await expect(this.twitterHashtagLink, 'twitter preview is not updated with hashtag on composer').toBeVisible();
 		assert((await this.twitterHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Twitter preview');
 		assert((await this.twitterHashtagLink.getAttribute('href')).includes(`https://twitter.com/hashtag/${hashtag}`), 'Incorrect href value in Twitter preview');
 	}
 
 	async verifyTiktokHashtagPreview(hashtag) {
-		await expect(this.tiktokHashtagLink).toBeVisible();
+		await expect(this.tiktokHashtagLink, 'Tiktok preview is not updated with hashtag on composer').toBeVisible();
 		assert((await this.tiktokHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Tiktok preview');
 		assert((await this.tiktokHashtagLink.getAttribute('href')).includes(`https://www.tiktok.com/tag/${hashtag}`), 'Incorrect href value in Tiktok preview');
 	}
 
 	async verifyInstagramHashtagPreview(hashtag) {
-		await expect(this.instagramHashtagLink).toBeVisible();
+		await expect(this.instagramHashtagLink, 'Instagram post preview is not updated with hashtag on composer').toBeVisible();
 		assert((await this.instagramHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Instagram preview');
 		assert((await this.instagramHashtagLink.getAttribute('href')).includes(`https://www.instagram.com/explore/tags/${hashtag}`), 'Incorrect href value in Instagram preview');
 	}
 
 	async verifyLinkedInPdfPreview() {
-		await expect(this.previewNetworkType).toContainText('LinkedIn');
+		await expect(this.previewNetworkType, 'Linkedin preview is not updated with PDF preview on composer').toContainText('LinkedIn');
 		await expect(this.linkedInPdfPreview).toBeVisible();
 	}
 
 	async selectMessageScheduleDate() {
 		await this.scheduleLaterButton.click();
-		await expect(this.openCalendarButton).toHaveCount(1);
+		await expect(this.openCalendarButton, 'Should open calendar').toHaveCount(1);
 		await this.openCalendarButton.hover();
 		await this.openCalendarButton.click();
 		await this.nextMonthButton.hover();
@@ -301,7 +301,7 @@ exports.ComposePage = class ComposePage {
 		await this.firstDayOfNextMonth.click();
 		await this.scheduleDoneButton.click();
 		await this.scheduleButton.click();
-		await expect(this.scheduleButton).not.toBeVisible();
+		await expect(this.scheduleButton, 'Schedule message failed from composer').not.toBeVisible();
 		await expect(this.feCallOuts).not.toBeVisible();
 	}
 
@@ -312,30 +312,30 @@ exports.ComposePage = class ComposePage {
 
 	async saveChanges(){
 		await this.saveChangesButton.click();
-		await expect(this.composeScreen).not.toBeVisible();
+		await expect(this.composeScreen, 'Save message failed from composer').not.toBeVisible();
 	}
 
 	async saveDraft() {
 		await this.saveDraftFromDropdown.click();
-		await expect(this.composeScreen).not.toBeVisible();
+		await expect(this.composeScreen, 'Save draft failed from composer').not.toBeVisible();
 	}
 
 	async saveToContentLibrary() {
 		await this.moreButton.click();
-		await expect(this.saveToContentLibraryButton).toBeVisible();
+		await expect(this.saveToContentLibraryButton, 'Content library button should be visible').toBeVisible();
 		await this.saveToContentLibraryButton.click();
 	}
 
 	async saveEditedMessage() {
 		await this.saveEditsButton.click();
-		await expect(this.composeScreen).not.toBeVisible();
+		await expect(this.composeScreen, 'Save edit message failed from composer').not.toBeVisible();
 	}
 
 	async scheduleDuplicateMessage() {
 		await expect(this.scheduleButton).toBeVisible();
 		await this.scheduleButton.hover();
 		await this.scheduleButton.click();
-		await expect(this.scheduleButton).not.toBeVisible();
+		await expect(this.scheduleButton, 'Schedule message failed from composer').not.toBeVisible();
 		await expect(this.feCallOuts).toHaveCount(1);
 	}
 	async openMediaLibrary() {
@@ -354,7 +354,7 @@ exports.ComposePage = class ComposePage {
 
 	async attachImageFromMediaLibrary(numImages) {
 		let randomImage;
-		await expect(this.mediaContent).toBeVisible();
+		await expect(this.mediaContent, 'Media library content is not loaded').toBeVisible();
 		await expect(this.firstImage.nth(0)).toBeVisible();
 		for (let i = 0; i < numImages; i ++) {
 			randomImage = Math.floor(Math.random() * 15) + 1;
@@ -379,31 +379,31 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async openLinkSettingsDialog() {
-		await expect(this.addTrackingButton).toBeVisible();
+		await expect(this.addTrackingButton, 'Add tracking button is missing from composer').toBeVisible();
 		await this.addTrackingButton.click();
-		await expect(this.linkSettingsModal).toBeVisible();
+		await expect(this.linkSettingsModal, 'Unable to open link settings modal').toBeVisible();
 	}
 
 	async selectLink(url) {
 		const linkToSelect = this.page.getByRole('option', { name: `${url}` });
-		await expect(this.selectLinkDropdown).toBeVisible();
+		await expect(this.selectLinkDropdown, 'Link dropdown is not visible').toBeVisible();
 		await this.selectLinkDropdown.click();
-		await expect(linkToSelect).toBeVisible();
+		await expect(linkToSelect, 'Selected link is not displayed').toBeVisible();
 		await linkToSelect.click();
 	}
 
 	async selectTracker(tracker) {
 		const linkSettingsTracker = this.page.getByRole('option', { name: `${tracker}`});
-		await expect(this.linkSettingsTrackerDropdown).toBeVisible();
+		await expect(this.linkSettingsTrackerDropdown, 'Link settings track dropdown is not visible').toBeVisible();
 		await this.linkSettingsTrackerDropdown.click();
 		await linkSettingsTracker.click();
 	}
 
 	async setTrackingParameter(parameterName, parameterValue) {
-		await expect(this.trackingParametersTable).toBeVisible();
-		await expect(this.parameterName).toBeVisible();
+		await expect(this.trackingParametersTable, 'Link tracking parameter table is not visible').toBeVisible();
+		await expect(this.parameterName, 'Link settings tracking parameter name is not visible').toBeVisible();
 		await this.parameterName.fill(parameterName);
-		await expect(this.parameterValue).toBeVisible();
+		await expect(this.parameterValue, 'Link settings tracking parameter value is not visible').toBeVisible();
 		await this.parameterValue.fill(parameterValue);
 	}
 

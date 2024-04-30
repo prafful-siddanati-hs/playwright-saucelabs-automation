@@ -28,30 +28,30 @@ exports.ContentLibraryPage = class ContentLibraryPage {
 
 	async createContentLibrary(libraryName, teamName) {
 		const selectTeam = this.page.getByRole('option', { name: `${teamName}` }).locator('div');
-		await expect(this.createContentLibBtn).toBeVisible();
+		await expect(this.createContentLibBtn, 'Create Content Library button is not visible').toBeVisible();
 		await this.createContentLibBtn.hover();
 		await this.createContentLibBtn.click();
-		await expect(this.libNameInput).toBeVisible();
+		await expect(this.libNameInput, 'Content Library name input field is not visible').toBeVisible();
 		await this.libNameInput.hover();
 		await this.libNameInput.click();
 		await this.libNameInput.fill(libraryName);
 		await this.addTeamBtn.click();
 		await selectTeam.click();
-		await expect(this.createBtn).toBeEnabled();
+		await expect(this.createBtn, 'Content Library create button is not visible').toBeEnabled();
 		await this.createBtn.click();
-		await expect(this.uploadAssetsButton).toBeVisible();
+		await expect(this.uploadAssetsButton, 'Asset upload button is not visible').toBeVisible();
 	}
 
 	async createContentLibraryAsset(libraryName) {
 		const libToSelect = this.page.getByRole('option', { name: `${libraryName}` }).locator('div');
-		await expect(this.createAssetPopup).toBeVisible();
-		await expect(this.selectLibraryButton).toBeVisible();
+		await expect(this.createAssetPopup, 'Content Library assert pop up is not visible').toBeVisible();
+		await expect(this.selectLibraryButton, 'Select library button is not visible').toBeVisible();
 		await this.selectLibraryButton.click();
 		await libToSelect.click();
-		await expect(this.addAssetButton).toBeEnabled();
+		await expect(this.addAssetButton, 'Add asset button is not visible').toBeEnabled();
 		await this.addAssetButton.click();
-		await expect(this.clSuccessCallout).toBeVisible();
-		await expect(this.clSuccessCallout).toHaveCount(1);
+		await expect(this.clSuccessCallout, 'Failed creating content library').toBeVisible();
+		await expect(this.clSuccessCallout, 'Failed creating content library').toHaveCount(1);
 	}
 
 	async verifyContentLibraryTemplate(templateText) {
@@ -60,10 +60,10 @@ exports.ContentLibraryPage = class ContentLibraryPage {
 	}
 
 	async deleteContentLibrary() {
-		await expect(this.librarySelectBtn).toBeVisible();
+		await expect(this.librarySelectBtn, 'Select content library button is not visible').toBeVisible();
 		await this.librarySelectBtn.click();
 		await this.editLibraryBtn.click();
-		await expect(this.removeLibraryBtn).toBeVisible();
+		await expect(this.removeLibraryBtn, 'Remove content library button is not visible').toBeVisible();
 		await this.removeLibraryBtn.click();
 		this.page.on('dialog', async dialog => {
 			await dialog.accept();
@@ -72,10 +72,10 @@ exports.ContentLibraryPage = class ContentLibraryPage {
 	}
 
 	async selectContentLibraryTemplateToCompose(templateText) {
-		await expect(this.page.getByText(templateText)).toBeVisible();
-		await expect(this.firstCLCard).toBeVisible();
+		await expect(this.page.getByText(templateText), 'Content library template name is not visible').toBeVisible();
+		await expect(this.firstCLCard, 'Content library first card is not visible').toBeVisible();
 		await this.firstCLCard.click();
-		await expect(this.composeWithTemplate).toBeVisible();
+		await expect(this.composeWithTemplate, 'Compose with template is not visible').toBeVisible();
 		await this.composeWithTemplate.click();
 	}
 };

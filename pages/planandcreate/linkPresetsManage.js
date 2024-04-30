@@ -35,7 +35,7 @@ exports.LinkPresetsManagePage = class LinkPresetsManagePage {
 	}
 
 	async clickCreateLinkPresetButton() {
-		await expect(this.createNewLinkSettings).toBeVisible();
+		await expect(this.createNewLinkSettings, 'Create new link settings button is not visible').toBeVisible();
 		await this.createNewLinkSettings.click();
 	}
 
@@ -45,14 +45,14 @@ exports.LinkPresetsManagePage = class LinkPresetsManagePage {
 	}
 
 	async editPreset() {
-		await expect(this.moreOptionsButton).toBeVisible();
+		await expect(this.moreOptionsButton, 'More options is not visible').toBeVisible();
 		await this.moreOptionsButton.click();
 		await expect(this.editOption).toBeVisible();
 		await this.editOption.click();
 	}
 
 	async closeLinkPresetManage() {
-		await expect(this.backButton).toBeVisible();
+		await expect(this.backButton, 'Back button is not visible').toBeVisible();
 		await this.backButton.click();
 	}
 };

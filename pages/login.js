@@ -35,7 +35,7 @@ exports.LoginPage = class LoginPage {
 		await this.emailAddress.fill(user.email);
 		await this.password.fill(user.password);
 		await this.loginSubmit.click();
-		await expect(this.emailAddress).not.toBeVisible();
+		await expect(this.emailAddress, 'Login into Hootsuite failed').not.toBeVisible();
 		await this.page.waitForLoadState();
 	}
 
@@ -45,7 +45,7 @@ exports.LoginPage = class LoginPage {
 		await this.emailAddress.fill(email);
 		await this.password.fill(password);
 		await this.loginSubmit.click();
-		await expect(this.emailAddress).not.toBeVisible();
+		await expect(this.emailAddress, 'Login into Hootsuite failed').not.toBeVisible();
 		await this.page.waitForLoadState();
 	}
 

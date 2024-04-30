@@ -33,7 +33,7 @@ exports.BulkComposePage = class BulkComposePage {
 
 	async visit() {
 		await this.page.goto('/dashboard#/publisher/bulkcomposer');
-		await expect(this.bulkComposer).toBeVisible();
+		await expect(this.bulkComposer, 'should navigate to bulk composer').toBeVisible();
 	}
 
 	async selectSocialProfile(name) {
@@ -43,7 +43,7 @@ exports.BulkComposePage = class BulkComposePage {
 
 	async verifySocialProfileSelected(name) {
 		const pillText = this.page.locator(`//*[contains(@class, "vk-PillText") and text()="${name}"]`);
-		await expect(pillText).toBeVisible();
+		await expect(pillText, 'Social network is not selected').toBeVisible();
 		await expect(this.page.locator('.vk-Loader')).toHaveCount(0);
 	}
 
@@ -70,20 +70,20 @@ exports.BulkComposePage = class BulkComposePage {
 	async verifyFacebookPreview(message) {
 		const facebookPreview = this.page.locator(`//div[contains(@class, "rc-MessageEditText")] //div[contains(@class, "public-DraftEditor-content")]//span[contains(text(), '${message}')]`);
 
-		await expect(facebookPreview).toBeVisible();
+		await expect(facebookPreview, 'Facebook preview is not updated with text message on BC').toBeVisible();
 	}
 
 	async verifyTwitterPreview(message) {
 		const twitterPreview = this.page.locator(`//div[contains(@class, "rc-MessageEditText")] //div[contains(@class, "public-DraftEditor-content")]//span[contains(text(), '${message}')]`);
 
-		await expect(twitterPreview).toBeVisible();
+		await expect(twitterPreview, 'Twitter preview is not updated with text message on BC').toBeVisible();
 	}
 
 	async schedule() {
 		await expect(this.scheduleButton).toBeVisible();
 		await this.scheduleButton.hover();
 		await this.scheduleButton.click();
-		await expect(this.scheduleButton).not.toBeVisible();
+		await expect(this.scheduleButton, 'Schedule message failed from BC').not.toBeVisible();
 		await expect(this.feCallOuts).toHaveCount(1);
 	}
 };

@@ -12,7 +12,7 @@ exports.MemberOverViewPage = class MemberOverViewPage {
 	}
 
 	async selectLinkSettingButton(){
-		await expect(this.linkSettingsButton).toHaveCount(1);
+		await expect(this.linkSettingsButton, 'Link setting button is not visible on member page').toHaveCount(1);
 		await this.linkSettingsButton.click();
 	}
 };

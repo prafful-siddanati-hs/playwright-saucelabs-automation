@@ -13,18 +13,18 @@ exports.LinkPresetsCreatePage = class LinkPresetsCreatePage {
 	}
 
 	async clickCreateButton() {
-		await expect(this.linkPresetCreateButton).toBeVisible();
+		await expect(this.linkPresetCreateButton, 'Link presets create button is not visible').toBeVisible();
 		await this.linkPresetCreateButton.click();
 	}
 
 	async setPresetName(linkPresetName) {
-		await expect(this.linkPresetNameInput).toBeVisible();
+		await expect(this.linkPresetNameInput, 'Link preset input is not visible').toBeVisible();
 		await this.linkPresetNameInput.fill(linkPresetName);
 	}
 
 	async setShortener(linkPresetShortenerName) {
 		const linkPresetShortener = this.page.getByRole('button', { name: `${linkPresetShortenerName}`, exact: true });
-		await expect(this.linkPresetShortenerDropdown).toBeVisible();
+		await expect(this.linkPresetShortenerDropdown, 'Link preset shortener dropdown is not visible').toBeVisible();
 		await this.linkPresetShortenerDropdown.hover();
 		await this.linkPresetShortenerDropdown.click();
 		await linkPresetShortener.click();
@@ -32,7 +32,7 @@ exports.LinkPresetsCreatePage = class LinkPresetsCreatePage {
 
 	async setTracker(linkPresetTrackerName) {
 		const linkPresetTracker = this.page.getByRole('button', { name: `${linkPresetTrackerName}`, exact: true });
-		await expect(this.linkPresetTrackerDropdown).toBeVisible();
+		await expect(this.linkPresetTrackerDropdown, 'Link preset tracker dropdown is not visible').toBeVisible();
 		await this.linkPresetTrackerDropdown.click();
 		await linkPresetTracker.click();
 	}
@@ -41,7 +41,7 @@ exports.LinkPresetsCreatePage = class LinkPresetsCreatePage {
 		const typeDropdown = this.page.locator(`.rc-LinkTrackingParametersArea .-fieldImprovements:nth-child(${index}) .vk-TrackingParamsDropdownAnchor`);
 		const typeSelector = this.page.locator(`.rc-LinkTrackingParametersArea .-fieldImprovements:nth-child(${index}) .vk-TrackingParamsListItemContainer .vk-ListItemWrapper:has-text("${type}")`);
 
-		await expect(typeDropdown).toBeVisible();
+		await expect(typeDropdown, 'Link preset type dropdown is not visible').toBeVisible();
 		await typeDropdown.click();
 		await expect(typeSelector).toBeVisible();
 		await typeSelector.click();
@@ -56,7 +56,7 @@ exports.LinkPresetsCreatePage = class LinkPresetsCreatePage {
 	}
 
 	async clickApplyButton() {
-		await expect(this.linkSettingsApplyButton).toBeVisible();
+		await expect(this.linkSettingsApplyButton, 'Link settings apply button is not visible').toBeVisible();
 		await this.linkSettingsApplyButton.click();
 	}
 
