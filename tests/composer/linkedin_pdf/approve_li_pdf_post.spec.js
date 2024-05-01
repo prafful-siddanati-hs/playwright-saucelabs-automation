@@ -59,8 +59,9 @@ test('Approve Linkedin PDF posts via custom approval : ', async ({ page }) => {
 		);
 	});
 
-	await test.step('Hide native posts', async () => {
+	await test.step('Hide native posts & recommended times', async () => {
 		await plannerPage.hideNativePosts(limitedUserMemberId);
+		await plannerPage.hideRecommendedTimes(limitedUserMemberId);
 	});
 
 	await test.step('Navigate to planner', async () => {
