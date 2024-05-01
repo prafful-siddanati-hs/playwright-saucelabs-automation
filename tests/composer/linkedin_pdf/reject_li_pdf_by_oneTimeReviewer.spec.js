@@ -102,8 +102,9 @@ test('Reject LinkedIn PDF post by one time reviewer : ', async ({ page }) => {
 		await loginPage.signIn('pw_reject_limited_user');
 	});
 
-	await test.step('Hide native posts', async () => {
+	await test.step('Hide native posts & recommended times', async () => {
 		await plannerPage.hideNativePosts(limitedUserMemberId);
+		await plannerPage.hideRecommendedTimes(limitedUserMemberId);
 	});
 
 	await test.step('Navigate to planner', async () => {
