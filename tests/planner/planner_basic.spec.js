@@ -30,6 +30,7 @@ test('Verify scheduled message in week view', async ({ page }) => {
 
 	await userSetUp.setUpEnterpriseUser(orgName,'pw_planner', accounts);
 	await loginPage.signInSkipOnboarding('pw_planner');
+	await plannerPage.setDarkLaunchCookies();
 
 	/* Create a scheduled message */
 	await createScheduleMessage.command(
@@ -46,8 +47,7 @@ test('Verify scheduled message in week view', async ({ page }) => {
 	);
 
 	await plannerPage.visit();
-	await plannerPage.switchToExpandedView(global.member[0].memberId);
-	await plannerPage.verifyScheduledMessage(message, scheduleTime.getHours());
+	await plannerPage.verifyScheduledMessage(message);
 	await plannerPage.showPreviewPane(message);
 });
 

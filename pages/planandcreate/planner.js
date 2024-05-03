@@ -10,35 +10,259 @@ const timeZone = 'America/Toronto';
 exports.PlannerPage = class PlannerPage {
 	constructor(page) {
 		this.page = page;
+		/**
+     * - - - - - PLANNER GENERIC - - - - -
+     */
 		this.plannerButton = page.getByLabel('Planner', { exact: true });
+		this.detailPane = page.locator('.vk-Planner .vk-DetailPane');
+		this.genericDetailPaneText = page.locator('.vk-GenericPreview .vk-PreviewMessageText');
+		this.unschedPostCheckbox = page.getByTestId('UnscheduledPostsCheckBoxContainer');
+		this.closeExportModalButton = page.locator('.vk-DialogCloseButton');
+		this.firstDayFromMonthCalendar = page.locator('.vk-Planner .rdp-day[tabindex="0"]');
+		this.nextMonthNavigator = page.getByLabel('Go to next month');
+		this.startDayOfSunWeek = page.locator('//div[position() = 1 and text() = "Sun"]', { locateStrategy: 'xpath' });
+		this.startDayOfMonWeek = page.locator('//div[position() = 1 and text() = "Mon"]', { locateStrategy: 'xpath' });
+		this.feCallOut = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
+		this.extbutton = page.locator('#walkthrough-root .vk-OnboardingPopoverExit');
+		this.recommendedTimesPlaceholder = page.locator('(//*[contains(@class,"vk-SuggestedPostContainer")])[1]', { locateStrategy: 'xpath' });
+		this.recommendedTimesPopoverSocialProfile = page.locator('.vk-SuggestedPostContainer #popper li');
+		this.recommendedTimesNewPost = page.locator('(//*[contains(@class, "vk-SuggestedPostContainer")]//*[contains(@class,"vk-NewPostPlaceholderDropdownItem")]//*[text()="Post"])[1]', { locateStrategy: 'xpath' });
+		this.editDraftButton = page.locator('//button[text()="Edit draft"]', { locateStrategy: 'xpath' });
+
+		/**
+     * - - - - - CALENDAR: TOP PANE - - - - -
+     */
+		this.calendarTab = page.getByTestId('MainPanelWrapper').getByText('Calendar');
+		this.draftsTab = page.getByTestId('MainPanelWrapper').getByText('Drafts');
+		this.approvalstab = page.getByTestId('MainPanelWrapper').getByText('Approvals');
+		this.contentTab = page.getByTestId('MainPanelWrapper').getByText('Content');
+		this.datePickerButton = page.locator('.vk-Planner .vk-Toolbar #dateRangeAnchor');
+		this.orgPicker= page.getByTestId('OrgPicker');
+		this.createPostButton = page.getByRole('button', { name: 'Create' }).first();
+		this.addMediaButton = page.getByTestId('ContentButton');
+		this.filtersButton = page.getByTestId('FiltersButton');
+		this.filterAccountsPicker = page.getByTestId('right-sheet').getByText('Social accounts');
+		this.filterPostStatusPicker = page.getByTestId('right-sheet').getByText('Post status');
+		this.filterCampaignsPicker = page.getByTestId('right-sheet').getByText('Campaigns');
+		this.filterApplyButton = page.getByLabel('Apply filters');
+		this.filterClearButton = page.getByLabel('Clear filters');
+		this.filterCloseButton = page.getByTestId('right-sheet').getByLabel('Close Panel');
+		this.filterBackButton = page.getByText('keyboard_arrow_left');
+		this.viewWeekToggle = page.getByLabel('View weekly planner');
+		this.viewMonthToggle = page.getByLabel('View monthly planner');
+		this.todayButton = page.getByTestId('TodayButton');
+		this.navigateToNextWeek = page.getByTestId('NextNavButton');
+		this.navigateToPreviousWeek = page.getByTestId('PrevNavButton');
+		this.settingsButton = page.getByTestId('SettingsButton');
+		this.exportButton = page.getByTestId('planner-export-button');
+		this.csvExportOption = page.getByTestId('export-dropdown-csv-list-item');
+		this.exportModal = page.locator('.vk-ExportingModalContainer');
+		this.startOfWeekSundayButton = page.getByTestId('Sunday');
+		this.startOfWeekMondayButton = page.getByTestId('Monday');
+		this.recommendedTimeToggle = page.getByTestId('RecommendedTimesToggle');
+
+		/**
+     * - - - - - CALENDAR: WEEK VIEW - - - -
+     */
+		this.week = page.locator('.vk-Planner .vk-Week');
+		this.messages = page.locator('.vk-Planner .vk-Week .vk-DraggableCard');
+		this.mediaThumbnail = page.getByTestId('ThumbnailContainer');
+		this.timeSlot = page.locator('.vk-Planner .vk-TimeSlot');
+		this.weekViewValidation = page.locator('.vk-Planner .vk-CalendarHeader');
+		this.dayMessageCounter = page.locator('//*[contains(@class,vk-CalendarHeader)]/*[contains(@aria-label,"today")]//*[contains(@data-testid,"NumContent")]', { locateStrategy: 'xpath' });
+		this.todayColumn = page.getByLabel('today');
+		this.newPost = page.locator('//*[contains(@class, "vk-NewPostContainer")]//*[contains(@class,"vk-NewPostPlaceholderDropdownItem")]//*[text()="Post"]', { locateStrategy: 'xpath' });
+		this.newPin = page.locator('//*[contains(@class, "vk-NewPostContainer")]//*[contains(@class,"vk-NewPostPlaceholderDropdownItem")]//*[text()="Pin"]', { locateStrategy: 'xpath' });
+		this.nextMonthFromDateRange = page.locator('//*[contains(@class, "vk-Planner")]//*[contains(@class, \'rdp-month\')]//*[@aria-label="Go to next month"]', { locateStrategy: 'xpath' });
+		this.firstHolidayPill = page.locator('//*[@data-dap-target="planner-ai-suggestions-chip"]', { locateStrategy: 'xpath' });
+		this.draggableCard = page.getByTestId('DraggableCard');
+		this.exitOnboardingPopover = page.locator('#walkthrough-root .vk-OnboardingPopoverExit');
+
+		/**
+     * - - - - - CALENDAR: MONTH VIEW - - - - -
+     */
+		this.month = page.locator('.vk-Planner .vk-Month');
+		this.viewToggleMonthByInactiveButton = page.locator('.vk-Planner .vk-CountToggleBar [aria-pressed="false"]');
+		this.monthDateRangeButton = page.locator('.vk-Planner .vk-DateRangeAnchorButton');
+		this.daySlot = page.locator('.vk-Planner .vk-Month .vk-Day');
+		this.pausedIconInMonthView = page.locator('.vk-Row .vk-CountByPostTypeWrapper .pause');
+		this.monthDayTodayClickable = page.locator('//*[@data-today]', { locateStrategy: 'xpath' });
+		this.prevYearNavigationButton = page.getByTestId('Go to previous month');
+		this.nextYearNavigationButton = page.getByTestId('Go to next month');
+		this.newPostMonthSidePane = page.locator('//*[contains(@id, "popper")]//*[contains(@class,"vk-NewPostPlaceholderDropdownItem")]//*[text()="Post"]', { locateStrategy: 'xpath' });
+		this.messageStatusOnMonthView = page.getByTestId('DayOfMonthStatus-SCHEDULED').first();
+		this.messageCountOnMonthView = page.getByTestId('DayOfMonthCount-SCHEDULED').first();
+		this.draftCountOnMonthView = page.getByTestId('DayOfMonthCount-DRAFTS');
+		this.messageSNCountOnMonthView = page.locator('//*[contains(@class, "vk-SNCountBarWrapper")]//div//div[last()]', { locateStrategy: 'xpath' });
+		this.disconnectedIcon = page.locator('[data-status="DISCONNECTED"]');
+		this.monthSidePaneCloseButton = page.locator('.vk-DetailPane .vk-CloseButton');
+		this.monthSidePaneCreateButton = page.locator('.vk-DetailPane .vk-MonthSidePaneCreateButton');
+		this.hourCardBlockFirstCard = page.locator('(//*[contains(@class, "vk-DetailPane")]//*[contains(@class, "vk-HourBlockContainer")]//*[contains(@class, "vk-Card")])[1]', { locateStrategy: 'xpath' });
+		this.hourCardBlockTitle = page.locator('(//*[contains(@class, "vk-DetailPane")]//*[contains(@class, "vk-HourBlockContainer")]//*[contains(@class, "vk-HourBlockTitle")])[1]', { locateStrategy: 'xpath' });
+		this.hourCardBlockShowMore = page.locator('//*[contains(@class, "vk-DetailPane")]//*[contains(@class, "vk-HourBlockContainer")]//button', { locateStrategy: 'xpath' });
+		this.recommendedTimesPlaceholderMonthPanel = page.locator('(//*[contains(@class,"vk-RecommendedTimeCardContainer")])[1]', { locateStrategy: 'xpath' });
+		this.recommendedTimesNewPostListPanel = page.locator('((//*[contains(@class, "vk-DropdownContainer")]//*[contains(@class,"vk-NewPostPlaceholderDropdownItem")]//*[text()="Post"])[1]', { locateStrategy: 'xpath' });
+
+		/**
+     * - - - - - CALENDAR: LIST VIEW - - - - -
+     */
+		this.viewToggleList = page.getByLabel('View planner as a list');
+		this.mediaThumbnailListView = page.locator('.vk-ListViewCardListCardsContainer').getByTestId('ThumbnailContainer');
+		this.postVolumeCalendarContainer = page.getByLabel('Post volume graphs');
+		this.postVolumeGraphWeekContainer = page.getByTestId('Weeks');
+		this.postVolumeGraphWeek = page.getByTestId('Weeks').locator('.vk-PostVolumeGraphWeek');
+		this.postVolumeCalendarNextWeek = page.getByTestId('PostVolumeGraph').getByLabel('Next week');
+		this.postVolumeCalendarPrevWeek = page.getByTestId('PostVolumeGraph').getByLabel('Previous week');
+		this.collapsePostVolumeGraph = page.locator('.vk-CollapseButton');
+		this.singlePvgBar = page.locator('//*[contains(@data-testid,"PostCountBarGraph")]/ancestor::*[contains(@aria-label,"1 post on")]', { locateStrategy: 'xpath' });
+		this.listViewCreateButton = page.locator('(//*[contains(@class, "vk-ListViewCreateButtonDropdown")])[1]', { locateStrategy: 'xpath' });
+		this.listViewNewPost = page.locator('//*[contains(@class, "vk-NewPostPlaceholderDropdownItem")]//*[text()="Post"]', { locateStrategy: 'xpath' });
+		this.listViewNewPin = page.locator('//*[contains(@class, "vk-NewPostPlaceholderDropdownItem")]//*[text()="Pin"]', { locateStrategy: 'xpath' });
+		this.scheduledCardsListView = page.locator('//*[contains(@data-testid,"StateText") and text()="Scheduled"]', { locateStrategy: 'xpath' });
+		this.pendingApprovalCardsListView = page.locator('//*[contains(@data-testid,"StateText") and text()="Pending"]', { locateStrategy: 'xpath' });
+		this.failedCardsListView = page.locator('//*[contains(@data-testid,"StateText") and text()="Failed"]', { locateStrategy: 'xpath' });
+		this.publishedCardsListView = page.locator('//*[contains(@data-testid,"StateText") and text()="Published"]', { locateStrategy: 'xpath' });
+		this.draftCardsListView = page.locator('//*[contains(@data-testid,"StateText") and text()="Draft"]', { locateStrategy: 'xpath' });
+		this.listViewApproveAction = page.locator('.vk-ActionsWrapper button[aria-label="Approve post"]');
+		this.listViewRejectAction = page.locator('.vk-ActionsWrapper button[aria-label="Reject post"]');
+		this.listViewMoreActions = page.locator('.vk-ActionsWrapper button[aria-label="More actions"]');
+		this.listViewDuplicateAction = page.locator('.vk-ActionsWrapper button[aria-label="Duplicate post"]');
+		this.listViewEditAction = page.locator('.vk-ActionsWrapper button[aria-label="Edit post"]');
+		this.listViewDeleteAction = page.locator('.vk-ActionsWrapper button[aria-label="Delete post"]');
+		this.editFromMoreActionsItems = page.locator('//*[contains(@class, "vk-ActionsWrapper")]//*[contains(@class, "vk-ListItemWrapper")]//*[text()="Edit"]', { locateStrategy: 'xpath' });
+		this.duplicateFromMoreActionsItems = page.locator('//*[contains(@class, "vk-ActionsWrapper")]//*[contains(@class, "vk-ListItemWrapper")]//*[text()="Duplicate"]', { locateStrategy: 'xpath' });
+		this.deleteFromMoreActionsItems = page.locator('//*[contains(@class, "vk-ActionsWrapper")]//*[contains(@class, "vk-ListItemWrapper")]//*[text()="Delete"]', { locateStrategy: 'xpath' });
+		this.moveToDraftsFromMoreActionsItems = page.locator('//*[contains(@class, "vk-ActionsWrapper")]//*[contains(@class, "vk-ListItemWrapper")]//*[text()="Move to drafts"]', { locateStrategy: 'xpath' });
+		this.ReconnectFromMoreActionsItems = page.locator('//*[contains(@class, "vk-ActionsWrapper")]//*[contains(@class, "vk-ListItemWrapper")]//*[text()="Reconnect"]', { locateStrategy: 'xpath' });
+		this.messageRejectReason = page.getByTestId('RejectionReason');
+		this.recommendedTimesPlaceholderListPanel = page.locator('(//*[contains(@class,"vk-DropdownAnchorWrapper")])[1]', { locateStrategy: 'xpath' });
+		this.todayInListView = page.locator('//*[contains(@class,"vk-InnerDay") and contains(@aria-label,"today")]');
+
+		/**
+     * - - - - CALENDAR: PREVIEW PANE - - - - -
+     */
+		this.detailPaneMessageStateText = page.locator('.vk-Planner .vk-DetailPane .vk-StateText');
+		this.detailPaneSocialNetwork = page.locator('.vk-Planner .vk-DetailPane .vk-NetworkType');
+		this.duplicateButton = page.locator('//*[contains(@class,"vk-AdditionalActions")]//*[text()="Duplicate"]');
+		this.moveToDraftsButton = page.locator('.vk-Planner .vk-DetailPane .vk-ConvertPostToDraft');
+		this.postDuplicateButton = page.getByTestId('DuplicateButton');
+		this.rescheduleButton = page.getByTestId('RescheduleButton');
+		this.editButton = page.getByTestId('EditButton');
 		this.deleteButton = page.getByTestId('DeleteButton');
+		this.moreActions = page.getByTestId('Dropdown').getByLabel('More actions');
+		this.messageRejectModal = page.locator('.vk-MessageRejectModal');
+		this.messageRejectModalTitle = page.locator('//*[contains(@class,"vk-MessageRejectModal")]//h2[contains(text(),"Reject Message")]', { locateStrategy: 'xpath' });
+		this.messageRejectModalInput = page.locator('.vk-MessageRejectModal input');
+		this.messageRejectModalRejectButton = page.locator('.vk-MessageRejectModal .vk-SubmitButton');
+		this.confirmationSubmitButton = page.locator('.vk-ConfirmationModal .vk-SubmitButton');
+		this.duplicateButton = page.locator('//*[contains(@class,"vk-AdditionalActions")]//*[text()="Duplicate"]', { locateStrategy: 'xpath' });
+		this.moveToDraftsBtn = page.locator('button[data-testid="MoveToDraftsButton"]');
 		this.sidePaneCloseButton = page.getByTestId('CloseButton');
 		this.deletePostButton = page.getByRole('button', { name: 'Delete post' });
-		this.addMediaButton = page.getByTestId('ContentButton');
 		this.termsOfServiceWall = page.locator('.vk-TermsOfServiceWall button');
 		this.firstFreeImage = page.locator('.-mediaRow img[draggable="true"]').first();
 		this.draftCard = page.getByText('No account');
 		this.closeSaveDraftPopup = page.locator('#DraftSavedPopover [aria-label="Close Draft saved"]');
-		this.viewWeekToggle = page.locator('.vk-Planner .vk-ViewToggleBar [aria-label= "View weekly planner"]');
-		this.navigateToNextWeek = page.locator('.vk-Planner .vk-NextButton');
-		this.editButton = page.getByTestId('EditButton');
-		this.moreActions = page.getByTestId('Dropdown').getByLabel('More actions');
-		this.duplicateButton = page.locator('//*[contains(@class,"vk-AdditionalActions")]//*[text()="Duplicate"]');
-		this.exitOnboardingPopover = page.locator('#walkthrough-root .vk-OnboardingPopoverExit');
-		this.linkedinPreviewPdf = page.locator('.vk-Planner .vk-DetailPane .vk-LinkedInPreview .vk-PdfContainer .vk-PdfDocument');
-		this.pdfCardIcon = page.locator('//*[contains(@data-testid,"MediaStateText")][text()="PDF"]');
-		this.detailPaneMessageStateText = page.locator('.vk-Planner .vk-DetailPane .vk-StateText');
+		this.reconnectButton = page.locator('.vk-Planner .vk-DetailPane .vk-ReconnectButton');
+		this.messageTags = page.locator('.vk-DetailPane .vk-TagDetails .vk-TagContainer');
+		this.altTextDescription = page.locator('.vk-AltText p');
+		this.previewPaneNetworkType = page.locator('.vk-Planner .vk-DetailPane .vk-NetworkType');
+		this.previewPaneScheduledTime = page.locator('.vk-DetailPane .vk-ScheduledTime');
 		this.viewApprovalHistory = page.getByLabel('View approval history');
+		this.approvalDescription = page.locator('.-modalDialog .-content .-description');
+		this.approvalHistoryFirstDetails = page.locator('.-modalDialog .-action:nth-child(1) .-description');
+		this.approvalHistorySecondDetails = page.locator('.-modalDialog .-action:nth-child(2) .-description');
+		this.approvalHistoryThirdDetails = page.locator('.-modalDialog .-action:nth-child(3) .-description');
+		this.approvalHistoryReason = page.locator('.-modalDialog .-reason');
+		this.rejectModalInput = page.locator('.vk-MessageRejectModal input');
+		this.rejectModalRejectButton = page.locator('.vk-MessageRejectModal .vk-SubmitButton');
 		this.closeApprovalHistoryModal = page.getByTestId('App').getByLabel('Close', { exact: true });
 		this.previewPaneApproveButton = page.getByTestId('ContextualActionsArea').getByLabel('Approve');
 		this.previewPaneRejectButton = page.getByTestId('ContextualActionsArea').getByLabel('Reject');
 		this.rejectModalInput = page.locator('.vk-MessageRejectModal input');
 		this.rejectModalRejectButton = page.locator('.vk-MessageRejectModal .vk-SubmitButton');
+		this.suspendedReasonSidePane = page.locator('(//*[contains(@class, "vk-SuspendActions")]//p)[2]', { locateStrategy: 'xpath' });
+		this.suspendedInfoMsgSidePane = page.locator('(//*[contains(@class, "vk-SuspendActions")]//p)[1]', { locateStrategy: 'xpath' });
+		this.detailPaneCloseButton = page.getByTestId('CloseButton');
+
+		//Twitter
+		this.twitterPreviewSocialProfile = page.locator('.vk-Planner .vk-DetailPane .vk-TwitterPreview .vk-Handle');
+		this.twitterReplySocialProfile = page.locator('[data-testid="Preview"] .vk-Wrapper span');
+		this.twitterPreviewMessageText = page.locator('.vk-Planner .vk-DetailPane .vk-TwitterPreview .vk-ContentBody p');
+		this.twitterPreviewMedia = page.locator('//*[contains(@class, "vk-DetailPane")]//*[contains(@class, "vk-TwitterPreview")]//*[contains(@class,"vk-MediaImg") or contains(@class,"vk-ImageContainer")]', { locateStrategy: 'xpath' });
+		this.twitterReplyMediaPreview = page.locator('.vk-DetailPane .vk-MediaContainer');
+		this.twitterPreviewVideo = page.locator('.vk-Planner .vk-DetailPane .vk-TwitterPreview .vk-VideoPlayer');
+		this.twitterMentionLink = page.locator('.vk-Planner .vk-TwitterPreview .vk-ContentBody .vk-MessageMention');
+		this.videoPlayButton = page.locator('.vk-Planner .vk-DetailPane .vk-TwitterPreview .vk-PlayButton');
+
+		//Facebook
+		this.facebookPreviewSocialProfile = page.locator('.vk-Planner .vk-DetailPane .vk-FacebookPreview .vk-Name');
+		this.facebookPreviewMessageText = page.locator('.vk-Planner .vk-DetailPane .vk-FacebookPreview .vk-ContentBody p');
+		this.facebookPreviewMedia = page.locator('.vk-Planner .vk-DetailPane .vk-FacebookPreview .vk-MediaImg');
+		this.facebookPreviewImageContainer = page.locator('.vk-Planner .vk-DetailPane .vk-FacebookPreview .vk-MediaContainer');
+		this.facebookPreviewVideo = page.locator('.vk-Planner .vk-DetailPane .vk-FacebookPreview .vk-VideoPlayer');
+		this.facebookPreviewLinkPreview = page.locator('.vk-FacebookPreview .vk-ContentBody p');
+		this.facebookThumbNail = page.locator('.vk-FacebookPreview .vk-ThumbnailContainer .vk-Thumbnail');
+		this.facebookMentionLink = page.locator('.vk-Planner .vk-FacebookPreview .vk-ContentBody .vk-MessageMention');
+
+		//LinkedIn
+		this.linkedinPreviewSocialProfile = page.locator('.vk-Planner .vk-DetailPane .vk-LinkedInPreview .vk-Name');
+		this.linkedinPreviewMessageText = page.locator('.vk-Planner .vk-DetailPane .vk-LinkedInPreview .vk-ContentBody p');
+		this.linkedinPreviewMedia = page.locator('.vk-Planner .vk-DetailPane .vk-LinkedInPreview .vk-MediaImg');
+		this.linkedinPreviewImageContainer = page.locator('.vk-Planner .vk-DetailPane .vk-LinkedInPreview .vk-MediaContainer');
+		this.linkedinPreviewVideo = page.locator('.vk-Planner .vk-DetailPane .vk-LinkedInPreview .vk-VideoPlayer');
+		this.linkedinPreviewPdf = page.locator('.vk-Planner .vk-DetailPane .vk-LinkedInPreview .vk-PdfContainer .vk-PdfDocument');
+		this.pdfCardIcon = page.locator('//*[contains(@data-testid,"MediaStateText")][text()="PDF"]');
+
+		//Instagram
+		this.instagramPreviewSocialProfile = page.locator('.vk-Planner .vk-DetailPane .vk-InstagramPreviewHeader .vk-Name');
+		this.instagramPreviewImageContainer = page.locator('.vk-Planner .vk-DetailPane .vk-InstagramPreview .vk-ImageContainer');
+		this.instagramPreviewVideo = page.locator('.vk-Planner .vk-DetailPane .vk-InstagramPreview .vk-VideoPlayer');
+		this.instagramReelPreviewSocialProfile = page.locator('.vk-Planner .vk-DetailPane .vk-InstagramReelPreview .vk-Name');
+		this.instagramReelMessageText = page.locator('.vk-Planner .vk-DetailPane .vk-InstagramReelPreview .vk-MessageText');
+		this.instagramReelPreviewMedia = page.locator('.vk-Planner .vk-DetailPane .vk-InstagramReelPreview .vk-StreamlinedVideo');
+		this.instagramPreviewMessageText = page.locator('(//*[contains(@class,"vk-Planner")]//*[contains(@class,"vk-InstagramPreview")]//p)[1]', { locateStrategy: 'xpath' });
+		this.instagramPreviewMessageTextWithMedia = page.locator('(//*[contains(@class,"vk-Planner")]//*[contains(@class,"vk-InstagramPreview")]//p)[2]', { locateStrategy: 'xpath' });
+		this.instagramStoryPreviewMessageState = page.locator('.vk-Planner .vk-DetailPane .vk-AuthorText');
+		this.instagramStoryPreviewSocialProfile = page.locator('.vk-Planner .vk-DetailPane .vk-InstagramStoryPreview .vk-Name');
+		this.instagramStoryPreviewMessageText = page.locator('.vk-Planner .vk-DetailPane .vk-InstagramStoryPreview .vk-StoryText');
+		this.instagramStoryPreviewPublisherNotesText = page.locator('.vk-Planner .vk-DetailPane .vk-PublisherNotes');
+		this.instagramVideoPlayButton = page.locator('.vk-Planner .vk-InstagramPreview .vk-PlayButton');
+		this.instagramImageContainer = page.locator('.vk-Planner .vk-InstagramPreview .vk-ImageContainer');
+		this.mediaNavigatorButton = page.locator('.vk-Planner .vk-InstagramPreview button.vk-StyledButton svg[alt="Next item"]');
+		this.assetCounter = page.locator('.vk-Planner .vk-InstagramPreview .vk-AssetCounterContainer');
+		this.firstProductTagName = page.locator('.vk-Planner .vk-InstagramPreview .vk-CollapsedStyledProductTag[aria-label="Pride T-Shirt - Small"]');
+		this.productTagTitle = page.locator('.rc-Planner .vk-ProductTagContainer .vk-ProductTagTitle');
+		this.productTagName = page.locator('.rc-Planner .vk-ProductTagContainer p.vk-ProductTagTitle');
+		this.instagramCarouselIndicators = page.locator('.vk-Planner .vk-InstagramPreview .vk-IndicatorDot');
+
+		  // //Pinterest
+		  // pinterestPreviewMessageText: '.vk-Planner .vk-DetailPane .vk-PinterestPreview .vk-PinterestPreviewDescription',
+		//
+		  // pinterestPreviewSocialProfile: '.vk-Planner .vk-DetailPane .vk-PinterestPreview .vk-PinterestPreviewUsername',
+		//
+		  // //Tiktok
+		  // tiktokPreviewMessageText: '.vk-Planner .vk-DetailPane .vk-TikTokPreview .vk-MessageText',
+		//
+		  // tiktokEngagementField: '.vk-Planner .vk-DetailPane .vk-PrivacySettings li',
+
 	}
 
 	async visit() {
 		await this.page.goto('/dashboard#/planner');
 		await this.page.waitForURL('/dashboard#/planner');
+	}
+
+	async setDarkLaunchCookies() {
+		const url = this.page.url();
+		await this.page.context().addCookies([
+			{
+				name: 'PUB_32151_UI_ACTIVATION_BLITZ',
+				value: '1',
+				url: url,
+			}
+		]);
+		await this.page.reload();
 	}
 
 	async selectWeekView() {
