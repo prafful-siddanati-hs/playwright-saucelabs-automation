@@ -236,15 +236,61 @@ exports.PlannerPage = class PlannerPage {
 		this.productTagName = page.locator('.rc-Planner .vk-ProductTagContainer p.vk-ProductTagTitle');
 		this.instagramCarouselIndicators = page.locator('.vk-Planner .vk-InstagramPreview .vk-IndicatorDot');
 
-		  // //Pinterest
-		  // pinterestPreviewMessageText: '.vk-Planner .vk-DetailPane .vk-PinterestPreview .vk-PinterestPreviewDescription',
-		//
-		  // pinterestPreviewSocialProfile: '.vk-Planner .vk-DetailPane .vk-PinterestPreview .vk-PinterestPreviewUsername',
-		//
-		  // //Tiktok
-		  // tiktokPreviewMessageText: '.vk-Planner .vk-DetailPane .vk-TikTokPreview .vk-MessageText',
-		//
-		  // tiktokEngagementField: '.vk-Planner .vk-DetailPane .vk-PrivacySettings li',
+		//Pinterest
+		this.pinterestPreviewMessageText = page.locator('.vk-Planner .vk-DetailPane .vk-PinterestPreview .vk-PinterestPreviewDescription');
+
+		this.pinterestPreviewSocialProfile = page.locator('.vk-Planner .vk-DetailPane .vk-PinterestPreview .vk-PinterestPreviewUsername');
+
+		//Tiktok
+		this.tiktokPreviewMessageText = page.locator('.vk-Planner .vk-DetailPane .vk-TikTokPreview .vk-MessageText');
+		this.tiktokEngagementField = page.locator('..vk-Planner .vk-DetailPane .vk-PrivacySettings li');
+
+		/**
+     * - - - - - PLANNER ADS - - - - -
+     */
+
+		this.advertisePage = page.locator('//*[text()="Advertise"]', { locateStrategy: 'xpath' });
+		this.adDetailPaneNetworkType = page.locator('(//div[contains(@class, "vk-SocialProfile")]//*[text()="LinkedIn"])');
+		this.adDetailPaneObjective = page.locator('(//div[contains(@class, "vk-AdObjective")]//*[text()="Get more website visitors"])', { locateStrategy: 'xpath' });
+		this.adDetailPaneAudienceNetwork = page.locator('(//div[contains(@class, "vk-AdLinkedinAudienceNetwork")]//*[text()="LinkedIn Audience Network"])', { locateStrategy: 'xpath' });
+		this.adViewMoreDetailsButton = page.locator('(//div[contains(@class, "vk-Planner")]//*[contains(@class,"vk-DetailPane")]//*[text()="View more details"])', { locateStrategy: 'xpath' });
+		this.adViewMoreDetailsButtonInPanel = page.locator('//*[contains(@class,"vk-DetailPane")]//*[text()="View more details"]', { locateStrategy: 'xpath' });
+		this.adViewMoreDetailsButtonInModal = page.locator('//*[contains(@class,"vk-AdsPreviewModal")]//*[text()="View more details"]', { locateStrategy: 'xpath' });
+		this.adDetailPaneInputToggle = page.locator('(//div[contains(@class, "vk-ActionContainer")]//input[contains(@data-testid, "AdCampaignStatusInputToggle")]', { locateStrategy: 'xpath' });
+		this.adDetailPaneInputToggleSpanBtn = page.locator('//div[contains(@class, "vk-ActionContainer")]//input[contains(@data-testid, "AdCampaignStatusInputToggle")]/../..', { locateStrategy: 'xpath' });
+		this.adDetailStatusToastPaused = page.locator('//div[contains(@class, "vk-MessageColumn")]//*[text()="You paused your campaign"]', { locateStrategy: 'xpath' });
+		this.adPerformanceHeader = page.locator('//*[contains(@class,"vk-DetailPane")]//h3[contains(text(), "Performance")]', { locateStrategy: 'xpath' });
+		this.multiAdSecondImage = page.locator('(//div[contains(@aria-label, "Ad image 2")]', { locateStrategy: 'xpath' });
+
+		/**
+     * - - - - - OWLY WRITER PANEL - - - - -
+     */
+		this.firstOwlyWriterSuggestion = page.locator('[data-dap-target="planner-ai-suggestions-panel"] [data-testid="suggested-card-container"]:first-child', { locateStrategy: 'css selector' });
+
+		/**
+     * - - - - - APPROVALS VIEW - - - - -
+     */
+		this.pendingAssignedTab = page.locator('.vk-Planner .vk-ApprovalsToolbarContainer .vk-TabsContainer #approval-tabs-APPROVALS_PENDING_ASSIGNED');
+		this.pendingCreatedTab = page.locator('.vk-Planner .vk-ApprovalsToolbarContainer .vk-TabsContainer #approval-tabs-APPROVALS_PENDING_CREATED');
+		this.rejectedTab = page.locator('.vk-Planner .vk-ApprovalsToolbarContainer .vk-TabsContainer #approval-tabs-APPROVALS_REJECTED');
+		this.expiredTab = page.locator('.vk-Planner .vk-ApprovalsToolbarContainer .vk-TabsContainer #approval-tabs-APPROVALS_EXPIRED');
+		this.postTypeFilter = page.locator('.vk-Planner .vk-ApprovalsViewContainer [data-testid="PostTypeFilterAnchor"]');
+		this.accountFilter = page.locator('.vk-Planner .vk-ApprovalsViewContainer [data-testid="AccountsFilterAnchor"]');
+		this.postsFilter = page.locator('.vk-Planner .vk-ApprovalsViewContainer [data-testid="list-item-clickable"] [title="Posts"]');
+		this.commentsAndRepliesFilter = page.locator('.vk-Planner .vk-ApprovalsViewContainer [data-testid="list-item-clickable"] [title="Comments & Replies"]');
+		this.MessagesFilter = page.locator('.vk-Planner .vk-ApprovalsViewContainer [data-testid="list-item-clickable"] [title="Messages"]');
+		this.closeButtonForPostTypeFilter = page.locator('.vk-Planner .vk-ApprovalsViewContainer button[data-testid="approvals-type-dropdown-footerApplyButton"]');
+		this.applyButtonForPostTypeFilter = page.locator('.vk-Planner .vk-ApprovalsViewContainer button[data-testid="approvals-type-dropdown-footerApplyButton"]');
+		this.sortByDateFilter = page.getByTestId('SortByDropdownAnchor');
+		this.newestFirstDateModified = page.locator('button [title="Date modified (newest first)"]');
+		this.approvalsListViewMoreActions = page.getByLabel('More actions').first();
+		this.approvalsListViewEditButton = page.getByLabel('Edit post');
+		this.approvalsListViewDuplicateButton = page.getByLabel('Duplicate post');
+		this.approvalsListViewDeleteButton = page.getByLabel('Delete post');
+		this.noPermissionDeleteButton = page.locator('//label[contains(., "Only authors can delete content")]', { locateStrategy: 'xpath' });
+		this.approvalsListViewRejectButton = page.locator('(//*[contains(@class, "vk-Planner")]//*[contains(@aria-label, "Reject post")])[1]', { locateStrategy: 'xpath' });
+		this.approvalsListViewApproveButton = page.locator('(//*[contains(@class, "vk-Planner")]//*[contains(@aria-label, "Approve post")])[1]', { locateStrategy: 'xpath' });
+		this.sectionHeaderTitle = page.locator('//*[contains(@class,"vk-SectionContainerTitle")][contains(text(),"Content you submitted for approval")]', { locateStrategy: 'xpath' });
 
 	}
 
