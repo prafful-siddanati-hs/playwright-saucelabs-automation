@@ -21,10 +21,10 @@ properties(
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer_regression.config.yml', description: 'Composer tests on chrome'),
         ]),
         //Linkedin PDF - Run at 4:30 PM on Thursday
-        //Planner Regression - Run at 8.20 AM on Monday
-        //Link Settings - Run at 3.50 PM on Monday
-        //Link Previews - Run at 3.20 PM on Monday
-        //Composer Regression - Run at 5.05 PM on Friday
+        //Planner Regression - Run at 8:20 AM on Monday
+        //Link Settings - Run at 3:50 PM on Monday
+        //Link Previews - Run at 3:20 PM on Monday
+        //Composer Regression - Run at 5:05 PM on Friday
         pipelineTriggers(
             [parameterizedCron('''
                  05 0 * * 5  %CONFIG_FILE=.sauce/composer_regression.config.yml
