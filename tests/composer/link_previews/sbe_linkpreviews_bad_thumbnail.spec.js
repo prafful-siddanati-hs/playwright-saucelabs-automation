@@ -19,7 +19,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Link containing bad thumbnail in composer', async ({ page }) => {
-	const sbe_url = 'https://www.kijiji.ca/b-dogs-puppies/vancouver/c126l1700287';
+	const sbe_url = 'https://www.cadnce.com/'; //Deliberately using a bad thumbnail link
 	const composeText = `Bad thumbnail link ${sbe_url} `.concat(Math.floor(Math.random() * 1000));
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
@@ -68,9 +68,5 @@ test('Link containing bad thumbnail in composer', async ({ page }) => {
 	await test.step('Veriy thumbnail error is no longer displayed', async () => {
 		await expect(composePage.badLinkThumbnailWarning).not.toBeVisible();
 		await expect(composePage.linkedinLinkPreviewTitle).not.toBeVisible();
-	});
-
-	await test.step('Close composer', async () => {
-		await composePage.closeComposer();
 	});
 });
