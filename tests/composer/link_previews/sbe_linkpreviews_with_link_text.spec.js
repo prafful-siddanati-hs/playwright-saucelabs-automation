@@ -63,8 +63,4 @@ test('Verify Link preview with text with link followed by more text', async ({pa
 		// await expect(composePage.twitterLinkPreviewTitle).toBeVisible();  // This is failing due to a bug in the product
 		// await expect(composePage.twitterLinkPreviewSource).toContainText(url);
 	});
-
-	await test.step('Close composer', async () => {
-		await composePage.closeComposer();
-	});
 });

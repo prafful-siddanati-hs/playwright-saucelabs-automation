@@ -76,8 +76,4 @@ test('Link preview with space', async ({page}) => {
 		await expect(composePage.twitterLinkPreviewTitle).toBeVisible();
 		await expect(composePage.twitterLinkPreviewSource).toHaveText(spaces_url);
 	});
-
-	await test.step('Close composer', async () => {
-		await composePage.closeComposer();
-	});
 });

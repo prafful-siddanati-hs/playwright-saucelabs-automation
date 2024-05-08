@@ -68,8 +68,4 @@ test('Link preview with mention followed by link', async ({page}) => {
 		// await expect(composePage.facebookLinkPreviewTitle).toBeVisible();  // This is failing due to a bug in the product
 		// await expect(composePage.facebookLinkPreviewSource).toContainText(url);
 	});
-
-	await test.step('Close composer', async () => {
-		await composePage.closeComposer();
-	});
 });
