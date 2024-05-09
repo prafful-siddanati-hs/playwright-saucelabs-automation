@@ -9,7 +9,7 @@ exports.LinkPresetsCreatePage = class LinkPresetsCreatePage {
 		this.linkPresetTrackingName = page.getByRole('button', { name: 'Custom' });
 		this.linkPresetCreateButton = page.getByRole('button', { name: 'Create new preset' });
 		this.linkPresetCancelButton = page.getByRole('button', { name: 'Cancel' });
-		this.linkSettingsApplyButton = page.getByRole('button', { name: 'Apply' });
+		this.linkSettingsApplyButton = page.locator('.vk-LinkSettingsApply');
 	}
 
 	async clickCreateButton() {

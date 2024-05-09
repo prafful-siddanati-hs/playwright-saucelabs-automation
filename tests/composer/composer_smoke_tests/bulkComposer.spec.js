@@ -71,6 +71,7 @@ test('Schedule a message using bulk composer', async ({ page }) => {
 	await test.step('Select the first message to edit', async () => {
 		await expect(bulkComposePage.firstMessageItem).toBeVisible();
 		bulkComposePage.firstMessageItem.click();
+		await bulkComposePage.verifyFacebookPreview('Message 1');
 	});
 
 	await test.step('Edit and verify preview', async () => {
