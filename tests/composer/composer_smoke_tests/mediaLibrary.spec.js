@@ -52,7 +52,8 @@ test('Schedule with image from media library', async ({page}) => {
 
 	await test.step('Write a message', async () => {
 		await composePage.writeMessage(mediaText);
-		await composePage.verifyGenericPreview(mediaText);
+		await composePage.verifyTwitterPreview(mediaText);
+		await composePage.verifyFacebookPreview(mediaText);
 	});
 
 	await test.step('Upload an image from media library', async () => {
@@ -63,7 +64,8 @@ test('Schedule with image from media library', async ({page}) => {
 	});
 
 	await test.step('Verify image preview', async () => {
-		await composePage.verifyGenericImagePreview();
+		await composePage.verifyTwitterImagePreview();
+		await composePage.verifyFacebookImagePreview();
 	});
 
 	await test.step('Schedule the message', async () => {

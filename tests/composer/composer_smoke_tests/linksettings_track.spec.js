@@ -36,7 +36,7 @@ test('Track applied linksettings', async ({ page }) => {
 		await loginPage.signIn('pw_link_track');
 		const isViewVisible = await Promise.race([
 			loginPage.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
-			loginPage.welcomeSelector.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+			loginPage.homePageWidget.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
 		]);
 
 		expect(isViewVisible).toBeTruthy();

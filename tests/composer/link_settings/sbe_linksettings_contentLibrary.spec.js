@@ -51,7 +51,7 @@ test('Link settings via content library template', async ({ page }) => {
 		await loginPage.signInSkipOnboarding('pw_cl_link_template');
 		const isViewVisible = await Promise.race([
 			loginPage.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
-			loginPage.welcomeSelector.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+			loginPage.homePageWidget.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
 		]);
 		expect(isViewVisible).toBeTruthy();
 	});

@@ -9,7 +9,8 @@ exports.LoginPage = class LoginPage {
 		this.password = page.locator('#loginPasswordInput');
 		this.loginSubmit = page.getByRole('button', { name: 'Sign in', exact: true });
 		this.streamsView = page.locator('#stream-migration-root');
-		this.welcomeSelector = page.getByRole('heading', { name: 'Welcome back,' });
+		this.homePageWidget = page.locator('.homepage-widget-announcements');
+		this.homeLoginButton = page.locator('//*[@data-button-type="primary"]//*[contains(text(), "Log In")]', {locationStrategy: 'xpath'});
 	}
 
 	async visit() {
@@ -50,17 +51,18 @@ exports.LoginPage = class LoginPage {
 	}
 
 	async logout() {
-		await this.page.context().addCookies([
-			{
-				name: '_SID_STAGE_TRUNK',
-				value: '',
-				domain: '*.staging.hootsuite.com',
-				path: '/',
-				expires: Date.now() / 1000 // Set expiration date to the current time to expire the cookie immediately
-			}
-		]);
-		console.log('Deleting cookies to force a logout. See PLAT-10602 for more details.');
+		// await this.page.context().addCookies([
+		// 	{
+		// 		name: '_SID_STAGE_TRUNK',
+		// 		value: '',
+		// 		domain: '*.staging.hootsuite.com',
+		// 		path: '/',
+		// 		expires: Date.now() / 1000 // Set expiration date to the current time to expire the cookie immediately
+		// 	}
+		// ]);
+		// console.log('Deleting cookies to force a logout. See PLAT-10602 for more details.');
 		await this.page.goto('/logout');
+		await expect(this.homeLoginButton).toBeVisible();
 	}
 
 	// Redirect to dashboard home after login to skip any onboarding
@@ -74,7 +76,7 @@ exports.LoginPage = class LoginPage {
 
 		const isViewVisible = await Promise.race([
 			this.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
-			this.welcomeSelector.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+			this.homePageWidget.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
 		]);
 
 		expect(isViewVisible).toBeTruthy();

@@ -50,7 +50,6 @@ test('Composer basic validations', async ({ page }) => {
 	});
 
 	await test.step('Verify preview for each network tab', async () => {
-		await composePage.verifyGenericPreview(composeBasicText);
 		await expect(composePage.twitterTab).toBeVisible();
 		await composePage.twitterTab.click();
 		await composePage.verifyTwitterPreview(composeBasicText);

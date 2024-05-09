@@ -43,7 +43,7 @@ test('Update link presets', async ({ page }) => {
 
 		const isViewVisible = await Promise.race([
 			loginPage.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
-			loginPage.welcomeSelector.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+			loginPage.homePageWidget.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
 		]);
 
 		expect(isViewVisible).toBeTruthy();

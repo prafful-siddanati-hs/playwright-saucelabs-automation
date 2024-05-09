@@ -27,7 +27,7 @@ test('Bitly link shortener creation', async ({ page }) => {
 	await loginPage.signInSkipOnboarding('bit_ly_user');
 	const isViewVisible = await Promise.race([
 		loginPage.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
-		loginPage.welcomeSelector.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+		loginPage.homePageWidget.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
 	]);
 	expect(isViewVisible).toBeTruthy();
 
