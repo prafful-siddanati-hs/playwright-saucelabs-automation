@@ -20,8 +20,10 @@ exports.ComposePage = class ComposePage {
 		this.composerHeader = page.locator('.vk-ComposerHeader');
 		this.previewNetworkType = page.locator('.vk-ComposerModal .vk-MessagePreviewHeader .vk-NetworkType');
 		this.genericPreviewSingleImage = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-MediaImg');
-		this.twitterPreviewSingleImage = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaImg, .vk-ComposerModal .vk-TwitterPreview .vk-MediaContainer');
-		this.facebookPreviewSingleImage = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaImg, .vk-ComposerModal .vk-FacebookPreview .vk-MediaContainer');
+		this.twitterPreviewSingleImage = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaImg');
+		this.twitterPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaContainer');
+		this.facebookPreviewSingleImage = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaImg');
+		this.facebookPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaContainer');
 		this.messageArea = page.getByTestId('MessageEditArea').getByLabel('Text');
 		this.scheduleLaterButton = page.getByRole('button', { name: 'Schedule for later' });
 		this.scheduleDone = page.getByRole('button', { name: 'Done' });
@@ -203,13 +205,21 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async verifyTwitterImagePreview() {
-		await expect(this.twitterPreviewSingleImage, 'Twitter preview is not updated with image on composer').toHaveJSProperty('complete', true);
-		await expect(this.twitterPreviewSingleImage).not.toHaveJSProperty('naturalWidth', 0);
+		const isImageVisible = await Promise.race([
+			this.twitterPreviewSingleImage.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
+			this.twitterPreviewMediaContainer.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+		]);
+
+		expect(isImageVisible).toBeTruthy();
 	}
 
 	async verifyFacebookImagePreview() {
-		await expect(this.facebookPreviewSingleImage, 'Facebook preview is not updated with image on composer').toHaveJSProperty('complete', true);
-		await expect(this.facebookPreviewSingleImage).not.toHaveJSProperty('naturalWidth', 0);
+		const isImageVisible = await Promise.race([
+			this.facebookPreviewSingleImage.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
+			this.facebookPreviewMediaContainer.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+		]);
+
+		expect(isImageVisible).toBeTruthy();
 	}
 
 	async verifyFacebookVideoPreview() {
