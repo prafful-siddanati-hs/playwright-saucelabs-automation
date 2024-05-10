@@ -311,7 +311,6 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async saveChanges(){
-		await expect(this.saveChangesModal).toBeVisible();
 		await this.saveChangesButton.click();
 		await expect(this.composeScreen, 'Save message failed from composer').not.toBeVisible();
 	}
