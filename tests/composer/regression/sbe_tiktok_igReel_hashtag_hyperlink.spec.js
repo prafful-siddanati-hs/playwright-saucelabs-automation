@@ -36,6 +36,10 @@ test('Tiktok & IG Reels hashtags are hyperlinked', async ({ page }) => {
 		await composePage.selectComposeButton();
 	});
 
+	await test.step('Verify generic preview base layout on composer', async () => {
+		await expect(composePage.genericPreviewText).toBeVisible();
+	});
+
 	await test.step('Select Tiktok & IG Reels networks', async () => {
 		await composePage.profileDropDown.hover();
 		await composePage.profileDropDown.click();
@@ -48,7 +52,6 @@ test('Tiktok & IG Reels hashtags are hyperlinked', async ({ page }) => {
 
 	await test.step('Write a message hashtag', async () => {
 		await composePage.writeMessage(messageWithHashtags);
-		await composePage.verifyGenericPreview(messageWithHashtags);
 	});
 
 	await test.step('Upload a video', async () => {

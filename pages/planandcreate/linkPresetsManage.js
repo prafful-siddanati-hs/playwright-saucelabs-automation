@@ -3,7 +3,8 @@ exports.LinkPresetsManagePage = class LinkPresetsManagePage {
 	constructor(page) {
 		this.page = page;
 		this.createNewLinkSettings = page.getByRole('button', { name: 'Create new link settings' });
-		this.createBitlyButton = page.getByRole('button', { name: 'Add new Bit.ly shortener' });
+		this.createBitlyButton = page.getByRole('button', { name: 'Create new Bit.ly shortener' });
+		this.addNewBitlyButton = page.getByRole('button', { name: 'Add new Bit.ly shortener' });
 		this.shortenerInput = page.locator('.rc-TextInput input');
 		this.backButton = page.getByLabel('Back to previous screen');
 		this.moreOptionsButton = page.locator('.-presetActions [aria-label="More options"]');
@@ -17,10 +18,11 @@ exports.LinkPresetsManagePage = class LinkPresetsManagePage {
 	}
 
 	async createBitlyShortener(shortenerName) {
-		await this.createNewLinkSettings.click();
+		await this.createBitlyButton.click();
 		await this.shortenerInput.fill(shortenerName);
 		const page1Promise = this.page.waitForEvent('popup');
-		await this.createBitlyButton.click();
+		await expect(this.addNewBitlyButton).toBeVisible();
+		await this.addNewBitlyButton.click();
 		const page1 = await page1Promise;
 		await page1.getByRole('button', { name: 'Close' }).click();
 		await page1.getByRole('link', { name: 'Sign in with your Bitly account' }).click();
