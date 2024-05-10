@@ -12,6 +12,7 @@ const tearDown = require('../../../custom-commands/tearDown');
 const { getObjectByName } = require('../../../globals');
 const { formatISO, addHours } = require('date-fns');
 const { ComposePage } = require('../../../pages/planandcreate/compose');
+const { HomePage } = require('../../../pages/homepage');
 let memberId;
 
 test.afterEach(async ({ page }) => {
@@ -21,7 +22,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Close composer and save edits', async ({page}) => {
+test('Navigate away from composer and save edits', async ({page}) => {
 	let originalText = `Save edits while closing ${Date.now()}`;
 	let editedText = originalText.concat('--edited');
 	const scheduleTime = addHours(new Date(), 1);
@@ -31,6 +32,7 @@ test('Close composer and save edits', async ({page}) => {
 	const loginPage = new LoginPage(page);
 	const plannerPage = new PlannerPage(page);
 	const composePage = new ComposePage(page);
+	const homePage = new HomePage(page);
 
 
 	await test.step('Setup user & accounts', async () => {
@@ -58,8 +60,9 @@ test('Close composer and save edits', async ({page}) => {
 		);
 	});
 
-	await test.step('Hide native posts', async () => {
+	await test.step('Hide native posts & recommended times', async () => {
 		await plannerPage.hideNativePosts(memberId);
+		await plannerPage.hideRecommendedTimes(memberId);
 	});
 
 	await test.step('Navigate to planner', async () => {
@@ -83,13 +86,19 @@ test('Close composer and save edits', async ({page}) => {
 		await composePage.messageArea.fill(`${editedText}`);
 	});
 
-	await test.step('Close composer and save edits', async () => {
-		await composePage.exitComposerButton.click();
+	await test.step('Click on home page and save edits', async () => {
+		await homePage.homePageGlobalNavButton.click();
 		await composePage.saveChanges();
+		await expect(homePage.homePageCreateButton).toBeVisible();
+	});
+
+	await test.step('Navigate to planner', async () => {
+		await expect(composePage.feCallOuts).not.toBeVisible();
+		await plannerPage.visit();
 	});
 
 	await test.step('Verify updated message', async () => {
-		await expect(composePage.feCallOuts).not.toBeVisible();
+		await plannerPage.showPreviewPane(editedText);
 		await plannerPage.verifyTextInPreviewPane(editedText);
 	});
 

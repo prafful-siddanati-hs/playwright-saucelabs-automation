@@ -85,7 +85,6 @@ exports.ComposePage = class ComposePage {
 		this.videoRemoveButton = page.locator('.rc-Composer .videoThumbnail .vk-MediaThumbnailDelete');
 		this.imageRemoveButton = page.locator('.rc-Composer .imageThumbnail .vk-MediaThumbnailDelete');
 		this.pdfRemoveButton = page.locator('.rc-Composer .pdfThumbnail .vk-MediaThumbnailDelete');
-		this.exitComposerButton = page.getByLabel('Exit Composer');
 		this.discardPost = page.getByRole('button', { name: 'Discard post' });
 		this.addTrackingButton = page.getByRole('button', { name: 'Add tracking' });
 		this.linkSettingsModal = page.getByLabel('Apply Link Settings modal');
@@ -110,6 +109,7 @@ exports.ComposePage = class ComposePage {
 		this.badLinkThumbnailWarning = page.getByRole('heading', { name: 'This website is preventing us from displaying image previews. Please upload a custom thumbnail.' });
 		this.twitterLinkPreviewCustomizationInfo = page.getByRole('heading', { name: 'Link preview customization is not supported by Twitter' });
 		this.twitterCharacterLimitError = page.getByTestId('banner-container').locator('div').filter({ hasText: 'Your text exceeds the character limit for Twitter' }).first();
+		this.saveChangesModal = page.getByRole('heading', { name: 'Save your changes?' });
 	}
 
 	async selectComposeButton() {
@@ -311,6 +311,7 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async saveChanges(){
+		await expect(this.saveChangesModal).toBeVisible();
 		await this.saveChangesButton.click();
 		await expect(this.composeScreen, 'Save message failed from composer').not.toBeVisible();
 	}

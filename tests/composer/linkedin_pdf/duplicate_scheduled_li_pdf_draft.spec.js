@@ -99,6 +99,9 @@ test('Duplicate a scheduled draft with LinkedIn PDF', async ({ page }) => {
 
 	await test.step('Verify scheduled message in planner', async () => {
 		await expect(composePage.feCallOuts).not.toBeVisible();
+		await expect(plannerPage.calendarTab).toBeVisible();
+		await plannerPage.calendarTab.click();
+		await plannerPage.showPreviewPane(pdfDraftText.concat('--Duplicated'));
 		await plannerPage.verifyTextInPreviewPane(pdfDraftText.concat('--Duplicated'));
 		await plannerPage.verifyPDFInPreviewPane();
 	});
