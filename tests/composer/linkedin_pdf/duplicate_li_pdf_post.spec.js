@@ -38,13 +38,6 @@ test('Duplicate a LinkedIn PDF post', async ({page}) => {
 
 	await test.step('Login as test enterprise user', async () => {
 		await loginPage.signInSkipOnboarding('pw_duplicate_li_pdf');
-
-		const isViewVisible = await Promise.race([
-			loginPage.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
-			loginPage.homePageWidget.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
-		]);
-
-		expect(isViewVisible).toBeTruthy();
 	});
 
 	await test.step('Hide native posts', async () => {

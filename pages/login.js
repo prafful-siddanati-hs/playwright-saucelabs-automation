@@ -69,6 +69,13 @@ exports.LoginPage = class LoginPage {
 	async signInSkipOnboarding(member) {
 		await this.signIn(member);
 		await this.page.goto('/dashboard#/home');
+
+		const isViewVisible = await Promise.race([
+			this.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
+			this.homePageWidget.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+		]);
+
+		expect(isViewVisible).toBeTruthy();
 	}
 
 	async signInAsProUser(member) {
