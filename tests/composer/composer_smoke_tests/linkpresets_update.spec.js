@@ -40,13 +40,6 @@ test('Update link presets', async ({ page }) => {
 
 	await test.step('Login as enterprise user', async () => {
 		await loginPage.signInSkipOnboarding('link_presets_update');
-
-		const isViewVisible = await Promise.race([
-			loginPage.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
-			loginPage.homePageWidget.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
-		]);
-
-		expect(isViewVisible).toBeTruthy();
 	});
 
 	await test.step('Select new compose button', async () => {

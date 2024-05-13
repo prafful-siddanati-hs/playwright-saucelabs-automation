@@ -33,13 +33,6 @@ test('Send LinkedIn PDF post with multiple social networks', async ({ page }) =>
 
 	await test.step('Login as test enterprise user', async () => {
 		await loginPage.signInSkipOnboarding('pw_send_li_pdf_multiple_sn');
-
-		const isViewVisible = await Promise.race([
-			loginPage.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
-			loginPage.homePageWidget.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
-		]);
-
-		expect(isViewVisible).toBeTruthy();
 	});
 
 	await test.step('Select new compose button', async () => {

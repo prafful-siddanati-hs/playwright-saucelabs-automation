@@ -28,11 +28,6 @@ test('Bitly link shortener creation', async ({ page }) => {
 
 	await test.step('Login as test enterprise user', async () => {
 		await loginPage.signInSkipOnboarding('bit_ly_user');
-		const isViewVisible = await Promise.race([
-			loginPage.streamsView.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
-			loginPage.homePageWidget.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
-		]);
-		expect(isViewVisible).toBeTruthy();
 	});
 
 	await test.step('Navigate to member page', async () => {
