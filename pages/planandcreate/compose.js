@@ -88,7 +88,10 @@ exports.ComposePage = class ComposePage {
 		this.imageRemoveButton = page.locator('.rc-Composer .imageThumbnail .vk-MediaThumbnailDelete');
 		this.pdfRemoveButton = page.locator('.rc-Composer .pdfThumbnail .vk-MediaThumbnailDelete');
 		this.discardPost = page.getByRole('button', { name: 'Discard post' });
-		this.addTrackingButton = page.getByRole('button', { name: 'Add tracking' });
+		this.shortenWithOwlyButton = page.getByLabel('Shorten with Ow.ly');
+		this.addTrackingButton = page.getByLabel('Add tracking');
+		this.editCustomLinkSettingsButton = page.getByLabel('Edit custom link settings');
+		this.editLinkShorteningButton = page.getByLabel('Edit link shortening');
 		this.linkSettingsModal = page.getByLabel('Apply Link Settings modal');
 		this.presetSelectDropdown = page.getByTestId('Preset-select');
 		this.linkSettingsNoTracker = page.getByText('Tracking: No Tracking');
@@ -96,13 +99,13 @@ exports.ComposePage = class ComposePage {
 		this.customizePresetButton = page.locator('//*[@aria-label="Apply Link Settings modal"]//*[text()="Customize"]', {locationStrategy: 'xpath'});
 		this.linkSettingsShortenerDropdown = page.getByLabel('No Shortener');
 		this.linkSettingsTrackerDropdown = page.getByLabel('No Tracking');
-		this.linkSettingsCutomTracker = page.getByRole('option', { name: 'Custom' });
+		this.linkSettingsCutomTracker = page.getByTestId('Custom-select-item', {hasText: 'Custom'});
 		this.trackingParametersTable = page.getByTestId('TrackingParametersTable');
 		this.linkSettingsAddParameterButton = page.getByTestId('AddParameterButton');
 		this.parameterName = page.getByTestId('CompoundParameterNameInput-0');
 		this.parameterValue = page.getByTestId('CompoundParameterValueInput-0-0');
 		this.linkShortener = page.getByTestId('Ow.ly-select-item');
-		this.manageLinkPreset = page.getByRole('option', { name: 'Manage link presets' });
+		this.manageLinkPreset = page.getByTestId('Manage link presets-select-item', {hasText: 'Manage link presets'});
 		this.shortenWithOwlyCaption = page.getByTestId('owlyText').locator('div');
 		this.editAppliedLinkPreset = page.getByTestId('MessageEditArea').getByRole('button', { name: 'Edit' });
 		this.selectLinkDropdown = page.getByTestId('Select a link-select').locator('div').first();
@@ -395,7 +398,8 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async selectLink(url) {
-		const linkToSelect = this.page.getByRole('option', { name: `${url}` });
+		const linkToSelect =  this.page.locator(`[data-testid="${url}-select-item"]`, { hasText: url });
+
 		await expect(this.selectLinkDropdown, 'Link dropdown is not visible').toBeVisible();
 		await this.selectLinkDropdown.click();
 		await expect(linkToSelect, 'Selected link is not displayed').toBeVisible();
@@ -403,7 +407,8 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async selectTracker(tracker) {
-		const linkSettingsTracker = this.page.getByRole('option', { name: `${tracker}`});
+		const linkSettingsTracker = this.page.locator(`[data-testid="${tracker}-select-item"]`, { hasText: tracker });
+
 		await expect(this.linkSettingsTrackerDropdown, 'Link settings track dropdown is not visible').toBeVisible();
 		await this.linkSettingsTrackerDropdown.click();
 		await linkSettingsTracker.click();

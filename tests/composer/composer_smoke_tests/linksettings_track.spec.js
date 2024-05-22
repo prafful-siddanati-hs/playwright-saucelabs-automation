@@ -85,6 +85,7 @@ test('Track applied linksettings', async ({ page }) => {
 		await expect(composePage.linkSettingsApplyButton).toBeVisible();
 		await composePage.linkSettingsApplyButton.click();
 		await expect(composePage.feCallOuts).not.toBeVisible();
+		await expect(composePage.editCustomLinkSettingsButton).toBeVisible();
 	});
 
 	await test.step('Verify the tracker is applied', async () => {
