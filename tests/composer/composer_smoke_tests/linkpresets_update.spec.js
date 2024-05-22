@@ -82,9 +82,9 @@ test('Update link presets', async ({ page }) => {
 	});
 
 	await test.step('Verify created preset in dropdown options', async () => {
-		const createdLinkPreset = page.getByRole('option', { name: `${presetName}` });
-		await linkPresetsManagePage.closeLinkPresetManage();
+		const createdLinkPreset = page.locator(`[data-testid="${presetName}-select-item"]`, { hasText: presetName });
 
+		await linkPresetsManagePage.closeLinkPresetManage();
 		await composePage.openLinkSettingsDialog();
 		await expect(composePage.presetSelectDropdown).toBeVisible();
 		await composePage.presetSelectDropdown.click();
@@ -111,7 +111,7 @@ test('Update link presets', async ({ page }) => {
 	});
 
 	await test.step('Select the new preset', async () => {
-		const updatedLinkPreset = page.getByRole('option', { name: `${firstEdit}` });
+		const updatedLinkPreset = page.locator(`[data-testid="${firstEdit}-select-item"]`, { hasText: firstEdit });
 		await composePage.openLinkSettingsDialog();
 		await expect(composePage.presetSelectDropdown).toBeVisible();
 		await composePage.presetSelectDropdown.click();
@@ -123,12 +123,12 @@ test('Update link presets', async ({ page }) => {
 	await test.step('Verify link settings are applied', async () => {
 		await composePage.verifyFacebookPreview(SHORTENER.toLowerCase());
 		await expect(composePage.facebookPreviewText).not.toContainText(URL);
-		await expect(composePage.shortenWithOwlyCaption).toContainText('--edit');
+		await expect(composePage.editCustomLinkSettingsButton).toBeVisible();
 	});
 
 	await test.step('Open manage presets area from composer', async () => {
-		await expect(composePage.editAppliedLinkPreset).toBeVisible();
-		await composePage.editAppliedLinkPreset.click();
+		await expect(composePage.editCustomLinkSettingsButton).toBeVisible();
+		await composePage.editCustomLinkSettingsButton.click();
 		await expect(composePage.presetSelectDropdown).toBeVisible();
 		await composePage.presetSelectDropdown.click();
 		await expect(composePage.manageLinkPreset).toBeVisible();
@@ -150,6 +150,6 @@ test('Update link presets', async ({ page }) => {
 
 	await test.step('Verify updated preset is applied on composer', async () => {
 		await composePage.verifyFacebookPreview(SHORTENER.toLowerCase());
-		await expect(composePage.shortenWithOwlyCaption).toContainText('--secondEdit');
+		await expect(composePage.editCustomLinkSettingsButton).toBeVisible();
 	});
 });

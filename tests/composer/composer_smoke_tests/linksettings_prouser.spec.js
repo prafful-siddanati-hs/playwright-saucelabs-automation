@@ -75,6 +75,7 @@ test('Verify links settings on composer', async ({ page }) => {
 		await expect(composePage.linkSettingsApplyButton).toBeVisible();
 		await composePage.linkSettingsApplyButton.click();
 		await expect(composePage.feCallOuts).not.toBeVisible();
+		await expect(composePage.editCustomLinkSettingsButton).toBeVisible();
 	});
 
 	await test.step('Verify the shortened url is updated in preview', async () => {
