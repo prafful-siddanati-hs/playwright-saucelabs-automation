@@ -93,7 +93,7 @@ exports.ComposePage = class ComposePage {
 		this.editCustomLinkSettingsButton = page.getByLabel('Edit custom link settings');
 		this.editLinkShorteningButton = page.getByLabel('Edit link shortening');
 		this.linkSettingsModal = page.getByLabel('Apply Link Settings modal');
-		this.presetSelectDropdown = page.getByTestId('Preset-select');
+		this.presetSelectDropdown = page.locator('//*[@aria-label="Apply Link Settings modal"]//*[@aria-label="Select Preset Area"]//*[@data-testid="Preset-select"]//*[@aria-haspopup ="listbox"]', {locationStrategy: 'xpath'});
 		this.linkSettingsNoTracker = page.getByText('Tracking: No Tracking');
 		this.linkSettingsNoShortner = page.getByText('Shortener: No Shortener');
 		this.customizePresetButton = page.locator('//*[@aria-label="Apply Link Settings modal"]//*[text()="Customize"]', {locationStrategy: 'xpath'});
