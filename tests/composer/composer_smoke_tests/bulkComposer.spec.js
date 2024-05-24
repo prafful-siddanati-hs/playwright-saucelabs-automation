@@ -65,7 +65,7 @@ test('Schedule a message using bulk composer', async ({ page }) => {
 	});
 
 	await test.step('Verify there are no errors on message dashboard', async () => {
-		await expect(bulkComposePage.bulkComposerError).not.toBeVisible();
+		await expect(bulkComposePage.bulkComposerSuccessMessage).toBeVisible();
 	});
 
 	await test.step('Select the first message to edit', async () => {

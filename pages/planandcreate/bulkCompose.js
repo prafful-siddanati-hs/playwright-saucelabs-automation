@@ -13,6 +13,7 @@ exports.BulkComposePage = class BulkComposePage {
 		this.reviewPostsButton = page.getByRole('button', { name: 'Review posts' });
 		this.messageDashboard = page.locator('.rc-MessageDashboard');
 		this.messageEditArea = page.getByTestId('MessageEditArea').locator('div').first();
+		this.bulkComposerSuccessMessage = page.locator('//div[contains(@class, "rc-BulkComposer")]//h2[contains(text(), "Your posts are ready to go!")]', {locator: 'xpath'});
 		this.bulkComposerError = page.locator('.rc-BulkComposer [data-testid="MessageEditArea"] h2');
 		this.firstMessageItem = page.getByTestId('messageItemTop').first();
 		this.messageArea = page.getByTestId('MessageEditArea').getByLabel('Text');
