@@ -1,4 +1,4 @@
-const { test, expect} = require('@playwright/test');
+const { test } = require('@playwright/test');
 const tearDown = require('../../../custom-commands/tearDown');
 const {MemberOverViewPage} = require('../../../pages/memberOverview');
 const {LinkPresetsManagePage} = require('../../../pages/planandcreate/linkPresetsManage');

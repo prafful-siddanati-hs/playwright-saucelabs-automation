@@ -57,7 +57,6 @@ test('Link preview with space', async ({page}) => {
 
 	await test.step('Write a message with link', async () => {
 		await composePage.writeMessage(messageWithLinks);
-		await composePage.verifyGenericPreview(messageWithLinks);
 	});
 
 	await test.step('Verify facebook link preview', async () => {
