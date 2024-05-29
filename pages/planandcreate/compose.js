@@ -384,7 +384,7 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async selectMention(mentionName) {
-		const mentionItem = this.page.locator('div').filter({hasText: new RegExp(`^${mentionName}$`)}).first();
+		const mentionItem = this.page.locator(`(//div[contains(@class, "vk-Mention")]/*[contains(text(),"${mentionName}")])[1]`, {locationStrategy: 'xpath'});
 
 		await this.mentionsList.isVisible();
 		await mentionItem.isVisible();
