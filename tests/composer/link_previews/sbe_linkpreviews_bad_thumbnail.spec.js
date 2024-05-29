@@ -19,8 +19,8 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Link containing bad thumbnail in composer', async ({ page }) => {
-	const sbe_url = 'https://www.cadnce.com/'; //Deliberately using a bad thumbnail link
-	const composeText = `Bad thumbnail link ${sbe_url} `.concat(Math.floor(Math.random() * 1000));
+	const sbe_url = 'https://www.ca'; //Deliberately using an incomplete link to generate thumbnail error
+	const composeText = `Bad thumbnail link ${Math.floor(Math.random() * 1000)} ${sbe_url} `;
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
@@ -58,7 +58,8 @@ test('Link containing bad thumbnail in composer', async ({ page }) => {
 	});
 
 	await test.step('Verify bad thumbnail warning', async () => {
-		await expect(composePage.badLinkThumbnailWarning).toBeVisible();
+		//Bad thumbnail warning takes a few seconds to appear
+		await expect(composePage.badLinkThumbnailWarning).toBeVisible({ timeout: 3000 });
 	});
 
 	await test.step('Upload a custom thumbnail', async () => {
