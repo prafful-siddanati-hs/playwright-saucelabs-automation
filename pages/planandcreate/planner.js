@@ -13,7 +13,7 @@ exports.PlannerPage = class PlannerPage {
 		/**
      * - - - - - PLANNER GENERIC - - - - -
      */
-		this.plannerButton = page.getByLabel('Planner', { exact: true });
+		this.plannerButton = page.getByLabel('Plan content', { exact: true });
 		this.detailPane = page.locator('.vk-Planner .vk-DetailPane');
 		this.genericDetailPaneText = page.locator('.vk-GenericPreview .vk-PreviewMessageText');
 		this.unschedPostCheckbox = page.getByTestId('UnscheduledPostsCheckBoxContainer');

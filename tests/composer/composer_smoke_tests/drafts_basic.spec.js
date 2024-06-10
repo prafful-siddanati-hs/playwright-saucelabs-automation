@@ -62,6 +62,7 @@ test('Create and edit draft using composer', async ({ page }) => {
 	});
 
 	await test.step('Verify and edit the draft', async () => {
+		await draftPage.visit();
 		await draftPage.verifyDraftMessage(profile, draftText, userName);
 		await draftPage.editDraftByContent(draftText);
 		await composePage.updateDraft(draftUpdate);
