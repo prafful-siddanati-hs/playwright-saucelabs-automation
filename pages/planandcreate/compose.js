@@ -9,7 +9,7 @@ const assert = require('assert');
 exports.ComposePage = class ComposePage {
 	constructor(page) {
 		this.page = page;
-		this.composeButton = page.getByLabel('Composer', { exact: true });
+		this.composeButton = page.getByLabel('Post', { exact: true });
 		this.postButton = page.locator('div.animated-secondary button[aria-label=\'Post\']');
 		this.composeScreen = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal');
 		this.profileDropDown = page.locator('[aria-label="Select a social account (required)"]');
@@ -117,9 +117,22 @@ exports.ComposePage = class ComposePage {
 		this.saveChangesModal = page.getByRole('heading', { name: 'Save your changes?' });
 	}
 
+	async setDarkLaunchCookies() {
+		const url = this.page.url();
+		await this.page.context().addCookies([
+			{
+				name: 'PGR_2155_NAVIGATION_TEST',
+				value: '1',
+				url: url,
+			}
+		]);
+		this.page.reload();
+	}
+
 	async selectComposeButton() {
-		await this.page.waitForSelector('button.vk-NewPostButton');
-		const composeHandle = await this.page.$('button.vk-NewPostButton');
+		await this.setDarkLaunchCookies();
+		await this.page.waitForSelector('button[aria-label="Create posts and more"]');
+		const composeHandle = await this.page.$('button[aria-label="Create posts and more"]');
 
 		if (composeHandle) {
 			await composeHandle.click();
