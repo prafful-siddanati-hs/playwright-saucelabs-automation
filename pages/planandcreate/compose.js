@@ -66,7 +66,8 @@ exports.ComposePage = class ComposePage {
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 		this.moreButton = page.getByLabel('more', { exact: true });
 		this.saveDraftFromDropdown = page.getByRole('button', { name: 'Save as draft', exact: true });
-		this.mediaLibraryButton = page.getByLabel('Media library', { exact: true });
+		this.addMediaButton = page.locator('.vk-ComposerModal [aria-label="Add media"]');
+		this.mediaLibraryButton = page.locator('.vk-ComposerModal [aria-label="Media library"]');
 		this.mediaLibraryCloseButton = page.getByRole('button', { name: 'Close media library'});
 		this.termsOfServiceWall = page.locator('.vk-TermsOfServiceWall button');
 		this.mediaLibraryRetryError= page.getByTestId('MediaLibraryErrorRetry');
@@ -356,6 +357,7 @@ exports.ComposePage = class ComposePage {
 		await expect(this.feCallOuts).toHaveCount(1);
 	}
 	async openMediaLibrary() {
+		await this.addMediaButton.click();
 		await this.mediaLibraryButton.click();
 		await this.page.waitForTimeout(1000);
 		if (await this.termsOfServiceWall.isVisible()) {
