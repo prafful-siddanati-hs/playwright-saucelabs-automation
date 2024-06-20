@@ -116,6 +116,10 @@ exports.ComposePage = class ComposePage {
 		this.twitterLinkPreviewCustomizationInfo = page.getByText('Link preview customization is not supported by Twitter');
 		this.twitterCharacterLimitError = page.getByTestId('banner-container').locator('div').filter({ hasText: 'Your text exceeds the character limit for Twitter' }).first();
 		this.saveChangesModal = page.getByRole('heading', { name: 'Save your changes?' });
+		this.composeTextAreaErrorTitle = page.locator('.rc-MessageEditText .vk-InputBanner h2');
+		this.composeTextAreaErrorDescription = page.locator('.rc-MessageEditText .vk-InputBanner');
+		this.mediaFirstError = page.locator('//div[contains(@class, "rc-MediaPicker")]//div[contains(@class, "vk-InputBanner")][1]//h2[text()="Video frame rate is too high"]/..//*[text() = "Twitter supports video frame rates up to 60 fps. Your video is 120 fps."]');
+		this.mediaSecondError = page.locator('//div[contains(@class, "rc-MediaPicker")]//div[contains(@class, "vk-InputBanner")][last()]//h2[contains(text(),"Video frame rate is too high")]/..//*[contains(text(),"Twitter supports video frame rates up to 60 fps. Your video is 120 fps.")]');
 	}
 
 	async setDarkLaunchCookies() {
