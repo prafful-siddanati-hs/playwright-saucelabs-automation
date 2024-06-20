@@ -9,8 +9,7 @@ const SOCIAL_NETWORK_ERROR_TITLE = 'Oops! You forgot to select a social account'
 const SOCIAL_NETWORK_ERROR_DESCRIPTION = 'Please choose one or more social accounts to publish to';
 const TEXT_AREA_ERROR_TITLE = 'Oops! You haven\'t added any text';
 const TEXT_AREA_ERROR_DESCRIPTION = 'Twitter requires text to be included';
-const MEDIA_ERROR_TITLE = 'Video frame rate is too high';
-const MEDIA_ERROR_DESCRIPTION = 'Twitter supports video frame rates up to 60 fps. Your video is 120 fps.';
+
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
 
@@ -60,8 +59,8 @@ test('Send now validations', async ({ page }) => {
 	});
 
 	await test.step('Verify empty text error', async () => {
-		await expect(page.getByRole('heading', { name: TEXT_AREA_ERROR_TITLE })).toBeVisible();
-		await expect(page.getByRole('heading', { name: TEXT_AREA_ERROR_DESCRIPTION })).toBeVisible();
+		await expect(composePage.composeTextAreaErrorTitle).toContainText(TEXT_AREA_ERROR_TITLE);
+		await expect(composePage.composeTextAreaErrorDescription).toContainText(TEXT_AREA_ERROR_DESCRIPTION);
 	});
 
 	await test.step('Upload invalid video file', async () => {
@@ -70,8 +69,8 @@ test('Send now validations', async ({ page }) => {
 	});
 
 	await test.step('Verify invalid video error', async () => {
-		await expect(page.getByRole('heading', { name: MEDIA_ERROR_TITLE })).toBeVisible();
-		await expect(page.getByRole('heading', { name: MEDIA_ERROR_DESCRIPTION })).toBeVisible();
+		await expect(composePage.mediaFirstError).toBeVisible();
+		await expect(composePage.mediaSecondError).toBeVisible();
 	});
 
 	await test.step('Remove video from message', async () => {
