@@ -116,10 +116,12 @@ exports.ComposePage = class ComposePage {
 		this.twitterLinkPreviewCustomizationInfo = page.getByText('Link preview customization is not supported by Twitter');
 		this.twitterCharacterLimitError = page.getByTestId('banner-container').locator('div').filter({ hasText: 'Your text exceeds the character limit for Twitter' }).first();
 		this.saveChangesModal = page.getByRole('heading', { name: 'Save your changes?' });
-		this.composeTextAreaErrorTitle = page.locator('.rc-MessageEditText .vk-InputBanner h2');
-		this.composeTextAreaErrorDescription = page.locator('.rc-MessageEditText .vk-InputBanner');
-		this.mediaFirstError = page.locator('//div[contains(@class, "rc-MediaPicker")]//div[contains(@class, "vk-InputBanner")][1]//h2[text()="Video frame rate is too high"]/..//*[text() = "Twitter supports video frame rates up to 60 fps. Your video is 120 fps."]');
-		this.mediaSecondError = page.locator('//div[contains(@class, "rc-MediaPicker")]//div[contains(@class, "vk-InputBanner")][last()]//h2[contains(text(),"Video frame rate is too high")]/..//*[contains(text(),"Twitter supports video frame rates up to 60 fps. Your video is 120 fps.")]');
+		this.composeTextAreaErrorTitle = page.locator('//*[@aria-labelledby="message-tab-bar-twitter"]//*[text()="Oops! You haven\'t added any text"]', {locationStrategy: 'xpath'});
+		this.composeTextAreaErrorDescription = page.locator('//*[@aria-labelledby="message-tab-bar-twitter"]//*[text()="Twitter requires text to be included"]', {locationStrategy: 'xpath'});
+		this.mediaFirstError = page.locator('//div[contains(@class, "rc-MediaPicker")]//*[(@role="alert")]//*[text()="Video frame rate is too high"]', {locationStrategy: 'xpath'});
+		this.mediaSecondError = page.locator('//div[contains(@class, "rc-MediaPicker")]//*[(@role="alert")]//*[text()="Twitter supports video frame rates up to 60 fps. Your video is 120 fps."]');
+		this.socialNetworkErrorTitle = page.locator('//div[contains(@class, "vk-ProfileSelectorError")]//*[(@role="alert")]//*[text()="Oops! You forgot to select a social account"]', {locationStrategy: 'xpath'});
+		this.socialNetworkErrorDescription = page.locator('//div[contains(@class, "vk-ProfileSelectorError")]//*[(@role="alert")]//*[text()="Please choose one or more social accounts to publish to"]', {locationStrategy: 'xpath'});
 	}
 
 	async setDarkLaunchCookies() {

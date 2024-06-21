@@ -5,11 +5,6 @@ const { LoginPage } = require('../../../pages/login');
 const { getObjectByName } = require('../../../globals');
 const { ComposePage } = require('../../../pages/planandcreate/compose');
 
-const SOCIAL_NETWORK_ERROR_TITLE = 'Oops! You forgot to select a social account';
-const SOCIAL_NETWORK_ERROR_DESCRIPTION = 'Please choose one or more social accounts to publish to';
-const TEXT_AREA_ERROR_TITLE = 'Oops! You haven\'t added any text';
-const TEXT_AREA_ERROR_DESCRIPTION = 'Twitter requires text to be included';
-
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
 
@@ -42,8 +37,8 @@ test('Send now validations', async ({ page }) => {
 	});
 
 	await test.step('Verify select a social network error', async () => {
-		await expect(page.getByRole('heading', { name: SOCIAL_NETWORK_ERROR_TITLE })).toBeVisible();
-		await expect(page.getByText(SOCIAL_NETWORK_ERROR_DESCRIPTION)).toBeVisible();
+		await expect(composePage.socialNetworkErrorTitle).toBeVisible();
+		await expect(composePage.socialNetworkErrorDescription).toBeVisible();
 	});
 
 	await test.step('Select twitter account', async () => {
@@ -59,8 +54,8 @@ test('Send now validations', async ({ page }) => {
 	});
 
 	await test.step('Verify empty text error', async () => {
-		await expect(composePage.composeTextAreaErrorTitle).toContainText(TEXT_AREA_ERROR_TITLE);
-		await expect(composePage.composeTextAreaErrorDescription).toContainText(TEXT_AREA_ERROR_DESCRIPTION);
+		await expect(composePage.composeTextAreaErrorTitle).toBeVisible();
+		await expect(composePage.composeTextAreaErrorDescription).toBeVisible();
 	});
 
 	await test.step('Upload invalid video file', async () => {
