@@ -112,7 +112,7 @@ exports.ComposePage = class ComposePage {
 		this.selectLinkDropdown = page.getByTestId('Select a link-select').locator('div').first();
 		this.linkShortener = page.getByTestId('Ow.ly-select-item');
 		this.linkSettingsApplyButton = page.locator('//*[@aria-label="Apply Link Settings modal"]//*[text()="Apply"]', {locationStrategy: 'xpath'});
-		this.badLinkThumbnailWarning = page.getByRole('heading', { name: 'This website is preventing us from displaying image previews. Please upload a custom thumbnail.' });
+		this.badLinkThumbnailWarning = page.locator('//*[@aria-labelledby="message-tab-bar-linkedIn"]//*[text()="This website is preventing us from displaying image previews. Please upload a custom thumbnail."]', {locationStrategy: 'xpath'});
 		this.twitterLinkPreviewCustomizationInfo = page.getByText('Link preview customization is not supported by Twitter');
 		this.twitterCharacterLimitError = page.getByTestId('banner-container').locator('div').filter({ hasText: 'Your text exceeds the character limit for Twitter' }).first();
 		this.saveChangesModal = page.getByRole('heading', { name: 'Save your changes?' });
