@@ -62,7 +62,6 @@ exports.ComposePage = class ComposePage {
 		this.twitterHashtagLink = page.locator('.vk-TwitterPreview .vk-ContentBody .vk-MessageHashtag');
 		this.tiktokHashtagLink = page.locator('.vk-TikTokPreview .vk-MessageText .vk-MessageHashtag');
 		this.instagramHashtagLink = page.locator('.vk-InstagramReelPreview .vk-MessageHashtag');
-		this.exitButton = page.getByRole('button', { name: 'Exit tutorial' });
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 		this.moreButton = page.getByLabel('more', { exact: true });
 		this.saveDraftFromDropdown = page.getByRole('button', { name: 'Save as draft', exact: true });
@@ -114,7 +113,7 @@ exports.ComposePage = class ComposePage {
 		this.linkSettingsApplyButton = page.locator('//*[@aria-label="Apply Link Settings modal"]//*[text()="Apply"]', {locationStrategy: 'xpath'});
 		this.badLinkThumbnailWarning = page.locator('//*[@aria-labelledby="message-tab-bar-linkedIn"]//*[text()="This website is preventing us from displaying image previews. Please upload a custom thumbnail."]', {locationStrategy: 'xpath'});
 		this.twitterLinkPreviewCustomizationInfo = page.getByText('Link preview customization is not supported by Twitter');
-		this.twitterCharacterLimitError = page.getByTestId('banner-container').locator('div').filter({ hasText: 'Your text exceeds the character limit for Twitter' }).first();
+		this.twitterCharacterLimitError = page.getByTestId('messageItemError').getByText('Your text exceeds the character limit for Twitter');
 		this.saveChangesModal = page.getByRole('heading', { name: 'Save your changes?' });
 		this.composeTextAreaErrorTitle = page.locator('//*[@aria-labelledby="message-tab-bar-twitter"]//*[text()="Oops! You haven\'t added any text"]', {locationStrategy: 'xpath'});
 		this.composeTextAreaErrorDescription = page.locator('//*[@aria-labelledby="message-tab-bar-twitter"]//*[text()="Twitter requires text to be included"]', {locationStrategy: 'xpath'});

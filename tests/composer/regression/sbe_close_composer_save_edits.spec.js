@@ -76,8 +76,6 @@ test('Navigate away from composer and save edits', async ({page}) => {
 
 	await test.step('Open message from planner preview pane', async () => {
 		await plannerPage.editFromPreviewPane();
-		await expect(composePage.exitButton).toBeVisible();
-		await composePage.exitButton.click();
 		await expect(composePage.composeScreen).toBeVisible();
 	});
 

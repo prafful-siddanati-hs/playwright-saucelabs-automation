@@ -35,7 +35,6 @@ test('Verify Link preview with text with link followed by more text', async ({pa
 
 	await test.step('Open composer', async () => {
 		await composePage.selectComposeButton();
-		await composePage.exitButton.click();
 	});
 
 	await test.step('Verify twitter account is displayed on social network picker', async () => {
