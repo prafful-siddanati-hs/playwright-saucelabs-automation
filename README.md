@@ -18,12 +18,12 @@ If you have already completed the preceding setup (for example, for another Hoot
 
 ```
 git clone git@github.hootops.com:hootsuite/playwright-saucelabs-automation.git
-cd playwirght-saucelabs-automation
+cd playwright-saucelabs-automation
 make install
 ```
 
 ### Vault Setup 
-***Required when tests use custom commands like getFxiture() etc***
+***Required when tests use custom commands like getFixture() etc***
 
 Playwright tests use DynamoDB. In order to run the tests locally you must first
 set up your local machine to be able to connect to the DynamoDB database on the dev AWS account if any fixtures (accounts) are used in your test.
