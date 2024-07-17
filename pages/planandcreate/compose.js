@@ -374,6 +374,7 @@ exports.ComposePage = class ComposePage {
 	async searchMediaLibrary(searchTerm) {
 		await this.mediaSearchBox.click();
 		await this.mediaSearchBox.fill(searchTerm);
+		await this.page.waitForTimeout(1000); // Wait for search results to load
 	}
 
 	async attachImageFromMediaLibrary(numImages) {
