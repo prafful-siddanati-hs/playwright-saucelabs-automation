@@ -11,6 +11,7 @@ install:
 	rm -rf node_modules || true
 	yarn
 	npm install saucectl@latest --no-save
+	npx playwright install
 
 test-playwright-saucelabs:
 	npx saucectl run
