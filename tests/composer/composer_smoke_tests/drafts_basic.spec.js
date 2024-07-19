@@ -65,6 +65,7 @@ test('Create and edit draft using composer', async ({ page }) => {
 		await draftPage.verifyDraftMessage(profile, draftText, userName);
 		await draftPage.editDraftByContent(draftText);
 		await composePage.updateDraft(draftUpdate);
+		await composePage.verifyTwitterPreview(draftUpdate);
 		await composePage.saveChanges();
 	});
 
