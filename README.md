@@ -63,7 +63,7 @@ export SAUCE_ACCESS_KEY=your_sl_key
 export SAUCE_USERNAME=your_sl_name
 ```
 
-Start tunnel locally to run tests on SauceLabs
+Open a new terminal window and initiate a local tunnel to execute tests on SauceLabs.
 ```bash
 make start-tunnel-local
 ```
