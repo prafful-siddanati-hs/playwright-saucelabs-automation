@@ -55,6 +55,18 @@ To check what tests are currently locked:
 # If not deleted manually, it will eventually time out.
 make dynamodb-browse-locks
 ```
+#### Your Laptop to (SauceLabs Browsers)
+
+Export your Saucelabs username and key in your laptop. Username and key can be found at https://app.saucelabs.com/user-settings
+```bash
+export SAUCE_ACCESS_KEY=your_sl_key
+export SAUCE_USERNAME=your_sl_name
+```
+
+Open a new terminal window and initiate a local tunnel to execute tests on SauceLabs.
+```bash
+make start-tunnel-local
+```
 
 ### Run tests on Saucelabs
 
