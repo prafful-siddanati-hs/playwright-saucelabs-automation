@@ -57,6 +57,7 @@ test('Save text data to content library', async ({ page }) => {
 
 	await test.step('Write a message', async () => {
 		await composePage.writeMessage(pwCLText);
+		await composePage.verifyFacebookPreview(pwCLText);
 	});
 
 	await test.step('Save as content library template', async () => {

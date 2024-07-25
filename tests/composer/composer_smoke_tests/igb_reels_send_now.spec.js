@@ -38,6 +38,7 @@ test('Send instagram reel message using composer', async ({ page }) => {
 		await composePage.selectSocialProfile(profile);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
+		await expect(composePage.emptyInstagramPreview).toBeVisible();
 	});
 
 	await test.step('Write a message and verify its preview', async () => {

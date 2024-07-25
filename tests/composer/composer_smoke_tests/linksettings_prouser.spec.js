@@ -44,6 +44,7 @@ test('Verify links settings on composer', async ({ page }) => {
 		await composePage.selectSocialProfile(twAccount);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
+		await expect(composePage.emptyTwitterPreview).toBeVisible();
 	});
 
 	await test.step('Write a message with link', async () => {
