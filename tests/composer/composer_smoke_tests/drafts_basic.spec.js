@@ -53,6 +53,7 @@ test('Create and edit draft using composer', async ({ page }) => {
 		await composePage.selectSocialProfile(profile);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
+		await expect(composePage.emptyTwitterPreview).toBeVisible();
 	});
 
 	await test.step('Compose and save as draft', async () => {

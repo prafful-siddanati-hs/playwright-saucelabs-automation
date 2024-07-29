@@ -52,6 +52,7 @@ test('Update link presets', async ({ page }) => {
 		await composePage.selectSocialProfile(getObjectByName(global.fixture, 'link_presets_update').facebookPage.username);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
+		await expect(composePage.emptyFacebookPreview).toBeVisible();
 	});
 
 	await test.step('Write a message with link', async () => {

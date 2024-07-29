@@ -43,6 +43,7 @@ test('Schedule a message with mentions', async ({ page }) => {
 		await composePage.selectSocialProfile(linkedInAccount);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
+		await expect(composePage.emptyLinkedInPreview).toBeVisible();
 	});
 
 	await test.step('Write a message with mention', async () => {

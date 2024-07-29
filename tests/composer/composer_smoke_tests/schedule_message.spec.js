@@ -43,10 +43,15 @@ test('Composer basic validations', async ({ page }) => {
 		await composePage.selectSocialProfile(fbAccount);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
+		await expect(composePage.emptyTwitterPreview).toBeVisible();
+		await expect(composePage.emptyFacebookPreview).toBeVisible();
 	});
 
 	await test.step('Write a message', async () => {
 		await composePage.writeMessage(composeBasicText);
+		await composePage.verifyTwitterPreview(composeBasicText);
+		await composePage.verifyFacebookPreview(composeBasicText);
+		await page.waitForTimeout(2000);
 	});
 
 	await test.step('Verify preview for each network tab', async () => {

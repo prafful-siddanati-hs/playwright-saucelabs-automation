@@ -40,6 +40,7 @@ test('Verify link preview on composer', async ({ page }) => {
 		await composePage.selectSocialProfile(fbAccount);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
+		await expect(composePage.emptyFacebookPreview).toBeVisible();
 	});
 
 	await test.step('Write a message with link', async () => {
