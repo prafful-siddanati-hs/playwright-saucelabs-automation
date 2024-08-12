@@ -9,7 +9,7 @@ exports.LoginPage = class LoginPage {
 		this.password = page.locator('#loginPasswordInput');
 		this.loginSubmit = page.getByRole('button', { name: 'Sign in', exact: true });
 		this.streamsView = page.locator('#stream-migration-root');
-		this.homePageWidget = page.locator('.homepage-widget-announcements');
+		this.homePageWidget = page.locator('.homepage-widget-inspirations');
 		this.homeLoginButton = page.locator('//*[@data-button-type="primary"]//*[contains(text(), "Log In")]', {locationStrategy: 'xpath'});
 	}
 
