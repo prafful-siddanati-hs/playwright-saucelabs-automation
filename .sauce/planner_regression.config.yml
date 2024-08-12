@@ -36,7 +36,7 @@ suites:
     platformName: "Windows 11"
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
-    testMatch: ['tests/planner/.*.js']
+    testMatch: ['tests/plan_and_create/planner/.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
@@ -44,7 +44,7 @@ suites:
     platformName: "macOS 13"
     screenResolution: "1600x1200"
     timeZone: 'Vancouver'
-    testMatch: ['tests/planner/.*.js']
+    testMatch: ['tests/plan_and_create/planner/.*.js']
     params:
       browserName: "webkit"
       project: "webkit"
