@@ -36,7 +36,7 @@ suites:
     platformName: "Windows 11"
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
-    testMatch: ['tests/composer/link_settings/*.*.js']
+    testMatch: ['tests/plan_and_create/composer/link_settings/*.*.js']
     params:
       browserName: "chromium"
       project: "chromium"
