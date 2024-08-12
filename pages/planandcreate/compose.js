@@ -12,13 +12,20 @@ exports.ComposePage = class ComposePage {
 		this.composeButton = page.locator('button[aria-label="Create posts and more"]');
 		this.postButton = page.locator('div.animated-secondary button[aria-label=\'Post\']');
 		this.composeScreen = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal');
-		this.profileDropDown = page.locator('[aria-label="Select a social account (required)"]');
+		this.headerLabel = page.locator('.vk-ComposerModal .vk-HeaderLabel');
+		this.minimizeComposeButton = page.locator('.vk-ComposerModal [aria-label="Minimize"]');
+		this.exitComposeButton = page.locator('.vk-ComposerModal [aria-label="Exit Composer"]');
+		this.profileDropDown = page.locator('.vk-ComposerModal [aria-label="Select a social account (required)"]');
+		this.snInputPlaceholder = page.locator('.vk-ComposerModal [aria-label="Select a social account (required)"]');
 		this.snContentItems = page.locator('.vk-ComposerModal .vk-ContentItems');
 		this.snPilltext = page.locator('.vk-ComposerModal .vk-PillText');
 		this.postToWrapper = page.locator('.vk-PostToWrapper');
 		this.profileListItemTitle = page.locator('.vk-ComposerModal .vk-ProfileListItemTitle');
 		this.composerHeader = page.locator('.vk-ComposerHeader');
 		this.previewNetworkType = page.locator('.vk-ComposerModal .vk-MessagePreviewHeader .vk-NetworkType');
+		this.tabContent = page.locator('.vk-ComposerModal .vk-TabContent');
+		this.genericPostPreview = page.locator('.vk-ComposerModal [aria-label="generic post preview"]');
+		this.genericPostPreviewText = page.locator('.vk-ComposerModal [aria-label="generic post preview"] .vk-PreviewMessageText');
 		this.genericPreviewSingleImage = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-MediaImg');
 		this.twitterPreviewSingleImage = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaImg');
 		this.twitterPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaContainer');
@@ -29,13 +36,18 @@ exports.ComposePage = class ComposePage {
 		this.facebookPreviewSingleImage = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaImg');
 		this.facebookPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaContainer');
 		this.messageArea = page.getByTestId('MessageEditArea').getByLabel('Text');
+		this.emojiButton = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="Add an emoji"]');
+		this.hashTagSuggestions = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="AI hashtag suggestions"]');
+		this.canvaButton = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="Design with Canva"]');
 		this.scheduleLaterButton = page.getByRole('button', { name: 'Schedule for later' });
 		this.scheduleDone = page.getByRole('button', { name: 'Done' });
 		this.scheduleDoneButton = page.getByTestId('schedule-post-done-btn');
 		this.scheduleButton = page.locator('button.vk-EditFooterScheduleButton');
+		this.saveAsDraftButton = page.locator('.vk-ComposerModal [data-testid= "SaveAsDraftButton"]');
 		this.saveChangesButton = page.getByRole('button', { name: 'Save changes' });
 		this.saveEditsButton = page.getByRole('button', { name: 'Save edits' });
 		this.postNowButton = page.getByRole('button', { name: 'Post now', exact: true });
+		this.addTagsButton = page.locator('.vk-ComposerModal [aria-label= "Add tags"]');
 		this.saveToContentLibraryButton = page.getByRole('button', { name: 'Save to content library' });
 		this.openCalendarButton = page.getByLabel('Open calendar');
 		this.nextMonthButton = page.getByLabel('Go to next month');
@@ -144,6 +156,32 @@ exports.ComposePage = class ComposePage {
 
 		await this.postButton.click();
 		await expect(this.composeScreen, 'should be navigated to composer full screen').toBeVisible();
+	}
+
+	async exitComposer() {
+		await expect(this.exitComposeButton).toBeVisible();
+		await this.exitComposeButton.click();
+	}
+
+	async verifyDefaultComposer() {
+		await expect(this.headerLabel).toHaveText('Create a post');
+		await expect(this.profileDropDown).toBeVisible();
+		await expect(this.minimizeComposeButton).toBeVisible();
+		await expect(this.exitComposeButton).toBeVisible();
+		await expect(this.postToWrapper).toBeVisible();
+		await this.postToWrapper.click();
+		await expect(this.snInputPlaceholder).toBeVisible();
+		await expect(this.tabContent).toHaveText('Your post');
+		await expect(this.messageArea).toBeVisible();
+		await expect(this.emojiButton).toBeVisible();
+		await expect(this.hashTagSuggestions).toBeVisible();
+		await expect(this.addMediaButton).toBeVisible();
+		await expect(this.canvaButton).toBeVisible();
+		await expect(this.genericPostPreview).toBeVisible();
+		await expect(this.genericPostPreviewText).toHaveText('Write your caption, then customize it for each social network');
+		await expect(this.scheduleLaterButton).toBeVisible();
+		await expect(this.postNowButton).toBeVisible();
+		await expect(this.saveAsDraftButton).toBeVisible();
 	}
 
 	async selectSocialProfile(name) {

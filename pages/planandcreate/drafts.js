@@ -8,10 +8,16 @@ exports.DraftPage = class DraftPage {
 	constructor(page) {
 		this.page = page;
 		this.draftListView = page.getByTestId('ListView');
+		this.createButton = page.getByTestId('ListView').getByTestId('create-button');
 		this.draftItem = page.getByTestId('CardWrapper');
 		this.editButtonOnListView = page.getByLabel('Edit post');
 		this.deleteButtonOnSidePane = page.getByTestId('DeleteButton');
 		this.confirmationModalSubmitButton = page.getByRole('button', { name: 'Delete post' });
+	}
+
+	async selectCreateButton() {
+		await expect(this.createButton).toBeVisible();
+		await this.createButton.click();
 	}
 
 	async deleteDraftsViaApi(memberId) {
