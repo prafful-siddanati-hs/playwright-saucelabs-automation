@@ -159,42 +159,42 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async exitComposer() {
-		await expect(this.exitComposeButton).toBeVisible();
+		await expect(this.exitComposeButton, 'Composer exit button is visible').toBeVisible();
 		await this.exitComposeButton.click();
 	}
 
 	async verifyComposerHeader() {
 		await expect(this.headerLabel).toHaveText('Create a post');
-		await expect(this.profileDropDown).toBeVisible();
-		await expect(this.minimizeComposeButton).toBeVisible();
-		await expect(this.exitComposeButton).toBeVisible();
+		await expect(this.minimizeComposeButton, 'Composer minimize button is visible').toBeVisible();
+		await expect(this.exitComposeButton, 'Composer exit button is visible').toBeVisible();
 	}
 
 	async verifyComposerMessageArea() {
 		await expect(this.postToWrapper).toBeVisible();
 		await this.postToWrapper.click();
-		await expect(this.snInputPlaceholder).toBeVisible();
+		await expect(this.profileDropDown, 'Profile picker is visible').toBeVisible();
+		await expect(this.snInputPlaceholder, 'Social profile input field is visible').toBeVisible();
 		await expect(this.tabContent).toHaveText('Your post');
-		await expect(this.messageArea).toBeVisible();
-		await expect(this.emojiButton).toBeVisible();
-		await expect(this.hashTagSuggestions).toBeVisible();
-		await expect(this.addMediaButton).toBeVisible();
-		await expect(this.canvaButton).toBeVisible();
-		await expect(this.genericPostPreview).toBeVisible();
+		await expect(this.messageArea, 'Composer message area is visible').toBeVisible();
+		await expect(this.emojiButton, 'Composer emoji button is visible').toBeVisible();
+		await expect(this.hashTagSuggestions, 'Composer hashtags button is visible').toBeVisible();
+		await expect(this.addMediaButton, 'Composer media button is visible').toBeVisible();
+		await expect(this.canvaButton, 'Composer canva button is visible').toBeVisible();
+		await expect(this.genericPostPreview, 'Composer generic preview is visible').toBeVisible();
 		await expect(this.genericPostPreviewText).toHaveText('Write your caption, then customize it for each social network');
 	}
 
 	async verifyComposerFooter() {
-		await expect(this.scheduleLaterButton).toBeVisible();
-		await expect(this.postNowButton).toBeVisible();
-		await expect(this.saveAsDraftButton).toBeVisible();
+		await expect(this.scheduleLaterButton, 'Composer schedule later button is visible').toBeVisible();
+		await expect(this.postNowButton, 'Composer post now button is visible').toBeVisible();
+		await expect(this.saveAsDraftButton, 'Composer save as draft button is visible').toBeVisible();
 	}
 
 	async verifyComposerDraftFooter() {
 		await expect(this.scheduleLaterButton).not.toBeVisible();
 		await expect(this.postNowButton).not.toBeVisible();
-		await expect(this.scheduleButton).toBeVisible();
-		await expect(this.saveAsDraftButton).toBeVisible();
+		await expect(this.scheduleButton, 'Composer schedule button is visible').toBeVisible();
+		await expect(this.saveAsDraftButton, 'Composer save as draft button is visible').toBeVisible();
 	}
 
 	async verifyComposerModal() {
