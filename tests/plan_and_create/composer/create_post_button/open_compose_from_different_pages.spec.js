@@ -76,10 +76,4 @@ test('Composer basic validations', async ({ page }) => {
 		await composePage.verifyComposerDraftFooter();
 	});
 
-	// await test.step('Open composer from planner draft view and verify its elements', async () => {
-	// 	await plannerPage.selectListView();
-	// 	await plannerPage.selectCreateButton();
-	// 	await composePage.verifyDefaultComposer();
-	// });
-
 });
