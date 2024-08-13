@@ -163,11 +163,14 @@ exports.ComposePage = class ComposePage {
 		await this.exitComposeButton.click();
 	}
 
-	async verifyDefaultComposer() {
+	async verifyComposerHeader() {
 		await expect(this.headerLabel).toHaveText('Create a post');
 		await expect(this.profileDropDown).toBeVisible();
 		await expect(this.minimizeComposeButton).toBeVisible();
 		await expect(this.exitComposeButton).toBeVisible();
+	}
+
+	async verifyComposerMessageArea() {
 		await expect(this.postToWrapper).toBeVisible();
 		await this.postToWrapper.click();
 		await expect(this.snInputPlaceholder).toBeVisible();
@@ -179,9 +182,25 @@ exports.ComposePage = class ComposePage {
 		await expect(this.canvaButton).toBeVisible();
 		await expect(this.genericPostPreview).toBeVisible();
 		await expect(this.genericPostPreviewText).toHaveText('Write your caption, then customize it for each social network');
+	}
+
+	async verifyComposerFooter() {
 		await expect(this.scheduleLaterButton).toBeVisible();
 		await expect(this.postNowButton).toBeVisible();
 		await expect(this.saveAsDraftButton).toBeVisible();
+	}
+
+	async verifyComposerDraftFooter() {
+		await expect(this.scheduleLaterButton).not.toBeVisible();
+		await expect(this.postNowButton).not.toBeVisible();
+		await expect(this.scheduleButton).toBeVisible();
+		await expect(this.saveAsDraftButton).toBeVisible();
+	}
+
+	async verifyComposerModal() {
+		await this.verifyComposerHeader();
+		await this.verifyComposerMessageArea();
+		await this.verifyComposerFooter();
 	}
 
 	async selectSocialProfile(name) {
