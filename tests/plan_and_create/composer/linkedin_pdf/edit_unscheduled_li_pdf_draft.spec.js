@@ -7,7 +7,7 @@ const { getObjectByName } = require('../../../../globals');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const { PlannerPage } = require('../../../../pages/planandcreate/planner');
-const { DraftPage } = require('../../../../pages/planandcreate/drafts');
+const { DraftsPage } = require('../../../../pages/planandcreate/drafts');
 let memberId;
 
 test.afterEach(async ({ page }) => {
@@ -25,7 +25,7 @@ test('Schedule a LinkedIn PDF post from draft', async ({ page }) => {
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const plannerPage = new PlannerPage(page);
-	const draftPage = new DraftPage(page);
+	const draftsPage = new DraftsPage(page);
 
 	await test.step('Setup user & accounts', async () => {
 		await createNewUser.command('pw_li_pdf_draft', 'team3s');
@@ -48,12 +48,12 @@ test('Schedule a LinkedIn PDF post from draft', async ({ page }) => {
 	});
 
 	await test.step('Delete residual drafts', async () => {
-		await draftPage.deleteDraftsViaApi(memberId);
+		await draftsPage.deleteDraftsViaApi(memberId);
 	});
 
 	await test.step('Create an unscheduled draft with PDF', async () => {
 		try {
-			await draftPage.createDraftViaApiByNetwork(
+			await draftsPage.createDraftViaApiByNetwork(
 				memberId,
 				null,
 				getObjectByName(global.fixture, 'li_pdf_draft').socialProfile.socialProfileId,
@@ -66,17 +66,17 @@ test('Schedule a LinkedIn PDF post from draft', async ({ page }) => {
 	});
 
 	await test.step('Navigate to drafts', async () => {
-		await draftPage.visit();
-		await expect(draftPage.draftItem).toHaveCount(1);
+		await draftsPage.visit();
+		await expect(draftsPage.draftItem).toHaveCount(1);
 	});
 
 	await test.step('Edit the draft', async () => {
-		await draftPage.editDraftByContent(pdfDraftText);
+		await draftsPage.editDraftByContent(pdfDraftText);
 		await composePage.updateDraft(editedPdfDraftText);
 	});
 
 	await test.step('Schedule the draft', async () => {
-		await draftPage.showPreviewPane(editedPdfDraftText);
+		await draftsPage.showPreviewPane(editedPdfDraftText);
 		await composePage.schedule();
 	});
 

@@ -2613,6 +2613,23 @@ module.exports = {
 		}
 	],
 
+	//Composer Amplify User
+	composer_amplify_user: [
+		{
+			id: '1',
+			memberId: '13291845',
+			name: 'Amplify Integrationtest 1',
+			accountType: 'free',
+			type: 'advocate',
+			isSocialProfile: false,
+			isHootsuiteUser: true,
+			tearDown: false,
+			fullName: 'Amplify Integrationtest 1',
+			email: 'amplify.integrationtest+async1@gmail.com',
+			password: 'Qwerqwer'
+		}
+	],
+
 	// Channel Integration
 	enterprise_user_channel_integration: [
 		{

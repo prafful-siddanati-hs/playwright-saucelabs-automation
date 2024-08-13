@@ -8,7 +8,7 @@ const { formatISO, addHours } = require('date-fns');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const { PlannerPage } = require('../../../../pages/planandcreate/planner');
-const { DraftPage } = require('../../../../pages/planandcreate/drafts');
+const { DraftsPage } = require('../../../../pages/planandcreate/drafts');
 let profileName, userName, memberId;
 const draftScheduleTime = addHours(new Date() , 1);
 
@@ -26,7 +26,7 @@ test('Duplicate a scheduled draft with LinkedIn PDF', async ({ page }) => {
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const plannerPage = new PlannerPage(page);
-	const draftPage = new DraftPage(page);
+	const draftsPage = new DraftsPage(page);
 
 	await test.step('Setup user & accounts', async () => {
 		await createNewUser.command('pw_li_pdf_duplicate_draft', 'team3s');
@@ -53,12 +53,12 @@ test('Duplicate a scheduled draft with LinkedIn PDF', async ({ page }) => {
 	});
 
 	await test.step('Deleting residual drafts', async () => {
-		await draftPage.deleteDraftsViaApi(memberId);
+		await draftsPage.deleteDraftsViaApi(memberId);
 	});
 
 	await test.step('Create a scheduled draft with PDF', async () => {
 		try {
-			await draftPage.createDraftViaApiByNetwork(
+			await draftsPage.createDraftViaApiByNetwork(
 				memberId,
 				null,
 				getObjectByName(global.fixture, 'li_pdf_scheduled_draft').socialProfile.socialProfileId,
@@ -72,12 +72,12 @@ test('Duplicate a scheduled draft with LinkedIn PDF', async ({ page }) => {
 	});
 
 	await test.step('Navigate to drafts page', async () => {
-		await draftPage.visit();
+		await draftsPage.visit();
 	});
 
 	await test.step('Verify scheduled draft message', async () => {
-		await draftPage.verifyDraftMessage(profileName, pdfDraftText, userName);
-		await draftPage.showPreviewPane(pdfDraftText);
+		await draftsPage.verifyDraftMessage(profileName, pdfDraftText, userName);
+		await draftsPage.showPreviewPane(pdfDraftText);
 	});
 
 	await test.step('Duplicate the scheduled post', async () => {

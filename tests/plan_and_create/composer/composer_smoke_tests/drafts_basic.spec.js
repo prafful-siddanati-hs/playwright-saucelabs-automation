@@ -4,7 +4,7 @@ const {ComposePage} = require('../../../../pages/planandcreate/compose');
 const {getObjectByName, plan_create} = require('../../../../globals');
 const {LoginPage} = require('../../../../pages/login');
 const getFixture = require('../../../../custom-commands/getFixture');
-const {DraftPage} = require('../../../../pages/planandcreate/drafts');
+const {DraftsPage} = require('../../../../pages/planandcreate/drafts');
 let profile, userName, memberId;
 
 test.afterEach(async ({ page }) => {
@@ -21,7 +21,7 @@ test('Create and edit draft using composer', async ({ page }) => {
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
-	const draftPage = new DraftPage(page);
+	const draftsPage = new DraftsPage(page);
 
 	await test.step('Setup user', async () => {
 		await addFixture.command('draft_message', 'pro_user_composer', true, 300);
@@ -35,12 +35,12 @@ test('Create and edit draft using composer', async ({ page }) => {
 	});
 
 	await test.step('Delete residual draft messages via API', async () => {
-		await draftPage.deleteDraftsViaApi(memberId);
+		await draftsPage.deleteDraftsViaApi(memberId);
 	});
 
 	await test.step('Navigate to drafts page', async () => {
-		await draftPage.visit();
-		await expect(draftPage.draftItem).toHaveCount(0);
+		await draftsPage.visit();
+		await expect(draftsPage.draftItem).toHaveCount(0);
 	});
 
 	await test.step('Select new compose button', async () => {
@@ -63,16 +63,16 @@ test('Create and edit draft using composer', async ({ page }) => {
 	});
 
 	await test.step('Verify and edit the draft', async () => {
-		await draftPage.verifyDraftMessage(profile, draftText, userName);
-		await draftPage.editDraftByContent(draftText);
+		await draftsPage.verifyDraftMessage(profile, draftText, userName);
+		await draftsPage.editDraftByContent(draftText);
 		await composePage.updateDraft(draftUpdate);
 		await composePage.verifyTwitterPreview(draftUpdate);
 		await composePage.saveChanges();
 	});
 
 	await test.step('Verify the updated draft and delete it', async () => {
-		await draftPage.verifyDraftMessage(profile, draftUpdate, userName);
-		await draftPage.showPreviewPane(draftUpdate);
-		await draftPage.deleteDraft(draftUpdate);
+		await draftsPage.verifyDraftMessage(profile, draftUpdate, userName);
+		await draftsPage.showPreviewPane(draftUpdate);
+		await draftsPage.deleteDraft(draftUpdate);
 	});
 });

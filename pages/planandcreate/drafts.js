@@ -4,14 +4,23 @@ const getDrafts = require('../../custom-commands/getDrafts');
 const draftMessage = require('../../custom-commands/draftMessage');
 const { plan_create } = require('../../globals');
 
-exports.DraftPage = class DraftPage {
+exports.DraftsPage = class DraftsPage {
 	constructor(page) {
 		this.page = page;
 		this.draftListView = page.getByTestId('ListView');
+		this.createButton = page.getByTestId('ListView').getByTestId('create-button');
+		this.postButton = page.locator('//*[contains(@class,vk-NewPostPlaceholderDropdown)]//*[contains(@role,"menuitem")]//*[text()="Post"]');
 		this.draftItem = page.getByTestId('CardWrapper');
 		this.editButtonOnListView = page.getByLabel('Edit post');
 		this.deleteButtonOnSidePane = page.getByTestId('DeleteButton');
 		this.confirmationModalSubmitButton = page.getByRole('button', { name: 'Delete post' });
+	}
+
+	async selectCreateButton() {
+		await expect(this.createButton).toBeVisible();
+		await this.createButton.click();
+		await expect(this.postButton).toBeVisible();
+		await this.postButton.click();
 	}
 
 	async deleteDraftsViaApi(memberId) {

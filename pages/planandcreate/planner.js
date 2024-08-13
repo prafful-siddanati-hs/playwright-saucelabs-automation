@@ -38,7 +38,7 @@ exports.PlannerPage = class PlannerPage {
 		this.contentTab = page.getByTestId('MainPanelWrapper').getByText('Content');
 		this.datePickerButton = page.locator('.vk-Planner .vk-Toolbar #dateRangeAnchor');
 		this.orgPicker= page.getByTestId('OrgPicker');
-		this.createPostButton = page.getByRole('button', { name: 'Create' }).first();
+		this.createPostButton = page.locator('.vk-Planner [data-testid="CreatePostButton"]');
 		this.addMediaButton = page.getByTestId('ContentButton');
 		this.filtersButton = page.getByTestId('FiltersButton');
 		this.filterAccountsPicker = page.getByTestId('right-sheet').getByText('Social accounts');
@@ -299,6 +299,11 @@ exports.PlannerPage = class PlannerPage {
 		await this.page.waitForURL('/dashboard#/planner');
 	}
 
+	async selectCreatePostButton() {
+		await expect(this.createPostButton).toBeVisible();
+		await this.createPostButton.click();
+	}
+
 	async setDarkLaunchCookies() {
 		const url = this.page.url();
 		await this.page.context().addCookies([
@@ -458,6 +463,16 @@ exports.PlannerPage = class PlannerPage {
 		await createMessage.command(parseInt(memberId, 10), options);
 	}
 
+	async selectListView() {
+		await expect(this.viewToggleList).toBeVisible();
+		await this.viewToggleList.click();
+	}
+
+	async selectCreateButton() {
+		await expect(this.createPostButton).toBeVisible();
+		await this.createPostButton.click();
+	}
+
 	async deleteScheduleMessagesViaAPI(memberId) {
 		const getAllScheduledMessages = new getScheduledMessages();
 		const deleteScheduledMessages = new deleteScheduledMessageById();
@@ -485,5 +500,4 @@ exports.PlannerPage = class PlannerPage {
 			}
 		}
 	}
-
 };
