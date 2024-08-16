@@ -1,3 +1,5 @@
+// This test is to verify the composer modal from different product areas like homepage, planner, drafts etc.
+
 const { test} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
@@ -14,7 +16,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Composer basic validations', async ({ page }) => {
+test('Open composer from different product areas', async ({ page }) => {
 	const createNewUser = new createUser();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
