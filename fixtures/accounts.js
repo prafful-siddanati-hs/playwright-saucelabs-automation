@@ -45,7 +45,7 @@ module.exports = {
 			username: 'Taco_Sparrow',
 			password: 'Assword!',
 			auth1: '760594707214798848-92of1oCO5JmX2rnb2xMKuizCbi1pCvp',
-			auth2: 'nWCSApRcJoMyvbGqd35Yzv2hkylPNSiKTNpEEn6T7duiZ',
+			auth2: 'nznyMlHIgorkl8jIuSptfJTajAHprnEZdRUABy0cwc4bg',
 			type: 'TWITTER'
 		},
 		{

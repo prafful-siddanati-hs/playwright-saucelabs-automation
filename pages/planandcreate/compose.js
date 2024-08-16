@@ -28,6 +28,7 @@ exports.ComposePage = class ComposePage {
 		this.genericPostPreviewText = page.locator('.vk-ComposerModal [aria-label="generic post preview"] .vk-PreviewMessageText');
 		this.genericPreviewSingleImage = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-MediaImg');
 		this.twitterPreviewSingleImage = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaImg');
+		this.twitterPreviewSingleVideo = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-VideoContainer');
 		this.twitterPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaContainer');
 		this.emptyTwitterPreview = page.locator('.vk-ComposerModal .vk-TwitterPreview');
 		this.emptyFacebookPreview = page.locator('.vk-ComposerModal .vk-FacebookPreview');
@@ -86,6 +87,9 @@ exports.ComposePage = class ComposePage {
 		this.mediaLibraryCloseButton = page.getByRole('button', { name: 'Close media library'});
 		this.termsOfServiceWall = page.locator('.vk-TermsOfServiceWall button');
 		this.mediaLibraryRetryError= page.getByTestId('MediaLibraryErrorRetry');
+		this.mediaLibrarySourceDropdown = page.locator('.rc-MediaLibrary .vk-SourceButton');
+		this.freeImagesMediaLibrarySelection = page.locator('//*[contains(@class, "rc-MediaLibrary")]//*[text()="Free Images"]', {locationStrategy: 'xpath'});
+		this.giphyMediaLibrarySelection = page.locator('//*[contains(@class, "rc-MediaLibrary")]//*[text()="GIPHY"]', {locationStrategy: 'xpath'});
 		this.mediaSearchBox = page.getByPlaceholder('Search media');
 		this.loadingBars = page.locator('[data-testid="bouncing-bars-loader-wrapper"]');
 		this.mediaContent = page.locator('.-mediaContent');
@@ -222,8 +226,8 @@ exports.ComposePage = class ComposePage {
 
 			await this.page.setInputFiles('.vk-MediaUpload input[type="file"]', filePath);
 			//Handle cases when more than one media file is uploaded
-			const mulitpleMediaOverlays = Array.from(await this.mediaOverLay);
-			await Promise.all(mulitpleMediaOverlays.map(async (overlay) => {
+			const multipleMediaOverlays = Array.from(await this.mediaOverLay);
+			await Promise.all(multipleMediaOverlays.map(async (overlay) => {
 				await expect(overlay, 'Media overlay should be visible').toBeVisible();
 			}));
 		} catch (error) {
@@ -236,6 +240,11 @@ exports.ComposePage = class ComposePage {
 		await this.messageArea.click();
 		await this.page.keyboard.type(message);
 		await expect(this.page.locator('.vk-Loader')).toHaveCount(0);
+	}
+
+	async clearMessageEditor() {
+		await this.messageArea.click();
+		await this.messageArea.fill('');
 	}
 
 	async schedule() {
@@ -257,7 +266,7 @@ exports.ComposePage = class ComposePage {
 
 	async verifySocialProfileSelected(name) {
 		const pillText = this.page.locator(`//*[contains(@class, "vk-PillText") and text()="${name}"]`);
-		await expect(pillText, 'Social network is not selected').toBeVisible();
+		await expect(pillText, 'Social network is selected').toBeVisible();
 		await expect(this.page.locator('.vk-Loader')).toHaveCount(0);
 	}
 
@@ -450,6 +459,18 @@ exports.ComposePage = class ComposePage {
 				await this.page.waitForTimeout(1000);
 			}
 		}
+	}
+
+	async selectGiphyInMediaLibrary() {
+		await expect(this.mediaLibrarySourceDropdown, 'Media library source dropdown is not visible').toBeVisible();
+		await this.mediaLibrarySourceDropdown.click();
+		expect(await this.giphyMediaLibrarySelection).toBeVisible();
+		await this.giphyMediaLibrarySelection.click();
+		await this.page.waitForTimeout(1000);
+		if (await this.termsOfServiceWall.isVisible()) {
+			await this.termsOfServiceWall.click();
+		}
+		await expect(this.mediaLibraryRetryError).not.toBeVisible(); //Ensure a media library error is not displayed.
 	}
 
 	async closeMediaLibrary() {

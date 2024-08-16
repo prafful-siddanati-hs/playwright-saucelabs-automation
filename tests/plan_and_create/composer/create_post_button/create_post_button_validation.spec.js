@@ -1,3 +1,4 @@
+// This test is to verify that the create post button is not visible on the following pages:
 const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
