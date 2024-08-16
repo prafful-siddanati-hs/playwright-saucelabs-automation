@@ -59,7 +59,7 @@ test('Twitter preview validations for media, text and link settings', async ({ p
 
 	await test.step('Upload giphy and verify its preview', async () => {
 		await composePage.uploadMediaFile('test_data/publisher/giphy');
-		await expect(composePage.twitterPreviewSingleImage, 'Twitter preview is updated with video').toBeVisible();
+		await expect(composePage.twitterPreviewSingleImage, 'Twitter preview is updated with giphy').toBeVisible();
 		await expect(composePage.twitterPreviewSingleImage).toHaveAttribute('src', /staging/);
 		await expect(composePage.imageRemoveButton).toBeVisible();
 		await composePage.imageRemoveButton.click();
