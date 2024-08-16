@@ -89,7 +89,7 @@ test('Verify error validations for LinkedIn PDF post', async ({page}) => {
 	});
 
 	await test.step('Verify multiple media types error is displayed', async () => {
-		await expect(page.getByRole('heading', { name: LINKEDIN_MIXED_MEDIA_ERROR })).toBeVisible();
+		await expect(page.getByText(LINKEDIN_MIXED_MEDIA_ERROR)).toBeVisible();
 	});
 
 	await test.step('Remove image and attach a 2nd pdf', async () => {
@@ -99,7 +99,7 @@ test('Verify error validations for LinkedIn PDF post', async ({page}) => {
 	});
 
 	await test.step('Verify multiple pdfs error is displayed', async () => {
-		await expect(page.getByRole('heading', { name: LINKEDIN_MULTIPLE_PDFS_ERROR })).toBeVisible();
+		await expect(page.getByText(LINKEDIN_MULTIPLE_PDFS_ERROR)).toBeVisible();
 	});
 
 	await test.step('Remove a pdf and verify no errors remain', async () => {
@@ -115,13 +115,13 @@ test('Verify error validations for LinkedIn PDF post', async ({page}) => {
 		await composePage.selectSocialProfile(twAccount);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
-		await expect(page.getByRole('heading', { name: TW_UNSUPPORTED_FILE_TYPE_ERROR })).toBeVisible();
-		await expect(page.getByRole('heading', { name: TW_SUPPORTED_FILE_TYPES_INFO })).toBeVisible();
+		await expect(page.getByText(TW_UNSUPPORTED_FILE_TYPE_ERROR)).toBeVisible();
+		await expect(page.getByText(TW_SUPPORTED_FILE_TYPES_INFO)).toBeVisible();
 	});
 
 	await test.step('Remove twitter account and verify no errors remain', async () => {
 		await page.getByLabel('Clear selection '.concat(twAccount)).click();
-		await expect(page.getByRole('heading', { name: TW_UNSUPPORTED_FILE_TYPE_ERROR })).not.toBeVisible();
-		await expect(page.getByRole('heading', { name: TW_SUPPORTED_FILE_TYPES_INFO })).not.toBeVisible();
+		await expect(page.getByText(TW_UNSUPPORTED_FILE_TYPE_ERROR)).not.toBeVisible();
+		await expect(page.getByText(TW_SUPPORTED_FILE_TYPES_INFO)).not.toBeVisible();
 	});
 });
