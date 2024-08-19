@@ -1,4 +1,5 @@
-//This test is to validate the twitter composer preview validations for link shortener
+//This test is to validate the twitter composer preview validations for link settings shorteners
+
 const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');

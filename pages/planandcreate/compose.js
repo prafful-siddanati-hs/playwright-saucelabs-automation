@@ -553,7 +553,7 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async clickLinkShortenerDropdown() {
-		await expect(this.linkSettingsShortenerDropdown).toBeVisible();
+		await expect(this.linkSettingsShortenerDropdown, 'Link shortener dropdown is visible').toBeVisible();
 		await this.linkSettingsShortenerDropdown.click();
 	}
 

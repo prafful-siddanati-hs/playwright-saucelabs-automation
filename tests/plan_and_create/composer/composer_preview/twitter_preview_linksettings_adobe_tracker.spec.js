@@ -1,11 +1,12 @@
 //This test is to validate the twitter composer preview validations for Adobe link settings
+
 const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const getFixture = require('../../../../custom-commands/getFixture');
 const createUser = require('../../../../custom-commands/createUser');
-const {plan_create, getObjectByName} = require('../../../../globals');
+const {getObjectByName} = require('../../../../globals');
 
 const URL = 'https://www.pinterest.com';
 const TRACKER = 'Adobe Analytics';

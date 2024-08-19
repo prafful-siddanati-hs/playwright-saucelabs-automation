@@ -1,4 +1,5 @@
 //This test is to validate the twitter composer preview validations for GA link settings
+
 const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
@@ -87,6 +88,4 @@ test('Twitter preview validations for google analytics link settings', async ({ 
 		await expect(composePage.twitterLinkPreviewSource).toContainText(URL);
 		await expect(composePage.twitterLinkPrevewMedia).toBeVisible();
 	});
-
-
 });

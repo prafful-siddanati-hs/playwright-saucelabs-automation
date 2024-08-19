@@ -1,4 +1,6 @@
 //This test is to validate the twitter composer preview validations for link with ow.ly shortener
+//Test data used: Link: slack.com, Shortener: ow.ly
+
 const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
