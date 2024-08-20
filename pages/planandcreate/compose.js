@@ -5,6 +5,7 @@ const getScheduledMessages = require('../../custom-commands/getScheduledMessages
 const deleteScheduledMessageById = require('../../custom-commands/deleteScheduledMesssagesById');
 const { addMonths, startOfMonth, addDays, formatISO} = require('date-fns');
 const assert = require('assert');
+const { use: { longTimeout } } = require('../../playwright.config.js');
 
 exports.ComposePage = class ComposePage {
 	constructor(page) {
@@ -36,7 +37,7 @@ exports.ComposePage = class ComposePage {
 		this.emptyInstagramPreview = page.locator('.vk-ComposerModal .vk-InstagramPreview');
 		this.facebookPreviewSingleImage = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaImg');
 		this.facebookPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaContainer');
-		this.messageArea = page.getByTestId('MessageEditArea').getByLabel('Text');
+		this.messageArea = page.locator('.rc-MessageEditText [aria-label="Text"].public-DraftEditor-content');
 		this.emojiButton = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="Add an emoji"]');
 		this.hashTagSuggestions = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="AI hashtag suggestions"]');
 		this.canvaButton = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="Design with Canva"]');
@@ -64,6 +65,7 @@ exports.ComposePage = class ComposePage {
 		this.twitterMessageLink = page.locator('.rc-Composer .vk-TwitterPreview .vk-ContentBody a');
 		this.twitterLinkPreviewTitle = page.locator('.rc-Composer .vk-TwitterPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
 		this.twitterLinkPreviewSource = page.locator('.rc-Composer .vk-TwitterPreview .vk-MessageLinkPreview .vk-Source');
+		this.twitterLinkPrevewMedia = page.locator('.rc-Composer .vk-TwitterPreview .vk-MessageLinkPreview .vk-LinkPreviewMedia');
 		this.facebookMessageLink = page.locator('.rc-Composer .vk-FacebookPreview .vk-ContentBody .vk-MessageLink');
 		this.facebookLinkPreviewTitle = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
 		this.facebookLinkPreviewSource = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-Source');
@@ -112,25 +114,6 @@ exports.ComposePage = class ComposePage {
 		this.addTrackingButton = page.getByLabel('Add tracking');
 		this.editCustomLinkSettingsButton = page.getByLabel('Edit custom link settings');
 		this.editLinkShorteningButton = page.getByLabel('Edit link shortening');
-		this.linkSettingsModal = page.getByLabel('Apply Link Settings modal');
-		this.presetSelectDropdown = page.locator('//*[@aria-label="Apply Link Settings modal"]//*[@aria-label="Select Preset Area"]//*[@data-testid="Preset-select"]//*[@aria-haspopup ="listbox"]', {locationStrategy: 'xpath'});
-		this.linkSettingsNoTracker = page.getByText('Tracking: No Tracking');
-		this.linkSettingsNoShortner = page.getByText('Shortener: No Shortener');
-		this.customizePresetButton = page.locator('//*[@aria-label="Apply Link Settings modal"]//*[text()="Customize"]', {locationStrategy: 'xpath'});
-		this.linkSettingsShortenerDropdown = page.getByLabel('No Shortener');
-		this.linkSettingsTrackerDropdown = page.getByLabel('No Tracking');
-		this.linkSettingsCutomTracker = page.getByTestId('Custom-select-item', {hasText: 'Custom'});
-		this.trackingParametersTable = page.getByTestId('TrackingParametersTable');
-		this.linkSettingsAddParameterButton = page.getByTestId('AddParameterButton');
-		this.parameterName = page.getByTestId('CompoundParameterNameInput-0');
-		this.parameterValue = page.getByTestId('CompoundParameterValueInput-0-0');
-		this.linkShortener = page.getByTestId('Ow.ly-select-item');
-		this.manageLinkPreset = page.getByTestId('Manage link presets-select-item', {hasText: 'Manage link presets'});
-		this.shortenWithOwlyCaption = page.getByTestId('owlyText').locator('div');
-		this.editAppliedLinkPreset = page.getByTestId('MessageEditArea').getByRole('button', { name: 'Edit' });
-		this.selectLinkDropdown = page.getByTestId('Select a link-select').locator('div').first();
-		this.linkShortener = page.getByTestId('Ow.ly-select-item');
-		this.linkSettingsApplyButton = page.locator('//*[@aria-label="Apply Link Settings modal"]//*[text()="Apply"]', {locationStrategy: 'xpath'});
 		this.badLinkThumbnailWarning = page.locator('//*[@aria-labelledby="message-tab-bar-linkedIn"]//*[text()="This website is preventing us from displaying image previews. Please upload a custom thumbnail."]', {locationStrategy: 'xpath'});
 		this.twitterLinkPreviewCustomizationInfo = page.getByText('Link preview customization is not supported by Twitter');
 		this.twitterCharacterLimitError = page.getByTestId('messageItemError').getByText('Your text exceeds the character limit for Twitter');
@@ -264,6 +247,12 @@ exports.ComposePage = class ComposePage {
 		await expect(this.feCallOuts).toHaveCount(1);
 	}
 
+	async waitForCalloutToDisappear() {
+		const selector = '#fe-lib-async-callouts-container>div>div>div>div[type="success"]';
+		await this.page.waitForSelector(selector, { state: 'visible', timeout: longTimeout });
+		await this.page.waitForSelector(selector, { state: 'hidden' });
+	}
+
 	async verifySocialProfileSelected(name) {
 		const pillText = this.page.locator(`//*[contains(@class, "vk-PillText") and text()="${name}"]`);
 		await expect(pillText, 'Social network is selected').toBeVisible();
@@ -338,6 +327,22 @@ exports.ComposePage = class ComposePage {
 		await expect(this.previewNetworkType, 'Instagram reel preview is not updated with video on composer').toContainText('Instagram Reel');
 		await expect(this.instagramReelVideoPreviewSelector).toHaveCount(1);
 		await this.page.waitForLoadState('domcontentloaded');
+	}
+
+	async selectShortenWithOwlyButton() {
+		await expect(this.shortenWithOwlyButton).toBeVisible();
+		await this.shortenWithOwlyButton.click();
+		await this.page.waitForTimeout(2000);
+	}
+
+	async selectEditLinkShorteningButton() {
+		await expect(this.editLinkShorteningButton).toBeVisible();
+		await this.editLinkShorteningButton.click();
+	}
+
+	async selectAddTrackingButton() {
+		await expect(this.addTrackingButton).toBeVisible();
+		await this.addTrackingButton.click();
 	}
 
 	async verifyLinkedInPreview(text) {
@@ -488,32 +493,6 @@ exports.ComposePage = class ComposePage {
 	async openLinkSettingsDialog() {
 		await expect(this.addTrackingButton, 'Add tracking button is missing from composer').toBeVisible();
 		await this.addTrackingButton.click();
-		await expect(this.linkSettingsModal, 'Unable to open link settings modal').toBeVisible();
-	}
-
-	async selectLink(url) {
-		const linkToSelect =  this.page.locator(`[data-testid="${url}-select-item"]`, { hasText: url });
-
-		await expect(this.selectLinkDropdown, 'Link dropdown is not visible').toBeVisible();
-		await this.selectLinkDropdown.click();
-		await expect(linkToSelect, 'Selected link is not displayed').toBeVisible();
-		await linkToSelect.click();
-	}
-
-	async selectTracker(tracker) {
-		const linkSettingsTracker = this.page.locator(`[data-testid="${tracker}-select-item"]`, { hasText: tracker });
-
-		await expect(this.linkSettingsTrackerDropdown, 'Link settings track dropdown is not visible').toBeVisible();
-		await this.linkSettingsTrackerDropdown.click();
-		await linkSettingsTracker.click();
-	}
-
-	async setTrackingParameter(parameterName, parameterValue) {
-		await expect(this.trackingParametersTable, 'Link tracking parameter table is not visible').toBeVisible();
-		await expect(this.parameterName, 'Link settings tracking parameter name is not visible').toBeVisible();
-		await this.parameterName.fill(parameterName);
-		await expect(this.parameterValue, 'Link settings tracking parameter value is not visible').toBeVisible();
-		await this.parameterValue.fill(parameterValue);
 	}
 
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {

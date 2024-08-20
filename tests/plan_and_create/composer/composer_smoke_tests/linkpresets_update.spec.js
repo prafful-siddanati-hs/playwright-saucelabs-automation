@@ -3,6 +3,7 @@ const tearDown = require('../../../../custom-commands/tearDown');
 const {getObjectByName} = require('../../../../globals');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
+const {LinkSettingsModal} = require('../../../../pages/planandcreate/linkSettingsModal');
 const { LinkPresetsCreatePage } = require('../../../../pages/planandcreate/linkPresetsCreate');
 const { LinkPresetsManagePage } = require('../../../../pages/planandcreate/linkPresetsManage');
 const createOrg = require('../../../../custom-commands/createOrg');
@@ -29,6 +30,7 @@ test('Update link presets', async ({ page }) => {
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
+	const linkSettingsModal = new LinkSettingsModal(page);
 	const linkPresetCreatePage = new LinkPresetsCreatePage(page);
 	const linkPresetsManagePage = new LinkPresetsManagePage(page);
 	const createNewOrg = new createOrg();
@@ -61,13 +63,12 @@ test('Update link presets', async ({ page }) => {
 
 	await test.step('Open link settings modal', async () => {
 		await composePage.openLinkSettingsDialog();
-		await expect(composePage.presetSelectDropdown).toBeVisible();
-		await composePage.presetSelectDropdown.click();
+		await linkSettingsModal.selectLinkPresetsDropDown();
 	});
 
 	await test.step('Select manage link presets', async () => {
-		await expect(composePage.manageLinkPreset).toBeVisible();
-		await composePage.manageLinkPreset.click();
+		await expect(linkSettingsModal.manageLinkPreset).toBeVisible();
+		await linkSettingsModal.manageLinkPreset.click();
 	});
 
 	await test.step('Open link settings management modal', async () => {
@@ -87,11 +88,10 @@ test('Update link presets', async ({ page }) => {
 
 		await linkPresetsManagePage.closeLinkPresetManage();
 		await composePage.openLinkSettingsDialog();
-		await expect(composePage.presetSelectDropdown).toBeVisible();
-		await composePage.presetSelectDropdown.click();
+		await linkSettingsModal.selectLinkPresetsDropDown();
 		await expect(createdLinkPreset).toBeVisible();
-		await expect(composePage.manageLinkPreset).toBeVisible();
-		await composePage.manageLinkPreset.click();
+		await expect(linkSettingsModal.manageLinkPreset).toBeVisible();
+		await linkSettingsModal.manageLinkPreset.click();
 	});
 
 	await test.step('Edit the created preset', async () => {
@@ -114,11 +114,10 @@ test('Update link presets', async ({ page }) => {
 	await test.step('Select the new preset', async () => {
 		const updatedLinkPreset = page.locator(`[data-testid="${firstEdit}-select-item"]`, { hasText: firstEdit });
 		await composePage.openLinkSettingsDialog();
-		await expect(composePage.presetSelectDropdown).toBeVisible();
-		await composePage.presetSelectDropdown.click();
+		await linkSettingsModal.selectLinkPresetsDropDown();
 		await expect(updatedLinkPreset).toBeVisible();
 		await updatedLinkPreset.click();
-		await composePage.linkSettingsApplyButton.click();
+		await linkSettingsModal.selectLinkSettingsApplyButton();
 	});
 
 	await test.step('Verify link settings are applied', async () => {
@@ -130,10 +129,9 @@ test('Update link presets', async ({ page }) => {
 	await test.step('Open manage presets area from composer', async () => {
 		await expect(composePage.editCustomLinkSettingsButton).toBeVisible();
 		await composePage.editCustomLinkSettingsButton.click();
-		await expect(composePage.presetSelectDropdown).toBeVisible();
-		await composePage.presetSelectDropdown.click();
-		await expect(composePage.manageLinkPreset).toBeVisible();
-		await composePage.manageLinkPreset.click();
+		await linkSettingsModal.selectLinkPresetsDropDown();
+		await expect(linkSettingsModal.manageLinkPreset).toBeVisible();
+		await linkSettingsModal.manageLinkPreset.click();
 	});
 
 	await test.step('Change the tracking parameter', async () => {

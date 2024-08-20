@@ -4,7 +4,9 @@ const getFixture = require('../../../../custom-commands/getFixture');
 const {getObjectByName} = require('../../../../globals');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
+const {LinkSettingsModal} = require('../../../../pages/planandcreate/linkSettingsModal');
 const {PlannerPage} = require('../../../../pages/planandcreate/planner');
+
 const URL = 'slack.com';
 const URL2 = 'https://www.facebook.com';
 const TRACKER = 'Adobe Analytics';
@@ -25,6 +27,7 @@ test('Track applied linksettings', async ({ page }) => {
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const plannerPage = new PlannerPage(page);
+	const linkSettingsModal = new LinkSettingsModal(page);
 
 	await test.step('Setup enterprise user & account', async () => {
 		await addFixture.command('pw_link_track', 'enterprise_user_composer', true, 300);
@@ -62,30 +65,24 @@ test('Track applied linksettings', async ({ page }) => {
 
 	await test.step('Open link settings modal', async () => {
 		await composePage.openLinkSettingsDialog();
-		await expect(composePage.presetSelectDropdown).toBeVisible();
-		await expect(composePage.linkSettingsNoTracker).toBeVisible();
-		await expect(composePage.linkSettingsNoShortner).toBeVisible();
+		await linkSettingsModal.verifyLinkSettingsModal();
 	});
 
 	await test.step('Add a tracker',async () => {
-		await composePage.selectLink(URL);
-		await expect(composePage.customizePresetButton).toBeVisible();
-		await composePage.customizePresetButton.click();
-		await expect(composePage.linkSettingsTrackerDropdown).toBeVisible();
-		await composePage.linkSettingsTrackerDropdown.click();
-		await composePage.selectTracker(TRACKER);
+		await linkSettingsModal.selectLink(URL);
+		await linkSettingsModal.selectCustomizeButton();
+		await linkSettingsModal.selectLinkSettingsTrackerDropDown();
+		await linkSettingsModal.selectTracker(TRACKER);
 	});
 
 	await test.step('Set a tracking parameter', async () => {
-		await composePage.setTrackingParameter(PARAMETER_NAME, PARAMETER_VALUE);
+		await linkSettingsModal.setAdobeTrackingParameter(PARAMETER_NAME, PARAMETER_VALUE);
 	});
 
 	await test.step('Verify & apply the tracking parameter', async () => {
 		const exampleURL = page.getByTestId('LinkPreviewWithUTM');
 		await expect(exampleURL).toContainText(`${URL}?${PARAMETER_NAME}=${PARAMETER_VALUE}`);
-		await expect(composePage.linkSettingsApplyButton).toBeVisible();
-		await composePage.linkSettingsApplyButton.click();
-		await expect(composePage.feCallOuts).not.toBeVisible();
+		await linkSettingsModal.selectLinkSettingsApplyButton();
 		await expect(composePage.editCustomLinkSettingsButton).toBeVisible();
 	});
 
