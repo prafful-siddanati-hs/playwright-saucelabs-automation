@@ -1,4 +1,4 @@
-//This test is to validate the twitter preview validations when multiple twitter accounts are selected
+//This test is to validate the twitter error validations when multiple Twitter accounts are selected
 
 const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
