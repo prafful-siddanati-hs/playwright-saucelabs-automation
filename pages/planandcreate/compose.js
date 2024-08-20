@@ -114,25 +114,6 @@ exports.ComposePage = class ComposePage {
 		this.addTrackingButton = page.getByLabel('Add tracking');
 		this.editCustomLinkSettingsButton = page.getByLabel('Edit custom link settings');
 		this.editLinkShorteningButton = page.getByLabel('Edit link shortening');
-		this.linkSettingsModal = page.getByLabel('Apply Link Settings modal');
-		this.presetSelectDropdown = page.locator('//*[@aria-label="Apply Link Settings modal"]//*[@aria-label="Select Preset Area"]//*[@data-testid="Preset-select"]//*[@aria-haspopup ="listbox"]', {locationStrategy: 'xpath'});
-		this.linkSettingsNoTracker = page.getByText('Tracking: No Tracking');
-		this.linkSettingsNoShortner = page.getByText('Shortener: No Shortener');
-		this.customizePresetButton = page.locator('//*[@aria-label="Apply Link Settings modal"]//*[text()="Customize"]', {locationStrategy: 'xpath'});
-		this.linkSettingsShortenerDropdown = page.locator('//*[@aria-label="Apply Link Settings modal"]//*[@data-testid="Shortener-select"]//*[@aria-haspopup="listbox"]', {locationStrategy: 'xpath'});
-		this.linkSettingsTrackerDropdown = page.getByLabel('No Tracking');
-		this.linkSettingsCutomTracker = page.getByTestId('Custom-select-item', {hasText: 'Custom'});
-		this.trackingParametersTable = page.getByTestId('TrackingParametersTable');
-		this.linkSettingsAddParameterButton = page.getByTestId('AddParameterButton');
-		this.parameterName = page.getByTestId('CompoundParameterNameInput-0');
-		this.parameterValue = page.getByTestId('CompoundParameterValueInput-0-0');
-		this.linkShortener = page.getByTestId('Ow.ly-select-item');
-		this.manageLinkPreset = page.getByTestId('Manage link presets-select-item', {hasText: 'Manage link presets'});
-		this.shortenWithOwlyCaption = page.getByTestId('owlyText').locator('div');
-		this.editAppliedLinkPreset = page.getByTestId('MessageEditArea').getByRole('button', { name: 'Edit' });
-		this.selectLinkDropdown = page.getByTestId('Select a link-select').locator('div').first();
-		this.linkShortener = page.getByTestId('Ow.ly-select-item');
-		this.linkSettingsApplyButton = page.locator('//*[@aria-label="Apply Link Settings modal"]//*[text()="Apply"]', {locationStrategy: 'xpath'});
 		this.badLinkThumbnailWarning = page.locator('//*[@aria-labelledby="message-tab-bar-linkedIn"]//*[text()="This website is preventing us from displaying image previews. Please upload a custom thumbnail."]', {locationStrategy: 'xpath'});
 		this.twitterLinkPreviewCustomizationInfo = page.getByText('Link preview customization is not supported by Twitter');
 		this.twitterCharacterLimitError = page.getByTestId('messageItemError').getByText('Your text exceeds the character limit for Twitter');
@@ -348,6 +329,22 @@ exports.ComposePage = class ComposePage {
 		await this.page.waitForLoadState('domcontentloaded');
 	}
 
+	async selectShortenWithOwlyButton() {
+		await expect(this.shortenWithOwlyButton).toBeVisible();
+		await this.shortenWithOwlyButton.click();
+		await this.page.waitForTimeout(2000);
+	}
+
+	async selectEditLinkShorteningButton() {
+		await expect(this.editLinkShorteningButton).toBeVisible();
+		await this.editLinkShorteningButton.click();
+	}
+
+	async selectAddTrackingButton() {
+		await expect(this.addTrackingButton).toBeVisible();
+		await this.addTrackingButton.click();
+	}
+
 	async verifyLinkedInPreview(text) {
 		await expect(this.linkedInPreviewText, 'Linkedin preview is not updated with text on composer').toContainText(`${text}`);
 	}
@@ -496,73 +493,7 @@ exports.ComposePage = class ComposePage {
 	async openLinkSettingsDialog() {
 		await expect(this.addTrackingButton, 'Add tracking button is missing from composer').toBeVisible();
 		await this.addTrackingButton.click();
-		await expect(this.linkSettingsModal, 'Unable to open link settings modal').toBeVisible();
 	}
-
-	async selectLink(url) {
-		const linkToSelect =  this.page.locator(`[data-testid="${url}-select-item"]`, { hasText: url });
-
-		await expect(this.selectLinkDropdown, 'Link dropdown is not visible').toBeVisible();
-		await this.selectLinkDropdown.click();
-		await expect(linkToSelect, 'Selected link is not displayed').toBeVisible();
-		await linkToSelect.click();
-	}
-
-	async selectTracker(tracker) {
-		const linkSettingsTracker = this.page.locator(`[data-testid="${tracker}-select-item"]`, { hasText: tracker });
-
-		await expect(this.linkSettingsTrackerDropdown, 'Link settings track dropdown is not visible').toBeVisible();
-		await this.linkSettingsTrackerDropdown.click();
-		await linkSettingsTracker.click();
-	}
-
-	async setTrackingParameter(parameterName, parameterValue) {
-		await expect(this.trackingParametersTable, 'Link tracking parameter table is not visible').toBeVisible();
-		await expect(this.parameterName, 'Link settings tracking parameter name is not visible').toBeVisible();
-		await this.parameterName.fill(parameterName);
-		await expect(this.parameterValue, 'Link settings tracking parameter value is not visible').toBeVisible();
-		await this.parameterValue.fill(parameterValue);
-	}
-
-	async setLinkTrackingParameter(index, type, value, name) {
-		const typeDropdown = this.page.locator(`(//*[@data-testid="TrackingParametersTable"]//*[@aria-haspopup="listbox"])[${index}]`, {locationStrategy: 'xpath'});
-		const typeSelector = this.page.locator(`//*[@role = "listbox"]//*[text() = "${type}"]`, {locationStrategy: 'xpath'});
-		const parameterName = this.page.locator(`//*[@data-testid="TrackingParametersTable"]//*[@data-testid="ParameterNameInput-${index - 1}"]`, {locationStrategy: 'xpath'});
-
-		await expect(typeDropdown, 'Link tracking parameter dropdown is visible').toBeVisible();
-		await typeDropdown.click();
-
-		await expect(typeSelector, 'Link tracking parameter type textbox is visible').toBeVisible();
-		await typeSelector.click();
-
-		if (name != null) {
-			await expect(parameterName, 'Link settings tracking parameter name textbox is  visible').toBeVisible();
-			await parameterName.click();
-			await parameterName.fill(name);
-		}
-
-		if (type === 'Custom') {
-			const valueSelector = this.page.locator(`//*[@data-testid="TrackingParametersTable"]//*[@data-testid="CompoundParameter-${index - 1}"]//*[@aria-label="Tracking parameter value"]`);
-			const inputSelector = this.page.locator(`//input[@value='${value}']`, {locationStrategy: 'xpath'});
-
-			await expect(valueSelector, 'Link tracking parameter value is visible').toBeVisible();
-			await valueSelector.click();
-			await this.page.keyboard.type(value);
-			await expect(inputSelector, 'Link tracking parameter value is visible').toBeVisible();
-		}
-	}
-
-	async clickLinkShortenerDropdown() {
-		await expect(this.linkSettingsShortenerDropdown, 'Link shortener dropdown is visible').toBeVisible();
-		await this.linkSettingsShortenerDropdown.click();
-	}
-
-	async selectMenuItemByName(name) {
-		const menuItem = this.page.locator(`//*[@aria-label="Apply Link Settings modal"]//*[@role="option"]//*[text()="${name}"]`);
-		await expect(menuItem, 'Link shortener dropdown list is visible').toBeVisible();
-		await menuItem.click();
-	}
-
 
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {
 		const getAllScheduledMessages = new getScheduledMessages();

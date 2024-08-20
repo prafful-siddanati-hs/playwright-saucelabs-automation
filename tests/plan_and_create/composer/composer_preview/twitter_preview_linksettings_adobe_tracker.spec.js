@@ -4,6 +4,7 @@ const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
+const {LinkSettingsModal} = require('../../../../pages/planandcreate/linkSettingsModal');
 const getFixture = require('../../../../custom-commands/getFixture');
 const createUser = require('../../../../custom-commands/createUser');
 const {getObjectByName} = require('../../../../globals');
@@ -26,6 +27,7 @@ test('Twitter preview validations for adobe link settings', async ({ page }) => 
 	const createNewUser = new createUser();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
+	const  linkSettingsModal = new LinkSettingsModal(page);
 	const addFixture = new getFixture();
 
 	await test.step('Setup user & twitter account', async () => {
@@ -57,32 +59,27 @@ test('Twitter preview validations for adobe link settings', async ({ page }) => 
 		await expect(composePage.twitterLinkPrevewMedia).toBeVisible();
 	});
 
-	await test.step('Select add tracker button', async () => {
+	await test.step('Select add tracker button on composer', async () => {
 		await composePage.openLinkSettingsDialog();
-		await expect(composePage.presetSelectDropdown).toBeVisible();
-		await expect(composePage.linkSettingsNoTracker).toBeVisible();
-		await expect(composePage.linkSettingsNoShortner).toBeVisible();
+		await linkSettingsModal.verifyLinkSettingsModal();
 	});
 
 	await test.step('Set a adobe tracking parameter', async () => {
-		await expect(composePage.customizePresetButton).toBeVisible();
-		await composePage.customizePresetButton.click();
-		await expect(composePage.linkSettingsTrackerDropdown).toBeVisible();
-		await composePage.linkSettingsTrackerDropdown.click();
-		await composePage.selectTracker(TRACKER);
-		await composePage.setTrackingParameter(PARAMETER_NAME, PARAMETER_VALUE);
+		await linkSettingsModal.selectCustomizeButton();
+		await expect(linkSettingsModal.linkSettingsTrackerDropdown).toBeVisible();
+		await linkSettingsModal.linkSettingsTrackerDropdown.click();
+		await linkSettingsModal.selectTracker(TRACKER);
+		await linkSettingsModal.setAdobeTrackingParameter(PARAMETER_NAME, PARAMETER_VALUE);
 	});
 
 	await test.step('Verify & apply the tracking parameter', async () => {
 		const exampleURL = page.getByTestId('LinkPreviewWithUTM');
 		await expect(exampleURL).toContainText(`${URL}?${PARAMETER_NAME}=${PARAMETER_VALUE}`);
-		await expect(composePage.linkSettingsApplyButton).toBeVisible();
-		await composePage.linkSettingsApplyButton.click();
-		await page.waitForTimeout(2000);
-		await expect(composePage.editCustomLinkSettingsButton).toBeVisible();
+		await linkSettingsModal.selectLinkSettingsApplyButton();
 	});
 
 	await test.step('Verify composer preview after applying tracking parameters', async () => {
+		await expect(composePage.editCustomLinkSettingsButton).toBeVisible();
 		await composePage.verifyLinkInTwitterPreview(`${URL}?${PARAMETER_NAME}=${PARAMETER_VALUE}`);
 		await expect(composePage.twitterLinkPreviewTitle).toBeVisible();
 		await expect(composePage.twitterLinkPreviewSource).toContainText(URL);

@@ -4,6 +4,7 @@ const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
+const {LinkSettingsModal} = require('../../../../pages/planandcreate/linkSettingsModal');
 const getFixture = require('../../../../custom-commands/getFixture');
 
 const URL = 'slack.com';
@@ -21,6 +22,7 @@ test('Twitter preview validations for link and link settings', async ({ page }) 
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
+	const linkSettingsModal = new LinkSettingsModal(page);
 	const twAccount = 'pnc_hoot_sparky';
 
 	await test.step('Setup user & accounts', async () => {
@@ -63,9 +65,7 @@ test('Twitter preview validations for link and link settings', async ({ page }) 
 	});
 
 	await test.step('Shorten the link to ow.ly shortener', async () => {
-		await expect(composePage.shortenWithOwlyButton).toBeVisible();
-		await composePage.shortenWithOwlyButton.click();
-		await page.waitForTimeout(2000);
+		await composePage.selectShortenWithOwlyButton();
 		await composePage.verifyLinkInTwitterPreview(SHORTENER);
 		await expect(composePage.twitterLinkPrevewMedia).not.toBeVisible();
 	});
@@ -73,14 +73,11 @@ test('Twitter preview validations for link and link settings', async ({ page }) 
 	await test.step('Select edit link shortening and select existing presets', async () => {
 		const linkPreset = page.locator('[data-testid="With Owly-select-item"]', { hasText: 'With Owly' });
 
-		await expect(composePage.editLinkShorteningButton).toBeVisible();
-		await composePage.editLinkShorteningButton.click();
-		await expect(composePage.presetSelectDropdown).toBeVisible();
-		await composePage.presetSelectDropdown.click();
+		await composePage.selectEditLinkShorteningButton();
+		await linkSettingsModal.selectLinkPresetsDropDown();
 		await expect(linkPreset).toBeVisible();
 		await linkPreset.click();
-		await composePage.linkSettingsApplyButton.click();
-		await page.waitForTimeout(2000);
+		await linkSettingsModal.selectLinkSettingsApplyButton();
 	});
 
 	await test.step('Verify applied presets on composer preview', async () => {

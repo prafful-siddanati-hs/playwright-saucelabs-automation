@@ -4,6 +4,7 @@ const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
+const {LinkSettingsModal} = require('../../../../pages/planandcreate/linkSettingsModal');
 const getFixture = require('../../../../custom-commands/getFixture');
 
 const URL = 'slack.com';
@@ -21,6 +22,7 @@ test('Twitter preview validations for link and link settings', async ({ page }) 
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
+	const linkSettingsModal = new LinkSettingsModal(page);
 	const twAccount = 'pnc_hoot_sparky';
 
 	await test.step('Setup user & accounts', async () => {
@@ -54,16 +56,13 @@ test('Twitter preview validations for link and link settings', async ({ page }) 
 		await expect(composePage.twitterLinkPrevewMedia, 'Link preview media is visible on composer preview').toBeVisible();
 	});
 
-	await test.step('Select add tracker and apply existing shortener', async () => {
-		await expect(composePage.addTrackingButton).toBeVisible();
-		await composePage.addTrackingButton.click();
-		await expect(composePage.linkSettingsModal, 'Link settings modal pop up is visible').toBeVisible();
-		await expect(composePage.customizePresetButton).toBeVisible();
-		await composePage.customizePresetButton.click();
-		await composePage.clickLinkShortenerDropdown();
-		await composePage.selectMenuItemByName('test');
-		await composePage.linkSettingsApplyButton.click();
-		await page.waitForTimeout(2000);
+	await test.step('Select add tracker and apply existing shortener on link settings modal', async () => {
+		await composePage.selectAddTrackingButton();
+		await expect(linkSettingsModal.linkSettingsModal, 'Link settings modal pop up is visible').toBeVisible();
+		await linkSettingsModal.selectCustomizeButton();
+		await linkSettingsModal.selectLinkShortenerDropdown();
+		await linkSettingsModal.selectMenuItemByName('test');
+		await linkSettingsModal.selectLinkSettingsApplyButton();
 	});
 
 	await test.step('Verify applied presets on composer preview', async () => {

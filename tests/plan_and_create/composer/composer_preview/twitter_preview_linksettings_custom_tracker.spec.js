@@ -4,6 +4,7 @@ const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
+const {LinkSettingsModal} = require('../../../../pages/planandcreate/linkSettingsModal');
 const getFixture = require('../../../../custom-commands/getFixture');
 const createUser = require('../../../../custom-commands/createUser');
 const {getObjectByName} = require('../../../../globals');
@@ -26,6 +27,7 @@ test('Twitter preview validations for google analytics link settings', async ({ 
 	const createNewUser = new createUser();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
+	const linkSettingsModal = new LinkSettingsModal(page);
 	const addFixture = new getFixture();
 
 	await test.step('Setup user & twitter account', async () => {
@@ -59,25 +61,23 @@ test('Twitter preview validations for google analytics link settings', async ({ 
 
 	await test.step('Select add tracker button', async () => {
 		await composePage.openLinkSettingsDialog();
-		await expect(composePage.presetSelectDropdown).toBeVisible();
-		await expect(composePage.linkSettingsNoTracker).toBeVisible();
-		await expect(composePage.linkSettingsNoShortner).toBeVisible();
+		await linkSettingsModal.verifyLinkSettingsModal();
 	});
 
 	await test.step('Add a tracker for link',async () => {
-		await expect(composePage.customizePresetButton).toBeVisible();
-		await composePage.customizePresetButton.click();
-		await expect(composePage.linkSettingsTrackerDropdown).toBeVisible();
-		await composePage.linkSettingsTrackerDropdown.click();
-		await composePage.selectTracker(TRACKER);
-		await composePage.setLinkTrackingParameter(2, 'Social Network', PARAMETER_VALUE, PARAMETER_NAME);
+		await expect(linkSettingsModal.customizePresetButton).toBeVisible();
+		await linkSettingsModal.customizePresetButton.click();
+		await expect(linkSettingsModal.linkSettingsTrackerDropdown).toBeVisible();
+		await linkSettingsModal.linkSettingsTrackerDropdown.click();
+		await linkSettingsModal.selectTracker(TRACKER);
+		await linkSettingsModal.setLinkTrackingParameter(2, 'Social Network', PARAMETER_VALUE, PARAMETER_NAME);
 	});
 
 	await test.step('Verify & apply the tracking parameter', async () => {
 		const exampleURL = page.getByTestId('LinkPreviewWithUTM');
 		await expect(exampleURL).toContainText('cbc.ca?utm_source=hootsuite&utm=twitter');
-		await expect(composePage.linkSettingsApplyButton).toBeVisible();
-		await composePage.linkSettingsApplyButton.click();
+		await expect(linkSettingsModal.linkSettingsApplyButton).toBeVisible();
+		await linkSettingsModal.linkSettingsApplyButton.click();
 		await page.waitForTimeout(2000);
 		await expect(composePage.editCustomLinkSettingsButton).toBeVisible();
 	});

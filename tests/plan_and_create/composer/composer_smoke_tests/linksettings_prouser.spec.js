@@ -2,6 +2,7 @@ const { test, expect } = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const getFixture = require('../../../../custom-commands/getFixture');
 const { LoginPage } = require('../../../../pages/login');
+const {LinkSettingsModal} = require('../../../../pages/planandcreate/linkSettingsModal');
 const { getObjectByName, plan_create } = require('../../../../globals');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const {PlannerPage} = require('../../../../pages/planandcreate/planner');
@@ -23,6 +24,7 @@ test('Verify links settings on composer', async ({ page }) => {
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const plannerPage = new PlannerPage(page);
+	const linkSettingsModal = new LinkSettingsModal(page);
 
 	await test.step('Create user & add social network', async () => {
 		await addFixture.command('pw_link_settings', 'pro_user_composer', true, 300);
@@ -53,29 +55,21 @@ test('Verify links settings on composer', async ({ page }) => {
 
 	await test.step('Open link settings dialog', async () => {
 		await composePage.openLinkSettingsDialog();
-		await expect(composePage.presetSelectDropdown).toBeVisible();
-		await expect(composePage.linkSettingsNoTracker).toBeVisible();
-		await expect(composePage.linkSettingsNoShortner).toBeVisible();
+		await linkSettingsModal.verifyLinkSettingsModal();
 	});
 
 	await test.step('Verify tracking parameter options are displayed', async () => {
-		await expect(composePage.customizePresetButton).toBeVisible();
-		await composePage.customizePresetButton.click();
-		await expect(composePage.linkSettingsTrackerDropdown).toBeVisible();
-		await composePage.linkSettingsTrackerDropdown.click();
-		await expect(composePage.linkSettingsCutomTracker).toBeVisible();
-		await composePage.linkSettingsCutomTracker.click();
-		await expect(composePage.trackingParametersTable).toBeVisible();
-		await expect(composePage.linkSettingsAddParameterButton).toBeVisible();
+		await linkSettingsModal.selectCustomizeButton();
+		await linkSettingsModal.selectLinkSettingsTrackerDropDown();
+		await linkSettingsModal.selectLinkSettingsCustomTracker();
+		await expect(linkSettingsModal.trackingParametersTable).toBeVisible();
+		await expect(linkSettingsModal.linkSettingsAddParameterButton).toBeVisible();
 	});
 
 	await test.step('Shorten the url', async () => {
-		await expect(composePage.linkSettingsShortenerDropdown).toBeVisible();
-		await composePage.linkSettingsShortenerDropdown.click();
-		await composePage.linkShortener.click();
-		await expect(composePage.linkSettingsApplyButton).toBeVisible();
-		await composePage.linkSettingsApplyButton.click();
-		await expect(composePage.feCallOuts).not.toBeVisible();
+		await linkSettingsModal.selectLinkShortenerDropdown();
+		await linkSettingsModal.linkShortener.click();
+		await linkSettingsModal.selectLinkSettingsApplyButton();
 		await expect(composePage.editCustomLinkSettingsButton).toBeVisible();
 	});
 
