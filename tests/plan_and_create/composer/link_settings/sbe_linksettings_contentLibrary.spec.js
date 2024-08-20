@@ -65,8 +65,10 @@ test('Link settings via content library template', async ({ page }) => {
 		await composePage.selectComposeButton();
 	});
 
-	await test.step('Write a message', async () => {
+	await test.step('Write a message and verify it got updated to composer preview', async () => {
+		await expect(composePage.emptyTwitterPreview).toBeVisible();
 		await composePage.writeMessage(clLinkText);
+		await composePage.verifyTwitterPreview(clLinkText);
 	});
 
 	await test.step('Save a content library template', async () => {

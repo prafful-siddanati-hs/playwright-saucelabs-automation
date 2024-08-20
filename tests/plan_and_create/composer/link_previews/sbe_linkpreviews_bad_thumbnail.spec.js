@@ -47,6 +47,7 @@ test('Link containing bad thumbnail in composer', async ({ page }) => {
 	});
 
 	await test.step('Write a message', async () => {
+		await expect(composePage.emptyLinkedInPreview).toBeVisible();
 		await composePage.writeMessage(composeText);
 		await composePage.writeMessage(' ');
 	});
@@ -60,7 +61,7 @@ test('Link containing bad thumbnail in composer', async ({ page }) => {
 
 	await test.step('Verify bad thumbnail warning', async () => {
 		//Bad thumbnail warning takes a few seconds to appear
-		await expect(composePage.badLinkThumbnailWarning).toBeVisible({ timeout: 3000 });
+		await expect(composePage.badLinkThumbnailWarning).toBeVisible({ timeout: 5000 });
 	});
 
 	await test.step('Upload a custom thumbnail', async () => {
