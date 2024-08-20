@@ -28,6 +28,8 @@ exports.ComposePage = class ComposePage {
 		this.genericPostPreview = page.locator('.vk-ComposerModal [aria-label="generic post preview"]');
 		this.genericPostPreviewText = page.locator('.vk-ComposerModal [aria-label="generic post preview"] .vk-PreviewMessageText');
 		this.genericPreviewSingleImage = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-MediaImg');
+		this.genericFacebookLinkPreviewMedia = page.locator('.vk-ComposerModal [aria-label="generic post preview"] .vk-FacebookPreview .vk-LinkPreviewMedia');
+		this.genericTwitterLinkPreviewMedia = page.locator('.vk-ComposerModal [aria-label="generic post preview"] .vk-TwitterPreview .vk-LinkPreviewMedia');
 		this.twitterPreviewSingleImage = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaImg');
 		this.twitterPreviewSingleVideo = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-VideoContainer');
 		this.twitterPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaContainer');

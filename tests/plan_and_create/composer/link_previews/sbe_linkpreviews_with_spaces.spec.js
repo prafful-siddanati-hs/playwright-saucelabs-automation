@@ -20,7 +20,7 @@ test.afterEach(async ({ page }) => {
 test('Link preview with space', async ({page}) => {
 	let orgName = 'pw_spaced_linkPreview_' + Math.floor(Math.random() * 10000);
 	const spaces_url = plan_create.getRandomUrlWithSpaces();
-	const messageWithLinks = `Link with spaces ${spaces_url} `;
+	const messageWithLinks = `Link with spaces ${spaces_url}  `;
 	const setUpEnterpriseUser = new SetUpEnterpriseUser();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
@@ -56,7 +56,11 @@ test('Link preview with space', async ({page}) => {
 	});
 
 	await test.step('Write a message with link', async () => {
+		await expect(composePage.emptyTwitterPreview).toBeVisible();
+		await expect(composePage.emptyFacebookPreview).toBeVisible();
 		await composePage.writeMessage(messageWithLinks);
+		await expect(composePage.genericFacebookLinkPreviewMedia).toBeVisible();
+		await expect(composePage.genericTwitterLinkPreviewMedia).toBeVisible();
 	});
 
 	await test.step('Verify facebook link preview', async () => {
