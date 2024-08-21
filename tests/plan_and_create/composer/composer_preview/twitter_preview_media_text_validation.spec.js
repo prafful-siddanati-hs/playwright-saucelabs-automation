@@ -95,7 +95,6 @@ test('Twitter preview validations for media, text and link settings', async ({ p
 		await expect(composePage.imageRemoveButton).toBeVisible();
 		await composePage.imageRemoveButton.click();
 		await expect(composePage.twitterPreviewMediaContainer).not.toBeVisible();
-		await page.waitForTimeout(2000);
 	});
 
 	await test.step('Enter hashtag to compose message and verify its preview', async () => {

@@ -89,9 +89,15 @@ exports.LinkSettingsModal = class LinkSettingsModal {
 	}
 
 	async selectMenuItemByName(name) {
-		const menuItem = this.page.locator(`//*[@aria-label="Apply Link Settings modal"]//*[@role="option"]//*[text()="${name}"]`);
+		const menuItem = this.page.locator(`(//*[@aria-label="Apply Link Settings modal"]//*[@role="option"]//*[text()="${name}"])[1]`);
 		await expect(menuItem, 'Link shortener dropdown list is visible').toBeVisible();
 		await menuItem.click();
+	}
+
+	async selectPresetByName(presetName) {
+		const linkPreset = this.page.locator(`[data-testid="${presetName}-select-item"]`, { hasText: presetName });
+		await expect(linkPreset, 'Link preset is visible in the dropdown list').toBeVisible();
+		await linkPreset.click();
 	}
 
 	async selectCustomizeButton() {
