@@ -28,6 +28,8 @@ npm:
     - hsdynamodb
     - hsapi
     - underscore
+    - date-fns
+    - date-fns-tz
     - events
 suites:
   - name: "Twitter_Preview - Chrome"

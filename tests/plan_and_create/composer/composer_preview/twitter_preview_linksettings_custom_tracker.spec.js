@@ -6,7 +6,6 @@ const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const {LinkSettingsModal} = require('../../../../pages/planandcreate/linkSettingsModal');
 const getFixture = require('../../../../custom-commands/getFixture');
-const createUser = require('../../../../custom-commands/createUser');
 const {getObjectByName} = require('../../../../globals');
 
 const URL = 'cbc.ca';
@@ -22,18 +21,16 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Twitter preview validations for google analytics link settings', async ({ page }) => {
+test('Twitter preview validations for custom link settings tracker', async ({ page }) => {
 	const composeBasicText = `GA ${URL}`;
-	const createNewUser = new createUser();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const linkSettingsModal = new LinkSettingsModal(page);
 	const addFixture = new getFixture();
 
 	await test.step('Setup user & twitter account', async () => {
-		await createNewUser.command('twitter_custom_link_settings', 'professional');
-		await addFixture.command('tw1_custom','twitter', true, 300);
-		twAccount = getObjectByName(global.fixture, 'tw1_custom').socialProfile.username;
+		await addFixture.command('twitter_custom_link_settings', 'pro_user_composer', true, 300);
+		twAccount = getObjectByName(global.fixture, 'twitter_custom_link_settings').twitter.username;
 	});
 
 	await test.step('Login as pro user', async () => {
@@ -46,11 +43,17 @@ test('Twitter preview validations for google analytics link settings', async ({ 
 		await composePage.postToWrapper.click();
 	});
 
-	await test.step('Verify account is selected', async () => {
-		await composePage.verifySocialProfileSelected(twAccount);
+	await test.step('Select twitter from social network dropdown', async () => {
+		await composePage.profileDropDown.click();
+		await expect(composePage.snContentItems).toBeVisible();
+		await composePage.selectSocialProfile(twAccount);
+		await composePage.postToWrapper.click();
+		await expect(composePage.profileListItemTitle).not.toBeVisible();
+		await expect(composePage.emptyTwitterPreview).toBeVisible();
 	});
 
 	await test.step('Write a message and verify its preview', async () => {
+		await expect(composePage.emptyTwitterPreview).toBeVisible();
 		await composePage.writeMessage(composeBasicText);
 		await composePage.verifyTwitterPreview(composeBasicText);
 		await composePage.verifyLinkInTwitterPreview(URL);
