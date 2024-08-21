@@ -3,7 +3,6 @@ const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
-const createUser = require('../../../../custom-commands/createUser');
 const getFixture = require('../../../../custom-commands/getFixture');
 const {getObjectByName, plan_create} = require('../../../../globals');
 let twAccount;
@@ -16,7 +15,6 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Twitter preview validations for media, text and link settings', async ({ page }) => {
-	const createNewUser = new createUser();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const addFixture = new getFixture();
@@ -24,13 +22,12 @@ test('Twitter preview validations for media, text and link settings', async ({ p
 	const hashtag = 'test';
 
 	await test.step('Setup user & twitter account', async () => {
-		await createNewUser.command('twitter_preview', 'professional');
-		await addFixture.command('tw1','twitter', true, 300);
-		twAccount = getObjectByName(global.fixture, 'tw1').socialProfile.username;
+		await addFixture.command('twitter_preview_media', 'pro_user_composer', true, 300);
+		twAccount = getObjectByName(global.fixture, 'twitter_preview_media').twitter.username;
 	});
 
 	await test.step('Login as pro user', async () => {
-		await loginPage.signInAsProUser('twitter_preview');
+		await loginPage.signInAsProUser('twitter_preview_media');
 	});
 
 	await test.step('Open composer from global navigator', async () => {
@@ -39,8 +36,13 @@ test('Twitter preview validations for media, text and link settings', async ({ p
 		await composePage.postToWrapper.click();
 	});
 
-	await test.step('Verify account is selected', async () => {
-		await composePage.verifySocialProfileSelected(twAccount);
+	await test.step('Select twitter from social network dropdown', async () => {
+		await composePage.profileDropDown.click();
+		await expect(composePage.snContentItems).toBeVisible();
+		await composePage.selectSocialProfile(twAccount);
+		await composePage.postToWrapper.click();
+		await expect(composePage.profileListItemTitle).not.toBeVisible();
+		await expect(composePage.emptyTwitterPreview).toBeVisible();
 	});
 
 	await test.step('Write a message and verify its preview', async () => {
@@ -59,7 +61,7 @@ test('Twitter preview validations for media, text and link settings', async ({ p
 
 	await test.step('Upload giphy and verify its preview', async () => {
 		await composePage.uploadMediaFile('test_data/publisher/giphy');
-		await expect(composePage.twitterPreviewSingleImage, 'Twitter preview is updated with giphy').toBeVisible();
+		await expect(composePage.twitterPreviewSingleImage, 'Twitter preview is updated with giphy').toBeVisible({timeout: 5000});
 		await expect(composePage.twitterPreviewSingleImage).toHaveAttribute('src', /staging/);
 		await expect(composePage.imageRemoveButton).toBeVisible();
 		await composePage.imageRemoveButton.click();
@@ -93,6 +95,7 @@ test('Twitter preview validations for media, text and link settings', async ({ p
 		await expect(composePage.imageRemoveButton).toBeVisible();
 		await composePage.imageRemoveButton.click();
 		await expect(composePage.twitterPreviewMediaContainer).not.toBeVisible();
+		await page.waitForTimeout(2000);
 	});
 
 	await test.step('Enter hashtag to compose message and verify its preview', async () => {

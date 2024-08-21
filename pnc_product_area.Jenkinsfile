@@ -14,8 +14,8 @@ properties(
             )
         ),
         parameters([
-            choice(name: 'SUITE_NAME', choices: ['Composer_Smoke - Chrome', 'Composer_Smoke - Safari', 'Link_Previews - Chrome', 'Link_Settings - Chrome', 'Planner_Regression - Chrome', 'Planner_Regression - Safari', 'LinkedIn_PDF - Chrome'], description: 'Select a suite to run'),
-            choice(name: 'FEATURE', choices: ['composer_smoke', 'link_previews', 'link_settings', 'planner_regression', 'linkedin_pdf'], description: 'Select product feature'),
+            choice(name: 'SUITE_NAME', choices: ['Composer_Smoke - Chrome', 'Composer_Smoke - Safari', 'Twitter_Preview - Chrome', 'Link_Previews - Chrome', 'Link_Settings - Chrome', 'Planner_Regression - Chrome', 'Planner_Regression - Safari', 'LinkedIn_PDF - Chrome'], description: 'Select a suite to run'),
+            choice(name: 'FEATURE', choices: ['composer_smoke', 'twitter_preview', link_previews', 'link_settings', 'planner_regression', 'linkedin_pdf'], description: 'Select product feature'),
         ]),
     ]
 )
