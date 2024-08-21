@@ -26,10 +26,10 @@ properties(
         //Twitter Composer Preview - Run at 10:05 AM on Monday
         //Link Settings - Run at 3:50 PM on Monday
         //Link Previews - Run at 3:20 PM on Monday
-        //Composer Regression - Run at 5:05 PM on Friday
+        //Composer Regression - Run at 10:05 PM on Tuesday
         pipelineTriggers(
             [parameterizedCron('''
-                 05 0 * * 5  %CONFIG_FILE=.sauce/composer_regression.config.yml
+                 05 18 * * 2  %CONFIG_FILE=.sauce/composer_regression.config.yml
                  05 18 * * 1 %CONFIG_FILE=.sauce/twitter_composer_preview.config.yml
                  30 23 * * 4 %CONFIG_FILE=.sauce/linkedin_pdf.config.yml
                  50 22 * * 1 %CONFIG_FILE=.sauce/link_settings.config.yml
