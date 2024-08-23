@@ -13,7 +13,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Twitter preview validations for link and link settings', async ({ page }) => {
+test('Error verification for multiple twitter selection', async ({ page }) => {
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
