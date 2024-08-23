@@ -13,7 +13,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Twitter preview validations for link and link settings', async ({ page }) => {
+test('Error verification for multiple twitter selection', async ({ page }) => {
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
@@ -37,7 +37,7 @@ test('Twitter preview validations for link and link settings', async ({ page }) 
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(twAccount1);
-		await composePage.selectSocialProfile(twAccount2);
+		await composePage.searchSocialProfile(twAccount2);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
 	});

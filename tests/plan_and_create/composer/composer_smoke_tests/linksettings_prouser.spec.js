@@ -70,6 +70,7 @@ test('Verify links settings on composer', async ({ page }) => {
 		await linkSettingsModal.selectLinkShortenerDropdown();
 		await linkSettingsModal.linkShortener.click();
 		await linkSettingsModal.selectLinkSettingsApplyButton();
+		await page.waitForTimeout(2000);
 		await expect(composePage.editCustomLinkSettingsButton).toBeVisible();
 	});
 

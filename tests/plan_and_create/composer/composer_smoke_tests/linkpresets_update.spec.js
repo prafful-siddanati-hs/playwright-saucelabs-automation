@@ -118,6 +118,7 @@ test('Update link presets', async ({ page }) => {
 		await expect(updatedLinkPreset).toBeVisible();
 		await updatedLinkPreset.click();
 		await linkSettingsModal.selectLinkSettingsApplyButton();
+		await page.waitForTimeout(2000);
 	});
 
 	await test.step('Verify link settings are applied', async () => {

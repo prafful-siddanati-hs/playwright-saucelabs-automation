@@ -15,7 +15,7 @@ properties(
         ),
         parameters([
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/planner_regression.config.yml', description: 'Planner tests on chrome '),
-            string(name: 'CONFIG_FILE', defaultValue: '.sauce/twitter_composer_preview.config.yml', description: 'Twitter Previews tests on chrome'),
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer_preview.config.yml', description: 'Twitter Previews tests on chrome'),
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/linkedin_pdf.config.yml', description: 'Linkedin PDF tests on chrome'),
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/link_settings.config.yml', description: 'Link Settings tests on chrome'),
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/link_previews.config.yml', description: 'Link Previews tests on chrome'),
@@ -30,7 +30,7 @@ properties(
         pipelineTriggers(
             [parameterizedCron('''
                  05 18 * * 2  %CONFIG_FILE=.sauce/composer_regression.config.yml
-                 05 18 * * 1 %CONFIG_FILE=.sauce/twitter_composer_preview.config.yml
+                 05 18 * * 1 %CONFIG_FILE=.sauce/composer_preview.config.yml
                  30 23 * * 4 %CONFIG_FILE=.sauce/linkedin_pdf.config.yml
                  50 22 * * 1 %CONFIG_FILE=.sauce/link_settings.config.yml
                  20 22 * * 1 %CONFIG_FILE=.sauce/link_previews.config.yml

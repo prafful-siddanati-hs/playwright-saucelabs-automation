@@ -21,6 +21,7 @@ exports.LinkSettingsModal = class LinkSettingsModal {
 		this.editAppliedLinkPreset = page.getByTestId('MessageEditArea').getByRole('button', { name: 'Edit' });
 		this.selectLinkDropdown = page.getByTestId('Select a link-select').locator('div').first();
 		this.linkSettingsApplyButton = page.locator('//*[@aria-label="Apply Link Settings modal"]//*[text()="Apply"]', {locationStrategy: 'xpath'});
+		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]').first();
 	}
 
 	async verifyLinkSettingsModal() {
@@ -118,7 +119,6 @@ exports.LinkSettingsModal = class LinkSettingsModal {
 	async selectLinkSettingsApplyButton() {
 		await expect(this.linkSettingsApplyButton).toBeVisible();
 		await this.linkSettingsApplyButton.click();
-		await this.page.waitForTimeout(2000);
 	}
 
 	async selectLinkPresetsDropDown() {
