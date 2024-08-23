@@ -1,4 +1,4 @@
-//
+//This test is to verify the tracking parameters are applied to the links in the message
 
 const { test, expect } = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
