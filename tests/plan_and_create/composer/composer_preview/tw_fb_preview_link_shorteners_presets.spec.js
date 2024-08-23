@@ -17,7 +17,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Twitter and facebook page preview validations for link and existing link shortener', async ({ page }) => {
+test('Twitter and facebook page preview validations for link and its existing shortener and presets', async ({ page }) => {
 	const composeBasicText = `Test ${URL}`;
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
