@@ -1,11 +1,12 @@
 //This test is to validate the twitter preview validations for media, text and link
+
 const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const getFixture = require('../../../../custom-commands/getFixture');
 const {getObjectByName, plan_create} = require('../../../../globals');
-let twAccount;
+let twAccount, fbAccount;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -14,20 +15,21 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Twitter preview validations for media, text and link settings', async ({ page }) => {
+test('Twitter and facebook page preview validations for media, text and link settings', async ({ page }) => {
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const addFixture = new getFixture();
 	const composeBasicText = `${plan_create.getComposeMessage().concat(' ' + Math.floor(Math.random() * 1000))}`;
 	const hashtag = 'test';
 
-	await test.step('Setup user & twitter account', async () => {
-		await addFixture.command('twitter_preview_media', 'pro_user_composer', true, 300);
-		twAccount = getObjectByName(global.fixture, 'twitter_preview_media').twitter.username;
+	await test.step('Setup user & accounts', async () => {
+		await addFixture.command('tw_fb_preview_media', 'pro_user_composer', true, 300);
+		twAccount = getObjectByName(global.fixture, 'tw_fb_preview_media').twitter.username;
+		fbAccount = getObjectByName(global.fixture, 'tw_fb_preview_media').facebookPage.username;
 	});
 
 	await test.step('Login as pro user', async () => {
-		await loginPage.signInAsProUser('twitter_preview_media');
+		await loginPage.signInAsProUser('tw_fb_preview_media');
 	});
 
 	await test.step('Open composer from global navigator', async () => {
@@ -36,44 +38,55 @@ test('Twitter preview validations for media, text and link settings', async ({ p
 		await composePage.postToWrapper.click();
 	});
 
-	await test.step('Select twitter from social network dropdown', async () => {
+	await test.step('Select twitter and facebook page accounts from social network dropdown', async () => {
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(twAccount);
+		await composePage.selectSocialProfile(fbAccount);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
 		await expect(composePage.emptyTwitterPreview).toBeVisible();
+		await expect(composePage.emptyFacebookPreview).toBeVisible();
 	});
 
-	await test.step('Write a message and verify its preview', async () => {
+	await test.step('Write a message and verify twitter and facebook page preview', async () => {
 		await composePage.writeMessage(composeBasicText);
 		await composePage.verifyTwitterPreview(composeBasicText);
+		await composePage.verifyFacebookPreview(composeBasicText);
 	});
 
 	await test.step('Upload single image and verify its preview', async () => {
 		await composePage.uploadMediaFile('test_data/publisher/images');
+		await expect(composePage.facebookPreviewSingleImage, 'Facebook preview is updated with image').toBeVisible();
+		await expect(composePage.facebookPreviewSingleImage).toHaveAttribute('src', /staging/);
 		await expect(composePage.twitterPreviewSingleImage, 'Twitter preview is updated with image').toBeVisible();
 		await expect(composePage.twitterPreviewSingleImage).toHaveAttribute('src', /staging/);
 		await expect(composePage.imageRemoveButton).toBeVisible();
 		await composePage.imageRemoveButton.click();
 		await expect(composePage.twitterPreviewSingleImage).not.toBeVisible();
+		await expect(composePage.facebookPreviewSingleImage).not.toBeVisible();
 	});
 
 	await test.step('Upload giphy and verify its preview', async () => {
 		await composePage.uploadMediaFile('test_data/publisher/giphy');
 		await expect(composePage.twitterPreviewSingleImage, 'Twitter preview is updated with giphy').toBeVisible({timeout: 5000});
 		await expect(composePage.twitterPreviewSingleImage).toHaveAttribute('src', /staging/);
+		await expect(composePage.facebookPreviewSingleImage, 'Facebook preview is updated with image').toBeVisible();
+		await expect(composePage.facebookPreviewSingleImage).toHaveAttribute('src', /staging/);
 		await expect(composePage.imageRemoveButton).toBeVisible();
 		await composePage.imageRemoveButton.click();
 		await expect(composePage.twitterPreviewSingleImage).not.toBeVisible();
+		await expect(composePage.facebookPreviewSingleImage).not.toBeVisible();
 	});
 
 	await test.step('Upload video and verify its preview', async () => {
 		await composePage.uploadMediaFile('test_data/publisher/videos/');
+		await expect(composePage.facebookPreviewSingleVideo, 'Facebook preview is updated with video').toBeVisible();
 		await expect(composePage.twitterPreviewSingleVideo, 'Twitter preview is updated with video').toBeVisible();
 		await expect(composePage.videoRemoveButton).toBeVisible();
 		await composePage.videoRemoveButton.click();
 		await expect(composePage.twitterPreviewSingleVideo).not.toBeVisible();
+		await expect(composePage.facebookPreviewSingleVideo).not.toBeVisible();
 	});
 
 	await test.step('Attach image from media library and verify its preview', async () => {
@@ -84,6 +97,7 @@ test('Twitter preview validations for media, text and link settings', async ({ p
 		await expect(composePage.imageRemoveButton).toBeVisible();
 		await composePage.imageRemoveButton.click();
 		await expect(composePage.twitterPreviewMediaContainer).not.toBeVisible();
+		await expect(composePage.facebookPreviewSingleImage).not.toBeVisible();
 	});
 
 	await test.step('Attach gif from media library and verify its preview', async () => {
@@ -100,11 +114,13 @@ test('Twitter preview validations for media, text and link settings', async ({ p
 	await test.step('Enter hashtag to compose message and verify its preview', async () => {
 		await composePage.writeMessage(` #${hashtag}`);
 		await composePage.verifyHashtagInTwitterPreview(hashtag);
+		await composePage.verifyHashtagInFacebookPreview(hashtag);
 	});
 
 	await test.step('Enter mention to compose message and verify its preview', async () => {
 		await composePage.writeMessage(' @mention');
 		await composePage.verifyTwitterPreview('@mention');
+		await composePage.verifyFacebookPreview('@mention');
 	});
 
 });

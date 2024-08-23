@@ -1,4 +1,4 @@
-//This test is to validate the twitter composer preview validations for GA link settings
+//This test is to validate the twitter and facebook page preview for custom link settings
 
 const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
@@ -12,7 +12,7 @@ const URL = 'cbc.ca';
 const TRACKER = 'Custom';
 const PARAMETER_NAME = 'utm';
 const PARAMETER_VALUE = '';
-let twAccount;
+let twAccount, fbAccount;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -21,20 +21,21 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Twitter preview validations for custom link settings tracker', async ({ page }) => {
-	const composeBasicText = `GA ${URL}`;
+test('Twitter and facebook preview validations for custom link settings tracker', async ({ page }) => {
+	const composeBasicText = `Custom ${URL} `;
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const linkSettingsModal = new LinkSettingsModal(page);
 	const addFixture = new getFixture();
 
-	await test.step('Setup user & twitter account', async () => {
-		await addFixture.command('twitter_custom_link_settings', 'pro_user_composer', true, 300);
-		twAccount = getObjectByName(global.fixture, 'twitter_custom_link_settings').twitter.username;
+	await test.step('Setup user & accounts', async () => {
+		await addFixture.command('tw_fb_custom_link_settings', 'pro_user_composer', true, 300);
+		twAccount = getObjectByName(global.fixture, 'tw_fb_custom_link_settings').twitter.username;
+		fbAccount = getObjectByName(global.fixture, 'tw_fb_custom_link_settings').facebookPage.username;
 	});
 
 	await test.step('Login as pro user', async () => {
-		await loginPage.signInAsProUser('twitter_custom_link_settings');
+		await loginPage.signInAsProUser('tw_fb_custom_link_settings');
 	});
 
 	await test.step('Open composer from global navigator', async () => {
@@ -43,23 +44,29 @@ test('Twitter preview validations for custom link settings tracker', async ({ pa
 		await composePage.postToWrapper.click();
 	});
 
-	await test.step('Select twitter from social network dropdown', async () => {
+	await test.step('Select twitter and facebook page accounts from social network dropdown', async () => {
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(twAccount);
+		await composePage.selectSocialProfile(fbAccount);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
 		await expect(composePage.emptyTwitterPreview).toBeVisible();
+		await expect(composePage.emptyFacebookPreview).toBeVisible();
 	});
 
-	await test.step('Write a message and verify its preview', async () => {
-		await expect(composePage.emptyTwitterPreview).toBeVisible();
+	await test.step('Write a message and verify twitter and facebook preview', async () => {
 		await composePage.writeMessage(composeBasicText);
 		await composePage.verifyTwitterPreview(composeBasicText);
 		await composePage.verifyLinkInTwitterPreview(URL);
 		await expect(composePage.twitterLinkPreviewTitle).toBeVisible();
 		await expect(composePage.twitterLinkPreviewSource).toContainText(URL);
 		await expect(composePage.twitterLinkPrevewMedia).toBeVisible();
+		await composePage.verifyFacebookPreview(composeBasicText);
+		await composePage.verifyLinkInFacebookPagePreview(URL);
+		await expect(composePage.facebookLinkPreviewTitle).toBeVisible();
+		await expect(composePage.facebookLinkPreviewSource).toContainText(URL);
+		await expect(composePage.facebookLinkPrevewMedia).toBeVisible();
 	});
 
 	await test.step('Select add tracker button', async () => {
@@ -68,8 +75,8 @@ test('Twitter preview validations for custom link settings tracker', async ({ pa
 	});
 
 	await test.step('Add a tracker for link',async () => {
-		await expect(linkSettingsModal.customizePresetButton).toBeVisible();
-		await linkSettingsModal.customizePresetButton.click();
+		await expect(linkSettingsModal.customizeButton).toBeVisible();
+		await linkSettingsModal.customizeButton.click();
 		await expect(linkSettingsModal.linkSettingsTrackerDropdown).toBeVisible();
 		await linkSettingsModal.linkSettingsTrackerDropdown.click();
 		await linkSettingsModal.selectTracker(TRACKER);
@@ -81,7 +88,7 @@ test('Twitter preview validations for custom link settings tracker', async ({ pa
 		await expect(exampleURL).toContainText('cbc.ca?utm_source=hootsuite&utm=twitter');
 		await expect(linkSettingsModal.linkSettingsApplyButton).toBeVisible();
 		await linkSettingsModal.linkSettingsApplyButton.click();
-		await page.waitForTimeout(2000);
+		await page.waitForTimeout(3000);
 		await expect(composePage.editCustomLinkSettingsButton).toBeVisible();
 	});
 
@@ -90,5 +97,9 @@ test('Twitter preview validations for custom link settings tracker', async ({ pa
 		await expect(composePage.twitterLinkPreviewTitle).toBeVisible();
 		await expect(composePage.twitterLinkPreviewSource).toContainText(URL);
 		await expect(composePage.twitterLinkPrevewMedia).toBeVisible();
+		await composePage.verifyLinkInFacebookPagePreview('http://cbc.ca?utm_source=hootsuite&utm=facebook');
+		await expect(composePage.facebookLinkPreviewTitle).toBeVisible();
+		await expect(composePage.facebookLinkPreviewSource).toContainText(URL);
+		await expect(composePage.facebookLinkPrevewMedia).toBeVisible();
 	});
 });

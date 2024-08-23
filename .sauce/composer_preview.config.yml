@@ -32,11 +32,11 @@ npm:
     - date-fns-tz
     - events
 suites:
-  - name: "Twitter_Preview - Chrome"
+  - name: "Composer_Preview - Chrome"
     platformName: "Windows 11"
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
-    testMatch: ['tests/plan_and_create/composer/composer_preview/twitter*.*.js']
+    testMatch: ['tests/plan_and_create/composer/composer_preview/*.*.js']
     params:
       browserName: "chromium"
       project: "chromium"

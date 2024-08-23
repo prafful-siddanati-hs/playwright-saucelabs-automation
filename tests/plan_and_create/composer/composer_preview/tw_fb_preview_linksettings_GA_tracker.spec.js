@@ -1,4 +1,5 @@
-//This test is to validate the twitter composer preview validations for GA link settings
+//This test is to validate the twitter and facebook preview for GA link settings
+
 const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
@@ -9,7 +10,7 @@ const {getObjectByName} = require('../../../../globals');
 
 const URL = 'hootsuite.com';
 const TRACKER = 'Google Analytics';
-let twAccount;
+let twAccount, fbAccount;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -18,20 +19,21 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Twitter preview validations for google analytics link settings', async ({ page }) => {
-	const composeBasicText = `GA ${URL}`;
+test('Twitter preview and facebook page validations for google analytics link settings', async ({ page }) => {
+	const composeBasicText = `GA ${URL} `;
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const linkSettingsModal = new LinkSettingsModal(page);
 	const addFixture = new getFixture();
 
-	await test.step('Setup user & twitter account', async () => {
-		await addFixture.command('twitter_GA_link_settings', 'pro_user_composer', true, 300);
-		twAccount = getObjectByName(global.fixture, 'twitter_GA_link_settings').twitter.username;
+	await test.step('Setup user & accounts', async () => {
+		await addFixture.command('tw_fb_GA_link_settings', 'pro_user_composer', true, 300);
+		twAccount = getObjectByName(global.fixture, 'tw_fb_GA_link_settings').twitter.username;
+		fbAccount = getObjectByName(global.fixture, 'tw_fb_GA_link_settings').facebookPage.username;
 	});
 
 	await test.step('Login as pro user', async () => {
-		await loginPage.signInAsProUser('twitter_GA_link_settings');
+		await loginPage.signInAsProUser('tw_fb_GA_link_settings');
 	});
 
 	await test.step('Open composer from global navigator', async () => {
@@ -40,23 +42,29 @@ test('Twitter preview validations for google analytics link settings', async ({ 
 		await composePage.postToWrapper.click();
 	});
 
-	await test.step('Select twitter from social network dropdown', async () => {
+	await test.step('Select twitter and facebook page accounts from social network dropdown', async () => {
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(twAccount);
+		await composePage.selectSocialProfile(fbAccount);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
 		await expect(composePage.emptyTwitterPreview).toBeVisible();
+		await expect(composePage.emptyFacebookPreview).toBeVisible();
 	});
 
-	await test.step('Write a message and verify its preview', async () => {
-		await expect(composePage.emptyTwitterPreview).toBeVisible();
+	await test.step('Write a message and verify twitter and facebook preview', async () => {
 		await composePage.writeMessage(composeBasicText);
 		await composePage.verifyTwitterPreview(composeBasicText);
 		await composePage.verifyLinkInTwitterPreview(URL);
 		await expect(composePage.twitterLinkPreviewTitle).toBeVisible();
 		await expect(composePage.twitterLinkPreviewSource).toContainText(URL);
 		await expect(composePage.twitterLinkPrevewMedia).toBeVisible();
+		await composePage.verifyFacebookPreview(composeBasicText);
+		await composePage.verifyLinkInFacebookPagePreview(URL);
+		await expect(composePage.facebookLinkPreviewTitle).toBeVisible();
+		await expect(composePage.facebookLinkPreviewSource).toContainText(URL);
+		await expect(composePage.facebookLinkPrevewMedia).toBeVisible();
 	});
 
 	await test.step('Select add tracker button', async () => {
@@ -78,6 +86,7 @@ test('Twitter preview validations for google analytics link settings', async ({ 
 		const exampleURL = page.getByTestId('LinkPreviewWithUTM');
 		await expect(exampleURL).toContainText('hootsuite.com?utm_source=hootsuite&utm_medium=twitter&utm_term=edt2&utm_content=271723&utm_campaign=test1');
 		await linkSettingsModal.selectLinkSettingsApplyButton();
+		await page.waitForTimeout(5000);
 	});
 
 	await test.step('Verify composer preview after applying tracking parameters', async () => {
@@ -86,6 +95,10 @@ test('Twitter preview validations for google analytics link settings', async ({ 
 		await expect(composePage.twitterLinkPreviewTitle).toBeVisible();
 		await expect(composePage.twitterLinkPreviewSource).toContainText(URL);
 		await expect(composePage.twitterLinkPrevewMedia).toBeVisible();
+		await composePage.verifyLinkInFacebookPagePreview('http://hootsuite.com?utm_source=hootsuite&utm_medium=facebook');
+		await expect(composePage.facebookLinkPreviewTitle).toBeVisible();
+		await expect(composePage.facebookLinkPreviewSource).toContainText(URL);
+		await expect(composePage.facebookLinkPrevewMedia).toBeVisible();
 	});
 
 });

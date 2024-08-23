@@ -37,7 +37,7 @@ test('Twitter preview validations for link and link settings', async ({ page }) 
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(twAccount1);
-		await composePage.selectSocialProfile(twAccount2);
+		await composePage.searchSocialProfile(twAccount2);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
 	});

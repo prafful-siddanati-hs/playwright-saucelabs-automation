@@ -37,6 +37,7 @@ exports.ComposePage = class ComposePage {
 		this.emptyFacebookPreview = page.locator('.vk-ComposerModal .vk-FacebookPreview');
 		this.emptyLinkedInPreview = page.locator('.vk-ComposerModal .vk-LinkedInPreview');
 		this.emptyInstagramPreview = page.locator('.vk-ComposerModal .vk-InstagramPreview');
+		this.facebookPreviewSingleVideo = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-VideoContainer');
 		this.facebookPreviewSingleImage = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaImg');
 		this.facebookPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaContainer');
 		this.messageArea = page.locator('.rc-MessageEditText [aria-label="Text"].public-DraftEditor-content');
@@ -71,6 +72,7 @@ exports.ComposePage = class ComposePage {
 		this.facebookMessageLink = page.locator('.rc-Composer .vk-FacebookPreview .vk-ContentBody .vk-MessageLink');
 		this.facebookLinkPreviewTitle = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
 		this.facebookLinkPreviewSource = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-Source');
+		this.facebookLinkPrevewMedia = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-LinkPreviewMedia');
 		this.instagramPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').getByLabel('Instagram post preview');
 		this.instagramReelPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').locator('.vk-InstagramReelPreview');
 		this.linkedInPreviewText = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-ContentBody');
@@ -81,6 +83,7 @@ exports.ComposePage = class ComposePage {
 		this.linkedInPdfPreview = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-PdfContainer .vk-PdfDocument');
 		this.facebookMentionLink = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody .vk-MessageMention');
 		this.twitterHashtagLink = page.locator('.vk-TwitterPreview .vk-ContentBody .vk-MessageHashtag');
+		this.facebookHashtagLink = page.locator('.vk-FacebookPreview .vk-ContentBody .vk-MessageHashtag');
 		this.tiktokHashtagLink = page.locator('.vk-TikTokPreview .vk-MessageText .vk-MessageHashtag');
 		this.instagramHashtagLink = page.locator('.vk-InstagramReelPreview .vk-MessageHashtag');
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
@@ -197,6 +200,16 @@ exports.ComposePage = class ComposePage {
 
 		await profileSelectorItem.click();
 		await this.verifySocialProfileSelected(name);
+	}
+
+	async searchSocialProfile(name) {
+		const profileSelectorItem = this.page.locator(`(//*[contains(@class, "rc-Composer")]//*[contains(@class, "vk-SocialNetworkPicker")]//div[contains(@class, "vk-ProfileListItemTitle") and text()="${name}"])[1]`);
+		const inputSelector = this.page.locator(`.vk-ComposerModal .vk-SocialNetworkPicker .vk-PillsInputWrapper input[value="${name}"]`);
+		await this.page.locator('.vk-ComposerModal .vk-SocialNetworkPicker .vk-PillsInputWrapper input').fill(name);
+		await this.page.waitForTimeout(500);
+		await expect(inputSelector).toBeVisible();
+		await expect(profileSelectorItem).toBeVisible();
+		await profileSelectorItem.click();
 	}
 
 	/**
@@ -372,6 +385,12 @@ exports.ComposePage = class ComposePage {
 		await expect(this.twitterHashtagLink, 'twitter preview is not updated with hashtag on composer').toBeVisible();
 		assert((await this.twitterHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Twitter preview');
 		assert((await this.twitterHashtagLink.getAttribute('href')).includes(`https://twitter.com/hashtag/${hashtag}`), 'Incorrect href value in Twitter preview');
+	}
+
+	async verifyHashtagInFacebookPreview(hashtag) {
+		await expect(this.facebookHashtagLink, 'facebook preview is not updated with hashtag on composer').toBeVisible();
+		assert((await this.facebookHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Facebook preview');
+		assert((await this.facebookHashtagLink.getAttribute('href')).includes(`https://www.facebook.com/hashtag/${hashtag}`), 'Incorrect href value in Facebook preview');
 	}
 
 	async verifyTiktokHashtagPreview(hashtag) {

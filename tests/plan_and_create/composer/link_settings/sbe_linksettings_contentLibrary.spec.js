@@ -109,6 +109,7 @@ test('Link settings via content library template', async ({ page }) => {
 		const exampleURL = page.getByTestId('LinkPreviewWithUTM');
 		await expect(exampleURL).toContainText(`${URL}?${PARAMETER_NAME}=${PARAMETER_VALUE}`);
 		await linkSettingsModal.selectLinkSettingsApplyButton();
+		await page.waitForTimeout(2000);
 	});
 
 	await test.step('Verify the tracker is applied', async () => {

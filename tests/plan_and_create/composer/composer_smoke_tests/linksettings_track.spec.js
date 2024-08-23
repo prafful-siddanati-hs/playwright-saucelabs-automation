@@ -1,3 +1,5 @@
+//
+
 const { test, expect } = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const getFixture = require('../../../../custom-commands/getFixture');
@@ -83,6 +85,7 @@ test('Track applied linksettings', async ({ page }) => {
 		const exampleURL = page.getByTestId('LinkPreviewWithUTM');
 		await expect(exampleURL).toContainText(`${URL}?${PARAMETER_NAME}=${PARAMETER_VALUE}`);
 		await linkSettingsModal.selectLinkSettingsApplyButton();
+		await page.waitForTimeout(2000);
 		await expect(composePage.editCustomLinkSettingsButton).toBeVisible();
 	});
 
