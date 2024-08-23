@@ -129,6 +129,9 @@ exports.ComposePage = class ComposePage {
 		this.mediaSecondError = page.locator('//div[contains(@class, "rc-MediaPicker")]//*[(@role="alert")]//*[text()="Twitter supports video frame rates up to 60 fps. Your video is 120 fps."]');
 		this.socialNetworkErrorTitle = page.locator('//div[contains(@class, "vk-ProfileSelectorError")]//*[(@role="alert")]//*[text()="Oops! You forgot to select a social account"]', {locationStrategy: 'xpath'});
 		this.socialNetworkErrorDescription = page.locator('//div[contains(@class, "vk-ProfileSelectorError")]//*[(@role="alert")]//*[text()="Please choose one or more social accounts to publish to"]', {locationStrategy: 'xpath'});
+		this.firstCommentHeader = page.getByText('First comment', { exact: true });
+		this.firstCommentTextArea = page.locator('.rc-MessageEditText [aria-label="First comment"].public-DraftEditor-content');
+		this.firstCommentPreview = page.locator('.vk-ComposerModal').getByTestId('preview-container').locator('.vk-InstagramFirstCommentPreview');
 	}
 
 	async setDarkLaunchCookies() {
@@ -342,6 +345,11 @@ exports.ComposePage = class ComposePage {
 		await expect(this.previewNetworkType, 'Instagram reel preview is not updated with video on composer').toContainText('Instagram Reel');
 		await expect(this.instagramReelVideoPreviewSelector).toHaveCount(1);
 		await this.page.waitForLoadState('domcontentloaded');
+	}
+
+	async verifyInstagramFirstCommentPreview(comment) {
+		await expect(this.firstCommentPreview, 'First comment preview is visible on composer').toBeVisible();
+		await expect(this.firstCommentPreview, 'Instagram first comment preview is not updated with text on composer').toContainText(`${comment}`);
 	}
 
 	async selectShortenWithOwlyButton() {

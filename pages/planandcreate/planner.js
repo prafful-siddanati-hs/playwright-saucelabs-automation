@@ -365,6 +365,11 @@ exports.PlannerPage = class PlannerPage {
 		await expect(previewPaneMessageText, 'Message is not visible on planner preview pane').toBeVisible();
 	}
 
+	async verifyFirstCommentInPreviewPane(firstComment) {
+		const firstCommentPreviewPaneText = this.page.getByTestId('Info').locator('.vk-FirstComment').getByText(firstComment);
+		await expect(firstCommentPreviewPaneText, 'First Comment is visible on planner preview pane').toBeVisible();
+	}
+
 	async verifyPDFInPreviewPane() {
 		await expect(this.page.getByTestId('Preview'), 'Message with PDF is not visible on planner preview pane').toBeVisible();
 		await expect(this.linkedinPreviewPdf).toBeVisible();
@@ -379,6 +384,11 @@ exports.PlannerPage = class PlannerPage {
 		await this.moreActions.click();
 		await expect(this.duplicateButton, 'Duplicate button is not visible on planner preview pane').toBeVisible();
 		await this.duplicateButton.click();
+	}
+
+	async deleteFromPreviewPane() {
+		await this.deleteButton.click();
+		await this.deletePostButton.click();
 	}
 
 	async weekViewPostCountHeader(num) {
