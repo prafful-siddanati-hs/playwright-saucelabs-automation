@@ -396,6 +396,16 @@ exports.PlannerPage = class PlannerPage {
 		await postCountHeader.isVisible();
 	}
 
+	async selectListView() {
+		await expect(this.viewToggleList).toBeVisible();
+		await this.viewToggleList.click();
+	}
+
+	async selectCreateButton() {
+		await expect(this.createPostButton).toBeVisible();
+		await this.createPostButton.click();
+	}
+
 	async dragAndDropCard(message, hour, id) {
 		const nextDayDate = format(utcToZonedTime(addDays(startOfWeek(addWeeks(new Date(), 1)), 1), timeZone), 'eeee, d MMMM');
 		const nextDayTime = format(utcToZonedTime(addDays(startOfWeek(addWeeks(new Date(), 1)), 1), timeZone), 'ha');
@@ -473,14 +483,22 @@ exports.PlannerPage = class PlannerPage {
 		await createMessage.command(parseInt(memberId, 10), options);
 	}
 
-	async selectListView() {
-		await expect(this.viewToggleList).toBeVisible();
-		await this.viewToggleList.click();
-	}
-
-	async selectCreateButton() {
-		await expect(this.createPostButton).toBeVisible();
-		await this.createPostButton.click();
+	async scheduleIGPostWithFirstComment(memberId, snId, message, scheduleDate, firstCommentText) {
+		const createMessage = new scheduleV3Message();
+		const options = {
+			messages: [
+				{
+					socialProfileId: parseInt(snId, 10),
+					text: message,
+					scheduledSendTime: scheduleDate,
+					postType: { 'postType': 'IG_FEED' },
+					publishingMode: { 'mode': 'IG_API' },
+					firstComment: { 'text': firstCommentText },
+					mediaUrls: [plan_create.mediaUrls.imageAttachment],
+				}
+			]
+		};
+		await createMessage.command(parseInt(memberId, 10), options);
 	}
 
 	async deleteScheduleMessagesViaAPI(memberId) {

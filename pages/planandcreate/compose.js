@@ -130,6 +130,7 @@ exports.ComposePage = class ComposePage {
 		this.socialNetworkErrorTitle = page.locator('//div[contains(@class, "vk-ProfileSelectorError")]//*[(@role="alert")]//*[text()="Oops! You forgot to select a social account"]', {locationStrategy: 'xpath'});
 		this.socialNetworkErrorDescription = page.locator('//div[contains(@class, "vk-ProfileSelectorError")]//*[(@role="alert")]//*[text()="Please choose one or more social accounts to publish to"]', {locationStrategy: 'xpath'});
 		this.firstCommentHeader = page.getByText('First comment', { exact: true });
+		this.firstCommentSubHeader = page.getByText('First comment is only available for direct publishing and for posts');
 		this.firstCommentTextArea = page.locator('.rc-MessageEditText [aria-label="First comment"].public-DraftEditor-content');
 		this.firstCommentPreview = page.locator('.vk-ComposerModal').getByTestId('preview-container').locator('.vk-InstagramFirstCommentPreview');
 	}

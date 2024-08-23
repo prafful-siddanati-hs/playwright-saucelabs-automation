@@ -64,6 +64,37 @@ module.exports = {
 			}
 		},
 
+		mediaUrls: {
+			imageAttachment:
+			{
+				'bytes': 68408,
+				'fileName': '12262804-6MuAcGtv.jpeg',
+				'fileSource': 'Pexels',
+				'height': 598,
+				'mimeType': 'image/jpeg',
+				'productTags': null,
+				'status': 'ATTACHED',
+				'thumbnailUrl': 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-0-12262804-4kFLS6Ca.jpeg',
+				'trackingSource': 'UPLOAD',
+				'url': 'https://hootsuite-video.s3.amazonaws.com/staging/12262804-4kFLS6Ca.jpeg',
+				'width': 940
+			},
+			videoAttachment:
+			{
+				'bytes': 2321652,
+				'fileName': '111956469_32407e98-0a1d-4084-b8eb-9ce8d403efdf.mp4',
+				'fileSource': 'Upload',
+				'height': 720,
+				'mimeType': 'video/mp4',
+				'productTags': null,
+				'status': 'ATTACHED',
+				'thumbnailUrl': 'https://hootsuite-video.s3.amazonaws.com/staging/12262804_8dcc8204-bb88-446d-ba92-55944bea29c8.mp4',
+				'trackingSource': 'UPLOAD',
+				'url': 'https://hootsuite-video.s3.amazonaws.com/staging/12262804_8dcc8204-bb88-446d-ba92-55944bea29c8.mp4',
+				'width': 1280
+			}
+		},
+
 		getComposeMessage: function () {
 			const MESSAGE = [
 				'Draft',
@@ -149,6 +180,12 @@ module.exports = {
 			const pdfs = Object.values(this.pdfs);
 			const randomIndex = Math.floor(Math.random() * pdfs.length);
 			return pdfs[randomIndex];
+		},
+
+		getMediaUrls: function () {
+			const mediaUrls = Object.values(this.mediaUrls);
+			const randomIndex = Math.floor(Math.random() * mediaUrls.length);
+			return mediaUrls[randomIndex];
 		},
 	},
 

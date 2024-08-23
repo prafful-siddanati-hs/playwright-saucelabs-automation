@@ -103,4 +103,45 @@ exports.DraftsPage = class DraftsPage {
 		}
 		await createDraft.command(parseInt(memberId, 10), draftOptions);
 	}
+
+	/**
+	 * Create a draft message via API for Instagram Business.
+	 * 'draftScheduleTime' is an optional parameter to create either scheduled or unscheduled draft.
+	 * 'firstCommentText' is an optional parameter to add first comment to the draft post.
+	 * @param feedOrPushType - IG_FEED or IG_PUSH
+	 */
+	async createIGBDraftViaApi(memberId, orgId, snId, feedOrPushType, message, socialNetwork, draftScheduleTime = null, firstCommentText = null) {
+		const createDraft = new draftMessage();
+		const orgid = orgId ? orgId : null;
+
+		const draftOptions = {
+			socialProfileIds: [
+				parseInt(snId, 10)
+			],
+			organizationId: orgid,
+			scheduledDate: draftScheduleTime,
+			draftMessage: {
+				text: message,
+				messageType: 'draft',
+				postType: feedOrPushType.toUpperCase(),
+				publishingMode: 'IG_API',
+				firstComment: {'text' : firstCommentText },
+				messages: [
+					{
+						message: message,
+						snType: socialNetwork.toUpperCase(),
+						snId: snId.toString()
+					}
+				],
+				attachments: [plan_create.mediaUrls.imageAttachment],
+			}
+		};
+		if (draftScheduleTime) {
+			draftOptions.scheduledDate = draftScheduleTime;
+		}
+		if (firstCommentText) {
+			draftOptions.draftMessage.firstComment = { 'text' : firstCommentText };
+		}
+		await createDraft.command(parseInt(memberId, 10), draftOptions);
+	}
 };
