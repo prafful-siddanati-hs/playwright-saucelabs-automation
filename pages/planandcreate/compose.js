@@ -38,11 +38,14 @@ exports.ComposePage = class ComposePage {
 		this.emptyLinkedInPreview = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview');
 		this.emptyLinkedInCompanyPreview = page.locator('.vk-ComposerModal [type="LINKEDINCOMPANY"] .vk-LinkedInPreview');
 		this.emptyInstagramPreview = page.locator('.vk-ComposerModal .vk-InstagramPreview');
+		this.emptyThreadsPreview = page.locator('.vk-ComposerModal .vk-ThreadsPreview');
 		this.facebookPreviewSingleVideo = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-VideoContainer');
 		this.facebookPreviewSingleImage = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaImg');
 		this.facebookPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaContainer');
 		this.instagramPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-InstagramPreview .vk-MediaContainer');
 		this.linkedInPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-MediaContainer');
+		this.threadsPreviewSingleImage = page.locator('.vk-ComposerModal .vk-ThreadsPreview .vk-MediaImg');
+		this.threadsPreviewSingleVideo = page.locator('.vk-ComposerModal .vk-ThreadsPreview .vk-VideoContainer');
 		this.messageArea = page.locator('.rc-MessageEditText [aria-label="Text"].public-DraftEditor-content');
 		this.emojiButton = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="Add an emoji"]');
 		this.hashTagSuggestions = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="AI hashtag suggestions"]');
@@ -68,6 +71,8 @@ exports.ComposePage = class ComposePage {
 		this.basePreviewLayout = page.locator('.vk-PreviewBaseLayout');
 		this.twitterPreviewText = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-ContentBody');
 		this.facebookPreviewText = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody');
+		this.threadsPreviewText = page.locator('.vk-ComposerModal .vk-ThreadsPreview .vk-ContentBody');
+		this.threadsMessageLink = page.locator('.vk-ComposerModal .vk-ThreadsPreview .vk-MessagePreview');
 		this.twitterMessageLink = page.locator('.rc-Composer .vk-TwitterPreview .vk-ContentBody a');
 		this.twitterLinkPreviewTitle = page.locator('.rc-Composer .vk-TwitterPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
 		this.twitterLinkPreviewSource = page.locator('.rc-Composer .vk-TwitterPreview .vk-MessageLinkPreview .vk-Source');
@@ -320,6 +325,19 @@ exports.ComposePage = class ComposePage {
 		expect(isImageVisible).toBeTruthy();
 	}
 
+	async verifyThreadsPreview(text) {
+		await expect(this.threadsPreviewText, 'Threads preview is not updated with text message on composer').toContainText(`${text}`);
+	}
+
+	async verifyThreadsImagePreview() {
+		const isImageVisible = await Promise.race([
+			this.threadsPreviewSingleImage.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
+			this.threadsPreviewSingleVideo.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+		]);
+
+		expect(isImageVisible).toBeTruthy();
+	}
+
 	async verifyFacebookImagePreview() {
 		const isImageVisible = await Promise.race([
 			this.facebookPreviewSingleImage.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
@@ -382,6 +400,11 @@ exports.ComposePage = class ComposePage {
 		await expect(this.facebookMessageLink, 'Facebook preview is not updated with link preview on composer').toBeVisible();
 		expect(await this.facebookMessageLink.getAttribute('href')).toContain(text);
 		expect(await this.facebookMessageLink.innerText()).toContain(text);
+	}
+
+	async verifyLinkInThreadsPreview(text) {
+		await expect(this.threadsMessageLink, 'Twitter preview is not updated with link preview on composer').toBeVisible();
+		expect(await this.threadsMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyInstagramPreview(text) {
@@ -534,6 +557,13 @@ exports.ComposePage = class ComposePage {
 			await this.termsOfServiceWall.click();
 		}
 		await expect(this.mediaLibraryRetryError).not.toBeVisible(); //Ensure a media library error is not displayed.
+	}
+
+	async selectFreeImagesInMediaLibrary() {
+		await expect(this.mediaLibrarySourceDropdown, 'Media library source dropdown is not visible').toBeVisible();
+		await this.mediaLibrarySourceDropdown.click();
+		await expect(await this.freeImagesMediaLibrarySelection, 'Free images drop down list is not visible ').toBeVisible();
+		await this.freeImagesMediaLibrarySelection.click();
 	}
 
 	async searchMediaLibrary(searchTerm) {
