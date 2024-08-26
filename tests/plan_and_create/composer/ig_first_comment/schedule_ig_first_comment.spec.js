@@ -19,8 +19,6 @@ test.afterEach(async ({ page }) => {
 test('Schedule instagram message with first comment', async ({ page }) => {
 	const scheduleText = 'Schedule IGB with comment ' + Math.floor(Math.random() * 1000);
 	const firstCommentText = 'Schedule with first comment #igFirstComment';
-	const scheduleTime = new Date();
-	scheduleTime.setHours(scheduleTime.getHours() + 1);
 
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
