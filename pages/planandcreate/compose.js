@@ -472,7 +472,6 @@ exports.ComposePage = class ComposePage {
 	async verifyLinkedInHashtagPreview(hashtag) {
 		await expect(this.linkedInHashtagLink, 'Linkedin post preview is not updated with hashtag on composer').toBeVisible();
 		assert((await this.linkedInHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Linkedin preview');
-		//assert((await this.linkedInHashtagLink.getAttribute('href')).includes(`https://www.linkedin.com/feed/hashtag/?keyword=${hashtag}`), 'Incorrect href value in Linkedin preview');
 	}
 
 	async verifyLinkedInPdfPreview() {
