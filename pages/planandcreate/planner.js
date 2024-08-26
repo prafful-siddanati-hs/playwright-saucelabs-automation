@@ -356,6 +356,13 @@ exports.PlannerPage = class PlannerPage {
 		await expect(this.page.getByText(text), 'Schedule message is not visible on planner').toBeVisible();
 	}
 
+	async verifyScheduledMessageNotPresent (text, hour) {
+		if (hour) {
+			await this.loadLazyRenderedCards(hour);
+		}
+		await expect(this.page.getByText(text), 'Schedule message is visible on planner').not.toBeVisible();
+	}
+
 	async showPreviewPane(text) {
 		await this.page.getByText(text).click();
 	}
@@ -483,7 +490,7 @@ exports.PlannerPage = class PlannerPage {
 		await createMessage.command(parseInt(memberId, 10), options);
 	}
 
-	async scheduleIGPostWithFirstComment(memberId, snId, message, scheduleDate, firstCommentText) {
+	async scheduleIGPostWithFirstComment(memberId, snId, message, scheduleDate, firstCommentText, reviewerId = false) {
 		const createMessage = new scheduleV3Message();
 		const options = {
 			messages: [
@@ -498,6 +505,9 @@ exports.PlannerPage = class PlannerPage {
 				}
 			]
 		};
+		if (reviewerId) {
+			options.messages[0].oneTimeReviewerId = parseInt(reviewerId, 10);
+		}
 		await createMessage.command(parseInt(memberId, 10), options);
 	}
 

@@ -924,6 +924,13 @@ module.exports = {
 			email: 'prafful.siddanati+testaccount@hootsuite.com',
 			password: '!1Password',
 
+			oneTimeReviewer: {
+				id: '14262685',
+				isSocialProfile: false,
+				isHootsuiteUser: true,
+				type: 'team3s', //This is a test user of TEAM3S plan that belongs to the same org as the admin and has one time approval permissions. Use with caution.
+			},
+
 			linkedin_audience: {
 				id: '1998128483',
 				type: 'linkedincompany',
@@ -958,6 +965,25 @@ module.exports = {
 				type: 'linkedin',
 				username: 'Hoot PS'
 			},
+
+			instagramBusiness: {
+				id:'1997972816',
+				type: 'instagrambusiness',
+				username: 'anotherowlmail',
+			},
+		}
+	],
+
+	teams_user : [
+		{
+			memberId: '14262685',
+			isSocialProfile: false,
+			isHootsuiteUser: true,
+			tearDown: false,
+			type: 'team3s',
+			username: 'Prafful Teams Plan',
+			email: 'prafful.siddanati+teamPlan@hootsuite.com',
+			password: '#3Passw0rd',
 		}
 	],
 
