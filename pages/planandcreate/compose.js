@@ -23,7 +23,7 @@ exports.ComposePage = class ComposePage {
 		this.postToWrapper = page.locator('.vk-PostToWrapper');
 		this.profileListItemTitle = page.locator('.vk-ComposerModal .vk-ProfileListItemTitle');
 		this.composerHeader = page.locator('.vk-ComposerHeader');
-		this.previewNetworkType = page.locator('.vk-ComposerModal .vk-MessagePreviewHeader .vk-NetworkType');
+		this.previewNetworkType = page.locator('.vk-ComposerModal [type="INSTAGRAMBUSINESS"] .vk-MessagePreviewHeader .vk-NetworkType');
 		this.tabContent = page.locator('.vk-ComposerModal .vk-TabContent');
 		this.genericPostPreview = page.locator('.vk-ComposerModal [aria-label="generic post preview"]');
 		this.genericPostPreviewText = page.locator('.vk-ComposerModal [aria-label="generic post preview"] .vk-PreviewMessageText');
@@ -35,11 +35,14 @@ exports.ComposePage = class ComposePage {
 		this.twitterPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaContainer');
 		this.emptyTwitterPreview = page.locator('.vk-ComposerModal .vk-TwitterPreview');
 		this.emptyFacebookPreview = page.locator('.vk-ComposerModal .vk-FacebookPreview');
-		this.emptyLinkedInPreview = page.locator('.vk-ComposerModal .vk-LinkedInPreview');
+		this.emptyLinkedInPreview = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview');
+		this.emptyLinkedInCompanyPreview = page.locator('.vk-ComposerModal [type="LINKEDINCOMPANY"] .vk-LinkedInPreview');
 		this.emptyInstagramPreview = page.locator('.vk-ComposerModal .vk-InstagramPreview');
 		this.facebookPreviewSingleVideo = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-VideoContainer');
 		this.facebookPreviewSingleImage = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaImg');
 		this.facebookPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaContainer');
+		this.instagramPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-InstagramPreview .vk-MediaContainer');
+		this.linkedInPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-MediaContainer');
 		this.messageArea = page.locator('.rc-MessageEditText [aria-label="Text"].public-DraftEditor-content');
 		this.emojiButton = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="Add an emoji"]');
 		this.hashTagSuggestions = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="AI hashtag suggestions"]');
@@ -73,19 +76,32 @@ exports.ComposePage = class ComposePage {
 		this.facebookLinkPreviewTitle = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
 		this.facebookLinkPreviewSource = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-Source');
 		this.facebookLinkPrevewMedia = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-LinkPreviewMedia');
+		this.linkedInPreviewSingleVideo = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-VideoContainer');
+		this.instagramReelPreviewSingleVideo = page.locator('.vk-ComposerModal .vk-InstagramReelPreview .vk-StreamlinedVideo');
 		this.instagramPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').getByLabel('Instagram post preview');
+		this.instagramMessageLink = page.locator('.rc-Composer .vk-InstagramPreview .vk-ContentBody p');
+		this.instagramPreviewSingleImage = page.locator('.vk-ComposerModal .vk-InstagramPreview .vk-MediaImg');
+		this.linkedInPreviewSingleImage = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-MediaImg');
+		this.linkedInCompanyPreviewSingleImage = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-MediaImg');
 		this.instagramReelPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').locator('.vk-InstagramReelPreview');
-		this.linkedInPreviewText = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-ContentBody');
-		this.linkedInMessageLink = page.locator('.rc-Composer .vk-LinkedInPreview .vk-ContentBody a');
-		this.linkedinLinkPreviewTitle = page.locator('.rc-Composer .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
-		this.linkedinLinkPreviewSource = page.locator('.rc-Composer .vk-LinkedInPreview .vk-MessageLinkPreview .vk-Source');
-		this.linkedInMentionLink = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-ContentBody .vk-MessageMention');
-		this.linkedInPdfPreview = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-PdfContainer .vk-PdfDocument');
+		this.linkedInPreviewText = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody');
+		this.linkedInCompanyPreviewText = page.locator('.vk-ComposerModal [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-ContentBody');
+		this.linkedInMessageLink = page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody a');
+		this.linkedInCompanyMessageLink = page.locator('.rc-Composer [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-ContentBody a');
+		this.linkedinLinkPreviewTitle = page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
+		this.linkedinLinkPreviewSource = page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-MessageLinkPreview .vk-Source');
+		this.linkedinLinkPrevewMedia = page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewMedia');
+		this.linkedInMentionLink = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody .vk-MessageMention');
+		this.linkedinLinkCompanyPreviewTitle = page.locator('.rc-Composer [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
+		this.linkedinLinkCompanyPreviewSource = page.locator('.rc-Composer [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-MessageLinkPreview .vk-Source');
+		this.linkedinCompanyLinkPrevewMedia = page.locator('.rc-Composer [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewMedia');
+		this.linkedInPdfPreview = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-PdfContainer .vk-PdfDocument');
 		this.facebookMentionLink = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody .vk-MessageMention');
 		this.twitterHashtagLink = page.locator('.vk-TwitterPreview .vk-ContentBody .vk-MessageHashtag');
 		this.facebookHashtagLink = page.locator('.vk-FacebookPreview .vk-ContentBody .vk-MessageHashtag');
 		this.tiktokHashtagLink = page.locator('.vk-TikTokPreview .vk-MessageText .vk-MessageHashtag');
-		this.instagramHashtagLink = page.locator('.vk-InstagramReelPreview .vk-MessageHashtag');
+		this.instagramHashtagLink = page.locator('.vk-ComposerModal .vk-InstagramPreview .vk-MessageHashtag');
+		this.linkedInHashtagLink = page.locator('.vk-LinkedInPreview .vk-MessageHashtag');
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 		this.moreButton = page.getByLabel('more', { exact: true });
 		this.saveDraftFromDropdown = page.getByRole('button', { name: 'Save as draft', exact: true });
@@ -313,6 +329,24 @@ exports.ComposePage = class ComposePage {
 		expect(isImageVisible).toBeTruthy();
 	}
 
+	async verifyInstagramImagePreview() {
+		const isImageVisible = await Promise.race([
+			this.instagramPreviewSingleImage.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
+			this.instagramPreviewMediaContainer.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+		]);
+
+		expect(isImageVisible).toBeTruthy();
+	}
+
+	async verifyLinkedInImagePreview() {
+		const isImageVisible = await Promise.race([
+			this.linkedInPreviewSingleImage.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
+			this.linkedInPreviewMediaContainer.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
+		]);
+
+		expect(isImageVisible).toBeTruthy();
+	}
+
 	async verifyFacebookVideoPreview() {
 		await expect(this.facebookVideoPreviewSelector, 'Facebook preview is not updated with video on composer').toHaveCount(1);
 	}
@@ -325,6 +359,23 @@ exports.ComposePage = class ComposePage {
 		await expect(this.twitterMessageLink, 'Twitter preview is not updated with link preview on composer').toBeVisible();
 		expect(await this.twitterMessageLink.getAttribute('href')).toContain(text);
 		expect(await this.twitterMessageLink.innerText()).toContain(text);
+	}
+
+	async verifyLinkInLinkedInPreview(text) {
+		await expect(this.linkedInMessageLink, 'Linkedin preview is not updated with link preview on composer').toBeVisible();
+		expect(await this.linkedInMessageLink.getAttribute('href')).toContain(text);
+		expect(await this.linkedInMessageLink.innerText()).toContain(text);
+	}
+
+	async verifyLinkInLinkedInCompanyPreview(text) {
+		await expect(this.linkedInCompanyMessageLink, 'Linkedin preview is not updated with link preview on composer').toBeVisible();
+		expect(await this.linkedInCompanyMessageLink.getAttribute('href')).toContain(text);
+		expect(await this.linkedInCompanyMessageLink.innerText()).toContain(text);
+	}
+
+	async verifyLinkInInstagramPreview(text) {
+		await expect(this.instagramMessageLink, 'Instagram preview is not updated with link preview on composer').toBeVisible();
+		expect(await this.instagramMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyLinkInFacebookPagePreview(text) {
@@ -373,6 +424,10 @@ exports.ComposePage = class ComposePage {
 		await expect(this.linkedInPreviewText, 'Linkedin preview is not updated with text on composer').toContainText(`${text}`);
 	}
 
+	async verifyLinkedInCompanyPreview(text) {
+		await expect(this.linkedInCompanyPreviewText, 'Linkedin preview is not updated with text on composer').toContainText(`${text}`);
+	}
+
 	async verifyFacebookMentionPreview(mentionName) {
 		await this.facebookMentionLink.isVisible();
 		assert((await this.facebookMentionLink.textContent()).includes(mentionName), 'Mention name not found on Facebook preview');
@@ -412,6 +467,12 @@ exports.ComposePage = class ComposePage {
 		await expect(this.instagramHashtagLink, 'Instagram post preview is not updated with hashtag on composer').toBeVisible();
 		assert((await this.instagramHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Instagram preview');
 		assert((await this.instagramHashtagLink.getAttribute('href')).includes(`https://www.instagram.com/explore/tags/${hashtag}`), 'Incorrect href value in Instagram preview');
+	}
+
+	async verifyLinkedInHashtagPreview(hashtag) {
+		await expect(this.linkedInHashtagLink, 'Linkedin post preview is not updated with hashtag on composer').toBeVisible();
+		assert((await this.linkedInHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Linkedin preview');
+		//assert((await this.linkedInHashtagLink.getAttribute('href')).includes(`https://www.linkedin.com/feed/hashtag/?keyword=${hashtag}`), 'Incorrect href value in Linkedin preview');
 	}
 
 	async verifyLinkedInPdfPreview() {
