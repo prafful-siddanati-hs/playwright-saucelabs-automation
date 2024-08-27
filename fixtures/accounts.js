@@ -1899,7 +1899,7 @@ module.exports = {
 			password: 'xC&z769X',
 
 			twitter: {
-				id: '1997877383',
+				id: '1998665724',
 				email: 'plan.create.automation+twitter4@hootsuite.com',
 				username: 'Composer4H',
 				password: 'g3UaHJg7vw',
@@ -1907,7 +1907,7 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			facebookPage: {
-				id: '1998414226',
+				id: '1998665729',
 				email: 'composer_ruvxnes_user@tfbnw.net',
 				username: 'Staging Composer Page Test 4',
 				password: '!1Password',
@@ -1915,7 +1915,7 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			linkedinProfile: {
-				id: '1997877413',
+				id: '1998665727',
 				email: 'plan.create.automation+licompany4@hootsuite.com',
 				username: 'Composer Staging Hoot Four',
 				password: 'N7JZqH7C&',
@@ -1923,7 +1923,7 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			facebookPage_igb: {
-				id: '1998134088',
+				id: '1998665733',
 				email: 'plan.create.automation+fbhsstgigb3@hootsuite.com',
 				username: 'Testigb_four ',
 				password: 'fH4fjPMsm3ow',
@@ -1950,7 +1950,7 @@ module.exports = {
 			password: '19FLh&5j',
 
 			twitter: {
-				id: '1997878731',
+				id: '1998665730',
 				email: 'plan.create.automation+twitter5@hootsuite.com',
 				username: 'HComposer5',
 				password: 'mbH3EHM27iJK',
@@ -2001,7 +2001,7 @@ module.exports = {
 			password: '49Un@zyX',
 
 			twitter: {
-				id: '1997880453',
+				id: '1998665731',
 				email: 'plan.create.automation+twitter6@hootsuite.com',
 				username: 'Composer6H',
 				password: 'U1wC3kHegwr3',
