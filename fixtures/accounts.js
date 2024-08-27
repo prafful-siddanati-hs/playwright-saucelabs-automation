@@ -1797,7 +1797,7 @@ module.exports = {
 			password: 'nJUW6u6M3q6M',
 
 			twitter: {
-				id: '1997874658',
+				id: '1998666032', //Phone number: 2368899747
 				email: 'plan.create.automation+twitter2@hootsuite.com',
 				username: 'Composer2H',
 				password: '!1Password',
