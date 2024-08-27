@@ -1974,7 +1974,7 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			facebookPage_igb: {
-				id: '1998134105',
+				id: '1998665738',
 				email: 'plan.create.automation+fbhsstgigb4@hootsuite.com',
 				username: 'Test IGB5',
 				password: '1tAzjMKDH4nu',
@@ -1982,7 +1982,7 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			instagramBusiness: {
-				id: '1998134935',
+				id: '1998665740',
 				email: 'luis.tellez+ig_account@hootsuite.com',
 				username: 'hoot_over_water',
 				password: 'IG:3005_p4ss!',
