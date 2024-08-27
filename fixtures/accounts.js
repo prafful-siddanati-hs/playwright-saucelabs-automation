@@ -1754,7 +1754,7 @@ module.exports = {
 			password: '0i292mJLOfyN',
 
 			facebookPage: {
-				id: '1998665726',
+				id: '1997872403',
 				email: 'lavanya.petchetti+fbhscomposer1@hootsuite.com',
 				username: 'Composer_one_hs_stg',
 				password: 'NaZcUwK83f7c',
@@ -1762,7 +1762,7 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			twitter: {
-				id: '1998665721',
+				id: '1997871609',
 				email: 'lavanya.petchetti+hs_composer1@hootsuite.com',
 				username: 'HComposer1',
 				password: 'Password!',
@@ -1805,7 +1805,7 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			facebookPage: {
-				id: '1998665742',
+				id: '1998414209',
 				email: 'composer_ruvxnes_user@tfbnw.net',
 				username: 'Staging Composer Page Test 2',
 				password: '!1Password',
@@ -1813,7 +1813,7 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			linkedinProfile: {
-				id: '1998665732',
+				id: '1997912313',
 				email: 'plan.create.automation+licompany2@hootsuite.com',
 				username: 'Composer Staging Page Two',
 				password: '3@O&jfe3wfa',
@@ -1829,7 +1829,7 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			instagramBusiness: {
-				id: '1998665734',
+				id: '1998232651',
 				email: 'plan.create.automation+stg2igb@hootsuite.com',
 				username: 'hoot_wave_igb',
 				password: '0wlsaway',
@@ -1848,7 +1848,7 @@ module.exports = {
 			password: '0Kh5xdBIGYzV',
 
 			twitter: {
-				id: '1998665715',
+				id: '1997912314',
 				email: 'plan.create.automation+twitter3@hootsuite.com',
 				username: 'Composer3H',
 				password: 'pP7m22PmkA',
