@@ -9,4 +9,3 @@
 .hgignore
 .gitlab-ci.yml
 .npmrc
-*.gif
