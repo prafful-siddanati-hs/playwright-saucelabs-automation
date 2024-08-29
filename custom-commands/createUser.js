@@ -47,7 +47,7 @@ class createUser extends events.EventEmitter {
 
 		try {
 			let data = await dashboard.createUserWithBilling(member.fullName, member.email, member.password, productCode, makeAriaAccount);
-			console.log(data !== undefined, `${member.email} / ${member.password}`);
+			console.log(data !== undefined, `${plan.toUpperCase()} user ${member.email} created successfully`);
 
 			// Updates member object, using the keys in data as defaults
 			_.defaults(member, data);

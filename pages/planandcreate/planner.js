@@ -526,7 +526,8 @@ exports.PlannerPage = class PlannerPage {
 			'SCHEDULED',
 			15).then(
 			response =>
-				messagesToDelete = response);
+				messagesToDelete = response)
+			.catch(err => console.log('Error getting scheduled messages', err));
 
 		let messageIdsToDelete = messagesToDelete.map(message => Number(message.id));
 

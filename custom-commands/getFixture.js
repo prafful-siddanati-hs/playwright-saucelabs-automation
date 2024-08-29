@@ -219,6 +219,10 @@ class getFixture extends events.EventEmitter {
 							fixture.socialProfile.socialProfileId = profile.socialProfileId;
 							fixture.socialProfile.isSecurePost = profile.isSecurePost;
 							fixture.socialProfile.isReuathRequired = profile.isReuathRequired;
+						})
+						.catch(profileErr => {
+							console.log(profileErr);
+							throw new Error(`Failed to add social profile ${fixture.socialProfile.username}.`);
 						});
 				}
 			} else {
@@ -274,7 +278,7 @@ class getFixture extends events.EventEmitter {
             }
             console.log(locked.resource !== undefined, `${displayEmail} / ${displayPassword}`); */
 
-			console.log(!locked.resource !== undefined, `${displayEmail}`);
+			console.log(locked.resource === undefined, `${displayEmail}`);
 
 		} catch (err) {
 			console.assert(false, `${this.step} ${err}`);

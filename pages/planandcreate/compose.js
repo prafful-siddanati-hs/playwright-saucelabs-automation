@@ -632,7 +632,8 @@ exports.ComposePage = class ComposePage {
 			'SCHEDULED',
 			15).then(
 			response =>
-				messagesToDelete = response);
+				messagesToDelete = response)
+			.catch(error => console.log(`Error fetching next month scheduled messages: ${error}`));
 
 		let messageIdsToDelete = messagesToDelete.map(message => Number(message.id));
 

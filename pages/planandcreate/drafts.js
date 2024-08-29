@@ -31,7 +31,8 @@ exports.DraftsPage = class DraftsPage {
 		await getAllDraftMessages.command(
 			parseInt(memberId, 10)).then(
 			response =>
-				draftsToDelete = response);
+				draftsToDelete = response)
+			.catch(draftError => console.log(`Error getting drafts: ${draftError}`));
 
 		let draftIdsToDelete = draftsToDelete.map(d => (d.draft.id));
 
