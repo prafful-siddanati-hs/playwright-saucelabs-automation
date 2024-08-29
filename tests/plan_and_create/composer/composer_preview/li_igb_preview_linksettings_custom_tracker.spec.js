@@ -21,7 +21,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Twitter and facebook preview validations for custom link settings tracker', async ({ page }) => {
+test('LinkedIn and Instagram preview validations for custom link settings tracker', async ({ page }) => {
 	const composeBasicText = `Custom ${URL} `;
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);

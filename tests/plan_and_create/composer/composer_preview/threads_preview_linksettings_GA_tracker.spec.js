@@ -6,7 +6,6 @@ const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const {LinkSettingsModal} = require('../../../../pages/planandcreate/linkSettingsModal');
 const getFixture = require('../../../../custom-commands/getFixture');
-const {getObjectByName} = require('../../../../globals');
 
 const URL = 'hootsuite.com';
 const TRACKER = 'Google Analytics';
