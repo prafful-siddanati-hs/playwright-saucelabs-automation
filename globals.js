@@ -49,7 +49,7 @@ module.exports = {
 				pages: 1,
 				status: 'ATTACHED',
 				url: 'https://hootsuite-video.s3.amazonaws.com/staging/13062818-r3urcWFm.pdf',
-				thumbnailUrl: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-12262804-4kFLS6Ca.jpeg'
+				thumbnailUrl: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-0-12262804-4kFLS6Ca.jpeg'
 			},
 			multi_page:
 			{
@@ -60,7 +60,7 @@ module.exports = {
 				pages: 5,
 				status: 'ATTACHED',
 				url: 'https://hootsuite-video.s3.amazonaws.com/staging/13062818-v3F9uBSD.pdf',
-				thumbnailUrl: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-12262804-4kFLS6Ca.jpeg'
+				thumbnailUrl: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-0-12262804-4kFLS6Ca.jpeg'
 			}
 		},
 

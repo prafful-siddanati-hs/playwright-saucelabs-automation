@@ -35,6 +35,7 @@ exports.ComposePage = class ComposePage {
 		this.twitterPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaContainer');
 		this.emptyTwitterPreview = page.locator('.vk-ComposerModal .vk-TwitterPreview');
 		this.emptyFacebookPreview = page.locator('.vk-ComposerModal .vk-FacebookPreview');
+		this.linkedinNetworkType = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-MessagePreviewHeader .vk-NetworkType');
 		this.emptyLinkedInPreview = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview');
 		this.emptyLinkedInCompanyPreview = page.locator('.vk-ComposerModal [type="LINKEDINCOMPANY"] .vk-LinkedInPreview');
 		this.emptyInstagramPreview = page.locator('.vk-ComposerModal .vk-InstagramPreview');
@@ -498,7 +499,7 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async verifyLinkedInPdfPreview() {
-		await expect(this.previewNetworkType, 'Linkedin preview is not updated with PDF preview on composer').toContainText('LinkedIn');
+		await expect(this.linkedinNetworkType, 'Linkedin preview is not updated with PDF preview on composer').toContainText('LinkedIn');
 		await expect(this.linkedInPdfPreview).toBeVisible();
 	}
 
