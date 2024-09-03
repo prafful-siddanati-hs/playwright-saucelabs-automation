@@ -137,6 +137,7 @@ exports.ComposePage = class ComposePage {
 		this.pdfRemoveButton = page.locator('.rc-Composer .pdfThumbnail .vk-MediaThumbnailDelete');
 		this.discardPost = page.getByRole('button', { name: 'Discard post' });
 		this.shortenWithOwlyButton = page.getByLabel('Shorten with Ow.ly');
+		this.clearOwlyShorteningButton = page.locator('.rc-Composer [aria-label="Clear Ow.ly shortening"]');
 		this.addTrackingButton = page.getByLabel('Add tracking');
 		this.editCustomLinkSettingsButton = page.getByLabel('Edit custom link settings');
 		this.editLinkShorteningButton = page.getByLabel('Edit link shortening');

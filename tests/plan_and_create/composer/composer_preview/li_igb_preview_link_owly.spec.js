@@ -89,12 +89,13 @@ test('Linkedin and instagram business accounts preview validations for link and 
 		await expect(composePage.linkedinLinkPrevewMedia).not.toBeVisible();
 		await composePage.verifyLinkInLinkedInCompanyPreview(SHORTENER);
 		await expect(composePage.linkedinCompanyLinkPrevewMedia).not.toBeVisible();
+		await expect(composePage.clearOwlyShorteningButton).toBeVisible();
 	});
 
 	await test.step('Select edit link shortening and select existing presets', async () => {
 		const linkPreset = page.locator('[data-testid="With Owly-select-item"]', { hasText: 'With Owly' });
 
-		await composePage.selectEditLinkShorteningButton();
+		await composePage.selectAddTrackingButton();
 		await linkSettingsModal.selectLinkPresetsDropDown();
 		await expect(linkPreset).toBeVisible();
 		await linkPreset.click();
