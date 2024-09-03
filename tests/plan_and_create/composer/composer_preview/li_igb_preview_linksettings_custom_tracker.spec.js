@@ -90,10 +90,10 @@ test('LinkedIn and Instagram preview validations for custom link settings tracke
 	});
 
 	await test.step('Verify composer preview after applying tracking parameters', async () => {
-		await composePage.verifyLinkInLinkedInPreview('http://cbc.ca?utm_source=hootsuite&utm=twitter');
+		await composePage.verifyLinkInLinkedInPreview('http://cbc.ca?utm_source=hootsuite&utm=linkedin');
 		await expect(composePage.linkedinLinkPreviewTitle).toBeVisible();
 		await expect(composePage.linkedinLinkPreviewSource).toContainText(URL);
 		await expect(composePage.linkedinLinkPrevewMedia).toBeVisible();
-		await composePage.verifyLinkInInstagramPreview('http://cbc.ca?utm_source=hootsuite&utm=facebook');
+		await composePage.verifyLinkInInstagramPreview('http://cbc.ca?utm_source=hootsuite&utm=instagram');
 	});
 });

@@ -62,6 +62,7 @@ test('Twitter and facebook page preview validations for link and ow.ly shortener
 		await expect(composePage.facebookLinkPreviewTitle).toBeVisible();
 		await expect(composePage.facebookLinkPreviewSource).toContainText(URL);
 		await expect(composePage.facebookLinkPrevewMedia).toBeVisible();
+		await expect(page.locator('//label[contains(text(),"Links")]//following::*[contains(text(), "(1)")]')).toBeVisible();
 	});
 
 	await test.step('Upload single image and verify its preview', async () => {
@@ -82,12 +83,13 @@ test('Twitter and facebook page preview validations for link and ow.ly shortener
 		await expect(composePage.twitterLinkPrevewMedia).not.toBeVisible();
 		await composePage.verifyLinkInFacebookPagePreview(SHORTENER);
 		await expect(composePage.facebookLinkPrevewMedia).not.toBeVisible();
+		await expect(composePage.clearOwlyShorteningButton).toBeVisible();
 	});
 
 	await test.step('Select edit link shortening and select existing presets', async () => {
 		const linkPreset = page.locator('[data-testid="With Owly-select-item"]', { hasText: 'With Owly' });
 
-		await composePage.selectEditLinkShorteningButton();
+		await composePage.selectAddTrackingButton();
 		await linkSettingsModal.selectLinkPresetsDropDown();
 		await expect(linkPreset).toBeVisible();
 		await linkPreset.click();
