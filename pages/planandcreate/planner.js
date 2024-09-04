@@ -363,8 +363,18 @@ exports.PlannerPage = class PlannerPage {
 		await expect(this.page.getByText(text), 'Schedule message is visible on planner').not.toBeVisible();
 	}
 
-	async showPreviewPane(text) {
-		await this.page.getByText(text).click();
+	/**
+	 * Click on scheduled message to show preview pane
+	 * @param {string} text Text of the message to click
+	 * @param {string} profile Optional value to click specific profile
+	 */
+	async showPreviewPane(text, profile = false) {
+		if (!profile) {
+			await this.page.getByText(text).click();
+		} else {
+			const cardSelector = this.page.locator(`//*[contains(@class, "vk-Card")]//*[@aria-label[contains(., '${profile}')]]/following::div[2][contains(text(), '${text}')]`, {locateStrategy: 'xpath'});
+			await cardSelector.click();
+		}
 	}
 
 	async verifyTextInPreviewPane(text) {

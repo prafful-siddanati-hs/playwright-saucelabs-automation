@@ -106,7 +106,8 @@ exports.ComposePage = class ComposePage {
 		this.twitterHashtagLink = page.locator('.vk-TwitterPreview .vk-ContentBody .vk-MessageHashtag');
 		this.facebookHashtagLink = page.locator('.vk-FacebookPreview .vk-ContentBody .vk-MessageHashtag');
 		this.tiktokHashtagLink = page.locator('.vk-TikTokPreview .vk-MessageText .vk-MessageHashtag');
-		this.instagramHashtagLink = page.locator('.vk-ComposerModal .vk-InstagramPreview .vk-MessageHashtag');
+		this.instagramHashtagLink = page.locator('.vk-ComposerModal .vk-InstagramPreview .vk-ContentBody .vk-MessageHashtag');
+		this.instagramFirstCommentHashtagLink = page.locator('.vk-ComposerModal .vk-InstagramFirstCommentPreview .vk-MessageHashtag');
 		this.linkedInHashtagLink = page.locator('.vk-LinkedInPreview .vk-MessageHashtag');
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 		this.moreButton = page.getByLabel('more', { exact: true });
@@ -492,6 +493,12 @@ exports.ComposePage = class ComposePage {
 		await expect(this.instagramHashtagLink, 'Instagram post preview is not updated with hashtag on composer').toBeVisible();
 		assert((await this.instagramHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Instagram preview');
 		assert((await this.instagramHashtagLink.getAttribute('href')).includes(`https://www.instagram.com/explore/tags/${hashtag}`), 'Incorrect href value in Instagram preview');
+	}
+
+	async verifyInstagramFirstCommentHashtagPreview(hashtag) {
+		await expect(this.instagramFirstCommentHashtagLink, 'Instagram first comment preview is not updated with hashtag on composer').toBeVisible();
+		assert((await this.instagramFirstCommentHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Instagram first comment preview');
+		assert((await this.instagramFirstCommentHashtagLink.getAttribute('href')).includes(`https://www.instagram.com/explore/tags/${hashtag}`), 'Incorrect href value in Instagram first comment preview');
 	}
 
 	async verifyLinkedInHashtagPreview(hashtag) {

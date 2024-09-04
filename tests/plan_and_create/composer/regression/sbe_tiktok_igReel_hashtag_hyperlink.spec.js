@@ -7,7 +7,7 @@ const { LoginPage } = require('../../../../pages/login.js');
 const { ComposePage } = require('../../../../pages/planandcreate/compose.js');
 const getFixture = require('../../../../custom-commands/getFixture.js');
 const tearDown = require('../../../../custom-commands/tearDown.js');
-let tiktokProfile = 'plancreate01';
+let tiktokProfile = 'nimataheri89';
 let igReelProfile = 'hoot_igb';
 
 test.afterEach(async ({ page }) => {
@@ -48,9 +48,11 @@ test('Tiktok & IG Reels hashtags are hyperlinked', async ({ page }) => {
 		await composePage.selectSocialProfile(igReelProfile);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
+		await expect(composePage.emptyInstagramPreview).toBeVisible();
 	});
 
 	await test.step('Write a message hashtag', async () => {
+		await composePage.messageArea.click();
 		await composePage.writeMessage(messageWithHashtags);
 	});
 
