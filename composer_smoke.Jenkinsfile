@@ -2,7 +2,7 @@
 
 @Library('hootsuite@6') _
 
-slackChannel = "#publisher-automation"
+slackChannel = "#publisher-web-alerts"
 
 jenkinsUrl = "<https://jenkins.build.hootops.com/job/Dashboard/job/Playwright_Composer_Smoke_Tests/${env.BUILD_NUMBER}/testReport|Build #${env.BUILD_NUMBER}>"
 
@@ -34,7 +34,7 @@ pod {
                 println(err.toString())
                 def sauceUrl = "<${getSaucelabsBuildUrl()}| Saucelabs URL>"
                 slackSend color: '#C85960', channel: slackChannel,
-                        message: " :playwright-logo: *[Playwright tests]*\n *Suite Name:* _Composer_Smoke - Chrome_ - Failed! :warning: \n" +
+                        message: " :playwright-logo: *hs-app-composer/master*\n _Composer Smoke Tests_ - Failed! :warning: \n" +
                             " Jenkins URL: ${jenkinsUrl} \n" + " ${sauceUrl} :saucelabs_new:"
                 currentBuild.result = "FAILURE"
                 throw err
