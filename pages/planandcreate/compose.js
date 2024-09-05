@@ -158,6 +158,11 @@ exports.ComposePage = class ComposePage {
 		this.firstCommentSubHeader = page.getByText('First comment is only available for direct publishing and for posts');
 		this.firstCommentTextArea = page.locator('.rc-MessageEditText [aria-label="First comment"].public-DraftEditor-content');
 		this.firstCommentPreview = page.locator('.vk-ComposerModal').getByTestId('preview-container').locator('.vk-InstagramFirstCommentPreview');
+		this.firstCommentHashtagSuggestion = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal .vk-StyledInstagramFirstCommentArea [aria-label="AI hashtag suggestions"]');
+		this.hashtagPanelCloseButton = page.locator('.vk-HashTagPanelCloseButton');
+		this.hashtagsArea = page.locator('.rc-Panel .-mediaContent', {locationStrategy: 'xpath'});
+		this.addHashtagButton = page.getByRole('button', { name: 'Add hashtags' });
+		this.firstHashtagSuggestion = page.locator('.-mediaContent [data-testid="list-item-clickable"]', {locationStrategy: 'xpath'}).first();
 	}
 
 	async setDarkLaunchCookies() {
