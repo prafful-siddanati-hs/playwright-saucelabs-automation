@@ -96,15 +96,7 @@ module.exports = {
 		},
 
 		generateRandomMessage: function(baseText , length) {
-			let message = '';
-
-			// Repeat the base text until it exceeds the required length
-			while (message.length < length) {
-				message += baseText;
-			}
-
-			// Trim the message to the exact length
-			return message.substring(0, length);
+			return baseText.repeat(length).substring(0, length);
 		},
 
 		getComposeMessage: function () {
