@@ -37,6 +37,7 @@ test('Error verification for multiple twitter selection', async ({ page }) => {
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(twAccount1);
+		await page.waitForTimeout(500);
 		await composePage.searchSocialProfile(twAccount2);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
