@@ -95,6 +95,10 @@ module.exports = {
 			}
 		},
 
+		generateRandomMessage: function(baseText , length) {
+			return baseText.repeat(length).substring(0, length);
+		},
+
 		getComposeMessage: function () {
 			const MESSAGE = [
 				'Draft',
@@ -186,6 +190,27 @@ module.exports = {
 			const mediaUrls = Object.values(this.mediaUrls);
 			const randomIndex = Math.floor(Math.random() * mediaUrls.length);
 			return mediaUrls[randomIndex];
+		},
+
+		getRandomHashTag: function() {
+			const HASH_TAGS = [
+				'#Test',
+				'#QA',
+				'#SoftwareTesting',
+				'#Test123',
+				'#Version2.0',
+				'#2024Goals',
+				'#Test_Automation',
+				'#New-Features',
+				'#Feature_Release!',
+				'#ThisIsAReallyLongHashtagThatShouldTestTheLimitsOfHashtagLengthInTheApplication',
+				'#TestAutomation',
+				'#TESTAUTOMATION',
+				'#Testing🚀',
+				'#TestAutomationSuite',
+				'#A'
+			];
+			return HASH_TAGS[Math.floor(Math.random() * HASH_TAGS.length)];
 		},
 	},
 
