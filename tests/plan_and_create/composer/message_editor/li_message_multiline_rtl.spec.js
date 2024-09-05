@@ -15,7 +15,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Verify the LinkedIn message character limit that are above and below the 3000-character threshold.', async ({ page }) => {
+test('Verify the LinkedIn message with multi line and RTL', async ({ page }) => {
 	const multiLineMsg = `${plan_create.getRandomUrl()} ${plan_create.getRandomHashTag()} This is a multiline test message.
 
 It includes several lines of text to verify

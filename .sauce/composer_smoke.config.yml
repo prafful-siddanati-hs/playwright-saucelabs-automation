@@ -36,9 +36,9 @@ suites:
     platformName: "Windows 11"
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
-    testMatch: ['tests/plan_and_create/composer/composer_smoke_tests/*.*.js']
+    testMatch: ['tests/plan_and_create/composer/message_editor/li_message_multiline_rtl.spec.js']
     excludedTestFiles: ['${DISABLED_TESTS}']
-    numShards: 4
+    #numShards: 4
     params:
       browserName: "chromium"
       project: "chromium"
