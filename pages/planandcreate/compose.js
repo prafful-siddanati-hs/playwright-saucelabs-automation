@@ -276,7 +276,7 @@ exports.ComposePage = class ComposePage {
 
 	async removeCharacters(count) {
 		await this.messageArea.click();
-		await this.page.keyboard.press('End');// Optional: Move cursor to the end
+		await this.page.keyboard.press('End');
 		await this.page.waitForTimeout(500);
 
 		for (let i = 0; i < count; i++) {
