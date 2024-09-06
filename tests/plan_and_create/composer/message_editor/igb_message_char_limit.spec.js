@@ -78,7 +78,7 @@ test('Verify the instagram message character limit that are above and below the 
 
 	await test.step('Upload single image and verify its preview', async () => {
 		await composePage.uploadMediaFile('test_data/publisher/images');
-		await expect(composePage.instagramPreviewSingleImage, 'Instagram preview is not updated with image').toBeVisible();
+		await expect(composePage.instagramPreviewSingleImage).toBeVisible();
 	});
 
 });
