@@ -18,7 +18,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Verify that the 3000-character threshold works as expected for edit instagram message', async ({ page }) => {
+test('Verify that the 2200-character threshold works as expected for edit instagram message', async ({ page }) => {
 	let originalText = `IGB test ${Date.now()}`;
 	const liMsg = `${plan_create.getRandomUrl()} ${plan_create.getRandomHashTag()} Hey everyone! 🌟 I’m doing a quick test to see how this message looks on Instagram. If you’re seeing this, it means I’m checking formatting, spacing, and all the little details to make sure everything looks great when I share my upcoming content. 📸✨`;
 	const msgAboveTheLimit = plan_create.generateRandomMessage(liMsg,2201);
