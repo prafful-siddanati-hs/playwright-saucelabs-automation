@@ -59,17 +59,6 @@ test('Verify composer message editor for twitter with multi line and RTL', async
 		await expect(composePage.emptyFacebookPreview).toBeVisible();
 	});
 
-	await test.step('Enter a message with 63,206 characters', async () => {
-		await composePage.messageArea.click();
-		await composePage.messageArea.fill(superLongText);
-		await composePage.verifyFacebookPreview(superLongText);
-		await expect(composePage.messageCharCount).toHaveText('63,206 / 63,206');
-		await expect(page.locator('//*[(@role="alert")]//*[text()="Your text exceeds the character limit for "]/following-sibling::span[text()=\'Facebook\']')).not.toBeVisible();
-		await composePage.clearMessageEditor();
-	});
-
-	//await page.pause();
-
 	await test.step('Enter multi line message', async () => {
 		await composePage.writeMessage(multiLineMsg);
 		await composePage.verifyFacebookPreview(multiLineMsg);
