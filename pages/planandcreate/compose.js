@@ -269,9 +269,15 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async writeMessage(message) {
-		await this.page.keyboard.press('Escape');
+		await this.messageArea.press('Escape');
 		await this.messageArea.click();
-		await this.page.keyboard.type(message);
+		if (process.env.BROWSER === 'webkit') {
+			console.log('Browser', process.env.BROWSER);
+			await this.messageArea.pressSequentially(message);
+		} else {
+			await this.messageArea.fill(message);
+		}
+		//await this.page.keyboard.type(message);
 		await expect(this.page.locator('.vk-Loader')).toHaveCount(0);
 	}
 
