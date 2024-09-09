@@ -16,8 +16,6 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Verify composer message editor for twitter with multi line and RTL', async ({ page }) => {
-	const superLongText = `${plan_create.generateRandomMessage('Super long text for facebook ',63206)}`;
-
 	const multiLineMsg = `${plan_create.getRandomUrl()} ${plan_create.getRandomHashTag()} This is a multi line test message with URL and hashtag.
 
     This is useful for testing
