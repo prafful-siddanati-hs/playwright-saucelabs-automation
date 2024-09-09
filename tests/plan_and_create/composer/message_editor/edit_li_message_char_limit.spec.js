@@ -9,7 +9,7 @@ const {formatISO, addHours} = require('date-fns');
 const scheduleV3Message = require('../../../../custom-commands/scheduleV3Message');
 const {PlannerPage} = require('../../../../pages/planandcreate/planner');
 
-let liAccount, memberId;
+let memberId;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -31,7 +31,6 @@ test('Verify that the 3000-character threshold works as expected for edit linked
 
 	await test.step('Setup user & accounts', async () => {
 		await addFixture.command('edit_li_msg_char_limit', 'pro_user_composer', true, 300);
-		liAccount = getObjectByName(global.fixture, 'edit_li_msg_char_limit').linkedinProfile.username;
 		memberId = global.member[0].memberId;
 	});
 
