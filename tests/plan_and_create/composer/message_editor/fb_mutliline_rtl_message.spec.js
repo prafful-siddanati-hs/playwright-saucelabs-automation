@@ -15,7 +15,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Verify composer message editor for twitter with multi line and RTL', async ({ page }) => {
+test('Verify composer message editor for facebook with multi line and RTL', async ({ page }) => {
 	const multiLineMsg = `${plan_create.getRandomUrl()} ${plan_create.getRandomHashTag()} This is a multi line test message with URL and hashtag.
 
     This is useful for testing
