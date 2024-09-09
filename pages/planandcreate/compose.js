@@ -41,6 +41,7 @@ exports.ComposePage = class ComposePage {
 		this.emptyLinkedInCompanyPreview = page.locator('.vk-ComposerModal [type="LINKEDINCOMPANY"] .vk-LinkedInPreview');
 		this.emptyInstagramPreview = page.locator('.vk-ComposerModal .vk-InstagramPreview');
 		this.emptyThreadsPreview = page.locator('.vk-ComposerModal .vk-ThreadsPreview');
+		this.emptyTiktokPreview = page.locator('.vk-ComposerModal .vk-TikTokPreview');
 		this.facebookPreviewSingleVideo = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-VideoContainer');
 		this.facebookPreviewSingleImage = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaImg');
 		this.facebookPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaContainer');
@@ -94,6 +95,8 @@ exports.ComposePage = class ComposePage {
 		this.instagramReelPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').locator('.vk-InstagramReelPreview');
 		this.linkedInPreviewText = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody p');
 		this.linkedInCompanyPreviewText = page.locator('.vk-ComposerModal [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-ContentBody p');
+		this.tiktokPreviewText = page.locator('.vk-ComposerModal [type="TIKTOKBUSINESS"] .vk-TikTokPreview .vk-MessageText');
+		this.tiktokVideoPreview = page.locator('.vk-ComposerModal [type="TIKTOKBUSINESS"] .vk-TikTokPreview .vk-StreamlinedVideo');
 		this.linkedInMessageLink = page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody a');
 		this.linkedInCompanyMessageLink = page.locator('.rc-Composer [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-ContentBody a');
 		this.linkedinLinkPreviewTitle = page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
@@ -469,6 +472,10 @@ exports.ComposePage = class ComposePage {
 
 	async verifyLinkedInCompanyPreview(text) {
 		await expect(this.linkedInCompanyPreviewText, 'Linkedin preview is not updated with text on composer').toContainText(`${text}`);
+	}
+
+	async verifyTiktokPreview(text) {
+		await expect(this.tiktokPreviewText).toContainText(`${text}`);
 	}
 
 	async verifyFacebookMentionPreview(mentionName) {
