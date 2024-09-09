@@ -25,7 +25,7 @@ exports.ComposePage = class ComposePage {
 		this.composerHeader = page.locator('.vk-ComposerHeader');
 		this.previewNetworkType = page.locator('.vk-ComposerModal [type="INSTAGRAMBUSINESS"] .vk-MessagePreviewHeader .vk-NetworkType');
 		this.tabContent = page.locator('.vk-ComposerModal .vk-TabContent');
-		this.messageCharCount = page.locator('(//*[contains(@class, "MessageEditArea")]//*[@aria-labelledby = "message-tab-bar-instagram"]//*[contains(@class, "-characterCounterCount")])[1]', {locationStrategy: 'xpath'});
+		this.messageCharCount = page.locator('(//*[contains(@class, "MessageEditArea")]//*[contains(@class, "-characterCounterCount")])[1]', {locationStrategy: 'xpath'});
 		this.genericPostPreview = page.locator('.vk-ComposerModal [aria-label="generic post preview"]');
 		this.genericPostPreviewText = page.locator('.vk-ComposerModal [aria-label="generic post preview"] .vk-PreviewMessageText');
 		this.genericPreviewSingleImage = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-MediaImg');
