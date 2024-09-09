@@ -1,5 +1,5 @@
 //This test is to validate pinterest message with arabic and multi line text
-const { test, expect} = require('@playwright/test');
+const { test} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
 const getFixture = require('../../../../custom-commands/getFixture');
@@ -13,7 +13,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Verify the LinkedIn message with multi line and RTL', async ({ page }) => {
+test('Verify the pinterest message with multi line and RTL', async ({ page }) => {
 	const multiLineMsg = `${plan_create.getRandomUrl()} ${plan_create.getRandomHashTag()} This is a multiline test message.
 
 It includes several lines of text to verify
