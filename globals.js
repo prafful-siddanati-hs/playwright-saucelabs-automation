@@ -208,7 +208,14 @@ module.exports = {
 				'#TESTAUTOMATION',
 				'#Testing🚀',
 				'#TestAutomationSuite',
-				'#A'
+				'#A',
+				'#Amor',
+				'#Amour',
+				'#Liebe',
+				'#Amore',
+				'#愛',
+				'#사랑',
+				'#حب',
 			];
 			return HASH_TAGS[Math.floor(Math.random() * HASH_TAGS.length)];
 		},
