@@ -71,7 +71,7 @@ Get ready to experience a world of culture and diversity at The Autumn Fair Show
 		await page.waitForTimeout(500);
 	});
 
-	await test.step('Write a RTL message in one line and verify linkedin preview', async () => {
+	await test.step('Write a RTL message in one line and verify pinterest preview', async () => {
 		await pinPage.clearMessageEditor();
 		await pinPage.writePinMessage(ltrRtlOneLine);
 		await pinPage.verifyPinPreview(ltrRtlOneLine, 'bbc.com');
