@@ -17,6 +17,7 @@ exports.PinPage = class PinPage {
 		this.previewWebsiteUrl = page.locator('.vk-PinterestPreviewUrl');
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 		this.postNowButton = page.getByRole('button', { name: 'Post now', exact: true });
+		this.messageCharCount = page.locator('(//*[contains(@class, "MessageEditArea")]//*[contains(@class, "-characterCounterCount")])[1]', {locationStrategy: 'xpath'});
 	}
 
 	async selectPinButton() {
@@ -69,6 +70,21 @@ exports.PinPage = class PinPage {
 		await this.postNowButton.click();
 		await expect(this.postNowButton, 'Pin send message failed').not.toBeVisible();
 		await expect(this.feCallOuts).toHaveCount(1);
+	}
+
+	async removeCharacters(count) {
+		await this.messageArea.click();
+		await this.page.keyboard.press('End');
+		await this.page.waitForTimeout(500);
+
+		for (let i = 0; i < count; i++) {
+			await this.page.keyboard.press('Backspace');
+		}
+	}
+
+	async clearMessageEditor() {
+		await this.messageArea.click();
+		await this.messageArea.fill('');
 	}
 
 };
