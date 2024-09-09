@@ -16,7 +16,6 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Verify composer message editor for twitter\'s 280 characters limit', async ({ page }) => {
-	console.log(process.env.BROWSER);
 	const twMsg = `Test twitter character limit of 280 characters including a hashtag${plan_create.getRandomHashTag()} and url that takes up 24 characters`;
 	const msgWithInTheLimit = `${plan_create.getRandomUrl()} `.concat(plan_create.generateRandomMessage(twMsg,251));
 	const addFixture = new getFixture();
