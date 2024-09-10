@@ -1,4 +1,4 @@
-//This test is to verify that the emojis from the emoji picker are added to messages across all networks
+//This test is to verify adding emojis to messages across all networks
 const { test, expect } = require('@playwright/test');
 const getFixture = require('../../../../custom-commands/getFixture');
 const tearDown = require('../../../../custom-commands/tearDown');
@@ -47,7 +47,7 @@ test('Verify that emojis from the emoji picker are added to messages across all 
 		await expect(composePage.emptyInstagramPreview).toBeVisible();
 	});
 
-	await test.step('Write a message with mention', async () => {
+	await test.step('Write a message with emoji', async () => {
 		await composePage.writeMessage(emojiText);
 		await composePage.verifyTwitterPreview(emojiText);
 		await composePage.verifyFacebookPreview(emojiText);
