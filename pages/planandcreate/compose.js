@@ -500,25 +500,25 @@ exports.ComposePage = class ComposePage {
 
 	async verifyHashtagInTwitterPreview(hashtag) {
 		await expect(this.twitterHashtagLink, 'twitter preview is updated with hashtag on composer').toBeVisible();
-		assert((await this.twitterHashtagLink.textContent()).includes(hashtag), 'Hashtag found on Twitter preview');
+		assert((await this.twitterHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Twitter preview');
 		assert((await this.twitterHashtagLink.getAttribute('href')).includes(`https://twitter.com/hashtag/${hashtag}`), 'Incorrect href value in Twitter preview');
 	}
 
 	async verifyHashtagInFacebookPreview(hashtag) {
 		await expect(this.facebookHashtagLink, 'facebook preview is updated with hashtag on composer').toBeVisible();
-		assert((await this.facebookHashtagLink.textContent()).includes(hashtag), 'Hashtag found on Facebook preview');
+		assert((await this.facebookHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Facebook preview');
 		assert((await this.facebookHashtagLink.getAttribute('href')).includes(`https://www.facebook.com/hashtag/${hashtag}`), 'Incorrect href value in Facebook preview');
 	}
 
 	async verifyTiktokHashtagPreview(hashtag) {
 		await expect(this.tiktokHashtagLink, 'Tiktok preview is updated with hashtag on composer').toBeVisible();
-		assert((await this.tiktokHashtagLink.textContent()).includes(hashtag), 'Hashtag found on Tiktok preview');
+		assert((await this.tiktokHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Tiktok preview');
 		assert((await this.tiktokHashtagLink.getAttribute('href')).includes(`https://www.tiktok.com/tag/${hashtag}`), 'Incorrect href value in Tiktok preview');
 	}
 
 	async verifyInstagramHashtagPreview(hashtag) {
 		await expect(this.instagramHashtagLink, 'Instagram post preview is updated with hashtag on composer').toBeVisible();
-		assert((await this.instagramHashtagLink.textContent()).includes(hashtag), 'Hashtag found on Instagram preview');
+		assert((await this.instagramHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Instagram preview');
 		assert((await this.instagramHashtagLink.getAttribute('href')).includes(`https://www.instagram.com/explore/tags/${hashtag}`), 'Incorrect href value in Instagram preview');
 	}
 
