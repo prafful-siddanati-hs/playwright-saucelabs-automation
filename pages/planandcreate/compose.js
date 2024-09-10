@@ -167,6 +167,9 @@ exports.ComposePage = class ComposePage {
 		this.hashtagsArea = page.locator('.rc-Panel .-mediaContent', {locationStrategy: 'xpath'});
 		this.addHashtagButton = page.getByRole('button', { name: 'Add hashtags' });
 		this.firstHashtagSuggestion = page.locator('.-mediaContent [data-testid="list-item-clickable"]', {locationStrategy: 'xpath'}).first();
+		this.emojiPicker = page.locator('.vk-ComposerModal [aria-label = "Add an emoji"]');
+		this.closeEmojiPicker = page.locator('.vk-ComposerModal [aria-label = "Close emoji picker"]');
+		this.firstEmojiFromList = page.locator('//*[contains(@class, "vk-ComposerModal")]//*[contains(@class, "epr-emoji-list")]//*[contains(@aria-label, "grinning")]', {locationStrategy: 'xpath'});
 	}
 
 	async setDarkLaunchCookies() {
@@ -323,20 +326,20 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async verifyGenericPreview(text) {
-		await expect(this.genericPreviewText, 'Generic preview is not updated with text message on composer').toContainText(`${text}`);
+		await expect(this.genericPreviewText, 'Generic preview is updated with text message on composer').toContainText(`${text}`);
 	}
 
 	async verifyGenericImagePreview() {
-		await expect(this.genericPreviewSingleImage, 'Generic preview is not updated with image on composer').toHaveJSProperty('complete', true);
+		await expect(this.genericPreviewSingleImage, 'Generic preview is updated with image on composer').toHaveJSProperty('complete', true);
 		await expect(this.genericPreviewSingleImage).not.toHaveJSProperty('naturalWidth', 0);
 	}
 
 	async verifyTwitterPreview(text) {
-		await expect(this.twitterPreviewText, 'Twitter preview is not updated with text message on composer').toContainText(`${text}`);
+		await expect(this.twitterPreviewText, 'Twitter preview is updated with text message on composer').toContainText(`${text}`);
 	}
 
 	async verifyTwitterVideoPreview() {
-		await expect(this.twitterVideoPreviewSelector, 'Twitter preview is not updated with video on composer').toHaveCount(1);
+		await expect(this.twitterVideoPreviewSelector, 'Twitter preview is updated with video on composer').toHaveCount(1);
 	}
 
 	async verifyTwitterImagePreview() {
@@ -349,7 +352,7 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async verifyThreadsPreview(text) {
-		await expect(this.threadsPreviewText, 'Threads preview is not updated with text message on composer').toContainText(`${text}`);
+		await expect(this.threadsPreviewText, 'Threads preview is updated with text message on composer').toContainText(`${text}`);
 	}
 
 	async verifyThreadsImagePreview() {
@@ -393,54 +396,54 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async verifyFacebookPreview(text) {
-		await expect(this.facebookPreviewText, 'Facebook preview is not updated with text on composer').toContainText(`${text}`);
+		await expect(this.facebookPreviewText, 'Facebook preview is updated with text on composer').toContainText(`${text}`);
 	}
 
 	async verifyLinkInTwitterPreview(text) {
-		await expect(this.twitterMessageLink, 'Twitter preview is not updated with link preview on composer').toBeVisible();
+		await expect(this.twitterMessageLink, 'Twitter preview is updated with link preview on composer').toBeVisible();
 		expect(await this.twitterMessageLink.getAttribute('href')).toContain(text);
 		expect(await this.twitterMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyLinkInLinkedInPreview(text) {
-		await expect(this.linkedInMessageLink, 'Linkedin preview is not updated with link preview on composer').toBeVisible();
+		await expect(this.linkedInMessageLink, 'Linkedin preview is updated with link preview on composer').toBeVisible();
 		expect(await this.linkedInMessageLink.getAttribute('href')).toContain(text);
 		expect(await this.linkedInMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyLinkInLinkedInCompanyPreview(text) {
-		await expect(this.linkedInCompanyMessageLink, 'Linkedin preview is not updated with link preview on composer').toBeVisible();
+		await expect(this.linkedInCompanyMessageLink, 'Linkedin preview is updated with link preview on composer').toBeVisible();
 		expect(await this.linkedInCompanyMessageLink.getAttribute('href')).toContain(text);
 		expect(await this.linkedInCompanyMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyLinkInInstagramPreview(text) {
-		await expect(this.instagramMessageLink, 'Instagram preview is not updated with link preview on composer').toBeVisible();
+		await expect(this.instagramMessageLink, 'Instagram preview is updated with link preview on composer').toBeVisible();
 		expect(await this.instagramMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyLinkInFacebookPagePreview(text) {
-		await expect(this.facebookMessageLink, 'Facebook preview is not updated with link preview on composer').toBeVisible();
+		await expect(this.facebookMessageLink, 'Facebook preview is updated with link preview on composer').toBeVisible();
 		expect(await this.facebookMessageLink.getAttribute('href')).toContain(text);
 		expect(await this.facebookMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyLinkInThreadsPreview(text) {
-		await expect(this.threadsMessageLink, 'Twitter preview is not updated with link preview on composer').toBeVisible();
+		await expect(this.threadsMessageLink, 'Twitter preview is updated with link preview on composer').toBeVisible();
 		expect(await this.threadsMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyInstagramPreview(text) {
-		await expect(this.instagramPreviewText, 'Instagram post preview is not updated with text on composer').toContainText(`${text}`);
+		await expect(this.instagramPreviewText, 'Instagram post preview is updated with text on composer').toContainText(`${text}`);
 		await expect(this.previewNetworkType).toContainText('Instagram Post');
 	}
 
 	async verifyInstagramReelPreview(text) {
-		await expect(this.instagramReelPreviewText, 'Instagram reel preview is not updated with text on composer').toContainText(`${text}`);
+		await expect(this.instagramReelPreviewText, 'Instagram reel preview is updated with text on composer').toContainText(`${text}`);
 	}
 
 	async verifyInstagramReelVideoPreview() {
-		await expect(this.previewNetworkType, 'Instagram reel preview is not updated with video on composer').toContainText('Instagram Reel');
+		await expect(this.previewNetworkType, 'Instagram reel preview is updated with video on composer').toContainText('Instagram Reel');
 		await expect(this.instagramReelVideoPreviewSelector).toHaveCount(1);
 		await this.page.waitForLoadState('domcontentloaded');
 	}
@@ -467,11 +470,11 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async verifyLinkedInPreview(text) {
-		await expect(this.linkedInPreviewText, 'Linkedin preview is not updated with text on composer').toContainText(`${text}`);
+		await expect(this.linkedInPreviewText, 'Linkedin preview is updated with text on composer').toContainText(`${text}`);
 	}
 
 	async verifyLinkedInCompanyPreview(text) {
-		await expect(this.linkedInCompanyPreviewText, 'Linkedin preview is not updated with text on composer').toContainText(`${text}`);
+		await expect(this.linkedInCompanyPreviewText, 'Linkedin preview is updated with text on composer').toContainText(`${text}`);
 	}
 
 	async verifyTiktokPreview(text) {
@@ -490,31 +493,31 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async verifyLinkInLinkedinPagePreview(text) {
-		await expect(this.linkedInMessageLink, 'Linkedin preview is not updated with link on composer').toBeVisible();
+		await expect(this.linkedInMessageLink, 'Linkedin preview is updated with link on composer').toBeVisible();
 		expect(await this.linkedInMessageLink).toHaveAttribute('href', text);
 		expect(await this.linkedInMessageLink.innerText()).toContain(text);
 	}
 
 	async verifyHashtagInTwitterPreview(hashtag) {
-		await expect(this.twitterHashtagLink, 'twitter preview is not updated with hashtag on composer').toBeVisible();
+		await expect(this.twitterHashtagLink, 'twitter preview is updated with hashtag on composer').toBeVisible();
 		assert((await this.twitterHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Twitter preview');
 		assert((await this.twitterHashtagLink.getAttribute('href')).includes(`https://twitter.com/hashtag/${hashtag}`), 'Incorrect href value in Twitter preview');
 	}
 
 	async verifyHashtagInFacebookPreview(hashtag) {
-		await expect(this.facebookHashtagLink, 'facebook preview is not updated with hashtag on composer').toBeVisible();
+		await expect(this.facebookHashtagLink, 'facebook preview is updated with hashtag on composer').toBeVisible();
 		assert((await this.facebookHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Facebook preview');
 		assert((await this.facebookHashtagLink.getAttribute('href')).includes(`https://www.facebook.com/hashtag/${hashtag}`), 'Incorrect href value in Facebook preview');
 	}
 
 	async verifyTiktokHashtagPreview(hashtag) {
-		await expect(this.tiktokHashtagLink, 'Tiktok preview is not updated with hashtag on composer').toBeVisible();
+		await expect(this.tiktokHashtagLink, 'Tiktok preview is updated with hashtag on composer').toBeVisible();
 		assert((await this.tiktokHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Tiktok preview');
 		assert((await this.tiktokHashtagLink.getAttribute('href')).includes(`https://www.tiktok.com/tag/${hashtag}`), 'Incorrect href value in Tiktok preview');
 	}
 
 	async verifyInstagramHashtagPreview(hashtag) {
-		await expect(this.instagramHashtagLink, 'Instagram post preview is not updated with hashtag on composer').toBeVisible();
+		await expect(this.instagramHashtagLink, 'Instagram post preview is updated with hashtag on composer').toBeVisible();
 		assert((await this.instagramHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Instagram preview');
 		assert((await this.instagramHashtagLink.getAttribute('href')).includes(`https://www.instagram.com/explore/tags/${hashtag}`), 'Incorrect href value in Instagram preview');
 	}
@@ -531,7 +534,7 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async verifyLinkedInPdfPreview() {
-		await expect(this.linkedinNetworkType, 'Linkedin preview is not updated with PDF preview on composer').toContainText('LinkedIn');
+		await expect(this.linkedinNetworkType, 'Linkedin preview is updated with PDF preview on composer').toContainText('LinkedIn');
 		await expect(this.linkedInPdfPreview).toBeVisible();
 	}
 
@@ -572,14 +575,14 @@ exports.ComposePage = class ComposePage {
 
 	async saveEditedMessage() {
 		await this.saveEditsButton.click();
-		await expect(this.composeScreen, 'Save edit message failed from composer').not.toBeVisible();
+		await expect(this.composeScreen, 'Edit message is successfully saved from composer').not.toBeVisible();
 	}
 
 	async scheduleDuplicateMessage() {
 		await expect(this.scheduleButton).toBeVisible();
 		await this.scheduleButton.hover();
 		await this.scheduleButton.click();
-		await expect(this.scheduleButton, 'Schedule message failed from composer').not.toBeVisible();
+		await expect(this.scheduleButton, 'Schedule message is successful from composer').not.toBeVisible();
 		await expect(this.feCallOuts).toHaveCount(1);
 	}
 	async openMediaLibrary() {
@@ -593,9 +596,9 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async selectFreeImagesInMediaLibrary() {
-		await expect(this.mediaLibrarySourceDropdown, 'Media library source dropdown is not visible').toBeVisible();
+		await expect(this.mediaLibrarySourceDropdown, 'Media library source dropdown is visible').toBeVisible();
 		await this.mediaLibrarySourceDropdown.click();
-		await expect(await this.freeImagesMediaLibrarySelection, 'Free images drop down list is not visible ').toBeVisible();
+		await expect(await this.freeImagesMediaLibrarySelection, 'Free images drop down list is visible ').toBeVisible();
 		await this.freeImagesMediaLibrarySelection.click();
 	}
 
@@ -607,7 +610,7 @@ exports.ComposePage = class ComposePage {
 
 	async attachImageFromMediaLibrary(numImages) {
 		let randomImage;
-		await expect(this.mediaContent, 'Media library content is not loaded').toBeVisible();
+		await expect(this.mediaContent, 'Media library content is loaded').toBeVisible();
 		await expect(this.firstImage.nth(0)).toBeVisible();
 		for (let i = 0; i < numImages; i ++) {
 			randomImage = Math.floor(Math.random() * 15) + 1;
@@ -620,7 +623,7 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async selectGiphyInMediaLibrary() {
-		await expect(this.mediaLibrarySourceDropdown, 'Media library source dropdown is not visible').toBeVisible();
+		await expect(this.mediaLibrarySourceDropdown, 'Media library source dropdown is visible').toBeVisible();
 		await this.mediaLibrarySourceDropdown.click();
 		expect(await this.giphyMediaLibrarySelection).toBeVisible();
 		await this.giphyMediaLibrarySelection.click();
@@ -644,8 +647,18 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async openLinkSettingsDialog() {
-		await expect(this.addTrackingButton, 'Add tracking button is missing from composer').toBeVisible();
+		await expect(this.addTrackingButton, 'Add tracking button is visible from composer').toBeVisible();
 		await this.addTrackingButton.click();
+	}
+
+	async selectEmojiButton() {
+		await expect(this.emojiButton, 'Emoji button is visible').toBeVisible();
+		await this.emojiPicker.click();
+	}
+
+	async selectCloseEmojiPicker() {
+		await expect(this.closeEmojiPicker, 'Close emoji picker button is visible').toBeVisible();
+		await this.closeEmojiPicker.click();
 	}
 
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {
