@@ -16,15 +16,15 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Verify composer message editor for twitter with multi line and RTL', async ({ page }) => {
-	const multiLineMsg = `${plan_create.getRandomUrl()} ${plan_create.getRandomHashTag()} This is a multi line test message.
+	const multiLineMsg = `${plan_create.getRandomUrl()} ${plan_create.getRandomLanguageHashtag()} This is a multi line test message.
 
     This is useful for testing
     how messages are displayed across multiple lines.
-    
+
         Ensure that all lines are preserved and formatted correctly.`;
 
 	const mixedMessage = `This is sample Hebrew text to verify if twitter profile in Hootsuite can display correct preview for this text #rtl #preview
-    
+
     זהו טקסט לדוגמה בעברית כדי לוודא אם פרופיל הטוויטר ב-Hootsuite יכול להציג תצוגה מקדימה נכונה עבור הטקסט הזה #rtl #preview`;
 
 	const oneLineRtlMessage = 'זהו טקסט לדוגמה בעברית שנכתב מימין לשמאל, זה יוודא אם פרופיל הטוויטר ב-Hootsuite יכול להציג תצוגה מקדימה נכונה עבור סוג זה של טקסט. #rtl #תצוגה מקדימה';

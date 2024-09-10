@@ -14,7 +14,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Verify the pinterest message with multi line and RTL', async ({ page }) => {
-	const multiLineMsg = `${plan_create.getRandomUrl()} ${plan_create.getRandomHashTag()} This is a multiline test message.
+	const multiLineMsg = `${plan_create.getRandomUrl()} ${plan_create.getRandomLanguageHashtag()} This is a multiline test message.
 
 It includes several lines of text to verify
 that the system handles multiline content

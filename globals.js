@@ -208,6 +208,14 @@ module.exports = {
 				'#TESTAUTOMATION',
 				'#Testing🚀',
 				'#TestAutomationSuite',
+				'#A'
+			];
+			return HASH_TAGS[Math.floor(Math.random() * HASH_TAGS.length)];
+		},
+
+		getRandomLanguageHashtag: function () {
+			const HASH_LANG_TAGS = [
+				'#Test',
 				'#A',
 				'#Amor',
 				'#Amour',
@@ -217,7 +225,26 @@ module.exports = {
 				'#사랑',
 				'#حب',
 			];
-			return HASH_TAGS[Math.floor(Math.random() * HASH_TAGS.length)];
+			return HASH_LANG_TAGS[Math.floor(Math.random() * HASH_LANG_TAGS.length)];
+		},
+
+		getRandomEmoji: function () {
+			const EMOJIS = [
+				'😀',
+				'🤣',
+				'😃',
+				'🥐',
+				'🍻',
+				'🍷',
+				'🍸',
+				'🇮🇹 ',
+				'🌺',
+				'🍣',
+				'🍜',
+				'🕌',
+				'🥟'
+			];
+			return EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
 		},
 	},
 
