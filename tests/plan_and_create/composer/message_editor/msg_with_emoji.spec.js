@@ -55,7 +55,7 @@ test('Verify that emojis from the emoji picker are added to messages across all 
 		await composePage.verifyInstagramPreview(emojiText);
 	});
 
-	await test.step('Add emoji from picker', async () => {
+	await test.step('Add emoji from emoji picker', async () => {
 		await composePage.selectEmojiButton();
 		await expect(composePage.firstEmojiFromList).toBeVisible();
 		await composePage.firstEmojiFromList.click();
