@@ -523,14 +523,14 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async verifyInstagramFirstCommentHashtagPreview(hashtag) {
-		await expect(this.instagramFirstCommentHashtagLink, 'Instagram first comment preview is updated with hashtag on composer').toBeVisible();
-		assert((await this.instagramFirstCommentHashtagLink.textContent()).includes(hashtag), 'Hashtag found on Instagram first comment preview');
-		assert((await this.instagramFirstCommentHashtagLink.getAttribute('href')).includes(`https://www.instagram.com/explore/tags/${hashtag}`), 'Correct href value in Instagram first comment preview');
+		await expect(this.instagramFirstCommentHashtagLink, 'Instagram first comment preview is not updated with hashtag on composer').toBeVisible();
+		assert((await this.instagramFirstCommentHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Instagram first comment preview');
+		assert((await this.instagramFirstCommentHashtagLink.getAttribute('href')).includes(`https://www.instagram.com/explore/tags/${hashtag}`), 'Incorrect href value in Instagram first comment preview');
 	}
 
 	async verifyLinkedInHashtagPreview(hashtag) {
-		await expect(this.linkedInHashtagLink, 'Linkedin post preview is updated with hashtag on composer').toBeVisible();
-		assert((await this.linkedInHashtagLink.textContent()).includes(hashtag), 'Hashtag found on Linkedin preview');
+		await expect(this.linkedInHashtagLink, 'Linkedin post preview is not updated with hashtag on composer').toBeVisible();
+		assert((await this.linkedInHashtagLink.textContent()).includes(hashtag), 'Hashtag not found on Linkedin preview');
 	}
 
 	async verifyLinkedInPdfPreview() {
