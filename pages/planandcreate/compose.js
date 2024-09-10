@@ -274,7 +274,7 @@ exports.ComposePage = class ComposePage {
 	async writeMessage(message) {
 		await this.page.keyboard.press('Escape');
 		await this.messageArea.click();
-		await this.page.keyboard.type(message);
+		await this.messageArea.pressSequentially(message);
 		await expect(this.page.locator('.vk-Loader')).toHaveCount(0);
 	}
 

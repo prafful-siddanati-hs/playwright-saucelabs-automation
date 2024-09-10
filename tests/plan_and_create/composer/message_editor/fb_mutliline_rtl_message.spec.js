@@ -16,7 +16,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Verify composer message editor for facebook with multi line and RTL', async ({ page }) => {
-	const multiLineMsg = `${plan_create.getRandomUrl()} ${plan_create.getRandomHashTag()} This is a multi line test message with URL and hashtag.
+	const multiLineMsg = `${plan_create.getRandomUrl()} ${plan_create.getRandomHashTag()} This is a multi line test message with URL and hashtag and random emoji ${plan_create.getRandomEmoji()}.
 
     This is useful for testing
     how messages are displayed across multiple lines.
@@ -25,9 +25,9 @@ test('Verify composer message editor for facebook with multi line and RTL', asyn
 
 	const mixedMessage = `This is sample Hebrew text to verify if facebook profile in Hootsuite can display correct preview for this text #rtl #preview
     
-    זהו טקסט לדוגמה בעברית כדי לוודא אם פרופיל הטוויטר ב-Hootsuite יכול להציג תצוגה מקדימה נכונה עבור הטקסט הזה #rtl #preview`;
+    זהו טקסט לדוגמה בעברית כדי לוודא אם פרופיל הטוויטר ב-Hootsuite יכול להציג תצוגה מקדימה נכונה עבור הטקסט הזה #rtl #preview ✡️`;
 
-	const oneLineRtlMessage = 'זהו טקסט לדוגמה בעברית שנכתב מימין לשמאל, זה יוודא אם פרופיל הטוויטר ב-Hootsuite יכול להציג תצוגה מקדימה נכונה עבור סוג זה של טקסט. #rtl #תצוגה מקדימה';
+	const oneLineRtlMessage = '✡️ זהו טקסט לדוגמה בעברית שנכתב מימין לשמאל, זה יוודא אם פרופיל הטוויטר ב-Hootsuite יכול להציג תצוגה מקדימה נכונה עבור סוג זה של טקסט. #rtl #תצוגה מקדימה';
 
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);

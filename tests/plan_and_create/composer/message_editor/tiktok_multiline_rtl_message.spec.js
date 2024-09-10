@@ -4,6 +4,7 @@ const { LoginPage } = require('../../../../pages/login.js');
 const { ComposePage } = require('../../../../pages/planandcreate/compose.js');
 const getFixture = require('../../../../custom-commands/getFixture.js');
 const tearDown = require('../../../../custom-commands/tearDown.js');
+const { plan_create } = require('../../../../globals.js');
 let tiktokProfile = 'nimataheri89';
 
 test.afterEach(async ({ page }) => {
@@ -14,7 +15,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Verify composer message editor for Tiktok with multi line and RTL', async ({ page }) => {
-	const multiLineMsg = `This is a multi line test message with URL and hashtag.
+	const multiLineMsg = `This is a multi line test message with URL and hashtag and ${plan_create.getRandomEmoji()}.
 
     This is useful for testing
     how messages are displayed across multiple lines.

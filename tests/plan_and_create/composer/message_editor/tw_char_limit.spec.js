@@ -16,7 +16,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Verify composer message editor for twitter\'s 280 characters limit', async ({ page }) => {
-	const twMsg = `Test twitter character limit of 280 characters including a hashtag${plan_create.getRandomHashTag()} and url that takes up 24 characters`;
+	const twMsg = `Test twitter character limit of 280 characters including an emoji 😀, hashtag ${plan_create.getRandomHashTag()}, url that takes up 24 characters`;
 	const msgWithInTheLimit = `${plan_create.getRandomUrl()} `.concat(plan_create.generateRandomMessage(twMsg,251));
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
@@ -52,6 +52,7 @@ test('Verify composer message editor for twitter\'s 280 characters limit', async
 		await page.waitForTimeout(500);
 		await composePage.verifyTwitterPreview(message);
 	});
+	await page.pause();
 
 	await test.step('Verify the character count', async () => {
 		await expect(composePage.messageCharCount).toHaveText('275 / 280');

@@ -17,7 +17,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Verify the LinkedIn message character limit that are above and below the 3000-character threshold.', async ({ page }) => {
-	const liMsg = `${plan_create.getRandomUrl()} ${plan_create.getRandomHashTag()} Hello, I am interested in connecting with you and learning more about your work. I see that we have similar interests in the industry and would love to discuss potential opportunities. Looking forward to your response and connecting with you. Thank you!`;
+	const liMsg = `${plan_create.getRandomUrl()} ${plan_create.getRandomHashTag()} Hello 👋🏼, I am interested in connecting with you and learning more about your work. I see that we have similar interests in the industry and would love to discuss potential opportunities. Looking forward to your response and connecting with you. Thank you😀`;
 	const msgWithInTheLimit = plan_create.generateRandomMessage(liMsg,2995);
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
