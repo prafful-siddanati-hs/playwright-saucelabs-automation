@@ -6,6 +6,7 @@ const deleteScheduledMessageById = require('../../custom-commands/deleteSchedule
 const getScheduledMessages = require('../../custom-commands/getScheduledMessages');
 const scheduleV3Message = require('../../custom-commands/scheduleV3Message');
 const timeZone = 'America/Toronto';
+const assert = require('assert');
 
 exports.PlannerPage = class PlannerPage {
 	constructor(page) {
@@ -390,6 +391,12 @@ exports.PlannerPage = class PlannerPage {
 	async verifyPDFInPreviewPane() {
 		await expect(this.page.getByTestId('Preview'), 'Message with PDF is not visible on planner preview pane').toBeVisible();
 		await expect(this.linkedinPreviewPdf).toBeVisible();
+	}
+
+	async verifyFacebookMentionInPreviewPane(mentionName) {
+		await this.facebookMentionLink.isVisible();
+		assert((await this.facebookMentionLink.textContent()).includes(mentionName), 'Mention name not found on Facebook preview');
+		assert((await this.facebookMentionLink.getAttribute('href')).includes('https://www.facebook.com/'), 'Incorrect href value in Facebook preview');
 	}
 
 	async editFromPreviewPane() {
