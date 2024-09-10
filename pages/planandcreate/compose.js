@@ -483,12 +483,12 @@ exports.ComposePage = class ComposePage {
 
 	async verifyFacebookMentionPreview(mentionName) {
 		await this.facebookMentionLink.isVisible();
-		assert((await this.facebookMentionLink.textContent()).includes(mentionName), 'Mention name found on Facebook preview');
+		assert((await this.facebookMentionLink.textContent()).includes(mentionName), 'Mention name not found on Facebook preview');
 		assert((await this.facebookMentionLink.getAttribute('href')).includes('https://www.facebook.com/'), 'Incorrect href value in Facebook preview');
 	}
 	async verifyLinkedInMentionPreview(mentionName) {
 		await this.linkedInMentionLink.isVisible();
-		assert((await this.linkedInMentionLink.textContent()).includes(mentionName), 'Mention name found on LinkedIn preview');
+		assert((await this.linkedInMentionLink.textContent()).includes(mentionName), 'Mention name not found on LinkedIn preview');
 		assert((await this.linkedInMentionLink.getAttribute('href')).includes('https://www.linkedin.com/company'), 'Incorrect href value in LinkedIn preview');
 	}
 
