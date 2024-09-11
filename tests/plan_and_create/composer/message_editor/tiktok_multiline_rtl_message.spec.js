@@ -15,7 +15,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Verify composer message editor for Tiktok with multi line and RTL', async ({ page }) => {
-	const multiLineMsg = `This is a multi line test message with URL and hashtag and ${plan_create.getRandomEmoji()}.
+	const multiLineMsg = `This is a multi line test message with URL and hashtag and ${plan_create.getRandomEmoji()} ${plan_create.getRandomLanguageHashtag()}.
 
     This is useful for testing
     how messages are displayed across multiple lines.
@@ -26,7 +26,7 @@ test('Verify composer message editor for Tiktok with multi line and RTL', async 
 
     זהו טקסט לדוגמה בעברית כדי לוודא אם פרופיל הטיקטוק ב-Hootsuite יכול להציג תצוגה מקדימה נכונה עבור הטקסט הזה #rtl #preview`;
 
-	const oneLineRtlMessage = 'זהו טקסט לדוגמה בעברית שנכתב מימין לשמאל, זה יוודא אם פרופיל הטיקטוק ב-Hootsuite יכול להציג תצוגה מקדימה נכונה עבור סוג זה של טקסט. #rtl #תצוגה מקדימה';
+	const oneLineRtlMessage = '✡️ זהו טקסט לדוגמה בעברית שנכתב מימין לשמאל, זה יוודא אם פרופיל הטיקטוק ב-Hootsuite יכול להציג תצוגה מקדימה נכונה עבור סוג זה של טקסט. #rtl #תצוגה מקדימה';
 
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
