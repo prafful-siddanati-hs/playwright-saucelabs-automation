@@ -59,10 +59,12 @@ test('Edit an existing mention and link a new one for facebook page', async ({ p
 
 	await test.step('Write a message with mention', async () => {
 		await composePage.writeMessage(`${scheduleText}@${initialMention}`);
+		await composePage.verifyFacebookPreview(`${scheduleText}@${initialMention}`);
 	});
 
 	await test.step('Select and link the mention', async () => {
 		await composePage.selectMention(initialMention);
+		await plannerPage.verifyFacebookMentionInPreviewPane(initialMention);
 	});
 
 	await test.step('Schedule the message', async () => {

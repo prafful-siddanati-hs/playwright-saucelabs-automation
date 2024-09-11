@@ -123,7 +123,16 @@ module.exports = {
 				'Hootrm\'s Catz',
 				'Brandon is not Awesome',
 				'BrandonEats',
-				'John Owly Art'
+				'John Owly Art',
+				'Test Algérie',
+				'SneakPeek Test',
+				'NET - National Eligibility Test - UGC',
+				'Nat-Test Center, Yangon',
+				'MentionSocials',
+				'M.E.N',
+				'Men\'s Health (TEST)',
+				'User',
+				'user',
 			];
 			return MENTIONS[Math.floor(Math.random() * MENTIONS.length)];
 		},
@@ -142,7 +151,16 @@ module.exports = {
 				'Composer Staging Page Two',
 				'catsRUs',
 				'Hootsuite Academy',
-				'Hootsuite Test Page!'
+				'Hootsuite Test Page!',
+				'MENT Internet Works',
+				'Learning & Development Awards',
+				'MENT',
+				'The Good Judge-ment Podcast',
+				'Hoot',
+				'hoot',
+				'Music Business Worldwide (MBW)',
+				'Music Reports, Inc',
+				'Music Supervisor Inc.'
 			];
 			return MENTIONS[Math.floor(Math.random() * MENTIONS.length)];
 		},

@@ -19,11 +19,11 @@ test('Verify composer message editor for Tiktok with multi line and RTL', async 
 
     This is useful for testing
     how messages are displayed across multiple lines.
-    
-        Ensure that all lines are preserved and formatted correctly.`;
 
-	const mixedMessage = `This is sample Hebrew text to verify if Tiktok profile in Hootsuite can display correct preview for this text #rtl #preview
-    
+        Ensure that all lines are preserved and formatted correctly. ${plan_create.getRandomUrl()} #test #multiline`;
+
+	const mixedMessage = `✨ This is sample Hebrew text to verify if Tiktok profile in Hootsuite can display correct preview for this text 🎉 #rtl #preview
+
     זהו טקסט לדוגמה בעברית כדי לוודא אם פרופיל הטיקטוק ב-Hootsuite יכול להציג תצוגה מקדימה נכונה עבור הטקסט הזה #rtl #preview`;
 
 	const oneLineRtlMessage = 'זהו טקסט לדוגמה בעברית שנכתב מימין לשמאל, זה יוודא אם פרופיל הטיקטוק ב-Hootsuite יכול להציג תצוגה מקדימה נכונה עבור סוג זה של טקסט. #rtl #תצוגה מקדימה';
