@@ -214,6 +214,7 @@ exports.PlannerPage = class PlannerPage {
 		this.linkedinPreviewVideo = page.locator('.vk-Planner .vk-DetailPane .vk-LinkedInPreview .vk-VideoPlayer');
 		this.linkedinPreviewPdf = page.locator('.vk-Planner .vk-DetailPane .vk-LinkedInPreview .vk-PdfContainer .vk-PdfDocument');
 		this.pdfCardIcon = page.locator('//*[contains(@data-testid,"MediaStateText")][text()="PDF"]');
+		this.linkedInMentionLink = page.locator('.vk-Planner .vk-LinkedInPreview .vk-ContentBody .vk-MessageMention');
 
 		//Instagram
 		this.instagramPreviewSocialProfile = page.locator('.vk-Planner .vk-DetailPane .vk-InstagramPreviewHeader .vk-Name');
@@ -397,6 +398,12 @@ exports.PlannerPage = class PlannerPage {
 		await this.facebookMentionLink.isVisible();
 		assert((await this.facebookMentionLink.textContent()).includes(mentionName), 'Mention name not found on Facebook preview');
 		assert((await this.facebookMentionLink.getAttribute('href')).includes('https://www.facebook.com/'), 'Incorrect href value in Facebook preview');
+	}
+
+	async verifyLinkedInMentionInPreviewPane(mentionName) {
+		await this.linkedInMentionLink.isVisible();
+		assert((await this.linkedInMentionLink.textContent()).includes(mentionName), 'Mention name not found on LinkedIn preview');
+		assert((await this.linkedInMentionLink.getAttribute('href')).includes('https://www.linkedin.com/company'), 'Incorrect href value in LinkedIn preview');
 	}
 
 	async editFromPreviewPane() {

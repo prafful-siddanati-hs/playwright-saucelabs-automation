@@ -5,7 +5,6 @@ const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const { getObjectByName, plan_create} = require('../../../../globals');
-const assert = require('assert');
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
