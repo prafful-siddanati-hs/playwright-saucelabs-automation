@@ -116,8 +116,14 @@ module.exports = {
 			return SEARCH_TERM[Math.floor(Math.random() * SEARCH_TERM.length)];
 		},
 
-		getRandomFBMention: function () {
-			const RANDOM_FB_MENTIONS = [
+		getFaceBookPageMention: function () {
+			const MENTIONS = [
+				'AlexT Hoot Shop',
+				'hoot_rm_business',
+				'Hootrm\'s Catz',
+				'Brandon is not Awesome',
+				'BrandonEats',
+				'John Owly Art',
 				'Test Algérie',
 				'SneakPeek Test',
 				'NET - National Eligibility Test - UGC',
@@ -127,34 +133,6 @@ module.exports = {
 				'Men\'s Health (TEST)',
 				'User',
 				'user',
-			];
-			return RANDOM_FB_MENTIONS[Math.floor(Math.random() * RANDOM_FB_MENTIONS.length)];
-		},
-
-		getRandomLIMention: function () {
-			const RANDOM_LI_MENTIONS = [
-				'MENT Internet Works',
-				'Learning & Development Awards',
-				'MENT',
-				'The Good Judge-ment Podcast',
-				'\"Hoot\" Judkins Furniture',
-				'Hoot',
-				'hoot',
-				'Music Business Worldwide (MBW)',
-				'Music Reports, Inc',
-				'Music Supervisor Inc.'
-			];
-			return RANDOM_LI_MENTIONS[Math.floor(Math.random() * RANDOM_LI_MENTIONS.length)];
-		},
-
-		getFaceBookPageMention: function () {
-			const MENTIONS = [
-				'AlexT Hoot Shop',
-				'hoot_rm_business',
-				'Hootrm\'s Catz',
-				'Brandon is not Awesome',
-				'BrandonEats',
-				'John Owly Art'
 			];
 			return MENTIONS[Math.floor(Math.random() * MENTIONS.length)];
 		},
@@ -173,7 +151,16 @@ module.exports = {
 				'Composer Staging Page Two',
 				'catsRUs',
 				'Hootsuite Academy',
-				'Hootsuite Test Page!'
+				'Hootsuite Test Page!',
+				'MENT Internet Works',
+				'Learning & Development Awards',
+				'MENT',
+				'The Good Judge-ment Podcast',
+				'Hoot',
+				'hoot',
+				'Music Business Worldwide (MBW)',
+				'Music Reports, Inc',
+				'Music Supervisor Inc.'
 			];
 			return MENTIONS[Math.floor(Math.random() * MENTIONS.length)];
 		},

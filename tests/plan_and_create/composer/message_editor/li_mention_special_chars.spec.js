@@ -15,7 +15,7 @@ test.afterEach(async ({ page }) => {
 
 test('Verify adding text with mention using special characters to linkedin message', async ({ page }) => {
 	const messageText = `Li Mention with special characters ${plan_create.getRandomUrl()} `;
-	const liMention = plan_create.getRandomLIMention();
+	const liMention = plan_create.getLinkedinMention();
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);

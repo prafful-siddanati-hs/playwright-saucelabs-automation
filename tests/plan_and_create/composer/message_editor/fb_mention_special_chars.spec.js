@@ -15,7 +15,7 @@ test.afterEach(async ({ page }) => {
 
 test('Verify adding text with mention using special characters to facebook message', async ({ page }) => {
 	const composeText = `Mention with special characters ${plan_create.getRandomUrl()} `;
-	const fbMention = plan_create.getRandomMention();
+	const fbMention = plan_create.getFaceBookPageMention();
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
