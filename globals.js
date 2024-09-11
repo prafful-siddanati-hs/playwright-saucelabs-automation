@@ -147,6 +147,39 @@ module.exports = {
 			return MENTIONS[Math.floor(Math.random() * MENTIONS.length)];
 		},
 
+		getTwitterMentions: function () {
+			const MENTIONS = [
+				'@ShanePlusThree',
+				'@Taco_BlueJay',
+				'@Taco_Emu',
+				'@Taco_Finch',
+				'@Taco_SNebouxii',
+				'@Taco_Sparrow',
+				'@Taco_Toucan',
+				'@Taco_Woodpecker',
+				'@tacoalbatross',
+				'@tacofowl',
+				'@taco_dove',
+				'@taco_eagle',
+				'@HComposerStg',
+				'@hoot_planner',
+				'@hoot_r2d2'
+			];
+			return MENTIONS[Math.floor(Math.random() * MENTIONS.length)];
+		},
+
+		getIgbMentions: function () {
+			const MENTIONS = [
+				'@alexhoot3',
+				'@donutdestruction',
+				'@hootigb',
+				'@Itarchive',
+				'@plancreatetagger',
+				'@robot.taco'
+			];
+			return MENTIONS[Math.floor(Math.random() * MENTIONS.length)];
+		},
+
 		getRandomUrl: function () {
 			const URLS = [
 				'cbc.ca',
