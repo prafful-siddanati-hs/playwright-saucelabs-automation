@@ -21,7 +21,7 @@ test('Verify composer message editor for facebook with multi line and RTL', asyn
     This is useful for testing
     how messages are displayed across multiple lines.
     
-        Ensure that all lines are preserved and formatted correctly.`;
+        Ensure that all lines are preserved and formatted correctly. ${plan_create.getRandomLanguageHashtag()}`;
 
 	const mixedMessage = `This is sample Hebrew text to verify if facebook profile in Hootsuite can display correct preview for this text #rtl #preview
     
