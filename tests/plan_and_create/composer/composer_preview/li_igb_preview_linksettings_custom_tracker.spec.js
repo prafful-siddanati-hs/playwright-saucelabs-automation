@@ -44,14 +44,14 @@ test('LinkedIn and Instagram preview validations for custom link settings tracke
 		await composePage.postToWrapper.click();
 	});
 
-	await test.step('Select twitter and facebook page accounts from social network dropdown', async () => {
+	await test.step('Select linkedin and instagram business accounts from social network dropdown', async () => {
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(liAccount);
 		await composePage.selectSocialProfile(igbAccount);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
-		await expect(composePage.emptyLinkedInPreview).toBeVisible();
+		await expect(page.locator('.vk-ComposerModal .vk-LinkedInPreview')).toBeVisible();
 		await expect(composePage.emptyInstagramPreview).toBeVisible();
 	});
 
@@ -95,5 +95,21 @@ test('LinkedIn and Instagram preview validations for custom link settings tracke
 		await expect(composePage.linkedinLinkPreviewSource).toContainText(URL);
 		await expect(composePage.linkedinLinkPrevewMedia).toBeVisible();
 		await composePage.verifyLinkInInstagramPreview('http://cbc.ca?utm_source=hootsuite&utm=instagram');
+	});
+
+	await test.step('Select edit link setting and verify custom tracker on modal', async () => {
+		await composePage.editCustomLinkSettingsButton.click();
+		await expect(page.locator('[aria-label = "Apply Link Settings modal"] [data-testid = "SelectedShortenerName"]')).toHaveText('No Shortener');
+		await expect(page.locator('[aria-label = "Apply Link Settings modal"] [data-testid = "SelectedTrackerName"]')).toHaveText('Custom');
+		await linkSettingsModal.linkSettingsApplyButton.click();
+	});
+
+	await test.step('Follow the link', async () => {
+		const href = await composePage.linkedInMessageLink.getAttribute('href');
+
+		if (href) {
+			await page.goto(href);
+			await expect(page).toHaveURL('https://www.cbc.ca/?utm_source=hootsuite&utm=linkedin');
+		}
 	});
 });

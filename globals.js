@@ -214,7 +214,8 @@ module.exports = {
 
 		getSBETestUrl: function () {
 			const URLS = [
-				'https://www.scottish-enterprise.com'
+				'https://www.scottish-enterprise.com',
+				'https://www.eventbrite.co.uk/e/accessability-expo-tickets-953252522957'
 				//Add more URLs here which are logged via SBE tickets
 			];
 			return URLS[Math.floor(Math.random() * URLS.length)];
