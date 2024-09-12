@@ -37,7 +37,7 @@ exports.ComposePage = class ComposePage {
 		this.emptyTwitterPreview = page.locator('.vk-ComposerModal .vk-TwitterPreview');
 		this.emptyFacebookPreview = page.locator('.vk-ComposerModal .vk-FacebookPreview');
 		this.linkedinNetworkType = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-MessagePreviewHeader .vk-NetworkType');
-		this.emptyLinkedInPreview = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview, .vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview');
+		this.emptyLinkedInPreview = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview, .vk-ComposerModal .vk-LinkedInPreview');
 		this.emptyLinkedInCompanyPreview = page.locator('.vk-ComposerModal [type="LINKEDINCOMPANY"] .vk-LinkedInPreview');
 		this.emptyInstagramPreview = page.locator('.vk-ComposerModal .vk-InstagramPreview');
 		this.emptyThreadsPreview = page.locator('.vk-ComposerModal .vk-ThreadsPreview');
