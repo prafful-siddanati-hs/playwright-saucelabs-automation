@@ -159,7 +159,8 @@ module.exports = {
 				'Hoot',
 				'Music Business Worldwide (MBW)',
 				'Music Reports, Inc',
-				'Газпром',
+				'Газпром', //Russian (Gazprom)
+				'大众汽车', //Chinese (Volkswagen)
 			];
 			return MENTIONS[Math.floor(Math.random() * MENTIONS.length)];
 		},
