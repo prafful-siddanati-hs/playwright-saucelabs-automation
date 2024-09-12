@@ -55,7 +55,7 @@ test('Verify preview with a combination of multiple links, hashtags & mentions a
 		await expect(composePage.emptyInstagramPreview).toBeVisible();
 	});
 
-	await test.step('Write a message with multiple links', async () => {
+	await test.step('Verify preview with text containing multiple links', async () => {
 		await composePage.writeMessage(multiLinksMsg);
 		await composePage.verifyTwitterPreview(multiLinksMsg);
 		await composePage.verifyLinkedInPreview(multiLinksMsg);
@@ -75,7 +75,7 @@ test('Verify preview with a combination of multiple links, hashtags & mentions a
 		await composePage.clearMessageEditor();
 	});
 
-	await test.step('Verify preview with text containing multiple links, hashtags & mentions', async () => {
+	await test.step('Verify preview with text containing multiple links, hashtags & mention', async () => {
 		await page.waitForTimeout(500);
 		await composePage.writeMessage(linksHashtagMentionMsg);
 		await composePage.verifyTwitterPreview(linksHashtagMentionMsg);
