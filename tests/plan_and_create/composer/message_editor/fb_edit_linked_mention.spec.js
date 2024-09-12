@@ -18,7 +18,7 @@ test.afterEach(async ({ page }) => {
 
 test('Edit an existing mention and link a new one for facebook page', async ({ page }) => {
 	const initialMention = plan_create.getFaceBookPageMention();
-	const scheduleText = 'Unlink this mention and link a new one ';
+	const scheduleText = `Unlink this mention ${plan_create.getRandomUrl()} ${plan_create.getRandomHashTag()} ${plan_create.getRandomUrl()} and link a new one `;
 	let newMention, secondMention;
 	do { // Ensure new mention is different from initial mention
 		newMention = plan_create.getFaceBookPageMention();
@@ -64,7 +64,7 @@ test('Edit an existing mention and link a new one for facebook page', async ({ p
 
 	await test.step('Select and link the mention', async () => {
 		await composePage.selectMention(initialMention);
-		await plannerPage.verifyFacebookMentionInPreviewPane(initialMention);
+		await composePage.verifyFacebookMentionPreview(initialMention);
 	});
 
 	await test.step('Schedule the message', async () => {

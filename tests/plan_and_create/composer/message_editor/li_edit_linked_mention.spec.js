@@ -19,7 +19,7 @@ test.afterEach(async ({ page }) => {
 
 test('Edit an existing mention and link two new ones for linkedin profile', async ({ page }) => {
 	const initialMention = plan_create.getLinkedinMention();
-	const scheduleText = 'Unlink this mention and link a new one ';
+	const scheduleText = `Unlink this mention  ${plan_create.getRandomUrl()} ${plan_create.getRandomHashTag()} ${plan_create.getRandomUrl()} and link a new one `;
 	let newMention, secondMention;
 	do { // Ensure new mention is different from initial mention
 		newMention = plan_create.getLinkedinMention();
