@@ -1,4 +1,4 @@
-/* Test to verify the preview when multiplt links, hashtags & mentions are included in a message text for different networks */
+/* Test to verify the preview when multiple links, hashtags & mentions are included in a message text for different networks */
 const { test, expect } = require('@playwright/test');
 const getFixture = require('../../../../custom-commands/getFixture');
 const tearDown = require('../../../../custom-commands/tearDown');
