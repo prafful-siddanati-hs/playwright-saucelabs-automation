@@ -2328,10 +2328,10 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			pinterest: {
-				id: '1997881475',
-				email: 'plan.create.automation+pin5@hootsuite.com',
-				username: 'plancreateautomationpin5',
-				password: '4LwG70O3zZ5g',
+				id: '1998673110',
+				email: 'plan.create.automation+pinfive@hootsuite.com',
+				username: 'plancreateautomationpinfive',
+				password: '^B9y5g4KYI=1,qSs}x3}',
 				ownerId: '13465807',
 				ownerType: 'MEMBER'
 			}
