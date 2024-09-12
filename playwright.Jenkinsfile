@@ -16,6 +16,7 @@ properties(
         parameters([
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/planner_regression.config.yml', description: 'Planner tests on chrome '),
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer_preview.config.yml', description: 'Composer Previews tests on chrome'),
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer_message_editor.config.yml', description: 'Composer message editor tests on chrome')
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/linkedin_pdf.config.yml', description: 'Linkedin PDF tests on chrome'),
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/link_settings.config.yml', description: 'Link Settings tests on chrome'),
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/link_previews.config.yml', description: 'Link Previews tests on chrome'),
@@ -29,8 +30,10 @@ properties(
         //Link Previews - Run at 3:20 PM on Monday
         //IG First Comment - Run at 11:00 AM on Monday
         //Composer Regression - Run at 10:05 PM on Tuesday
+        //Composer Message Editor - Run at 10:05 PM on Wednesday
         pipelineTriggers(
             [parameterizedCron('''
+                 05 18 * * 3  %CONFIG_FILE=.sauce/composer_message_editor.config.yml
                  05 18 * * 2  %CONFIG_FILE=.sauce/composer_regression.config.yml
                  05 18 * * 1 %CONFIG_FILE=.sauce/composer_preview.config.yml
                  30 23 * * 4 %CONFIG_FILE=.sauce/linkedin_pdf.config.yml

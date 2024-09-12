@@ -159,7 +159,6 @@ module.exports = {
 				'Hoot',
 				'Music Business Worldwide (MBW)',
 				'Music Reports, Inc',
-				'Music Supervisor Inc.'
 			];
 			return MENTIONS[Math.floor(Math.random() * MENTIONS.length)];
 		},
