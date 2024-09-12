@@ -37,7 +37,7 @@ exports.ComposePage = class ComposePage {
 		this.emptyTwitterPreview = page.locator('.vk-ComposerModal .vk-TwitterPreview');
 		this.emptyFacebookPreview = page.locator('.vk-ComposerModal .vk-FacebookPreview');
 		this.linkedinNetworkType = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-MessagePreviewHeader .vk-NetworkType');
-		this.emptyLinkedInPreview = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview');
+		this.emptyLinkedInPreview = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview, .vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview');
 		this.emptyLinkedInCompanyPreview = page.locator('.vk-ComposerModal [type="LINKEDINCOMPANY"] .vk-LinkedInPreview');
 		this.emptyInstagramPreview = page.locator('.vk-ComposerModal .vk-InstagramPreview');
 		this.emptyThreadsPreview = page.locator('.vk-ComposerModal .vk-ThreadsPreview');
@@ -93,13 +93,13 @@ exports.ComposePage = class ComposePage {
 		this.linkedInPreviewSingleImage = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-MediaImg');
 		this.linkedInCompanyPreviewSingleImage = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-MediaImg');
 		this.instagramReelPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').locator('.vk-InstagramReelPreview');
-		this.linkedInPreviewText = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody p');
+		this.linkedInPreviewText = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody p, .vk-ComposerModal .vk-LinkedInPreview .vk-ContentBody p');
 		this.linkedInCompanyPreviewText = page.locator('.vk-ComposerModal [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-ContentBody p');
 		this.tiktokPreviewText = page.locator('.vk-ComposerModal [type="TIKTOKBUSINESS"] .vk-TikTokPreview .vk-MessageText');
 		this.tiktokVideoPreview = page.locator('.vk-ComposerModal [type="TIKTOKBUSINESS"] .vk-TikTokPreview .vk-StreamlinedVideo');
-		this.linkedInMessageLink = page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody a');
+		this.linkedInMessageLink = page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody a, .rc-Composer .vk-LinkedInPreview .vk-ContentBody a');
 		this.linkedInCompanyMessageLink = page.locator('.rc-Composer [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-ContentBody a');
-		this.linkedinLinkPreviewTitle = page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
+		this.linkedinLinkPreviewTitle = page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle, .rc-Composer .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
 		this.linkedinLinkPreviewSource = page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-MessageLinkPreview .vk-Source');
 		this.linkedinLinkPrevewMedia = page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewMedia');
 		this.linkedInMentionLink = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody .vk-MessageMention');
