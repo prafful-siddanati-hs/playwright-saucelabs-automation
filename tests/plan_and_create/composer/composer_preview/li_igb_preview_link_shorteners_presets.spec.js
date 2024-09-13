@@ -1,4 +1,4 @@
-//This test is to validate the linkedin and instagram preview when existing presets and shorteners are applied to the link
+//This test is to validate the LinkedIn and instagram preview when existing presets and shorteners are applied to the link
 
 const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
@@ -48,15 +48,15 @@ test('Linkedin and instagram accounts preview validations for link and its exist
 		await composePage.searchSocialProfile(liCompanyAccount);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
-		await expect(composePage.emptyLinkedInPreview).toBeVisible();
+		await expect(page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview')).toBeVisible();
 		await expect(composePage.emptyInstagramPreview).toBeVisible();
 		await expect(composePage.emptyLinkedInCompanyPreview).toBeVisible();
 	});
 
 	await test.step('Write a message and verify its preview', async () => {
 		await composePage.writeMessage(composeBasicText);
-		await composePage.verifyLinkedInPreview(composeBasicText);
-		await expect(composePage.linkedinLinkPreviewTitle).toBeVisible();
+		await expect(page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody p')).toContainText(composeBasicText);
+		await expect(page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle')).toBeVisible();
 		await expect(composePage.linkedinLinkPreviewSource).toContainText(URL);
 		await expect(composePage.linkedinLinkPrevewMedia).toBeVisible();
 		await composePage.verifyLinkedInCompanyPreview(composeBasicText);
@@ -81,8 +81,8 @@ test('Linkedin and instagram accounts preview validations for link and its exist
 	await test.step('Verify applied presets on composer preview', async () => {
 		await composePage.verifyInstagramPreview('Test');
 		await composePage.verifyLinkInInstagramPreview(SHORTENER);
-		await composePage.verifyLinkedInPreview('Test');
-		await composePage.verifyLinkInLinkedInPreview(SHORTENER);
+		await expect(page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody p')).toContainText('Test');
+		await expect(page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody a')).toContainText(SHORTENER);
 		await composePage.verifyLinkedInCompanyPreview('Test');
 		await composePage.verifyLinkInLinkedInCompanyPreview(SHORTENER);
 	});

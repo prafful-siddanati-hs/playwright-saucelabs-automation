@@ -49,15 +49,15 @@ test('Linkedin and instagram business accounts preview validations for link and 
 		await expect(composePage.postToWrapper).toBeVisible();
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
-		await expect(composePage.emptyLinkedInPreview).toBeVisible();
+		await expect(page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview')).toBeVisible();
 		await expect(composePage.emptyInstagramPreview).toBeVisible();
 		await expect(composePage.emptyLinkedInCompanyPreview).toBeVisible();
 	});
 
 	await test.step('Write a message and verify linkedin and instagram preview', async () => {
 		await composePage.writeMessage(composeBasicText);
-		await composePage.verifyLinkedInPreview(composeBasicText);
-		await expect(composePage.linkedinLinkPreviewTitle).toBeVisible();
+		await expect(page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody p')).toContainText(composeBasicText);
+		await expect(page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle')).toBeVisible();
 		await expect(composePage.linkedinLinkPreviewSource).toContainText(URL);
 		await expect(composePage.linkedinLinkPrevewMedia).toBeVisible();
 		await composePage.verifyLinkedInCompanyPreview(composeBasicText);
@@ -73,7 +73,7 @@ test('Linkedin and instagram business accounts preview validations for link and 
 		await composePage.verifyLinkInInstagramPreview(URL);
 		await expect(composePage.instagramPreviewSingleImage, 'Instagram preview is updated with image').toBeVisible();
 
-		await composePage.verifyLinkInLinkedInPreview(URL);
+		await expect(page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody a')).toContainText(URL);
 		await expect(composePage.linkedInPreviewSingleImage, 'LinkedIn preview is not updated with image').toBeVisible();
 		await expect(composePage.linkedinLinkPrevewMedia).not.toBeVisible();
 
@@ -85,7 +85,7 @@ test('Linkedin and instagram business accounts preview validations for link and 
 	await test.step('Shorten the link to ow.ly shortener', async () => {
 		await composePage.selectShortenWithOwlyButton();
 		await composePage.verifyLinkInInstagramPreview(SHORTENER);
-		await composePage.verifyLinkInLinkedInPreview(SHORTENER);
+		await expect(page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody a')).toContainText(SHORTENER);
 		await expect(composePage.linkedinLinkPrevewMedia).not.toBeVisible();
 		await composePage.verifyLinkInLinkedInCompanyPreview(SHORTENER);
 		await expect(composePage.linkedinCompanyLinkPrevewMedia).not.toBeVisible();
@@ -104,8 +104,8 @@ test('Linkedin and instagram business accounts preview validations for link and 
 	});
 
 	await test.step('Verify applied presets on composer preview', async () => {
-		await composePage.verifyLinkedInPreview('Test');
-		await composePage.verifyLinkInLinkedInPreview(SHORTENER);
+		await expect(page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody p')).toContainText('Test');
+		await expect(page.locator('.rc-Composer [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody a')).toContainText(SHORTENER);
 
 		await composePage.verifyLinkedInCompanyPreview('Test');
 		await composePage.verifyLinkInLinkedInCompanyPreview(SHORTENER);
