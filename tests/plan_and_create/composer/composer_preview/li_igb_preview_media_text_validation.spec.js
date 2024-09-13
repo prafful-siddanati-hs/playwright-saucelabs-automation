@@ -1,4 +1,4 @@
-//This test is to validate the linkedin and instagram preview validations for media, text and link
+//This test is to validate the LinkedIn and instagram preview validations for media, text and link
 
 const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
@@ -91,7 +91,7 @@ test('Linkedin and instagram preview validations for media, text and link settin
 
 	await test.step('Upload video and verify its preview', async () => {
 		await composePage.uploadMediaFile('test_data/publisher/videos/');
-		await expect(composePage.linkedInPreviewSingleVideo, 'Linkedin preview is updated with video').toBeVisible();
+		await expect(composePage.linkedInPreviewSingleVideo, 'Linkedin preview is updated with video').toBeVisible({timeout: 5000});
 		await expect(composePage.instagramReelPreviewSingleVideo, 'Instagram preview is updated with video').toBeVisible();
 		await expect(composePage.videoRemoveButton).toBeVisible();
 		await composePage.videoRemoveButton.click();
