@@ -34,6 +34,7 @@ exports.ComposePage = class ComposePage {
 		this.twitterPreviewSingleImage = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaImg');
 		this.twitterPreviewSingleVideo = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-VideoContainer');
 		this.twitterPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaContainer');
+		this.imagePublishLimit=  page.locator('.vk-ComposerModal  .rc-MessageEditContent [role="alert"]');
 		this.emptyTwitterPreview = page.locator('.vk-ComposerModal .vk-TwitterPreview');
 		this.emptyFacebookPreview = page.locator('.vk-ComposerModal .vk-FacebookPreview');
 		this.linkedinNetworkType = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-MessagePreviewHeader .vk-NetworkType');
@@ -643,7 +644,7 @@ exports.ComposePage = class ComposePage {
 	async selectGiphyInMediaLibrary() {
 		await expect(this.mediaLibrarySourceDropdown, 'Media library source dropdown is visible').toBeVisible();
 		await this.mediaLibrarySourceDropdown.click();
-		expect(await this.giphyMediaLibrarySelection).toBeVisible();
+		await expect(await this.giphyMediaLibrarySelection).toBeVisible();
 		await this.giphyMediaLibrarySelection.click();
 		await this.page.waitForTimeout(1000);
 		if (await this.termsOfServiceWall.isVisible()) {
