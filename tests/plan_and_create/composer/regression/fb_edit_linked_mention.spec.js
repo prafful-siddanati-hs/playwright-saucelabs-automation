@@ -7,7 +7,7 @@ const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const {PlannerPage} = require('../../../../pages/planandcreate/planner');
 const { getObjectByName, plan_create } = require('../../../../globals');
 
-let fbAccount;
+let fbAccount, memberId;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -36,10 +36,15 @@ test('Edit an existing mention and link a new one for facebook page', async ({ p
 	await test.step('Setup user & accounts', async () => {
 		await addFixture.command('fb_edit_linked_mention', 'plan_create_facebookpage_mentions', true, 300);
 		fbAccount = getObjectByName(global.fixture, 'fb_edit_linked_mention').facebookPage.username;
+		memberId = global.member[0].memberId;
 	});
 
 	await test.step('Login as pro user', async () => {
 		await loginPage.signInAsProUser('fb_edit_linked_mention');
+	});
+
+	await test.step('Delete residual scheduled messages via API', async () => {
+		await plannerPage.deleteScheduleMessagesViaAPI(memberId);
 	});
 
 	await test.step('Open composer', async () => {
@@ -58,7 +63,8 @@ test('Edit an existing mention and link a new one for facebook page', async ({ p
 	});
 
 	await test.step('Write a message with mention', async () => {
-		await composePage.writeMessage(`${scheduleText}@${initialMention}`);
+		await composePage.writeMessage(`${scheduleText}`);
+		await composePage.messageArea.pressSequentially(`@${initialMention}`);
 		await composePage.verifyFacebookPreview(`${scheduleText}@${initialMention}`);
 	});
 
@@ -82,15 +88,16 @@ test('Edit an existing mention and link a new one for facebook page', async ({ p
 
 	await test.step('Edit by updating the linked mention', async () => {
 		await composePage.removeCharacters(initialMention.length + 1);
-		await composePage.writeMessage(`@${newMention} `);
 		await page.waitForTimeout(1000);
+		await composePage.verifyFacebookPreview(`${scheduleText}`);
+		await composePage.messageArea.pressSequentially(`@${newMention} `, { delay: 100 });
 		await composePage.selectMention(newMention);
 		await composePage.verifyFacebookMentionPreview(newMention);
 	});
 
 	await test.step('Add a second mention', async () => {
-		await composePage.writeMessage(` @${secondMention} `);
-		await page.waitForTimeout(1000);
+		await composePage.messageArea.pressSequentially(` @${secondMention}`, { delay: 100 });
+		await composePage.verifyFacebookPreview(`${scheduleText}${newMention} @${secondMention}`);
 		await composePage.selectMention(secondMention);
 		await expect(composePage.facebookMentionLink).toHaveCount(2);
 	});

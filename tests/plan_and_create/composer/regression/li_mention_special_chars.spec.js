@@ -43,7 +43,8 @@ test('Verify adding text with mention using special characters to linkedin messa
 	});
 
 	await test.step('Write a message with mention', async () => {
-		await composePage.writeMessage(`${messageText}@${liMention} `);
+		await composePage.writeMessage(`${messageText}`);
+		await composePage.messageArea.pressSequentially(`@${liMention}`);
 		await composePage.verifyLinkedInPreview(`${messageText}@${liMention}`);
 	});
 

@@ -52,7 +52,6 @@ test('Verify composer message editor for twitter\'s 280 characters limit', async
 		await page.waitForTimeout(500);
 		await composePage.verifyTwitterPreview(message);
 	});
-	await page.pause();
 
 	await test.step('Verify the character count', async () => {
 		await expect(composePage.messageCharCount).toHaveText('275 / 280');

@@ -64,7 +64,8 @@ test('Edit an existing mention and link two new ones for linkedin profile', asyn
 	});
 
 	await test.step('Write a message with mention', async () => {
-		await composePage.writeMessage(`${scheduleText}@${initialMention}`);
+		await composePage.writeMessage(`${scheduleText}`);
+		await composePage.messageArea.pressSequentially(`@${initialMention}`);
 		await composePage.verifyLinkedInPreview(`${scheduleText}@${initialMention}`);
 	});
 
@@ -88,15 +89,16 @@ test('Edit an existing mention and link two new ones for linkedin profile', asyn
 
 	await test.step('Edit by updating the linked mention', async () => {
 		await composePage.removeCharacters(initialMention.length + 1);
-		await composePage.writeMessage(`@${newMention} `);
 		await page.waitForTimeout(1000);
+		await composePage.verifyLinkedInPreview(`${scheduleText}`);
+		await composePage.messageArea.pressSequentially(`@${newMention} `, {delay : 100});
 		await composePage.selectMention(newMention);
 		await composePage.verifyLinkedInMentionPreview(newMention);
 	});
 
 	await test.step('Add a second mention', async () => {
-		await composePage.writeMessage(` @${secondMention} `);
-		await page.waitForTimeout(1000);
+		await composePage.messageArea.pressSequentially(` @${secondMention}`, {delay : 100});
+		await composePage.verifyLinkedInPreview(`${scheduleText}${newMention} @${secondMention}`);
 		await composePage.selectMention(secondMention);
 		await expect(composePage.linkedInMentionLink).toHaveCount(2);
 	});

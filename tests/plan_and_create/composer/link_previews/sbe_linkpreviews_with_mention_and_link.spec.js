@@ -51,11 +51,14 @@ test('Link preview with mention followed by link', async ({page}) => {
 	});
 
 	await test.step('Write a message with mention', async () => {
-		await composePage.writeMessage('test @' + fbMention );
+		await composePage.writeMessage('test ');
+		await composePage.messageArea.pressSequentially(`@${fbMention}`);
+		await composePage.verifyFacebookPreview(`test @${fbMention}`);
 	});
 
 	await test.step('Select and link the mention', async () => {
 		await composePage.selectMention(fbMention);
+		await composePage.verifyFacebookMentionPreview(fbMention);
 	});
 
 	await test.step('Add link to the message', async () => {

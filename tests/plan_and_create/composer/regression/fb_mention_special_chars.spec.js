@@ -43,7 +43,8 @@ test('Verify adding text with mention using special characters to facebook messa
 	});
 
 	await test.step('Write a message with mention', async () => {
-		await composePage.writeMessage(`${composeText}@${fbMention} `);
+		await composePage.writeMessage(`${composeText}`);
+		await composePage.messageArea.pressSequentially(`@${fbMention}`);
 		await composePage.verifyFacebookPreview(`${composeText}@${fbMention}`);
 	});
 

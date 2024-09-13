@@ -96,6 +96,7 @@ test('Verify that the 280-character threshold works as expected for edit twitter
 	await test.step('Remove characters to till error is not shown', async () => {
 		await composePage.removeCharacters(1);
 		await expect(composePage.messageCharCount).toHaveText('280 / 280');
+		await expect(page.locator('//*[(@role="alert")]//*[text()="Your text exceeds the character limit for "]/following-sibling::span[text()=\'Twitter\']')).not.toBeVisible();
 	});
 
 	await test.step('Schedule the duplicate message', async () => {
