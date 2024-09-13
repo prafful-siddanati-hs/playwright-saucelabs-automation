@@ -37,6 +37,7 @@ suites:
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
     testMatch: ['tests/plan_and_create/composer/message_editor/*.*.js']
+    numShards: 4
     params:
       browserName: "chromium"
       project: "chromium"
