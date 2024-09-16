@@ -65,7 +65,6 @@ test('Edit an existing mention and link two new ones for linkedin profile', asyn
 
 	await test.step('Write a message with mention', async () => {
 		await composePage.writeMessage(`${scheduleText} @${initialMention}`);
-		// await composePage.messageArea.pressSequentially(`@${initialMention}`);
 		await composePage.verifyLinkedInPreview(`${scheduleText}@${initialMention}`);
 	});
 
