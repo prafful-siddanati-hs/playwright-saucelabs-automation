@@ -14,7 +14,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Verify image and giphy limitations for twitter network', async ({page}) => {
+test('Validate the media library\'s image and GIF limits for Twitter', async ({page}) => {
 	const mediaText = `${plan_create.getComposeMessage()} ${Math.floor(Math.random() * 100)}`;
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
