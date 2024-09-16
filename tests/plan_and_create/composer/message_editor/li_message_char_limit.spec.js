@@ -48,7 +48,10 @@ test('Verify the LinkedIn message character limit that are above and below the 3
 	});
 
 	await test.step('Write a message and verify linkedin preview', async () => {
-		await composePage.writeMessage(msgWithInTheLimit);
+		await page.keyboard.press('Escape');
+		await composePage.messageArea.click();
+		await composePage.messageArea.fill(msgWithInTheLimit);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		await page.waitForTimeout(500);
 		const message = await composePage.messageArea.innerText();
 		await composePage.verifyLinkedInPreview(message);

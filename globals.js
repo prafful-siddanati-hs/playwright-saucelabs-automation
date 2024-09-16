@@ -153,7 +153,6 @@ module.exports = {
 				'Hootsuite Academy',
 				'Hootsuite Test Page!',
 				'MENT Internet Works',
-				'Learning & Development Awards',
 				'MENT',
 				'The Good Judge-ment Podcast',
 				'Hoot',

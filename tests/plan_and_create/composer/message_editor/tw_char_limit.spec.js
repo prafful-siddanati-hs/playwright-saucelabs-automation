@@ -47,9 +47,11 @@ test('Verify composer message editor for twitter\'s 280 characters limit', async
 	});
 
 	await test.step('Write a message that is within the allowed limit', async () => {
+		await page.keyboard.press('Escape');
+		await composePage.messageArea.click();
+		await composePage.messageArea.fill(msgWithInTheLimit);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		const message = await composePage.messageArea.innerText();
-		await composePage.writeMessage(msgWithInTheLimit);
-		await page.waitForTimeout(500);
 		await composePage.verifyTwitterPreview(message);
 	});
 

@@ -75,7 +75,11 @@ test('Verify that the 3000-character threshold works as expected for edit linked
 
 	await test.step('Edit message', async () => {
 		await composePage.clearMessageEditor();
-		await composePage.writeMessage(msgAboveTheLimit);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
+		await page.keyboard.press('Escape');
+		await composePage.messageArea.click();
+		await composePage.messageArea.fill(msgAboveTheLimit);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		const message = await composePage.messageArea.innerText();
 		await composePage.verifyLinkedInPreview(message);
 	});

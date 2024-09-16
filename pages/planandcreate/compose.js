@@ -275,26 +275,10 @@ exports.ComposePage = class ComposePage {
 		}
 	}
 
-	/**
-	 * Writes a message into the composer message editor area.
-	 *
-	 * @param {string} message - The message to be written.
-	 * @param {Object} [testInfo=false] - Optional. Contains info about test environment. Should be used only if test needs to be run on webkit.
-	 * @param {string} testInfo.project.name - The name of the project. Eg: 'webkit', 'chromium', 'firefox'.
-	 * Usage example:
-	 * test('Run this test in safari also', async ({ page }, testInfo) => { //Can be skipped if test is intended to run only on chrome
-	 * 		await composePage.writeMessage('Hello', testInfo);
-	 * });
-	 */
-	async writeMessage(message, testInfo = false) {
+	async writeMessage(message) {
 		await this.page.keyboard.press('Escape');
-		const originalContent = await this.messageArea.textContent();
-		const newContent = `${originalContent}${message}`;
-		if (testInfo && testInfo.project.name === 'webkit') {
-			await this.messageArea.pressSequentially(newContent);
-		} else {
-			await this.messageArea.fill(newContent);
-		}
+		await this.messageArea.click();
+		await this.messageArea.pressSequentially(message);
 		await expect(this.page.locator('.vk-Loader')).toHaveCount(0);
 	}
 

@@ -20,11 +20,11 @@ test('Verify composer message editor for facebook with multi line and RTL', asyn
 
     This is useful for testing
     how messages are displayed across multiple lines.
-    
+
         Ensure that all lines are preserved and formatted correctly. ${plan_create.getRandomLanguageHashtag()}`;
 
 	const mixedMessage = `This is sample Hebrew text to verify if facebook profile in Hootsuite can display correct preview for this text #rtl #preview
-    
+
     זהו טקסט לדוגמה בעברית כדי לוודא אם פרופיל הטוויטר ב-Hootsuite יכול להציג תצוגה מקדימה נכונה עבור הטקסט הזה #rtl #preview ✡️`;
 
 	const oneLineRtlMessage = '✡️ זהו טקסט לדוגמה בעברית שנכתב מימין לשמאל, זה יוודא אם פרופיל הטוויטר ב-Hootsuite יכול להציג תצוגה מקדימה נכונה עבור סוג זה של טקסט. #rtl #תצוגה מקדימה';
@@ -58,19 +58,28 @@ test('Verify composer message editor for facebook with multi line and RTL', asyn
 	});
 
 	await test.step('Enter multi line message', async () => {
-		await composePage.writeMessage(multiLineMsg);
+		await page.keyboard.press('Escape');
+		await composePage.messageArea.click();
+		await composePage.messageArea.fill(multiLineMsg);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		await composePage.verifyFacebookPreview(multiLineMsg);
 		await composePage.clearMessageEditor();
 	});
 
 	await test.step('Enter mixed message', async () => {
-		await composePage.writeMessage(mixedMessage);
+		await page.keyboard.press('Escape');
+		await composePage.messageArea.click();
+		await composePage.messageArea.fill(mixedMessage);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		await composePage.verifyFacebookPreview(mixedMessage);
 		await composePage.clearMessageEditor();
 	});
 
 	await test.step('Enter one line right to left message', async () => {
-		await composePage.writeMessage(oneLineRtlMessage);
+		await page.keyboard.press('Escape');
+		await composePage.messageArea.click();
+		await composePage.messageArea.fill(oneLineRtlMessage);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		await composePage.verifyFacebookPreview(oneLineRtlMessage);
 	});
 });
