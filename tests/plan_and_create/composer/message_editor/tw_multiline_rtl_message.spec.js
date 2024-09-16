@@ -58,19 +58,30 @@ test('Verify composer message editor for twitter with multi line and RTL', async
 	});
 
 	await test.step('Enter multi line message', async () => {
-		await composePage.writeMessage(multiLineMsg);
+		await page.keyboard.press('Escape');
+		await composePage.messageArea.click();
+		await composePage.messageArea.fill(multiLineMsg);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		await composePage.verifyTwitterPreview(multiLineMsg);
 		await composePage.clearMessageEditor();
 	});
 
 	await test.step('Enter mixed message', async () => {
-		await composePage.writeMessage(mixedMessage);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
+		await page.keyboard.press('Escape');
+		await composePage.messageArea.click();
+		await composePage.messageArea.fill(mixedMessage);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		await composePage.verifyTwitterPreview(mixedMessage);
 		await composePage.clearMessageEditor();
 	});
 
 	await test.step('Enter one line right to left message', async () => {
-		await composePage.writeMessage(oneLineRtlMessage);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
+		await page.keyboard.press('Escape');
+		await composePage.messageArea.click();
+		await composePage.messageArea.fill(oneLineRtlMessage);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		await composePage.verifyTwitterPreview(oneLineRtlMessage);
 	});
 });

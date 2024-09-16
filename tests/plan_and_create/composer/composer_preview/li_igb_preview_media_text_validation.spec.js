@@ -91,7 +91,8 @@ test('Linkedin and instagram preview validations for media, text and link settin
 
 	await test.step('Upload video and verify its preview', async () => {
 		await composePage.uploadMediaFile('test_data/publisher/videos/');
-		await expect(composePage.linkedInPreviewSingleVideo, 'Linkedin preview is updated with video').toBeVisible({timeout: 5000});
+		await page.waitForTimeout(1000);
+		await expect(composePage.linkedInPreviewSingleVideo, 'Linkedin preview is updated with video').toBeVisible();
 		await expect(composePage.instagramReelPreviewSingleVideo, 'Instagram preview is updated with video').toBeVisible();
 		await expect(composePage.videoRemoveButton).toBeVisible();
 		await composePage.videoRemoveButton.click();

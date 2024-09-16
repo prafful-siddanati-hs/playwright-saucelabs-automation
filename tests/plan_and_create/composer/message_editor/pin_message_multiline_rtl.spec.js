@@ -1,5 +1,5 @@
 //This test is to validate pinterest message with arabic and multi line text
-const { test} = require('@playwright/test');
+const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
 const getFixture = require('../../../../custom-commands/getFixture');
@@ -56,7 +56,10 @@ Get ready to experience a world of culture and diversity at The Autumn Fair Show
 	});
 
 	await test.step('Write a pin message and website url', async () => {
-		await pinPage.writePinMessage(multiLineMsg);
+		await page.keyboard.press('Escape');
+		await pinPage.messageArea.click();
+		await pinPage.messageArea.fill(multiLineMsg);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		await pinPage.writeWebsiteUrl('bbc.com');
 	});
 
@@ -66,14 +69,22 @@ Get ready to experience a world of culture and diversity at The Autumn Fair Show
 
 	await test.step('Write a RTL message and verify pinterest preview', async () => {
 		await pinPage.clearMessageEditor();
-		await pinPage.writePinMessage(ltrRtlMessage);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
+		await page.keyboard.press('Escape');
+		await pinPage.messageArea.click();
+		await pinPage.messageArea.fill(ltrRtlMessage);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		await pinPage.verifyPinPreview(ltrRtlMessage, 'bbc.com');
 		await page.waitForTimeout(500);
 	});
 
 	await test.step('Write a RTL message in one line and verify pinterest preview', async () => {
 		await pinPage.clearMessageEditor();
-		await pinPage.writePinMessage(ltrRtlOneLine);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
+		await page.keyboard.press('Escape');
+		await pinPage.messageArea.click();
+		await pinPage.messageArea.fill(ltrRtlOneLine);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		await pinPage.verifyPinPreview(ltrRtlOneLine, 'bbc.com');
 	});
 

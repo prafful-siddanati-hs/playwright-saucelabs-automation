@@ -62,19 +62,28 @@ Get ready to experience a world of culture and diversity at The Autumn Fair Show
 	});
 
 	await test.step('Write a message and verify instagram preview', async () => {
-		await composePage.writeMessage(multiLineMsg);
+		await page.keyboard.press('Escape');
+		await composePage.messageArea.click();
+		await composePage.messageArea.fill(multiLineMsg);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		await composePage.verifyInstagramPreview(multiLineMsg);
 	});
 
 	await test.step('Write a RTL message and verify instagram preview', async () => {
 		await composePage.clearMessageEditor();
-		await composePage.writeMessage(ltrRtlMessage);
+		await page.keyboard.press('Escape');
+		await composePage.messageArea.click();
+		await composePage.messageArea.fill(ltrRtlMessage);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		await composePage.verifyInstagramPreview(ltrRtlMessage);
 	});
 
 	await test.step('Write a RTL message in one line and verify instagram preview', async () => {
 		await composePage.clearMessageEditor();
-		await composePage.writeMessage(ltrRtlOneLine);
+		await page.keyboard.press('Escape');
+		await composePage.messageArea.click();
+		await composePage.messageArea.fill(ltrRtlOneLine);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		await composePage.verifyInstagramPreview(ltrRtlOneLine);
 	});
 

@@ -47,7 +47,10 @@ test('Verify the instagram message character limit that are above and below the 
 	});
 
 	await test.step('Write a message and verify instagram preview', async () => {
-		await composePage.writeMessage(msgWithInTheLimit);
+		await page.keyboard.press('Escape');
+		await composePage.messageArea.click();
+		await composePage.messageArea.fill(msgWithInTheLimit);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		await page.waitForTimeout(500);
 		const message = await composePage.messageArea.innerText();
 		await composePage.verifyInstagramPreview(message);
@@ -72,6 +75,7 @@ test('Verify the instagram message character limit that are above and below the 
 
 	await test.step('Verify the character limit after deleting few characters', async () => {
 		await composePage.removeCharacters(5);
+		await page.waitForTimeout(1000);
 		await expect(composePage.messageCharCount).toHaveText('2,200 / 2,200');
 		await expect(page.locator('//*[(@role="alert")]//*[text()="Your text exceeds the character limit for "]/following-sibling::span[text()=\'Instagram\']')).not.toBeVisible();
 	});

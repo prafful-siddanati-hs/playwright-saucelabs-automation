@@ -42,7 +42,10 @@ test('Verify the pinterest message character limit that are above and below the 
 	});
 
 	await test.step('Write a pin message and website url', async () => {
-		await pinPage.writePinMessage(msgWithInTheLimit);
+		await page.keyboard.press('Escape');
+		await pinPage.messageArea.click();
+		await pinPage.messageArea.fill(msgWithInTheLimit);
+		await expect(page.locator('.vk-Loader')).toHaveCount(0);
 		await pinPage.writeWebsiteUrl('bbc.com');
 	});
 
