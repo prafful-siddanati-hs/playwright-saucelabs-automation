@@ -91,6 +91,10 @@ exports.ComposePage = class ComposePage {
 		this.instagramPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').getByLabel('Instagram post preview');
 		this.instagramMessageLink = page.locator('.rc-Composer .vk-InstagramPreview .vk-ContentBody p');
 		this.instagramPreviewSingleImage = page.locator('.vk-ComposerModal .vk-InstagramPreview .vk-MediaImg');
+		this.instagramCarouselIndicators = page.locator('.vk-ComposerModal .vk-InstagramPreview .vk-IndicatorDot');
+		this.igToggleDropdown = page.locator('.vk-ComposerModal .vk-PostTypeDropdownButton');
+		this.igStoryToggleDropdown = page.locator('.vk-ComposerModal .vk-ListItemWrapper[aria-label="Instagram Story"]');
+		this.instagramStoryPreviewSingleImage = page.locator('//*[contains(@class,"vk-PortraitImage") or contains(@class,"vk-ImageContainer")]', {locationStrategy: 'xpath'});
 		this.linkedInPreviewSingleImage = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-MediaImg');
 		this.linkedInCompanyPreviewSingleImage = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-MediaImg');
 		this.instagramReelPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').locator('.vk-InstagramReelPreview');
@@ -114,6 +118,8 @@ exports.ComposePage = class ComposePage {
 		this.tiktokHashtagLink = page.locator('.vk-TikTokPreview .vk-MessageText .vk-MessageHashtag');
 		this.instagramHashtagLink = page.locator('.vk-ComposerModal .vk-InstagramPreview .vk-ContentBody .vk-MessageHashtag');
 		this.instagramFirstCommentHashtagLink = page.locator('.vk-ComposerModal .vk-InstagramFirstCommentPreview .vk-MessageHashtag');
+		this.instagramDualSwitch = page.locator('.vk-ComposerModal [data-testid = "ds-visual-switch"]');
+		this.closeMobileSetUpPopUp = page.locator('.vk-ComposerModal [aria-label = "Close Set up mobile notifications to publish with Instagram"]');
 		this.linkedInHashtagLink = page.locator('.vk-LinkedInPreview .vk-MessageHashtag');
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 		this.moreButton = page.getByLabel('more', { exact: true });
