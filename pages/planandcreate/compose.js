@@ -77,6 +77,7 @@ exports.ComposePage = class ComposePage {
 		this.facebookPreviewText = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody');
 		this.threadsPreviewText = page.locator('.vk-ComposerModal .vk-ThreadsPreview .vk-ContentBody');
 		this.threadsMessageLink = page.locator('.vk-ComposerModal .vk-ThreadsPreview .vk-MessagePreview');
+		this.threadsmCarouselIndicators = page.locator('.vk-ComposerModal .vk-ThreadsPreview .vk-IndicatorDot');
 		this.twitterMessageLink = page.locator('.rc-Composer .vk-TwitterPreview .vk-ContentBody a');
 		this.twitterLinkPreviewTitle = page.locator('.rc-Composer .vk-TwitterPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
 		this.twitterLinkPreviewSource = page.locator('.rc-Composer .vk-TwitterPreview .vk-MessageLinkPreview .vk-Source');
