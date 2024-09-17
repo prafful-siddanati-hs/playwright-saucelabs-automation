@@ -1,4 +1,4 @@
-/* This test is to verify giphy limitations for LinkedIn network*/
+/* This test is to verify mixed media limitations for Threads network*/
 const {test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const getFixture = require('../../../../custom-commands/getFixture');
@@ -14,7 +14,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Validate the media library\'s GIF limits for Linkedin', async ({page}) => {
+test('Validate the media library\'s mixed media limits for Threads', async ({page}) => {
 	const mediaText = `test gif ${Math.floor(Math.random() * 100)}`;
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
