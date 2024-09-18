@@ -56,7 +56,8 @@ test('Validate the media library\'s image and GIF limits for Twitter', async ({p
 	});
 
 	await test.step('Remove attached 1 giphy and attach 1 image from media library', async () => {
-		await page.locator('(//*[contains(@class, "vk-ComposerModal")]//*[contains(@class, "imageThumbnail")]//*[contains(@class, "vk-MediaThumbnailDelete")])[1]').click();
+		await expect(composePage.imageRemoveButton).toBeVisible();
+		await composePage.imageRemoveButton.click();
 		await expect(composePage.imagePublishLimit).not.toBeVisible();
 		await composePage.selectFreeImagesInMediaLibrary();
 		await composePage.attachImageFromMediaLibrary(1);
@@ -65,7 +66,8 @@ test('Validate the media library\'s image and GIF limits for Twitter', async ({p
 	});
 
 	await test.step('Remove attached giphy and attach 3 more images from media library', async () => {
-		await page.locator('(//*[contains(@class, "vk-ComposerModal")]//*[contains(@class, "imageThumbnail")]//*[contains(@class, "vk-MediaThumbnailDelete")])[1]').click();
+		await expect(composePage.imageRemoveButton).toBeVisible();
+		await composePage.imageRemoveButton.click();
 		await expect(composePage.imagePublishLimit).not.toBeVisible();
 		await composePage.attachImageFromMediaLibrary(3);
 		await expect(composePage.twitterPreviewMediaContainer).toBeHidden(4);

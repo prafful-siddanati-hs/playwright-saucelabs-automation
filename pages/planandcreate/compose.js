@@ -148,7 +148,7 @@ exports.ComposePage = class ComposePage {
 		this.tiktokTab = page.getByLabel('TikTok content');
 		this.instagramTab = page.getByLabel('Instagram content');
 		this.videoRemoveButton = page.locator('.rc-Composer .videoThumbnail .vk-MediaThumbnailDelete');
-		this.imageRemoveButton = page.locator('.rc-Composer .imageThumbnail .vk-MediaThumbnailDelete');
+		this.imageRemoveButton = page.locator('.rc-Composer .imageThumbnail .vk-MediaThumbnailDelete').first();
 		this.pdfRemoveButton = page.locator('.rc-Composer .pdfThumbnail .vk-MediaThumbnailDelete');
 		this.discardPost = page.getByRole('button', { name: 'Discard post' });
 		this.shortenWithOwlyButton = page.getByLabel('Shorten with Ow.ly');
@@ -178,6 +178,8 @@ exports.ComposePage = class ComposePage {
 		this.emojiPicker = page.locator('.vk-ComposerModal [aria-label = "Add an emoji"]');
 		this.closeEmojiPicker = page.locator('.vk-ComposerModal [aria-label = "Close emoji picker"]');
 		this.firstEmojiFromList = page.locator('//*[contains(@class, "vk-ComposerModal")]//*[contains(@class, "epr-emoji-list")]//*[contains(@aria-label, "grinning")]', {locationStrategy: 'xpath'});
+		this.mediaReplacementModal = page.getByRole('heading', { name: 'Select the media you want to' });
+		this.mediaReplacementModalCancelButton = page.locator('.vk-MediaReplaceModal .vk-SubmitButton', {locationStrategy: 'xpath'});
 	}
 
 	async setDarkLaunchCookies() {
