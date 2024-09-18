@@ -10,8 +10,8 @@ const { use: { longTimeout } } = require('../../playwright.config.js');
 exports.ComposePage = class ComposePage {
 	constructor(page) {
 		this.page = page;
-		this.composeButton = page.locator('button[aria-label="Create posts and more"]');
-		this.postButton = page.locator('div.animated-secondary button[aria-label=\'Post\']');
+		this.composeButton = page.locator('button[data-dap-target="global-nav-compose-button"]');
+		this.postButton = page.locator('button[aria-label="Post"]');
 		this.composeScreen = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal');
 		this.headerLabel = page.locator('.vk-ComposerModal .vk-HeaderLabel');
 		this.minimizeComposeButton = page.locator('.vk-ComposerModal [aria-label="Minimize"]');
@@ -185,8 +185,8 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async selectComposeButton() {
-		await this.page.waitForSelector('button[aria-label="Create posts and more"]');
-		const composeHandle = await this.page.$('button[aria-label="Create posts and more"]');
+		await this.page.waitForSelector('button[data-dap-target="global-nav-compose-button"]');
+		const composeHandle = await this.page.$('button[data-dap-target="global-nav-compose-button"]');
 
 		if (composeHandle) {
 			await composeHandle.click();
