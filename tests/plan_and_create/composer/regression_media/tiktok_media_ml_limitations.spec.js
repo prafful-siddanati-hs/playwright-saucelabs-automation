@@ -63,7 +63,7 @@ test('Validate the media library\'s media limits for Tiktok', async ({page}) => 
 	});
 
 	await test.step('Removed attached image and verify tiktok preview', async () => {
-		await composePage.imageRemoveButton.first().click();
+		await composePage.imageRemoveButton.click();
 		await expect(composePage.imagePublishLimit).toHaveText('errorThis file type isn\'t supported by TikTok BusinessYou can only publish videos to TikTok Business.');
 	});
 

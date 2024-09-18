@@ -58,7 +58,7 @@ test('Validate the media library\'s image and gif limits for Instagram Story', a
 	});
 
 	await test.step('Remove one image and attach 1 giphy from media library', async () => {
-		await composePage.imageRemoveButton.first().click();
+		await composePage.imageRemoveButton.click();
 		await page.waitForTimeout(1000);
 		await expect(composePage.imagePublishLimit).not.toBeVisible();
 		await composePage.openMediaLibrary();
@@ -70,7 +70,7 @@ test('Validate the media library\'s image and gif limits for Instagram Story', a
 	});
 
 	await test.step('Remove image and attach 1 more gif from media library', async () => {
-		await composePage.imageRemoveButton.first().click();
+		await composePage.imageRemoveButton.click();
 		await page.waitForTimeout(1000);
 		await expect(composePage.imagePublishLimit).not.toBeVisible();
 		await composePage.openMediaLibrary();
