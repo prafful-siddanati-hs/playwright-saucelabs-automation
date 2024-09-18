@@ -5,7 +5,7 @@ const {join} = require('node:path');
 exports.PinPage = class PinPage {
 	constructor(page) {
 		this.page = page;
-		this.composeButton = page.locator('button[aria-label="Create posts and more"]');
+		this.composeButton = page.locator('button[data-dap-target="global-nav-compose-button"]');
 		this.composerHeader = page.locator('.vk-ComposerHeader');
 		this.pinButton = page.locator('[data-test-id="new-pin"]');
 		this.messageArea = page.getByTestId('MessageEditArea').getByLabel('Text');

@@ -48,7 +48,7 @@ test('Validate the media library\'s mixed media limits for Instagram', async ({p
 		await composePage.verifyInstagramPreview(mediaText);
 	});
 
-	await test.step('Upload 10 gif\'s from media library and verify its preview', async () => {
+	await test.step('Upload 5 gif\'s and images from media library and verify its preview', async () => {
 		await composePage.openMediaLibrary();
 		await composePage.attachImageFromMediaLibrary(5);
 		await composePage.selectGiphyInMediaLibrary();
