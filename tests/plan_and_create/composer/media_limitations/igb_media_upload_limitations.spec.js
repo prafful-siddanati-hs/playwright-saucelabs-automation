@@ -3,11 +3,12 @@ const {test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const getFixture = require('../../../../custom-commands/getFixture');
 const { LoginPage } = require('../../../../pages/login');
-const { getObjectByName, plan_create } = require('../../../../globals');
+const { getObjectByName } = require('../../../../globals');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 
 let igbAccount;
-const INSTAGTRAM_MAX_MEDIA_LIMIT_INFO = 'Instagram supports 10 media files per post. You can drag files to reorder them or remove extra files.';
+const INSTAGTRAM_POST_MAX_MEDIA_LIMIT_INFO = 'Instagram supports 10 media files per post. You can drag files to reorder them or remove extra files.';
+const INSTAGTRAM_STORY_MAX_MEDIA_LIMIT_INFO = 'Instagram supports 10 media files per story. You can drag files to reorder them or remove extra files.';
 const IG_STORY_DIRECT_PUBLISHING_INFO = 'The Instagram direct publishing workflow only supports one media file per story. You can drag files to reorder them or remove extra files.';
 
 test.afterEach(async ({ page }) => {
@@ -18,7 +19,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Validate uploaded media limitations for Instagram business', async ({page}) => {
-	const mediaText = `${plan_create.getComposeMessage()} ${Math.floor(Math.random() * 100)}`;
+	const mediaText = `IG Post & Story media upload ${Math.floor(Math.random() * 100)}`;
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
@@ -50,45 +51,68 @@ test('Validate uploaded media limitations for Instagram business', async ({page}
 		await composePage.verifyInstagramPreview(mediaText);
 	});
 
-	await test.step('Upload GIF of size less than 8 MB and verify no error message', async () => {
-		let giphyFile = 'test_data/publisher/giphy/OrbitAnimation.gif';
-		await composePage.uploadMediaFile('test_data/publisher/giphy/', giphyFile);
-		await expect(composePage.instagramPreviewSingleImage, 'Instagram preview is updated with image').toBeVisible();
+	await test.step('Upload a GIF of size greater than 8 MB and verify the error', async () => {
+		let largeGiphy = 'test_data/publisher/giphy/starsLargeGIF.gif';
+		await composePage.uploadMediaFile('test_data/publisher/giphy/', largeGiphy);
+		await expect(composePage.instagramPreviewSingleImage, 'Instagram post preview is updated with image').toBeVisible();
 		await expect(composePage.instagramPreviewSingleImage).toHaveAttribute('src', /staging/);
+		await expect(composePage.imagePublishLimit).toHaveText('errorImage file size is too largeInstagram posts supports images up to 8 MB. Your file is 13.1 MB.');
 	});
 
-	await test.step('Upload more than 10 media files and verify the info banners', async () => {
-		await composePage.uploadMediaFile('test_data/publisher/images','', 7);
-		await composePage.uploadMediaFile('test_data/publisher/giphy','', 3);
-		await expect(composePage.instagramCarouselIndicators).toHaveCount(10);
-		await expect(page.getByText(INSTAGTRAM_MAX_MEDIA_LIMIT_INFO)).toBeVisible();
-	});
-
-	await test.step('Select instagram story from dropdown toggle', async () => {
+	await test.step('Verify story with direct publishing also shows an error', async () => {
 		await expect(composePage.igToggleDropdown).toBeVisible();
 		await composePage.igToggleDropdown.click();
 		await expect(composePage.igStoryToggleDropdown).toBeVisible();
 		await composePage.igStoryToggleDropdown.click();
+		await expect(composePage.imagePublishLimit).toHaveText('errorImage file size is too largeInstagram posts supports images up to 8 MB. Your file is 13.1 MB.');
 	});
 
-	await test.step('Verify IG Story Direct Publishing info banner', async () => {
-		await expect(page.getByText(IG_STORY_DIRECT_PUBLISHING_INFO)).toBeVisible();
+	await test.step('Verify mobile publishing does not show GIF size error', async () => {
+		await expect(composePage.instagramDualSwitch).toBeVisible();
+		await composePage.instagramDualSwitch.click();
+		await expect(composePage.closeMobileSetUpPopUp).toBeVisible();
+		await composePage.closeMobileSetUpPopUp.click();
+		await expect(composePage.imagePublishLimit).not.toBeVisible();
+	});
+
+	await test.step('Upload GIF of size less than 8 MB and verify no error', async () => {
+		let giphyFile = 'test_data/publisher/giphy/OrbitAnimation.gif';
+		await expect(composePage.imageRemoveButton).toBeVisible();
+		await composePage.imageRemoveButton.click();
+		await composePage.uploadMediaFile('test_data/publisher/giphy/', giphyFile);
+		await expect(composePage.instagramStoryPreviewSingleImage, 'Instagram story preview is updated with image').toBeVisible();
+		await expect(composePage.imagePublishLimit).not.toBeVisible();
+	});
+
+	await test.step('Upload more than 10 media files and verify the info banners', async () => {
+		await composePage.uploadMediaFile('test_data/publisher/images','', 8);
+		await composePage.uploadMediaFile('test_data/publisher/giphy','', 2);
+		await expect(page.getByText(INSTAGTRAM_STORY_MAX_MEDIA_LIMIT_INFO)).toBeVisible();
 	});
 
 	await test.step('Remove 1 media file', async () => {
 		await expect(composePage.imageRemoveButton).toBeVisible();
 		await composePage.imageRemoveButton.click();
-		await expect(page.getByText(INSTAGTRAM_MAX_MEDIA_LIMIT_INFO)).not.toBeVisible();
+		await expect(page.getByText(INSTAGTRAM_STORY_MAX_MEDIA_LIMIT_INFO)).not.toBeVisible();
 	});
 
-	await test.step('Switch to mobile notification message', async () => {
+	await test.step('Verify story direct publishing limitation info', async () => {
 		await expect(composePage.instagramDualSwitch).toBeVisible();
 		await composePage.instagramDualSwitch.click();
-		await expect(composePage.closeMobileSetUpPopUp).toBeVisible();
-		await composePage.closeMobileSetUpPopUp.click();
+		await expect(page.getByText(IG_STORY_DIRECT_PUBLISHING_INFO)).toBeVisible();
 	});
 
-	await test.step('Verify IG story publish limit info is no longer visible', async () => {
+	await test.step('Switch back to instagram post type', async () => {
+		await expect(composePage.igToggleDropdown).toBeVisible();
+		await composePage.igToggleDropdown.click();
+		await expect(composePage.igPostToggleDropdown).toBeVisible();
+		await composePage.igPostToggleDropdown.click();
+		await expect(composePage.instagramCarouselIndicators).toHaveCount(10);
+	});
+
+	await test.step('Upload 1 more image to verify post media limit info', async () => {
+		await composePage.uploadMediaFile('test_data/publisher/images');
+		await expect(page.getByText(INSTAGTRAM_POST_MAX_MEDIA_LIMIT_INFO)).toBeVisible();
 		await expect(page.getByText(IG_STORY_DIRECT_PUBLISHING_INFO)).not.toBeVisible();
 	});
 });
