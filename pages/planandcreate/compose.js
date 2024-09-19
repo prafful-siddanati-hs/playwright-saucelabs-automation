@@ -264,21 +264,32 @@ exports.ComposePage = class ComposePage {
 	}
 
 	/**
-	 * Uploads a media file to the page.If `filePath` is not provided, a random media file from `testDataFolder` will be selected.
+	 * Uploads an external media file to composer.
+	 * @param {string} testDataFolder The folder containing the media files located at './test_data/'.
+	 * @param {string} filePath (Optional) Path to the media. If empty, a random media file will be uploaded.
+	 * @param {number} count (Optional) Number of media files to upload. Default set to 1.
 	*/
-	async uploadMediaFile(testDataFolder, filePath = '') {
+	async uploadMediaFile(testDataFolder, filePath = '', count = 1) {
+		const MAX_ALLOWED_UPLOADS = 15; //Maximum number of media files that can be uploaded at once in composer
 		try {
-			if (filePath === '') {
-				const randomFile = await getRandomMediaFile(testDataFolder);
-				filePath = join(testDataFolder, randomFile);
+			for (let i = 0; i < count; i+= MAX_ALLOWED_UPLOADS) {
+				const remainingUploads = Math.min(count - i, MAX_ALLOWED_UPLOADS);
+				const multipleMediaOverlays = Array.from(await this.mediaOverLay);
+				for (let j = 0; j < remainingUploads; j++) {
+					let currentFilePath = filePath;
+					if (currentFilePath === '') {
+						const randomFile = await getRandomMediaFile(testDataFolder);
+						currentFilePath = join(testDataFolder, randomFile);
+					}
+					await this.page.setInputFiles('.vk-MediaUpload input[type="file"]', currentFilePath);
+					//Handle cases when more than one media file is uploaded
+					await Promise.all(multipleMediaOverlays.map(async (overlay) => {
+						await expect(overlay, 'Media overlay should be visible').toBeVisible();
+					}));
+				}
+				//Small delay between batch uploads
+				await this.page.waitForTimeout(1500);
 			}
-
-			await this.page.setInputFiles('.vk-MediaUpload input[type="file"]', filePath);
-			//Handle cases when more than one media file is uploaded
-			const multipleMediaOverlays = Array.from(await this.mediaOverLay);
-			await Promise.all(multipleMediaOverlays.map(async (overlay) => {
-				await expect(overlay, 'Media overlay should be visible').toBeVisible();
-			}));
 		} catch (error) {
 			console.error('Error:', error);
 		}
