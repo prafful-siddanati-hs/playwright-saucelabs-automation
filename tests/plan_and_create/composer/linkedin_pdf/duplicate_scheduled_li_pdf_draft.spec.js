@@ -77,6 +77,7 @@ test('Duplicate a scheduled draft with LinkedIn PDF', async ({ page }) => {
 
 	await test.step('Verify scheduled draft message', async () => {
 		await draftsPage.verifyDraftMessage(profileName, pdfDraftText, userName);
+		await expect(plannerPage.pdfCardIcon).toBeVisible();
 		await draftsPage.showPreviewPane(pdfDraftText);
 	});
 
@@ -91,6 +92,7 @@ test('Duplicate a scheduled draft with LinkedIn PDF', async ({ page }) => {
 
 	await test.step('Update the draft', async () => {
 		await composePage.writeMessage('--Duplicated');
+		await composePage.verifyLinkedInPreview(pdfDraftText.concat('--Duplicated'));
 	});
 
 	await test.step('Schedule the draft', async () => {

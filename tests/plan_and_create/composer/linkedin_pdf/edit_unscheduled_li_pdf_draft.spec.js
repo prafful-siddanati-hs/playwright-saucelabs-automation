@@ -68,16 +68,19 @@ test('Schedule a LinkedIn PDF post from draft', async ({ page }) => {
 	await test.step('Navigate to drafts', async () => {
 		await draftsPage.visit();
 		await expect(draftsPage.draftItem).toHaveCount(1);
+		await expect(plannerPage.pdfCardIcon).toBeVisible();
 	});
 
 	await test.step('Edit the draft', async () => {
 		await draftsPage.editDraftByContent(pdfDraftText);
 		await composePage.updateDraft(editedPdfDraftText);
+		await composePage.verifyLinkedInPreview(editedPdfDraftText);
+		await composePage.verifyLinkedInPdfPreview();
 	});
 
 	await test.step('Schedule the draft', async () => {
-		await draftsPage.showPreviewPane(editedPdfDraftText);
 		await composePage.schedule();
+		await draftsPage.showPreviewPane(editedPdfDraftText);
 	});
 
 	await test.step('Verify scheduled message in planner preview pane', async () => {

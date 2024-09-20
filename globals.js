@@ -42,14 +42,17 @@ module.exports = {
 		pdfs: {
 			single_page:
 			{
-				bytes:83570,
+				bytes:20597,
 				fileName: 'single_page.pdf',
 				fileSource: 'Upload',
 				mimeType: 'application/pdf',
 				pages: 1,
+				productTags: null,
 				status: 'ATTACHED',
-				url: 'https://hootsuite-video.s3.amazonaws.com/staging/13062818-r3urcWFm.pdf',
-				thumbnailUrl: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-0-12262804-4kFLS6Ca.jpeg'
+				thumbnailUrl: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-0-13062818-r3urcWFm.jpeg',
+				trackingSource: 'UPLOAD',
+				uploadGroup: null,
+				url: 'https://hootsuite-video.s3.amazonaws.com/staging/13062818-oJt5U2C9.pdf',
 			},
 			multi_page:
 			{
@@ -58,9 +61,12 @@ module.exports = {
 				fileSource: 'Upload',
 				mimeType: 'application/pdf',
 				pages: 5,
+				productTags: null,
 				status: 'ATTACHED',
+				thumbnailUrl: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-0-13062818-v3F9uBSD.jpeg',
+				trackingSource: 'UPLOAD',
+				uploadGroup: null,
 				url: 'https://hootsuite-video.s3.amazonaws.com/staging/13062818-v3F9uBSD.pdf',
-				thumbnailUrl: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-0-12262804-4kFLS6Ca.jpeg'
 			}
 		},
 
