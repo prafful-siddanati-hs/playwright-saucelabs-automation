@@ -57,6 +57,7 @@ test('Linkedin and instagram preview validations for media, text and link settin
 
 	await test.step('Enter hashtag to compose message and verify its preview', async () => {
 		await composePage.writeMessage(` #${hashtag}`);
+		await page.waitForTimeout(500);
 		await composePage.verifyInstagramHashtagPreview(hashtag);
 		await composePage.verifyLinkedInHashtagPreview(hashtag);
 	});
@@ -79,7 +80,8 @@ test('Linkedin and instagram preview validations for media, text and link settin
 	});
 
 	await test.step('Upload giphy and verify its preview', async () => {
-		await composePage.uploadMediaFile('test_data/publisher/giphy');
+		let filePath = 'test_data/publisher/giphy/giphy_1.gif';
+		await composePage.uploadMediaFile('test_data/publisher/giphy' , filePath);
 		await expect(composePage.linkedInPreviewSingleImage, 'Linkedin preview is updated with giphy').toBeVisible({timeout: 5000});
 		await expect(composePage.linkedInPreviewSingleImage).toHaveAttribute('src', /staging/);
 		await expect(composePage.instagramPreviewSingleImage, 'Instagram preview is updated with image').toBeVisible();

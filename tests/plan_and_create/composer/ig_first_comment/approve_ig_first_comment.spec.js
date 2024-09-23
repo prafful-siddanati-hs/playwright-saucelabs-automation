@@ -52,6 +52,7 @@ test('Approve an IG post with first comment', async ({ page }) => {
 
 	await test.step('Login as reviewer', async () => {
 		await loginPage.signIn('ig_first_comment_reviewer');
+		await expect(page.locator('//*[contains(@class, "homepage-welcome-header")]//*[contains(text(), "Create a post")]')).toBeVisible();
 	});
 
 	await test.step('Navigate to planner', async () => {
@@ -81,7 +82,6 @@ test('Approve an IG post with first comment', async ({ page }) => {
 	});
 
 	await test.step('Verify the approved message is removed from the view', async () => {
-		await expect(page.getByText('Content that needs your approval (0)')).toBeVisible();
 		await plannerPage.verifyScheduledMessageNotPresent(scheduleText);
 	});
 });

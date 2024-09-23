@@ -21,7 +21,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Threads preview validations for adobe link settings', async ({ page }) => {
-	const composeBasicText = `Adobe ${URL} `;
+	const composeBasicText = `Adobe ${URL}`;
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const  linkSettingsModal = new LinkSettingsModal(page);

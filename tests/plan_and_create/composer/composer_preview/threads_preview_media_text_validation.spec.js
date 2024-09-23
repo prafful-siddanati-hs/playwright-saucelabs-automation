@@ -60,8 +60,9 @@ test('Threads preview validations for media, text and link settings', async ({ p
 	});
 
 	await test.step('Upload giphy and verify its preview', async () => {
-		await composePage.uploadMediaFile('test_data/publisher/giphy');
-		await expect(composePage.threadsPreviewSingleImage, 'Threads preview is updated with giphy').toBeVisible({timeout: 5000});
+		let filePath = 'test_data/publisher/giphy/giphy_1.gif';
+		await composePage.uploadMediaFile('test_data/publisher/giphy', filePath);
+		await expect(composePage.threadsPreviewSingleImage, 'Threads preview is updated with giphy').toBeVisible();
 		await expect(composePage.threadsPreviewSingleImage).toHaveAttribute('src', /staging/);
 		await expect(composePage.imageRemoveButton).toBeVisible();
 		await composePage.imageRemoveButton.click();
