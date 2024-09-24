@@ -40,21 +40,6 @@ suites:
     params:
       browserName: "chromium"
       project: "chromium"
-  # - name: "Composer_Regression - Firefox"
-  #   platformName: "Windows 11"
-  #   screenResolution: "1400x1050"
-  #   testMatch: ['tests/composer/regression/*.*.js']
-  #   params:
-  #     browserName: "firefox"
-  #     project: "firefox"
-#  - name: "Composer_Smoke - Safari"
-#    platformName: "macOS 13"
-#    screenResolution: "1600x1200"
-#    timeZone: 'Vancouver'
-#    testMatch: [ 'tests/composer/regression/*.*.js' ]
-#    params:
-#      browserName: "webkit"
-#      project: "webkit"
 
 # Controls what artifacts to fetch when the suites have finished.
 artifacts:
