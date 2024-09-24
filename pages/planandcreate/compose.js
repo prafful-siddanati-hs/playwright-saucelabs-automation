@@ -163,7 +163,7 @@ exports.ComposePage = class ComposePage {
 		this.saveChangesModal = page.getByRole('heading', { name: 'Save your changes?' });
 		this.composeTextAreaErrorTitle = page.locator('//*[text()="Oops! You haven\'t added any text"]', {locationStrategy: 'xpath'});
 		this.composeMediaAreaErrorTitle = page.locator('//*[text()="Oops! You haven\'t added any media"]', {locationStrategy: 'xpath'});
-		this.linkedInEmptyTextAreaErrorDescription = page.locator('//*[@aria-labelledby="message-tab-bar-linkedIn"]//*[text()="LinkedIn requires text to be included"]', {locationStrategy: 'xpath'});
+		this.linkedInEmptyTextAreaErrorDescription = page.locator('//*[@aria-labelledby="message-tab-bar-linkedIn"]//*[text()="LinkedIn Page requires text to be included"]', {locationStrategy: 'xpath'});
 		this.twitterEmptyTextAreaErrorDescription = page.locator('//*[@aria-labelledby="message-tab-bar-twitter"]//*[text()="Twitter requires text to be included"]', {locationStrategy: 'xpath'});
 		this.instagramEmptyMediaAreaErrorDescription = page.locator('//*[@aria-labelledby="message-tab-bar-instagram"]//*[text()="Instagram posts requires an image or video. Looking for inspiration?"]', {locationStrategy: 'xpath'});
 		this.mediaFirstError = page.locator('//div[contains(@class, "rc-MediaPicker")]//*[(@role="alert")]//*[text()="Video frame rate is too high"]', {locationStrategy: 'xpath'});
