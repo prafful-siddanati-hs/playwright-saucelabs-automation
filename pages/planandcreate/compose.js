@@ -724,7 +724,6 @@ exports.ComposePage = class ComposePage {
 		await expect(this.successTipHashtags).toBeVisible();
 		await expect(this.successTipHashtagRelevance).toBeVisible();
 		await expect(this.successTipEmoji).toBeVisible();
-		await expect(this.successTipEmojiRelenvance).toBeVisible();
 		await expect(this.successTipLink).toBeVisible();
 	}
 

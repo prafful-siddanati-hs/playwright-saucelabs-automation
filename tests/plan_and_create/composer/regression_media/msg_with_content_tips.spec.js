@@ -56,7 +56,6 @@ test('Compose message with content tips', async ({ page }) => {
 		await composePage.verifyFacebookPreview(composeBasicText);
 		await composePage.verifyLinkedInPreview(composeBasicText);
 		await composePage.verifyInstagramPreview(composeBasicText);
-		await page.waitForTimeout(2000);
 	});
 
 	await test.step('Verify AI content tips for facebook tab', async () => {
