@@ -55,7 +55,7 @@ test('Send now validations', async ({ page }) => {
 
 	await test.step('Verify empty text error', async () => {
 		await expect(composePage.composeTextAreaErrorTitle).toBeVisible();
-		await expect(composePage.composeTextAreaErrorDescription).toBeVisible();
+		await expect(composePage.twitterEmptyTextAreaErrorDescription).toBeVisible();
 	});
 
 	await test.step('Upload invalid video file', async () => {
