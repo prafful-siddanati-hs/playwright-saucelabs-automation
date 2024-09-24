@@ -181,6 +181,14 @@ exports.ComposePage = class ComposePage {
 		this.firstEmojiFromList = page.locator('//*[contains(@class, "vk-ComposerModal")]//*[contains(@class, "epr-emoji-list")]//*[contains(@aria-label, "grinning")]', {locationStrategy: 'xpath'});
 		this.mediaReplacementModal = page.getByRole('heading', { name: 'Select the media you want to' });
 		this.mediaReplacementModalCancelButton = page.locator('.vk-MediaReplaceModal .vk-SubmitButton', {locationStrategy: 'xpath'});
+		this.aiContentTips = page.locator('//*[contains(@class, "vk-ComposerModal")]//button[contains(text(), \'AI content tips\')]');
+		this.successTipContentLength = page.locator('//*[contains(@aria-label, "Successful tip")]//b[contains(text(), \'Content length\')]');
+		this.successTipHashtags = page.locator('//*[contains(@aria-label, "Successful tip")]//b[contains(text(), \'Number of hashtags\')]');
+		this.successTipHashtagRelevance = page.locator('//*[contains(@aria-label, "Successful tip")]//b[contains(text(), \'Hashtag relevance\')]');
+		this.successTipEmoji = page.locator('//*[contains(@aria-label, "Successful tip")]//b[contains(text(), \'Number of emojis\')]');
+		this.successTipEmojiRelenvance = page.locator('//*[contains(@aria-label, "Successful tip")]//b[contains(text(), \'Emoji relevance\')]');
+		this.successTipLink = page.locator('//*[contains(@aria-label, "Successful tip")]//b[contains(text(), \'Link\')]');
+		this.closeTips = page.locator('.rc-PanelContainerContent [aria-label="Close tips"]');
 	}
 
 	async setDarkLaunchCookies() {
@@ -683,6 +691,48 @@ exports.ComposePage = class ComposePage {
 	async selectCloseEmojiPicker() {
 		await expect(this.closeEmojiPicker, 'Close emoji picker button is visible').toBeVisible();
 		await this.closeEmojiPicker.click();
+	}
+
+	async selectAIContentTipButton() {
+		await expect(this.aiContentTips, 'AI content tips button is visible').toBeVisible();
+		await this.aiContentTips.click();
+	}
+
+	async closeAIContentTips() {
+		await expect(this.closeTips, 'AI content tips close button is visible').toBeVisible();
+		await this.closeTips.click();
+	}
+
+	async verifyFBAIContentTips() {
+		await expect(this.successTipContentLength).toBeVisible();
+		await expect(this.successTipHashtags).toBeVisible();
+		await expect(this.successTipHashtagRelevance).toBeVisible();
+		await expect(this.successTipEmoji).toBeVisible();
+		await expect(this.successTipLink).toBeVisible();
+	}
+
+	async verifyTWAIContentTips() {
+		await expect(this.successTipContentLength).toBeVisible();
+		await expect(this.successTipHashtagRelevance).toBeVisible();
+		await expect(this.successTipEmoji).toBeVisible();
+		await expect(this.successTipHashtagRelevance).toBeVisible();
+		await expect(this.successTipLink).toBeVisible();
+	}
+
+	async verifyLIAIContentTips() {
+		await expect(this.successTipContentLength).toBeVisible();
+		await expect(this.successTipHashtags).toBeVisible();
+		await expect(this.successTipHashtagRelevance).toBeVisible();
+		await expect(this.successTipEmoji).toBeVisible();
+		await expect(this.successTipEmojiRelenvance).toBeVisible();
+		await expect(this.successTipLink).toBeVisible();
+	}
+
+	async verifyIGBAIContentTips() {
+		await expect(this.successTipHashtags).toBeVisible();
+		await expect(this.successTipHashtagRelevance).toBeVisible();
+		await expect(this.successTipEmoji).toBeVisible();
+		await expect(this.successTipEmojiRelenvance).toBeVisible();
 	}
 
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {
