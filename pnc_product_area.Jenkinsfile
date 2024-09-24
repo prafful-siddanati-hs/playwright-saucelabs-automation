@@ -14,8 +14,8 @@ properties(
             )
         ),
         parameters([
-            choice(name: 'SUITE_NAME', choices: ['Composer_Smoke - Chrome', 'Composer_Smoke - Safari', 'Composer_Preview - Chrome', 'Composer_Message_Editor - Chrome', 'Link_Previews - Chrome', 'Link_Settings - Chrome', 'Planner_Regression - Chrome', 'Planner_Regression - Safari', 'LinkedIn_PDF - Chrome', 'IG_First_Comment - Chrome'], description: 'Select a suite to run'),
-            choice(name: 'FEATURE', choices: ['composer_smoke', 'composer_preview', 'composer_message_editor', 'link_previews', 'link_settings', 'planner_regression', 'linkedin_pdf', 'ig_first_comment'], description: 'Select product feature'),
+            choice(name: 'SUITE_NAME', choices: ['Composer_Smoke - Chrome', 'Composer_Smoke - Safari', 'Composer_Preview - Chrome', 'Composer_Message_Editor - Chrome', 'Link_Previews - Chrome', 'Link_Settings - Chrome', 'Planner_Regression - Chrome', 'Planner_Regression - Safari', 'LinkedIn_PDF - Chrome', 'IG_First_Comment - Chrome', 'Composer_Regression - Chrome', 'Composer_Regression_Media - Chrome'], description: 'Select a suite to run'),
+            choice(name: 'FEATURE', choices: ['composer_smoke', 'composer_preview', 'composer_message_editor', 'link_previews', 'link_settings', 'planner_regression', 'linkedin_pdf', 'ig_first_comment', 'composer_media_limitations', 'composer_regression', 'composer_regression_media'], description: 'Select product feature'),
         ]),
     ]
 )
