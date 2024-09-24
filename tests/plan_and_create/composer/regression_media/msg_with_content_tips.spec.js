@@ -13,7 +13,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Compose message with content tips', async ({ page }) => {
+test('Verify AI content tips for composed message', async ({ page }) => {
 	const composeBasicText = 'We have new content suggestion tips for your message using our AI model. #DigitalMarketing #ContentStrategy #AIContent https://www.honda.ca 😀📊';
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
@@ -35,7 +35,7 @@ test('Compose message with content tips', async ({ page }) => {
 		await composePage.selectComposeButton();
 	});
 
-	await test.step('Select facebook & twitter account', async () => {
+	await test.step('Select all accounts from network picker', async () => {
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(twAccount);
