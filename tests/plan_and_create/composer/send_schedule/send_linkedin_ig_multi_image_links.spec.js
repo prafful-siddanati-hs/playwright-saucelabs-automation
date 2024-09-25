@@ -16,7 +16,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Send linkedin post with text and multiple images', async ({ page }) => {
+test('Send LinkedIn & IG post with text and multiple images', async ({ page }) => {
 	const sendText = `Post now LinkedIn & IG with multiple images & ${plan_create.getRandomUrl()} ` + Math.floor(Math.random() * 1000);
 
 	const addFixture = new getFixture();
