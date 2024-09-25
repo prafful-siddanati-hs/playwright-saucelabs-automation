@@ -1,4 +1,4 @@
-/* Test to validate and send post with text, links & mulitple images to LinkedIn & Instagram */
+/* Test to validate and send post with text, links & multiple images to LinkedIn & Instagram */
 const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const {ComposePage} = require('../../../../pages/planandcreate/compose');
