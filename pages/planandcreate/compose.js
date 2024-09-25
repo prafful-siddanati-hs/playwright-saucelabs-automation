@@ -192,6 +192,8 @@ exports.ComposePage = class ComposePage {
 		this.successTipEmojiRelenvance = page.locator('//*[contains(@aria-label, "Successful tip")]//b[contains(text(), \'Emoji relevance\')]');
 		this.successTipLink = page.locator('//*[contains(@aria-label, "Successful tip")]//b[contains(text(), \'Link\')]');
 		this.closeTips = page.locator('.rc-PanelContainerContent [aria-label="Close tips"]');
+		this.oneTimeApproverDropDown = page.locator('.vk-ComposerModal .-messageSettingsContainer .vk-PillsInputWrapper svg');
+		this.oneTimeApproverDropDownInputSelector = page.locator('input[placeholder="Search for a team member to approve your post"]');
 	}
 
 	async setDarkLaunchCookies() {
@@ -343,7 +345,7 @@ exports.ComposePage = class ComposePage {
 
 	async sendNow() {
 		await this.postNowButton.click();
-		await expect(this.postNowButton, 'Send now message failed from composerBC').not.toBeVisible();
+		await expect(this.postNowButton, 'Send now message failed from composer').not.toBeVisible();
 		await expect(this.composeScreen).not.toBeVisible();
 		await expect(this.feCallOuts).toHaveCount(1);
 	}
@@ -735,6 +737,20 @@ exports.ComposePage = class ComposePage {
 		await expect(this.successTipHashtagRelevance).toBeVisible();
 		await expect(this.successTipEmoji).toBeVisible();
 		await expect(this.successTipEmojiRelenvance).toBeVisible();
+	}
+
+	async selectOneTimeApprover(name) {
+		const selector = this.page.locator(`[data-testid="list-item-clickable"] [title="${name}"]`);
+		const pillText = this.page.locator(`//*[contains(@class, "vk-PillText") and text()="${name}"]`);
+
+		await expect(this.oneTimeApproverDropDown, 'One time approver dropdown was present').toBeVisible();
+		await this.oneTimeApproverDropDown.hover();
+		await this.oneTimeApproverDropDown.click();
+		await expect(this.oneTimeApproverDropDownInputSelector, 'One time approver dropdown input selector was present').toBeVisible();
+		await this.oneTimeApproverDropDownInputSelector.click();
+		await expect(selector, 'One time approver dropdown item was present').toBeVisible();
+		await selector.click();
+		await expect(pillText, 'One time approver is selected').toBeVisible();
 	}
 
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {
