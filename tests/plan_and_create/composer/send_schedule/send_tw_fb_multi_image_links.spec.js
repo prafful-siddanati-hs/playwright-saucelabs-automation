@@ -53,7 +53,7 @@ test('Send twitter and facebook post with text, multiple images and one time app
 		await composePage.selectComposeButton();
 	});
 
-	await test.step(`Select ${twAccount} & ${fbAccount} from social network picker`, async () => {
+	await test.step('Select twitte and facebook from social network picker', async () => {
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(getObjectByName(global.fixture, `${accounts.twitter}`).username);
