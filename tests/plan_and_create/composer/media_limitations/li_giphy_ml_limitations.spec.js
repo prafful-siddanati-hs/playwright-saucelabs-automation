@@ -7,6 +7,7 @@ const { getObjectByName, plan_create } = require('../../../../globals');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 
 let liAccount;
+const LI_MEDIA_WARNING = 'warningThe first 20 images will be publishedLinkedIn supports 20 images per post. You can drag files to reorder them or remove extra files.';
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -16,7 +17,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Validate the media library\'s GIF limits for Linkedin', async ({page}) => {
-	const mediaText = `${plan_create.getComposeMessage()} ${Math.floor(Math.random() * 100)}`;
+	const mediaText = `Media warning test ${Math.floor(Math.random() * 100)}`;
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
@@ -71,7 +72,7 @@ test('Validate the media library\'s GIF limits for Linkedin', async ({page}) => 
 		await composePage.attachImageFromMediaLibrary(5);
 		await composePage.closeMediaLibrary();
 		await expect(composePage.linkedInPreviewMediaContainer).toHaveCount(5);
-		await expect(composePage.imagePublishLimit).toHaveText('warningThe first 20 images will be publishedLinkedIn supports 20 images per post. You can drag files to reorder them or remove extra files.');
+		await composePage.verifyInstagramMediaWarningMessage(LI_MEDIA_WARNING);
 	});
 
 });
