@@ -66,6 +66,6 @@ test('Validate the media library\'s image and gif limits for Instagram story(Mob
 		await composePage.attachImageFromMediaLibrary(1);
 		await composePage.closeMediaLibrary();
 		await expect(composePage.instagramStoryPreviewSingleImage).toBeVisible();
-		await composePage.verifyInstagramMediaWarningMessage(IGS_MOBILE_MEDIA_WARNING);
+		await composePage.verifyMediaWarningMessage(IGS_MOBILE_MEDIA_WARNING);
 	});
 });

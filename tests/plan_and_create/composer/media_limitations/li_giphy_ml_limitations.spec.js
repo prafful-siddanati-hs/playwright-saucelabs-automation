@@ -3,7 +3,7 @@ const {test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const getFixture = require('../../../../custom-commands/getFixture');
 const { LoginPage } = require('../../../../pages/login');
-const { getObjectByName, plan_create } = require('../../../../globals');
+const { getObjectByName } = require('../../../../globals');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 
 let liAccount;
@@ -72,7 +72,7 @@ test('Validate the media library\'s GIF limits for Linkedin', async ({page}) => 
 		await composePage.attachImageFromMediaLibrary(5);
 		await composePage.closeMediaLibrary();
 		await expect(composePage.linkedInPreviewMediaContainer).toHaveCount(5);
-		await composePage.verifyInstagramMediaWarningMessage(LI_MEDIA_WARNING);
+		await composePage.verifyMediaWarningMessage(LI_MEDIA_WARNING);
 	});
 
 });

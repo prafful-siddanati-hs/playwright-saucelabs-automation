@@ -63,7 +63,7 @@ test('Validate the media library\'s mixed media limits for Instagram', async ({p
 		await composePage.attachImageFromMediaLibrary(1);
 		await composePage.closeMediaLibrary();
 		await expect(composePage.instagramCarouselIndicators).toHaveCount(10);
-		await composePage.verifyInstagramMediaWarningMessage(IGB_MEDIA_WARNING);
+		await composePage.verifyMediaWarningMessage(IGB_MEDIA_WARNING);
 	});
 
 });
