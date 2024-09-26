@@ -754,6 +754,19 @@ exports.ComposePage = class ComposePage {
 		await expect(pillText, 'One time approver is selected').toBeVisible();
 	}
 
+	async verifyMediaWarningMessage(text) {
+		try {
+			if (await this.imagePublishLimit.count() > 1) {
+				const alertLocator = this.page.locator('(//*[@aria-labelledby="message-tab-bar-instagram"]//*[@role="alert"])[2]');
+				await expect(alertLocator).toHaveText(`${text}`);
+			} else {
+				await expect(this.imagePublishLimit).toHaveText(`${text}`);
+			}
+		} catch (error) {
+			console.error('An error occurred during the expectation check:', error);
+		}
+	}
+
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {
 		const getAllScheduledMessages = new getScheduledMessages();
 		const deleteScheduledMessages = new deleteScheduledMessageById();

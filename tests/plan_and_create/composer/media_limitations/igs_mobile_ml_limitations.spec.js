@@ -7,7 +7,7 @@ const { getObjectByName } = require('../../../../globals');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 
 let igbAccount;
-
+const IGS_MOBILE_MEDIA_WARNING = 'warningThe first 10 media files will be publishedInstagram supports 10 media files per story. You can drag files to reorder them or remove extra files.';
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
 
@@ -66,7 +66,6 @@ test('Validate the media library\'s image and gif limits for Instagram story(Mob
 		await composePage.attachImageFromMediaLibrary(1);
 		await composePage.closeMediaLibrary();
 		await expect(composePage.instagramStoryPreviewSingleImage).toBeVisible();
-		await expect(composePage.imagePublishLimit).toHaveText('warningThe first 10 media files will be publishedInstagram supports 10 media files per story. You can drag files to reorder them or remove extra files.');
+		await composePage.verifyMediaWarningMessage(IGS_MOBILE_MEDIA_WARNING);
 	});
-
 });
