@@ -9,7 +9,6 @@ const addUserToOrg = require('../../../../custom-commands/addUserToOrg');
 const {SetUpEnterpriseUser} = require('../../../../custom-commands/setUpEnterpriseUser');
 const modifySocialProfilePermissions = require('../../../../custom-commands/modifySocialProfilePermissions');
 
-let twAccount, fbAccount;
 const SHORTENER = 'https://ow.ly';
 
 test.afterEach(async ({ page }) => {
@@ -64,7 +63,7 @@ test('Send twitter and facebook post with text, multiple images and one time app
 		await expect(composePage.emptyFacebookPreview).toBeVisible();
 	});
 
-	await test.step('Select to twitter tab and upload 2 images to twitter', async () => {
+	await test.step('Select twitter tab and upload 2 images to twitter', async () => {
 		await expect(composePage.twitterTab).toBeVisible();
 		await composePage.twitterTab.click();
 		await composePage.uploadMediaFile('test_data/publisher/images', '', 2);
@@ -82,7 +81,7 @@ test('Send twitter and facebook post with text, multiple images and one time app
 		await expect(composePage.clearOwlyShorteningButton).toBeVisible();
 	});
 
-	await test.step('Select to facebook tab and add only text to facebook', async () => {
+	await test.step('Select facebook tab and add only text to facebook', async () => {
 		await expect(composePage.facebookPageTab).toBeVisible();
 		await composePage.facebookPageTab.click();
 		await composePage.writeMessage(sendText);

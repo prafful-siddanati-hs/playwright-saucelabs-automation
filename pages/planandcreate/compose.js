@@ -679,7 +679,8 @@ exports.ComposePage = class ComposePage {
 		const mentionItem = this.page.locator(`(//div[contains(@class, "vk-Mention")]/*[contains(text(),"${mentionName}")])[1]`, {locationStrategy: 'xpath'});
 
 		await this.mentionsList.isVisible();
-		await mentionItem.isVisible();
+		await mentionItem.scrollIntoViewIfNeeded();
+		await expect(mentionItem, 'Mention item is visible').toBeVisible();
 		await mentionItem.click();
 	}
 
