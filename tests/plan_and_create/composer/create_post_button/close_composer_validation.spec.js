@@ -42,7 +42,7 @@ test('Composer close button validations', async ({ page }) => {
 		await expect(composePage.emptyTwitterPreview).toBeVisible();
 	});
 
-	await test.step('close composer after selecting twitter profile', async () => {
+	await test.step('Close composer after selecting twitter profile', async () => {
 		await composePage.exitComposer();
 		await expect(composePage.composeScreen).not.toBeVisible();
 	});
@@ -117,22 +117,4 @@ test('Composer close button validations', async ({ page }) => {
 		await expect(composePage.discardPost).toBeVisible();
 		await composePage.discardPost.click();
 	});
-
-	//
-	// await test.step('Verify preview for each network tab', async () => {
-	// 	await expect(composePage.twitterTab).toBeVisible();
-	// 	await composePage.twitterTab.click();
-	// 	await composePage.verifyTwitterPreview(composeBasicText);
-	// 	await expect(composePage.facebookPageTab).toBeVisible();
-	// 	await composePage.facebookPageTab.click();
-	// 	await composePage.verifyFacebookPreview(composeBasicText);
-	// });
-	//
-	// await test.step('Schedule the messages', async () => {
-	// 	await composePage.schedule();
-	// });
-	//
-	// await test.step('Delete the scheduled messages', async () => {
-	// 	await plannerPage.deleteScheduleMessagesViaAPI(memberId);
-	// });
 });
