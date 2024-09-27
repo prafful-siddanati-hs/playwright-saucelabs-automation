@@ -18,6 +18,7 @@ exports.PinPage = class PinPage {
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 		this.postNowButton = page.getByRole('button', { name: 'Post now', exact: true });
 		this.messageCharCount = page.locator('(//*[contains(@class, "MessageEditArea")]//*[contains(@class, "-characterCounterCount")])[1]', {locationStrategy: 'xpath'});
+		this.imageRemoveButton = page.locator('.rc-Composer .imageThumbnail .vk-MediaThumbnailDelete').first();
 	}
 
 	async selectPinButton() {
