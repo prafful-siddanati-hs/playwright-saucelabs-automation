@@ -197,6 +197,7 @@ exports.ComposePage = class ComposePage {
 		this.oneTimeApproverDropDown = page.locator('.vk-ComposerModal .-messageSettingsContainer .vk-PillsInputWrapper svg');
 		this.oneTimeApproverDropDownInputSelector = page.locator('input[placeholder="Search for a team member to approve your post"]');
 		this.tiktokEngagementPanel = page.locator('.vk-ComposerModal #message-edit-content-tiktok .vk-StyledTiktokEngagementArea');
+		this.saveDraftModalTitle =page.locator('[role="dialog"] h3');
 	}
 
 	async setDarkLaunchCookies() {
