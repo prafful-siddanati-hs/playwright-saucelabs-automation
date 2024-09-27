@@ -36,19 +36,6 @@ test('Send pinterest message using composer', async ({ page }) => {
 	await test.step('Select first board from social network picker', async () => {
 		await pinPage.selectFirstPinBoard();
 	});
-	//
-	// await test.step('Upload an image', async () => {
-	// 	await pinPage.uploadImageFile('test_data/publisher/images');
-	// });
-	//
-	// await test.step('Write a pin message and website url', async () => {
-	// 	await pinPage.writePinMessage(pinText);
-	// 	await pinPage.writeWebsiteUrl('bbc.com');
-	// });
-	//
-	// await test.step('Verify pin preview', async () => {
-	// 	await pinPage.verifyPinPreview(pinText, 'bbc.com');
-	// });
 
 	await test.step('Send pin message with link and text and verify error messages', async () => {
 		await pinPage.postNowButton.click();
