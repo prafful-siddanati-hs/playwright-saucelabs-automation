@@ -109,7 +109,6 @@ module.exports = {
 			const MESSAGE = [
 				'Draft',
 				'Compose',
-				'D$a#t_',
 				'C@mP0se',
 				'12abXY!%',
 				'comporTeste'
