@@ -73,15 +73,11 @@ test('Edit scheduled linkedin message with link customization', async ({ page })
 		await composePage.writeMessage(url + ' ');
 		await composePage.verifyLinkInLinkedInPreview(url);
 		await page.waitForTimeout(1000);
-		await expect(composePage.editLinkPreviewButton).toBeVisible();
-		await composePage.editLinkPreviewButton.hover();
-		await composePage.editLinkPreviewButton.click();
-		await expect(composePage.removeLinkPreviewImage).toBeVisible();
-		await composePage.removeLinkPreviewImage.click();
+		await composePage.selectEditLinkPreviewButton();
+		await composePage.selectRemoveLinkPreviewImage();
 		await page.setInputFiles(mediaUploadButtonLocator, 'test_data/publisher/giphy/stay_cool.gif');
 		await expect(composePage.linkPreviewThumbnail).toBeVisible();
-		await expect(composePage.linkPreviewSaveButton).toBeVisible();
-		await composePage.linkPreviewSaveButton.click();
+		await composePage.selectSaveLinkPreviewButton();
 	});
 
 	await test.step('Verify the updated link customization', async () => {

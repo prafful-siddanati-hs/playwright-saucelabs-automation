@@ -775,6 +775,23 @@ exports.ComposePage = class ComposePage {
 		}
 	}
 
+	async selectEditLinkPreviewButton() {
+		await expect(this.editLinkPreviewButton).toBeVisible();
+		await this.editLinkPreviewButton.hover();
+		await this.editLinkPreviewButton.click();
+	}
+
+	async selectRemoveLinkPreviewImage() {
+		await expect(this.removeLinkPreviewImage).toBeVisible();
+		await this.removeLinkPreviewImage.click();
+		await expect(this.linkPreviewThumbnail).not.toBeVisible();
+	}
+
+	async selectSaveLinkPreviewButton() {
+		await expect(this.linkPreviewSaveButton).toBeVisible();
+		await this.linkPreviewSaveButton.click();
+	}
+
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {
 		const getAllScheduledMessages = new getScheduledMessages();
 		const deleteScheduledMessages = new deleteScheduledMessageById();
