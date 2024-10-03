@@ -1,5 +1,4 @@
-//This test is to validate to edit facebook message along with instagram business account
-
+//This test is to validate edit facebook message along with instagram business account without media
 const { test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../../pages/login');
@@ -18,7 +17,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Edit scheduled facebook message along with instagram', async ({ page }) => {
+test('Edit scheduled facebook message along with instagram without media', async ({ page }) => {
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const createScheduleMessage = new scheduleV3Message();
@@ -69,7 +68,7 @@ test('Edit scheduled facebook message along with instagram', async ({ page }) =>
 		await plannerPage.editFromPreviewPane();
 	});
 
-	await test.step('Verify facebook preview and Select instagram account from social network dropdown', async () => {
+	await test.step('Verify facebook preview on composer and select instagram account from social network dropdown', async () => {
 		await composePage.verifyFacebookPreview(composeBasicText);
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
