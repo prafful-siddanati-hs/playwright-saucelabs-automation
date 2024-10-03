@@ -62,7 +62,7 @@ test('Edit scheduled linkedin message with link customization', async ({ page })
 		await plannerPage.verifyTextInPreviewPane(composeBasicText);
 	});
 
-	await test.step('Edit facebook scheduled message from side pane', async () => {
+	await test.step('Edit linkedin scheduled message from side pane', async () => {
 		await plannerPage.editFromPreviewPane();
 		await composePage.verifyLinkedInPreview(composeBasicText);
 	});
