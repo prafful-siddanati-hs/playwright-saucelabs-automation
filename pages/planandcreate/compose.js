@@ -198,6 +198,10 @@ exports.ComposePage = class ComposePage {
 		this.oneTimeApproverDropDownInputSelector = page.locator('input[placeholder="Search for a team member to approve your post"]');
 		this.tiktokEngagementPanel = page.locator('.vk-ComposerModal #message-edit-content-tiktok .vk-StyledTiktokEngagementArea');
 		this.saveDraftModalTitle =page.locator('[role="dialog"] h3');
+		this.editLinkPreviewButton =  page.locator('.vk-ComposerModal [aria-labelledby="message-tab-bar-linkedIn"] [aria-label="Edit link preview"]');
+		this.linkPreviewThumbnail = page.locator('.vk-ComposerModal .vk-Thumbnail');
+		this.linkPreviewSaveButton = page.locator('.vk-ComposerModal [aria-label="Save"]');
+		this.removeLinkPreviewImage = page.locator('//*[contains(@role, "img") and text()="cancel"]');
 	}
 
 	async setDarkLaunchCookies() {
@@ -769,6 +773,23 @@ exports.ComposePage = class ComposePage {
 		} catch (error) {
 			console.error('An error occurred during the expectation check:', error);
 		}
+	}
+
+	async selectEditLinkPreviewButton() {
+		await expect(this.editLinkPreviewButton).toBeVisible();
+		await this.editLinkPreviewButton.hover();
+		await this.editLinkPreviewButton.click();
+	}
+
+	async selectRemoveLinkPreviewImage() {
+		await expect(this.removeLinkPreviewImage).toBeVisible();
+		await this.removeLinkPreviewImage.click();
+		await expect(this.linkPreviewThumbnail).not.toBeVisible();
+	}
+
+	async selectSaveLinkPreviewButton() {
+		await expect(this.linkPreviewSaveButton).toBeVisible();
+		await this.linkPreviewSaveButton.click();
 	}
 
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {
