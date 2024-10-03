@@ -215,6 +215,7 @@ exports.PlannerPage = class PlannerPage {
 		this.linkedinPreviewPdf = page.locator('.vk-Planner .vk-DetailPane .vk-LinkedInPreview .vk-PdfContainer .vk-PdfDocument');
 		this.pdfCardIcon = page.locator('//*[contains(@data-testid,"MediaStateText")][text()="PDF"]');
 		this.linkedInMentionLink = page.locator('.vk-Planner .vk-LinkedInPreview .vk-ContentBody .vk-MessageMention');
+		this.linkedinLinkPreviewMedia = page.locator('.vk-Planner .vk-DetailPane .vk-LinkedInPreview .vk-LinkPreviewMedia');
 
 		//Instagram
 		this.instagramPreviewSocialProfile = page.locator('.vk-Planner .vk-DetailPane .vk-InstagramPreviewHeader .vk-Name');

@@ -198,6 +198,10 @@ exports.ComposePage = class ComposePage {
 		this.oneTimeApproverDropDownInputSelector = page.locator('input[placeholder="Search for a team member to approve your post"]');
 		this.tiktokEngagementPanel = page.locator('.vk-ComposerModal #message-edit-content-tiktok .vk-StyledTiktokEngagementArea');
 		this.saveDraftModalTitle =page.locator('[role="dialog"] h3');
+		this.editLinkPreviewButton =  page.locator('.vk-ComposerModal [aria-labelledby="message-tab-bar-linkedIn"] [aria-label="Edit link preview"]');
+		this.linkPreviewThumbnail = page.locator('.vk-ComposerModal .vk-Thumbnail');
+		this.linkPreviewSaveButton = page.locator('.vk-ComposerModal [aria-label="Save"]');
+		this.removeLinkPreviewImage = page.locator('//*[contains(@role, "img") and text()="cancel"]');
 	}
 
 	async setDarkLaunchCookies() {
