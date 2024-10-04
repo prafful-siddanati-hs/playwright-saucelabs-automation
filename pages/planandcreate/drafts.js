@@ -8,11 +8,13 @@ exports.DraftsPage = class DraftsPage {
 	constructor(page) {
 		this.page = page;
 		this.draftListView = page.getByTestId('ListView');
+		this.cardList = page.locator('[data-testid="card-list"]');
 		this.createButton = page.getByTestId('ListView').getByTestId('create-button');
 		this.postButton = page.locator('//*[contains(@class,vk-NewPostPlaceholderDropdown)]//*[contains(@role,"menuitem")]//*[text()="Post"]');
 		this.draftItem = page.getByTestId('CardWrapper');
 		this.editButtonOnListView = page.getByLabel('Edit post');
 		this.deleteButtonOnSidePane = page.getByTestId('DeleteButton');
+		this.editButtonOnSidePane = page.getByTestId('DetailPaneRenderer').getByLabel('Edit post');
 		this.confirmationModalSubmitButton = page.getByRole('button', { name: 'Delete post' });
 	}
 
