@@ -48,13 +48,13 @@ exports.DraftsPage = class DraftsPage {
 
 	async visit() {
 		await this.page.goto('/dashboard#/planner?view=drafts');
-		await expect(this.draftListView, 'Draft list view is not visible').toBeVisible();
+		await expect(this.draftListView, 'Draft list view is visible').toBeVisible();
 	}
 
 	async verifyDraftMessage(profile, text, user ) {
 		const userSelector= `//*[contains(@data-testid,"Summary") and contains(text(),"${text}")]//following::*[contains(@data-testid,"CreationDetails") and contains(text(),"${user}")]`;
-		await expect(this.page.getByTestId('Username').getByText(profile), 'Draft user name is not visible').toBeVisible();
-		await expect(this.page.getByTestId('Summary').getByText(text), 'Draft summary is not visible').toBeVisible();
+		await expect(this.page.getByTestId('Username').getByText(profile), 'Draft user name is visible').toBeVisible();
+		await expect(this.page.getByTestId('Summary').getByText(text), 'Draft summary is  visible').toBeVisible();
 		await expect(this.page.locator(userSelector)).toBeVisible();
 	}
 

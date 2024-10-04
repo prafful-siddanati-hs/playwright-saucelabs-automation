@@ -15,7 +15,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Create draft using composer', async ({ page }) => {
-	const draftText = plan_create.getComposeMessage() + ' ' + plan_create.getRandomUrl() + ' ' + plan_create.getRandomHashTag() + ' ' + plan_create.getRandomEmoji() + '@mention';
+	const draftText = plan_create.getComposeMessage() + ' ' + plan_create.getRandomUrl() + ' ' + plan_create.getRandomHashTag() + ' ' + plan_create.getRandomEmoji() + ' '+ '@mention';
 
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
