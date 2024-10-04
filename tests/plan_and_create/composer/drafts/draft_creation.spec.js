@@ -69,7 +69,7 @@ test('Create draft using composer', async ({ page }) => {
 		await composePage.saveChanges();
 	});
 
-	await test.step('Create draft without selecting network and no text and verify it', async () => {
+	await test.step('Verify draft with single network selected and no text message', async () => {
 		await expect(draftsPage.draftItem).toHaveCount(1);
 		await expect(page.getByLabel(profile)).toBeVisible();
 		await expect(page.getByTestId('CreationDetails')).toContainText(userName);
