@@ -23,7 +23,7 @@ test('Create draft with multiple networks using composer', async ({ page }) => {
 	const composePage = new ComposePage(page);
 	const draftsPage = new DraftsPage(page);
 
-	await test.step('Setup user & add accounts', async () => {
+	await test.step('Setup user', async () => {
 		await addFixture.command('draft_message', 'pro_user_composer', true, 300);
 		twProfile = getObjectByName(global.fixture, 'draft_message').twitter.username;
 		igProfile = getObjectByName(global.fixture, 'draft_message').instagramBusiness.username;
