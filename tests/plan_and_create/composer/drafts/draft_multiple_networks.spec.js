@@ -76,7 +76,7 @@ test('Create draft with multiple networks using composer', async ({ page }) => {
 	await test.step('Verify draft preview on composer and upload video file', async () => {
 		await composePage.verifyTwitterPreview(draftText);
 		await composePage.verifyInstagramPreview(draftText);
-		await page.setInputFiles('.vk-MediaUpload input[type="file"]', 'test_data/publisher/videos/video_2.mp4');
+		await composePage.uploadMediaFile('test_data/publisher/videos/', 'test_data/publisher/videos/video_2.mp4');
 		await expect(composePage.mediaOverLay).toBeVisible();
 		await expect(composePage.twitterVideoPreviewSelector).toBeVisible();
 		await composePage.verifyInstagramReelVideoPreview();

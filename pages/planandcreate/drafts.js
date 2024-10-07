@@ -9,12 +9,16 @@ exports.DraftsPage = class DraftsPage {
 		this.page = page;
 		this.draftListView = page.getByTestId('ListView');
 		this.cardList = page.locator('[data-testid="card-list"]');
+		this.userName = page.getByTestId('Username');
+		this.summary = page.getByTestId('Summary');
 		this.createButton = page.getByTestId('ListView').getByTestId('create-button');
 		this.postButton = page.locator('//*[contains(@class,vk-NewPostPlaceholderDropdown)]//*[contains(@role,"menuitem")]//*[text()="Post"]');
 		this.draftItem = page.getByTestId('CardWrapper');
 		this.editButtonOnListView = page.getByLabel('Edit post');
 		this.deleteButtonOnSidePane = page.getByTestId('DeleteButton');
 		this.editButtonOnSidePane = page.getByTestId('DetailPaneRenderer').getByLabel('Edit post');
+		this.previewMessageText = page.getByTestId('DetailPaneRenderer').locator('.vk-PreviewMessageText');
+		this.previewMedia = page.getByTestId('DetailPaneRenderer').locator('img');
 		this.confirmationModalSubmitButton = page.getByRole('button', { name: 'Delete post' });
 	}
 
