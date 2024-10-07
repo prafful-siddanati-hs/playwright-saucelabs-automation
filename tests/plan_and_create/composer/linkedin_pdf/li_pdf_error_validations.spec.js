@@ -70,7 +70,7 @@ test('Verify error validations for LinkedIn PDF post', async ({page}) => {
 	await test.step('Verify there are no thumbnail actions for PDF', async () => {
 		await expect(composePage.altTextButton).not.toBeVisible();
 		await expect(composePage.editImageButton).not.toBeVisible();
-		await expect(composePage.editVideButton).not.toBeVisible();
+		await expect(composePage.editVideoButton).not.toBeVisible();
 	});
 
 	await test.step('Verify LinkedIn PDF preview', async () => {
