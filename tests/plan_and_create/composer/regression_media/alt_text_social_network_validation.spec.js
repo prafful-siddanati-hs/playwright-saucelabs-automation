@@ -56,7 +56,7 @@ test('Verify that instagram does not support alt-text for any media types', asyn
 	});
 
 	await test.step('Verify alt-text option is present for uploaded image', async () => {
-		await page.getByLabel('Art.png').click();
+		await page.getByLabel('Art.png').hover();
 		await expect(composePage.editImageButton).toBeVisible();
 		await expect(composePage.altTextButton).toBeVisible();
 		await expect(composePage.editVideoButton).not.toBeVisible();

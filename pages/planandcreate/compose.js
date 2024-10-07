@@ -203,6 +203,8 @@ exports.ComposePage = class ComposePage {
 		this.linkPreviewThumbnail = page.locator('.vk-ComposerModal .vk-Thumbnail');
 		this.linkPreviewSaveButton = page.locator('.vk-ComposerModal [aria-label="Save"]');
 		this.removeLinkPreviewImage = page.locator('//*[contains(@role, "img") and text()="cancel"]');
+		this.altTextInputbox = page.locator('[aria-label="Alternative text"] .vk-DescriptionInput textarea');
+		this.addAltTextButton = page.locator('.-applyAltTextButton');
 	}
 
 	async setDarkLaunchCookies() {
@@ -791,6 +793,14 @@ exports.ComposePage = class ComposePage {
 	async selectSaveLinkPreviewButton() {
 		await expect(this.linkPreviewSaveButton).toBeVisible();
 		await this.linkPreviewSaveButton.click();
+	}
+
+	async writeAltText(altText) {
+		await expect(this.page.getByPlaceholder('Provide a description of the image...')).toBeVisible();
+		await this.altTextInputbox.click();
+		await this.altTextInputbox.fill(altText);
+		await expect(this.addAltTextButton).toBeVisible();
+		await this.addAltTextButton.click();
 	}
 
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {

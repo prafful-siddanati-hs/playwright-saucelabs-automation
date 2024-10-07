@@ -49,7 +49,7 @@ test('Verify that video files do not support alt-text', async ({page}) => {
 	});
 
 	await test.step('Verify alt-text option is present for image file', async () => {
-		await page.getByLabel('Art.png').click();
+		await page.getByLabel('Art.png').hover();
 		await expect(composePage.editImageButton).toBeVisible();
 		await expect(composePage.altTextButton).toBeVisible();
 		await expect(composePage.editVideoButton).not.toBeVisible();
