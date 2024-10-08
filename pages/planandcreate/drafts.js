@@ -20,6 +20,7 @@ exports.DraftsPage = class DraftsPage {
 		this.previewMessageText = page.getByTestId('DetailPaneRenderer').locator('.vk-PreviewMessageText');
 		this.previewMedia = page.getByTestId('DetailPaneRenderer').locator('img');
 		this.confirmationModalSubmitButton = page.getByRole('button', { name: 'Delete post' });
+		this.tagContainerText = page.locator('.vk-Planner [data-testid="DetailPaneRenderer"] .vk-TagContainer label');
 	}
 
 	async selectCreateButton() {

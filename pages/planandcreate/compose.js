@@ -34,7 +34,7 @@ exports.ComposePage = class ComposePage {
 		this.twitterPreviewSingleImage = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaImg');
 		this.twitterPreviewSingleVideo = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-VideoContainer');
 		this.twitterPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaContainer');
-		this.imagePublishLimit=  page.locator('.vk-ComposerModal  .rc-MessageEditContent [role="alert"]');
+		this.imagePublishLimit = page.locator('.vk-ComposerModal  .rc-MessageEditContent [role="alert"]');
 		this.emptyTwitterPreview = page.locator('.vk-ComposerModal .vk-TwitterPreview');
 		this.emptyFacebookPreview = page.locator('.vk-ComposerModal .vk-FacebookPreview');
 		this.linkedinNetworkType = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-MessagePreviewHeader .vk-NetworkType');
@@ -54,16 +54,16 @@ exports.ComposePage = class ComposePage {
 		this.emojiButton = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="Add an emoji"]');
 		this.hashTagSuggestions = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="AI hashtag suggestions"]');
 		this.canvaButton = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="Design with Canva"]');
-		this.scheduleLaterButton = page.getByRole('button', { name: 'Schedule for later' });
-		this.scheduleDone = page.getByRole('button', { name: 'Done' });
+		this.scheduleLaterButton = page.getByRole('button', {name: 'Schedule for later'});
+		this.scheduleDone = page.getByRole('button', {name: 'Done'});
 		this.scheduleDoneButton = page.getByTestId('schedule-post-done-btn');
 		this.scheduleButton = page.locator('button.vk-EditFooterScheduleButton');
 		this.saveAsDraftButton = page.locator('.vk-ComposerModal [data-testid= "SaveAsDraftButton"]');
-		this.saveChangesButton = page.getByRole('button', { name: 'Save changes' });
-		this.saveEditsButton = page.getByRole('button', { name: 'Save edits' });
-		this.postNowButton = page.getByRole('button', { name: 'Post now', exact: true });
+		this.saveChangesButton = page.getByRole('button', {name: 'Save changes'});
+		this.saveEditsButton = page.getByRole('button', {name: 'Save edits'});
+		this.postNowButton = page.getByRole('button', {name: 'Post now', exact: true});
 		this.addTagsButton = page.locator('.vk-ComposerModal [aria-label= "Add tags"]');
-		this.saveToContentLibraryButton = page.getByRole('button', { name: 'Save to content library' });
+		this.saveToContentLibraryButton = page.getByRole('button', {name: 'Save to content library'});
 		this.openCalendarButton = page.getByLabel('Open calendar');
 		this.nextMonthButton = page.getByLabel('Go to next month');
 		this.firstDayOfNextMonth = page.locator('(//button[contains(@class, "rdp-day") and text()="1"])[1]');
@@ -124,13 +124,13 @@ exports.ComposePage = class ComposePage {
 		this.closeMobileSetUpPopUp = page.locator('.vk-ComposerModal [aria-label = "Close Set up mobile notifications to publish with Instagram"]');
 		this.linkedInHashtagLink = page.locator('.vk-LinkedInPreview .vk-MessageHashtag');
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
-		this.moreButton = page.getByLabel('more', { exact: true });
-		this.saveDraftFromDropdown = page.getByRole('button', { name: 'Save as draft', exact: true });
+		this.moreButton = page.getByLabel('more', {exact: true});
+		this.saveDraftFromDropdown = page.getByRole('button', {name: 'Save as draft', exact: true});
 		this.addMediaButton = page.locator('.vk-ComposerModal [aria-label="Add media"]');
 		this.mediaLibraryButton = page.locator('.vk-ComposerModal [aria-label="Media library"]');
-		this.mediaLibraryCloseButton = page.getByRole('button', { name: 'Close media library'});
+		this.mediaLibraryCloseButton = page.getByRole('button', {name: 'Close media library'});
 		this.termsOfServiceWall = page.locator('.vk-TermsOfServiceWall button');
-		this.mediaLibraryRetryError= page.getByTestId('MediaLibraryErrorRetry');
+		this.mediaLibraryRetryError = page.getByTestId('MediaLibraryErrorRetry');
 		this.mediaLibrarySourceDropdown = page.locator('.rc-MediaLibrary .vk-SourceButton');
 		this.freeImagesMediaLibrarySelection = page.locator('//*[contains(@class, "rc-MediaLibrary")]//*[text()="Free Images"]', {locationStrategy: 'xpath'});
 		this.giphyMediaLibrarySelection = page.locator('//*[contains(@class, "rc-MediaLibrary")]//*[text()="GIPHY"]', {locationStrategy: 'xpath'});
@@ -145,13 +145,13 @@ exports.ComposePage = class ComposePage {
 		this.mentionsList = page.locator('.vk-NewMentionsList');
 		this.twitterTab = page.getByLabel('Twitter content');
 		this.linkedInTab = page.getByLabel('LinkedIn content');
-		this.facebookPageTab =  page.getByLabel('Facebook content');
+		this.facebookPageTab = page.getByLabel('Facebook content');
 		this.tiktokTab = page.getByLabel('TikTok content');
 		this.instagramTab = page.getByLabel('Instagram content');
 		this.videoRemoveButton = page.locator('.rc-Composer .videoThumbnail .vk-MediaThumbnailDelete');
 		this.imageRemoveButton = page.locator('.rc-Composer .imageThumbnail .vk-MediaThumbnailDelete').first();
 		this.pdfRemoveButton = page.locator('.rc-Composer .pdfThumbnail .vk-MediaThumbnailDelete');
-		this.discardPost = page.getByRole('button', { name: 'Discard post' });
+		this.discardPost = page.getByRole('button', {name: 'Discard post'});
 		this.shortenWithOwlyButton = page.getByLabel('Shorten with Ow.ly');
 		this.clearOwlyShorteningButton = page.locator('.rc-Composer [aria-label="Clear Ow.ly shortening"]');
 		this.addTrackingButton = page.getByLabel('Add tracking');
@@ -160,7 +160,7 @@ exports.ComposePage = class ComposePage {
 		this.badLinkThumbnailWarning = page.locator('//*[@aria-labelledby="message-tab-bar-linkedIn"]//*[text()="This website is preventing us from displaying image previews. Please upload a custom thumbnail."]', {locationStrategy: 'xpath'});
 		this.twitterLinkPreviewCustomizationInfo = page.getByText('Link preview customization is not supported by Twitter');
 		this.twitterCharacterLimitError = page.getByTestId('messageItemError').getByText('Your text exceeds the character limit for Twitter');
-		this.saveChangesModal = page.getByRole('heading', { name: 'Save your changes?' });
+		this.saveChangesModal = page.getByRole('heading', {name: 'Save your changes?'});
 		this.composeTextAreaErrorTitle = page.locator('//*[text()="Oops! You haven\'t added any text"]', {locationStrategy: 'xpath'});
 		this.composeMediaAreaErrorTitle = page.locator('//*[text()="Oops! You haven\'t added any media"]', {locationStrategy: 'xpath'});
 		this.tiktokMediaAreaErrorTitle = page.locator('//*[text()="It looks like you haven\'t added a video"]', {locationStrategy: 'xpath'});
@@ -172,19 +172,19 @@ exports.ComposePage = class ComposePage {
 		this.mediaSecondError = page.locator('//div[contains(@class, "rc-MediaPicker")]//*[(@role="alert")]//*[text()="Twitter supports video frame rates up to 60 fps. Your video is 120 fps."]');
 		this.socialNetworkErrorTitle = page.locator('//div[contains(@class, "vk-ProfileSelectorError")]//*[(@role="alert")]//*[text()="Oops! You forgot to select a social account"]', {locationStrategy: 'xpath'});
 		this.socialNetworkErrorDescription = page.locator('//div[contains(@class, "vk-ProfileSelectorError")]//*[(@role="alert")]//*[text()="Please choose one or more social accounts to publish to"]', {locationStrategy: 'xpath'});
-		this.firstCommentHeader = page.getByText('First comment', { exact: true });
+		this.firstCommentHeader = page.getByText('First comment', {exact: true});
 		this.firstCommentSubHeader = page.getByText('First comment is only available for direct publishing and for posts');
 		this.firstCommentTextArea = page.locator('.rc-MessageEditText [aria-label="First comment"].public-DraftEditor-content');
 		this.firstCommentPreview = page.locator('.vk-ComposerModal').getByTestId('preview-container').locator('.vk-InstagramFirstCommentPreview');
 		this.firstCommentHashtagSuggestion = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal .vk-StyledInstagramFirstCommentArea [aria-label="AI hashtag suggestions"]');
 		this.hashtagPanelCloseButton = page.locator('.vk-HashTagPanelCloseButton');
 		this.hashtagsArea = page.locator('.rc-Panel .-mediaContent', {locationStrategy: 'xpath'});
-		this.addHashtagButton = page.getByRole('button', { name: 'Add hashtags' });
+		this.addHashtagButton = page.getByRole('button', {name: 'Add hashtags'});
 		this.firstHashtagSuggestion = page.locator('.-mediaContent [data-testid="list-item-clickable"]', {locationStrategy: 'xpath'}).first();
 		this.emojiPicker = page.locator('.vk-ComposerModal [aria-label = "Add an emoji"]');
 		this.closeEmojiPicker = page.locator('.vk-ComposerModal [aria-label = "Close emoji picker"]');
 		this.firstEmojiFromList = page.locator('//*[contains(@class, "vk-ComposerModal")]//*[contains(@class, "epr-emoji-list")]//*[contains(@aria-label, "grinning")]', {locationStrategy: 'xpath'});
-		this.mediaReplacementModal = page.getByRole('heading', { name: 'Select the media you want to' });
+		this.mediaReplacementModal = page.getByRole('heading', {name: 'Select the media you want to'});
 		this.mediaReplacementModalCancelButton = page.locator('.vk-MediaReplaceModal .vk-SubmitButton', {locationStrategy: 'xpath'});
 		this.aiContentTips = page.locator('//*[contains(@class, "vk-ComposerModal")]//button[contains(text(), \'AI content tips\')]');
 		this.successTipContentLength = page.locator('//*[contains(@aria-label, "Successful tip")]//b[contains(text(), \'Content length\')]');
@@ -197,11 +197,19 @@ exports.ComposePage = class ComposePage {
 		this.oneTimeApproverDropDown = page.locator('.vk-ComposerModal .-messageSettingsContainer .vk-PillsInputWrapper svg');
 		this.oneTimeApproverDropDownInputSelector = page.locator('input[placeholder="Search for a team member to approve your post"]');
 		this.tiktokEngagementPanel = page.locator('.vk-ComposerModal #message-edit-content-tiktok .vk-StyledTiktokEngagementArea');
-		this.saveDraftModalTitle =page.locator('[role="dialog"] h3');
-		this.editLinkPreviewButton =  page.locator('.vk-ComposerModal [aria-labelledby="message-tab-bar-linkedIn"] [aria-label="Edit link preview"]');
+		this.saveDraftModalTitle = page.locator('[role="dialog"] h3');
+		this.editLinkPreviewButton = page.locator('.vk-ComposerModal [aria-labelledby="message-tab-bar-linkedIn"] [aria-label="Edit link preview"]');
 		this.linkPreviewThumbnail = page.locator('.vk-ComposerModal .vk-Thumbnail');
 		this.linkPreviewSaveButton = page.locator('.vk-ComposerModal [aria-label="Save"]');
 		this.removeLinkPreviewImage = page.locator('//*[contains(@role, "img") and text()="cancel"]');
+		this.addFBTargetAudienceButton = page.locator('.vk-FacebookTargetingWrapper a.vk-EditTargeting');
+		this.addLITargetAudienceButton = page.locator('.vk-AudienceTargetingWrapper  a.vk-EditTargeting');
+		this.fbAudienceCountryPicker = page.locator('.vk-SectionWrapper .vk-PillsInputBoxWrapper [placeholder="Search for a country"]');
+		this.audienceTargetingOptionsPopup = page.locator('.vk-TargetingEditModal');
+		this.addTargetAudienceButton = page.locator('//div[contains(@class, "vk-TargetingEditModal")]//button[contains(text(),"Add")]');
+		this.liAudienceLanguage = page.locator('.vk-SectionWrapper .vk-PillsInputBoxWrapper [placeholder="Select a language"]');
+		this.targetingEditModalAddButton = page.locator('//*[contains(@data-testid, "TargetingEditModalAddButton") and contains(text(), "Add")]');
+		this.appliedTargetValue = page.locator(' .vk-ComposerModal .vk-TargetingHeader ');
 	}
 
 	async setDarkLaunchCookies() {
@@ -790,6 +798,42 @@ exports.ComposePage = class ComposePage {
 	async selectSaveLinkPreviewButton() {
 		await expect(this.linkPreviewSaveButton).toBeVisible();
 		await this.linkPreviewSaveButton.click();
+	}
+
+	async selectAddFBTargetAudienceButton() {
+		await expect(this.addFBTargetAudienceButton).toBeVisible();
+		await this.addFBTargetAudienceButton.click();
+		await expect(this.audienceTargetingOptionsPopup).toBeVisible();
+	}
+
+	async setFBCountryTargetAudience(country) {
+		const selector = `//*[contains(@class, "vk-TargetingEditModal")]//*[contains(@class,"vk-ListItemWrapper")]//*[text()="${country}"]`;
+
+		await expect(this.fbAudienceCountryPicker).toBeVisible();
+		await this.fbAudienceCountryPicker.click();
+		await this.fbAudienceCountryPicker.pressSequentially(country);
+		await expect(this.page.locator(selector)).toBeVisible();
+		await this.page.locator(selector).click();
+	}
+
+	async selectAddLITargetAudienceButton() {
+		await expect(this.addLITargetAudienceButton).toBeVisible();
+		await this.addLITargetAudienceButton.click();
+		await expect(this.audienceTargetingOptionsPopup).toBeVisible();
+	}
+
+	async setLIAudienceLanguage(language) {
+		const selector = `//*[contains(@class, "vk-TargetingEditModal")]//*[contains(@class,"vk-ListItemWrapper")]//*[text()="${language}"]`;
+
+		await expect(this.liAudienceLanguage).toBeVisible();
+		await this.liAudienceLanguage.click();
+		await expect(this.page.locator(selector)).toBeVisible();
+		await this.page.locator(selector).click();
+	}
+
+	async selectApplyTargetAudienceButton() {
+		await expect(this.addTargetAudienceButton).toBeVisible();
+		await this.addTargetAudienceButton.click();
 	}
 
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {
