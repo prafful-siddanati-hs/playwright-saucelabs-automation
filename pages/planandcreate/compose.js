@@ -837,15 +837,15 @@ exports.ComposePage = class ComposePage {
 	async selectApplyTargetAudienceButton() {
 		await expect(this.addTargetAudienceButton).toBeVisible();
 		await this.addTargetAudienceButton.click();
-  }
-  
+	}
+
 	async writeAltText(altText) {
 		await expect(this.page.getByPlaceholder('Provide a description of the image...')).toBeVisible();
 		await this.altTextInputbox.click();
 		await this.altTextInputbox.fill(altText);
 		await expect(this.addAltTextButton).toBeVisible();
 		await this.addAltTextButton.click();
-  }
+	}
 
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {
 		const getAllScheduledMessages = new getScheduledMessages();
