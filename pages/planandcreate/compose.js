@@ -126,7 +126,7 @@ exports.ComposePage = class ComposePage {
 		this.linkedInHashtagLink = page.locator('.vk-LinkedInPreview .vk-MessageHashtag');
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 		this.moreButton = page.getByLabel('more', {exact: true});
-		this.saveDraftFromDropdown = page.getByRole('button', {name: 'Save as draft', exact: true});
+		this.saveDraftButton = page.getByRole('button', {name: 'Save as draft', exact: true});
 		this.addMediaButton = page.locator('.vk-ComposerModal [aria-label="Add media"]');
 		this.mediaLibraryButton = page.locator('.vk-ComposerModal [aria-label="Media library"]');
 		this.mediaLibraryCloseButton = page.getByRole('button', {name: 'Close media library'});
@@ -215,6 +215,8 @@ exports.ComposePage = class ComposePage {
 		this.appliedTargetValue = page.locator(' .vk-ComposerModal .vk-TargetingHeader ');
 		this.altTextInputbox = page.locator('[aria-label="Alternative text"] .vk-DescriptionInput textarea');
 		this.addAltTextButton = page.locator('.-applyAltTextButton');
+		this.inputCollaborators = page.locator('.vk-ComposerModal [data-testid="collaborators-input"]');
+		this.collaboratorPill = page.locator('.vk-ComposerModal [data-testid="collaborator-pill"] span');
 	}
 
 	async setDarkLaunchCookies() {
@@ -621,7 +623,7 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async saveDraft() {
-		await this.saveDraftFromDropdown.click();
+		await this.saveDraftButton.click();
 		await expect(this.composeScreen, 'Save draft failed from composer').not.toBeVisible();
 	}
 

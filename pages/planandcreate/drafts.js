@@ -21,6 +21,10 @@ exports.DraftsPage = class DraftsPage {
 		this.previewMedia = page.getByTestId('DetailPaneRenderer').locator('img');
 		this.confirmationModalSubmitButton = page.getByRole('button', { name: 'Delete post' });
 		this.tagContainerText = page.locator('.vk-Planner [data-testid="DetailPaneRenderer"] .vk-TagContainer label');
+		this.instagramPreviewMedia = page.getByTestId('DetailPaneRenderer').getByLabel('Instagram post preview').getByLabel('Image and Tagging Area, media 1 of 1, tagging disabled');
+		this.instagramPreviewText = page.locator('[data-testid = "DetailPaneRenderer"] [aria-label ="Instagram post preview"] p');
+		this.instagramCollaborators = page.locator('[data-testid = "DetailPaneRenderer"] [data-testid ="Info"] .vk-InstagramCollaboratorsDetails p');
+		this.instagramAltText = page.locator('[data-testid = "DetailPaneRenderer"] [data-testid ="Info"] .vk-AltText p');
 	}
 
 	async selectCreateButton() {
