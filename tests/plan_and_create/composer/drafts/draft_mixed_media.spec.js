@@ -2,9 +2,8 @@ const {test, expect} = require('@playwright/test');
 const tearDown = require('../../../../custom-commands/tearDown');
 const getFixture = require('../../../../custom-commands/getFixture');
 const { LoginPage } = require('../../../../pages/login');
-const { getObjectByName, plan_create } = require('../../../../globals');
+const { getObjectByName } = require('../../../../globals');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
-const {PlannerPage} = require('../../../../pages/planandcreate/planner');
 const {DraftsPage} = require('../../../../pages/planandcreate/drafts');
 let memberId, userName;
 

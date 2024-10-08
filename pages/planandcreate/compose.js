@@ -72,6 +72,7 @@ exports.ComposePage = class ComposePage {
 		this.facebookVideoPreviewSelector = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-VideoContainer .vk-VideoPlayer');
 		this.instagramReelVideoPreviewSelector = page.getByTestId('preview-container').locator('.vk-InstagramReelPreview .vk-StreamlinedVideo');
 		this.genericPreviewText = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-PreviewMessageText');
+		this.genericVideoPreview = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-VideoContainer');
 		this.basePreviewLayout = page.locator('.vk-PreviewBaseLayout');
 		this.twitterPreviewText = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-ContentBody');
 		this.facebookPreviewText = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody');
@@ -141,14 +142,14 @@ exports.ComposePage = class ComposePage {
 		this.mediaThumbnail = page.locator('.rc-MediaLibrary .-mediaContainer .MediaThumbnail');
 		this.altTextButton = page.getByLabel('Edit alternative text');
 		this.editImageButton = page.getByLabel('Edit image');
-		this.editVideButton = page.getByLabel('Edit video');
+		this.editVideoButton = page.getByLabel('Edit video');
 		this.mentionsList = page.locator('.vk-NewMentionsList');
 		this.twitterTab = page.getByLabel('Twitter content');
 		this.linkedInTab = page.getByLabel('LinkedIn content');
 		this.facebookPageTab = page.getByLabel('Facebook content');
 		this.tiktokTab = page.getByLabel('TikTok content');
 		this.instagramTab = page.getByLabel('Instagram content');
-		this.videoRemoveButton = page.locator('.rc-Composer .videoThumbnail .vk-MediaThumbnailDelete');
+		this.videoRemoveButton = page.locator('.rc-Composer .videoThumbnail .vk-MediaThumbnailDelete').first();
 		this.imageRemoveButton = page.locator('.rc-Composer .imageThumbnail .vk-MediaThumbnailDelete').first();
 		this.pdfRemoveButton = page.locator('.rc-Composer .pdfThumbnail .vk-MediaThumbnailDelete');
 		this.discardPost = page.getByRole('button', {name: 'Discard post'});
@@ -210,6 +211,8 @@ exports.ComposePage = class ComposePage {
 		this.liAudienceLanguage = page.locator('.vk-SectionWrapper .vk-PillsInputBoxWrapper [placeholder="Select a language"]');
 		this.targetingEditModalAddButton = page.locator('//*[contains(@data-testid, "TargetingEditModalAddButton") and contains(text(), "Add")]');
 		this.appliedTargetValue = page.locator(' .vk-ComposerModal .vk-TargetingHeader ');
+		this.altTextInputbox = page.locator('[aria-label="Alternative text"] .vk-DescriptionInput textarea');
+		this.addAltTextButton = page.locator('.-applyAltTextButton');
 	}
 
 	async setDarkLaunchCookies() {
@@ -834,7 +837,15 @@ exports.ComposePage = class ComposePage {
 	async selectApplyTargetAudienceButton() {
 		await expect(this.addTargetAudienceButton).toBeVisible();
 		await this.addTargetAudienceButton.click();
-	}
+  }
+  
+	async writeAltText(altText) {
+		await expect(this.page.getByPlaceholder('Provide a description of the image...')).toBeVisible();
+		await this.altTextInputbox.click();
+		await this.altTextInputbox.fill(altText);
+		await expect(this.addAltTextButton).toBeVisible();
+		await this.addAltTextButton.click();
+  }
 
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {
 		const getAllScheduledMessages = new getScheduledMessages();
