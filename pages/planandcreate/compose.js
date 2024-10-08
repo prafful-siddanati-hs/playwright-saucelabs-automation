@@ -195,6 +195,8 @@ exports.ComposePage = class ComposePage {
 		this.successTipEmojiRelenvance = page.locator('//*[contains(@aria-label, "Successful tip")]//b[contains(text(), \'Emoji relevance\')]');
 		this.successTipLink = page.locator('//*[contains(@aria-label, "Successful tip")]//b[contains(text(), \'Link\')]');
 		this.closeTips = page.locator('.rc-PanelContainerContent [aria-label="Close tips"]');
+		this.refreshButton = page.locator('.vk-ComposerModal .rc-PanelContainerContent [aria-label="Refresh"]');
+		this.successTip = page.locator('.vk-ComposerModal .rc-Panel [aria-label="Successful tip"]');
 		this.oneTimeApproverDropDown = page.locator('.vk-ComposerModal .-messageSettingsContainer .vk-PillsInputWrapper svg');
 		this.oneTimeApproverDropDownInputSelector = page.locator('input[placeholder="Search for a team member to approve your post"]');
 		this.tiktokEngagementPanel = page.locator('.vk-ComposerModal #message-edit-content-tiktok .vk-StyledTiktokEngagementArea');
