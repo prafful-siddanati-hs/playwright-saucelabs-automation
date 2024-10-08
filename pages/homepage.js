@@ -3,7 +3,7 @@ const {expect} = require('@playwright/test');
 exports.HomePage = class HomePage {
 	constructor(page) {
 		this.page = page;
-		this.homePageGlobalNavButton = page.getByLabel('Home');
+		this.homePageGlobalNavButton = page.locator('[data-dap-target="global-nav-apps-section"] [aria-label="Home"]');
 		this.homePageWidget = page.locator('.homepage-widget-inspirations');
 		this.homePageCreateButton = page.locator('//*[contains(@class, "homepage-welcome-header")]//*[contains(text(), "Create a post")]', {locationStrategy: 'xpath'});
 	}

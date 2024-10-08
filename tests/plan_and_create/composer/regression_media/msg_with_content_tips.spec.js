@@ -63,7 +63,10 @@ test('Verify AI content tips for composed message', async ({ page }) => {
 		await composePage.facebookPageTab.click();
 		await composePage.verifyFacebookPreview(composeBasicText);
 		await composePage.selectAIContentTipButton();
-		await composePage.verifyFBAIContentTips();
+		await composePage.refreshButton.click();
+		await expect(composePage.successTip.first()).toBeVisible();
+		const count = await composePage.successTip.count();
+		await expect(count).toBeGreaterThan(1);
 		await composePage.closeAIContentTips();
 	});
 
@@ -72,7 +75,10 @@ test('Verify AI content tips for composed message', async ({ page }) => {
 		await composePage.twitterTab.click();
 		await composePage.verifyTwitterPreview(composeBasicText);
 		await composePage.selectAIContentTipButton();
-		await composePage.verifyTWAIContentTips();
+		await composePage.refreshButton.click();
+		await expect(composePage.successTip.first()).toBeVisible();
+		const count = await composePage.successTip.count();
+		await expect(count).toBeGreaterThan(1);
 		await composePage.closeAIContentTips();
 	});
 
@@ -81,7 +87,10 @@ test('Verify AI content tips for composed message', async ({ page }) => {
 		await composePage.linkedInTab.click();
 		await composePage.verifyLinkedInPreview(composeBasicText);
 		await composePage.selectAIContentTipButton();
-		await composePage.verifyLIAIContentTips();
+		await composePage.refreshButton.click();
+		await expect(composePage.successTip.first()).toBeVisible();
+		const count = await composePage.successTip.count();
+		await expect(count).toBeGreaterThan(1);
 		await composePage.closeAIContentTips();
 	});
 
@@ -90,6 +99,9 @@ test('Verify AI content tips for composed message', async ({ page }) => {
 		await composePage.instagramTab.click();
 		await composePage.verifyInstagramPreview(composeBasicText);
 		await composePage.selectAIContentTipButton();
-		await composePage.verifyIGBAIContentTips();
+		await composePage.refreshButton.click();
+		await expect(composePage.successTip.first()).toBeVisible();
+		const count = await composePage.successTip.count();
+		await expect(count).toBeGreaterThan(1);
 	});
 });
