@@ -438,6 +438,11 @@ exports.PlannerPage = class PlannerPage {
 		await this.createPostButton.click();
 	}
 
+	async checkAltText(text) {
+		await expect(this.altTextDescription).toBeVisible();
+		await expect(this.altTextDescription).toHaveText(text);
+	}
+
 	async dragAndDropCard(message, hour, id) {
 		const nextDayDate = format(utcToZonedTime(addDays(startOfWeek(addWeeks(new Date(), 1)), 1), timeZone), 'eeee, d MMMM');
 		const nextDayTime = format(utcToZonedTime(addDays(startOfWeek(addWeeks(new Date(), 1)), 1), timeZone), 'ha');
