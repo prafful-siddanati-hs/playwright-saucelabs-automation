@@ -73,7 +73,7 @@ test('Verify composer message editor for twitter\'s 280 characters limit', async
 
 	await test.step('Verify character count is not affected when image is uploaded', async () => {
 		await composePage.uploadMediaFile('test_data/publisher/images');
-		await expect(composePage.twitterSingleImagePreview).toBeVisible();
+		await expect(composePage.twitterPreviewSingleImage).toBeVisible();
 		await expect(composePage.messageCharCount).toHaveText('280 / 280');
 	});
 });

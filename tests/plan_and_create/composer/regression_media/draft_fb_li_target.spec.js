@@ -5,9 +5,6 @@ const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const { TagComponentPage } = require('../../../../pages/planandcreate/tagComponent');
 const getFixture = require('../../../../custom-commands/getFixture');
 const {DraftsPage} = require('../../../../pages/planandcreate/drafts');
-const {getObjectByName} = require('../../../../globals');
-
-let userName;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -16,7 +13,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Create draft for FB anf LI with target audience', async ({ page }) => {
+test('Create draft for FB and LI with target audience', async ({ page }) => {
 	const composeBasicText = 'Test FB and LI Target' + ` ${Math.floor(Math.random() * 100)}`;
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
@@ -28,7 +25,6 @@ test('Create draft for FB anf LI with target audience', async ({ page }) => {
 
 	await test.step('Setup user & accounts', async () => {
 		await addFixture.command('draft_target', 'linkedin_enterprise', true, 300);
-		userName = getObjectByName(global.fixture, 'draft_target').username;
 	});
 
 	await test.step('Login as pro test user', async () => {
