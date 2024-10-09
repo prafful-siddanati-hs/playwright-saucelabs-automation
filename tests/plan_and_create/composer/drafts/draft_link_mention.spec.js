@@ -61,7 +61,7 @@ test('Create draft with facebook message with mention and link', async ({ page }
 		await expect(composePage.emptyFacebookPreview).toBeVisible();
 	});
 
-	await test.step('Write a message with mention', async () => {
+	await test.step('Write a message with link and mention', async () => {
 		await composePage.writeMessage(`${scheduleText}`);
 		await composePage.messageArea.pressSequentially(`@${initialMention}`);
 		await composePage.verifyFacebookPreview(`${scheduleText}@${initialMention}`);
