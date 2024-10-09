@@ -25,6 +25,7 @@ exports.DraftsPage = class DraftsPage {
 		this.instagramPreviewText = page.locator('[data-testid = "DetailPaneRenderer"] [aria-label ="Instagram post preview"] p');
 		this.instagramCollaborators = page.locator('[data-testid = "DetailPaneRenderer"] [data-testid ="Info"] .vk-InstagramCollaboratorsDetails p');
 		this.instagramAltText = page.locator('[data-testid = "DetailPaneRenderer"] [data-testid ="Info"] .vk-AltText p');
+		this.facebookPreviewText = page.locator('[data-testid = "DetailPaneRenderer"] .vk-FacebookPreview .vk-ContentBody p');
 	}
 
 	async selectCreateButton() {
