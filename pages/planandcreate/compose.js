@@ -217,6 +217,11 @@ exports.ComposePage = class ComposePage {
 		this.addAltTextButton = page.locator('.-applyAltTextButton');
 		this.inputCollaborators = page.locator('.vk-ComposerModal [data-testid="collaborators-input"]');
 		this.collaboratorPill = page.locator('.vk-ComposerModal [data-testid="collaborator-pill"] span');
+		this.imageEditorCanvas = page.locator('[data-testid="imageEditor"] canvas[aria-label="Canvas"]');
+		this.imageEditorStickers = page.locator('[data-testid="imageEditor"] li button[aria-label="Stickers"]');
+		this.emoticonStickers= page.locator('[data-testid="imageEditor"] button[data-test="Emoticons"]');
+		this.grinEmoticonSticker = page.locator('[data-testid="imageEditor"] [data-test="Grin"]');
+		this.imageEditorSaveButton = page.locator('#fe-app-image-editor button[aria-label="Save"]');
 	}
 
 	async setDarkLaunchCookies() {
