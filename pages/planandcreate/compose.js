@@ -216,6 +216,8 @@ exports.ComposePage = class ComposePage {
 		this.appliedTargetValue = page.locator(' .vk-ComposerModal .vk-TargetingHeader ');
 		this.altTextInputbox = page.locator('[aria-label="Alternative text"] .vk-DescriptionInput textarea');
 		this.addAltTextButton = page.locator('.-applyAltTextButton');
+		this.altTextCharLimit = page.locator('[role="dialog"] .vk-AltTextLabelWrapper span +div');
+		this.altTextDialogCloseButton = page.locator('[role="dialog"] [aria-label="Close"]');
 		this.inputCollaborators = page.locator('.vk-ComposerModal [data-testid="collaborators-input"]');
 		this.collaboratorPill = page.locator('.vk-ComposerModal [data-testid="collaborator-pill"] span');
 		this.imageEditorCanvas = page.locator('[data-testid="imageEditor"] canvas[aria-label="Canvas"]');
@@ -453,6 +455,7 @@ exports.ComposePage = class ComposePage {
 	async verifyLinkedInImagePreview() {
 		const isImageVisible = await Promise.race([
 			this.linkedInPreviewSingleImage.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
+			this.linkedInCompanyPreviewSingleImage.waitFor({ timeout: 10000 }).then(() => true).catch(() => false),
 			this.linkedInPreviewMediaContainer.waitFor({ timeout: 10000 }).then(() => true).catch(() => false)
 		]);
 
