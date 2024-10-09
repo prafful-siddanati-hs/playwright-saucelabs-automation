@@ -17,9 +17,9 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Create draft with facebook message with mention ', async ({ page }) => {
+test('Create draft with facebook message with mention and link', async ({ page }) => {
 	const initialMention = plan_create.getFaceBookPageMention();
-	const scheduleText = `Message mention ${plan_create.getRandomUrl()} `;
+	const scheduleText = `Message mention ${plan_create.getRandomUrl()}  ${Math.floor(Math.random() * 100)}`;
 
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
