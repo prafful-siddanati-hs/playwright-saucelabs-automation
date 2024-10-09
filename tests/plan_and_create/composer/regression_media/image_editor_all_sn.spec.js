@@ -34,9 +34,9 @@ test('Verify image editor functions for all networks', async ({page}) => {
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.searchSocialProfile('DevtestCo'); // LinkedIn
-		await composePage.searchSocialProfile('CharlesClassOwl'); //Twitter
-		await composePage.searchSocialProfile('freshestdonut'); //Threads
-		await composePage.searchSocialProfile('hoot_igb'); //Instagram
+		await composePage.searchSocialProfile('CharlesClassOwl'); // Twitter
+		await composePage.searchSocialProfile('freshestdonut'); // Threads
+		await composePage.searchSocialProfile('hoot_igb'); // Instagram
 		await expect(composePage.postToWrapper).toBeVisible();
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
@@ -48,6 +48,10 @@ test('Verify image editor functions for all networks', async ({page}) => {
 
 	await test.step('Upload an external image file', async () => {
 		await composePage.uploadMediaFile('test_data/publisher/images', 'test_data/publisher/images/Art.png');
+		await expect(composePage.twitterPreviewSingleImage).toBeVisible();
+		await expect(composePage.linkedInCompanyPreviewSingleImage).toBeVisible();
+		await expect(composePage.instagramPreviewSingleImage).toBeVisible();
+		await expect(composePage.threadsPreviewSingleImage).toBeVisible();
 	});
 
 	await test.step('Verify edit image option is present for uploaded image', async () => {
@@ -55,6 +59,19 @@ test('Verify image editor functions for all networks', async ({page}) => {
 		await expect(composePage.editImageButton).toBeVisible();
 		await expect(composePage.altTextButton).toBeVisible();
 		await expect(composePage.editVideoButton).not.toBeVisible();
+	});
+
+	await test.step('Edit uploaded image from image editor', async () => {
+		await composePage.editImageButton.first().click();
+		await expect(composePage.imageEditorCanvas).toBeVisible();
+		await expect(composePage.imageEditorStickers).toBeVisible();
+		await composePage.imageEditorStickers.click();
+		await expect(composePage.emoticonStickers).toBeVisible();
+		await composePage.emoticonStickers.click();
+		await composePage.grinEmoticonSticker.click();
+		await expect(composePage.imageEditorSaveButton).toBeVisible();
+		await composePage.imageEditorSaveButton.click();
+		await expect(composePage.imageEditorCanvas).not.toBeVisible();
 	});
 
 	await test.step('Upload an image from media library', async () => {
@@ -68,21 +85,6 @@ test('Verify image editor functions for all networks', async ({page}) => {
 		await expect(composePage.editImageButton).toHaveCount(2);
 		await expect(composePage.altTextButton).toHaveCount(2);
 		await expect(composePage.editVideoButton).not.toBeVisible();
-	});
-
-	await test.step('Edit uploaded image from image editor', async () => {
-		await page.getByLabel('Art.png').hover();
-		await page.waitForTimeout(1000);
-		await composePage.editImageButton.first().click();
-		await expect(composePage.imageEditorCanvas).toBeVisible();
-		await expect(composePage.imageEditorStickers).toBeVisible();
-		await composePage.imageEditorStickers.click();
-		await expect(composePage.emoticonStickers).toBeVisible();
-		await composePage.emoticonStickers.click();
-		await composePage.grinEmoticonSticker.click();
-		await expect(composePage.imageEditorSaveButton).toBeVisible();
-		await composePage.imageEditorSaveButton.click();
-		await expect(composePage.imageEditorCanvas).not.toBeVisible();
 	});
 
 	await test.step('Edit image from media library', async () => {

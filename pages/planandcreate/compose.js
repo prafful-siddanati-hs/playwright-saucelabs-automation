@@ -31,8 +31,8 @@ exports.ComposePage = class ComposePage {
 		this.genericPreviewSingleImage = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-MediaImg');
 		this.genericFacebookLinkPreviewMedia = page.locator('.vk-ComposerModal [aria-label="generic post preview"] .vk-FacebookPreview .vk-LinkPreviewMedia');
 		this.genericTwitterLinkPreviewMedia = page.locator('.vk-ComposerModal [aria-label="generic post preview"] .vk-TwitterPreview .vk-LinkPreviewMedia');
-		this.twitterPreviewSingleImage = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaImg');
-		this.twitterPreviewSingleVideo = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-VideoContainer');
+		this.twitterPreviewSingleImage = page.locator('.vk-ComposerModal [type="TWITTER"] .vk-TwitterPreview .vk-MediaImg');
+		this.twitterPreviewSingleVideo = page.locator('.vk-ComposerModal [type="TWITTER"] .vk-TwitterPreview .vk-VideoContainer');
 		this.twitterPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaContainer');
 		this.imagePublishLimit = page.locator('.vk-ComposerModal  .rc-MessageEditContent [role="alert"]');
 		this.emptyTwitterPreview = page.locator('.vk-ComposerModal .vk-TwitterPreview');
@@ -48,8 +48,8 @@ exports.ComposePage = class ComposePage {
 		this.facebookPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-MediaContainer');
 		this.instagramPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-InstagramPreview .vk-MediaContainer');
 		this.linkedInPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-MediaContainer');
-		this.threadsPreviewSingleImage = page.locator('.vk-ComposerModal .vk-ThreadsPreview .vk-MediaImg');
-		this.threadsPreviewSingleVideo = page.locator('.vk-ComposerModal .vk-ThreadsPreview .vk-VideoContainer');
+		this.threadsPreviewSingleImage = page.locator('.vk-ComposerModal [type="THREADS"] .vk-ThreadsPreview .vk-MediaImg');
+		this.threadsPreviewSingleVideo = page.locator('.vk-ComposerModal [type="THREADS"] .vk-ThreadsPreview .vk-VideoContainer');
 		this.messageArea = page.locator('.rc-MessageEditText [aria-label="Text"].public-DraftEditor-content');
 		this.emojiButton = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="Add an emoji"]');
 		this.hashTagSuggestions = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="AI hashtag suggestions"]');
@@ -83,7 +83,6 @@ exports.ComposePage = class ComposePage {
 		this.twitterLinkPreviewTitle = page.locator('.rc-Composer .vk-TwitterPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
 		this.twitterLinkPreviewSource = page.locator('.rc-Composer .vk-TwitterPreview .vk-MessageLinkPreview .vk-Source');
 		this.twitterLinkPrevewMedia = page.locator('.rc-Composer .vk-TwitterPreview .vk-MessageLinkPreview .vk-LinkPreviewMedia');
-		this.twitterSingleImagePreview = page.locator('.rc-Composer [type="TWITTER"] .vk-TwitterPreview .vk-MediaImg');
 		this.facebookMessageLink = page.locator('.rc-Composer .vk-FacebookPreview .vk-ContentBody .vk-MessageLink');
 		this.facebookLinkPreviewTitle = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-LinkPreviewTitle');
 		this.facebookLinkPreviewSource = page.locator('.rc-Composer .vk-FacebookPreview .vk-MessageLinkPreview .vk-Source');
@@ -99,7 +98,8 @@ exports.ComposePage = class ComposePage {
 		this.igPostToggleDropdown = page.locator('.vk-ComposerModal .vk-ListItemWrapper[aria-label="Instagram Post"]');
 		this.instagramStoryPreviewSingleImage = page.locator('//*[contains(@class,"vk-PortraitImage") or contains(@class,"vk-ImageContainer")]', {locationStrategy: 'xpath'});
 		this.linkedInPreviewSingleImage = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-MediaImg');
-		this.linkedInCompanyPreviewSingleImage = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-MediaImg');
+		this.linkedInCompanyPreviewSingleImage = page.locator('.vk-ComposerModal [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-MediaImg');
+		this.linkedInCompanyPreviewSingleVideo = page.locator('.vk-ComposerModal [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-VideoContainer');
 		this.instagramReelPreviewText = page.locator('.vk-ComposerModal').getByTestId('preview-container').locator('.vk-InstagramReelPreview');
 		this.linkedInPreviewText = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-ContentBody p, .vk-ComposerModal .vk-LinkedInPreview .vk-ContentBody p');
 		this.linkedInCompanyPreviewText = page.locator('.vk-ComposerModal [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-ContentBody p');
@@ -143,6 +143,7 @@ exports.ComposePage = class ComposePage {
 		this.altTextButton = page.getByLabel('Edit alternative text');
 		this.editImageButton = page.getByLabel('Edit image');
 		this.editVideoButton = page.getByLabel('Edit video');
+		this.videoSettingsButton = page.getByLabel('Video settings');
 		this.mentionsList = page.locator('.vk-NewMentionsList');
 		this.twitterTab = page.getByLabel('Twitter content');
 		this.linkedInTab = page.getByLabel('LinkedIn content');
@@ -218,7 +219,9 @@ exports.ComposePage = class ComposePage {
 		this.inputCollaborators = page.locator('.vk-ComposerModal [data-testid="collaborators-input"]');
 		this.collaboratorPill = page.locator('.vk-ComposerModal [data-testid="collaborator-pill"] span');
 		this.imageEditorCanvas = page.locator('[data-testid="imageEditor"] canvas[aria-label="Canvas"]');
+		this.videoEditorCanvas = page.locator('[data-testid="videoEditor"] #root-shadow');
 		this.imageEditorStickers = page.locator('[data-testid="imageEditor"] li button[aria-label="Stickers"]');
+		this.videoEditorStickers = page.getByRole('button', { name: 'Stickers' });
 		this.emoticonStickers= page.locator('[data-testid="imageEditor"] button[data-test="Emoticons"]');
 		this.grinEmoticonSticker = page.locator('[data-testid="imageEditor"] [data-test="Grin"]');
 		this.imageEditorSaveButton = page.locator('#fe-app-image-editor button[aria-label="Save"]');

@@ -18,11 +18,11 @@ test('Verify video editor functions for all networks', async ({page}) => {
 	const composePage = new ComposePage(page);
 
 	await test.step('Setup user & accounts', async () => {
-		await addFixture.command('all_sn_image_editor', 'linkedin_enterprise', true, 300);
+		await addFixture.command('all_sn_video_editor', 'linkedin_enterprise', true, 300);
 	});
 
 	await test.step('Login as pro user', async () => {
-		await loginPage.signInAsProUser('all_sn_image_editor');
+		await loginPage.signInAsProUser('all_sn_video_editor');
 	});
 
 	await test.step('Select new compose button', async () => {
@@ -34,28 +34,45 @@ test('Verify video editor functions for all networks', async ({page}) => {
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.searchSocialProfile('DevtestCo'); // LinkedIn
-		await composePage.searchSocialProfile('CharlesClassOwl'); //Twitter
-		await composePage.searchSocialProfile('freshestdonut'); //Threads
-		await composePage.searchSocialProfile('hoot_igb'); //Instagram
-		await composePage.searchSocialProfile('nimataheri89'); //Tiktok
+		await composePage.searchSocialProfile('freshestdonut'); // Threads
+		await composePage.searchSocialProfile('hoot_igb'); // Instagram
+		await composePage.searchSocialProfile('nimataheri89'); // Tiktok
 		await expect(composePage.postToWrapper).toBeVisible();
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
 		await expect(composePage.emptyLinkedInPreview).toBeVisible();
 		await expect(composePage.emptyThreadsPreview).toBeVisible();
-		await expect(composePage.emptyTwitterPreview).toBeVisible();
 		await expect(composePage.emptyInstagramPreview).toBeVisible();
+		await expect(composePage.emptyTiktokPreview).toBeVisible();
 	});
 
-	await test.step('Upload an external image file', async () => {
+	await test.step('Upload a video file', async () => {
 		await composePage.uploadMediaFile('test_data/publisher/videos', 'test_data/publisher/videos/tiktok_video.mp4');
+		await expect(composePage.linkedInCompanyPreviewSingleVideo).toBeVisible();
+		await expect(composePage.instagramReelPreviewSingleVideo).toBeVisible();
+		await expect(composePage.threadsPreviewSingleVideo).toBeVisible();
+		await expect(composePage.tiktokVideoPreview).toBeVisible();
 	});
 
-	await test.step('Verify edit image option is present for uploaded image', async () => {
+	await test.step('Verify edit video option is present', async () => {
 		await page.getByLabel('tiktok_video.mp4').hover();
-		await expect(composePage.editImageButton).toBeVisible();
-		await expect(composePage.altTextButton).toBeVisible();
-		await expect(composePage.editVideoButton).not.toBeVisible();
+		await page.waitForTimeout(1000);
+		await expect(composePage.editImageButton).not.toBeVisible();
+		await expect(composePage.altTextButton).not.toBeVisible();
+		await expect(composePage.videoSettingsButton).toBeVisible();
+		await expect(composePage.editVideoButton).toBeVisible();
+		await composePage.editVideoButton.click();
 	});
 
+	await test.step('Edit uploaded video from video editor', async () => {
+		let videoSticker = page.getByLabel('imgly_sticker_emoticons_alien');
+		await expect(composePage.videoEditorCanvas).toBeVisible();
+		await expect(composePage.videoEditorStickers).toBeVisible();
+		await composePage.videoEditorStickers.click();
+		await expect(videoSticker).toBeVisible();
+		await videoSticker.click();
+		await expect(composePage.imageEditorSaveButton).toBeVisible();
+		await composePage.imageEditorSaveButton.click();
+		await expect(composePage.videoEditorCanvas).not.toBeVisible();
+	});
 });
