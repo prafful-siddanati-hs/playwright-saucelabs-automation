@@ -16,7 +16,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Send instagram message with collaborator', async ({ page }) => {
+test('Schedule instagram message with collaborator', async ({ page }) => {
 	const scheduleText = 'Schedule IGB with collaborator ' + Math.floor(Math.random() * 1000);
 
 	const addFixture = new getFixture();

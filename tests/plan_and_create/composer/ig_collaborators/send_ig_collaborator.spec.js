@@ -71,7 +71,7 @@ test('Send instagram message with collaborator', async ({ page }) => {
 		await expect(composePage.instagramPreviewHeaderName).toHaveText(`${igbProfile} and ${igbCollaborator}`);
 	});
 
-	await test.step('Send message to instagram with first comment', async () => {
+	await test.step('Send message to instagram with collaborator', async () => {
 		await composePage.sendNow();
 	});
 });
