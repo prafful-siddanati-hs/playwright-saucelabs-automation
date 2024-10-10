@@ -135,9 +135,7 @@ module.exports = {
 				'Nat-Test Center, Yangon',
 				'MentionSocials',
 				'M.E.N',
-				'Men\'s Health (TEST)',
-				'User',
-				'user',
+				'Men\'s Health (TEST)'
 			];
 			return MENTIONS[Math.floor(Math.random() * MENTIONS.length)];
 		},

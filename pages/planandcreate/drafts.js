@@ -17,6 +17,8 @@ exports.DraftsPage = class DraftsPage {
 		this.editButtonOnListView = page.getByLabel('Edit post');
 		this.deleteButtonOnSidePane = page.getByTestId('DeleteButton');
 		this.editButtonOnSidePane = page.getByTestId('DetailPaneRenderer').getByLabel('Edit post');
+		this.moreActionsButtonOnSidePane = page.getByTestId('DetailPaneRenderer').getByLabel('More actions');
+		this.duplicateButtonOnSidePane = page.locator('//*[contains(@data-testid, DetailPaneRenderer)]//*[contains(@class,vk-ListItemWrapper)]//*[text()="Duplicate"]');
 		this.previewMessageText = page.getByTestId('DetailPaneRenderer').locator('.vk-PreviewMessageText');
 		this.previewMedia = page.getByTestId('DetailPaneRenderer').locator('img');
 		this.confirmationModalSubmitButton = page.getByRole('button', { name: 'Delete post' });
