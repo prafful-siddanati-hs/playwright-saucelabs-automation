@@ -327,7 +327,6 @@ module.exports = {
 			});
 		});
 	},
-
 	/**
          * Function to get object from Playwright's global storage
          *
