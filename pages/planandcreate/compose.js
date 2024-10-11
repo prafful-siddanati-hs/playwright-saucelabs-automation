@@ -155,6 +155,7 @@ exports.ComposePage = class ComposePage {
 		this.imageRemoveButton = page.locator('.rc-Composer .imageThumbnail .vk-MediaThumbnailDelete').first();
 		this.pdfRemoveButton = page.locator('.rc-Composer .pdfThumbnail .vk-MediaThumbnailDelete');
 		this.discardPost = page.getByRole('button', {name: 'Discard post'});
+		this.discardChanges = page.getByRole('button', {name: 'Discard changes'});
 		this.shortenWithOwlyButton = page.getByLabel('Shorten with Ow.ly');
 		this.clearOwlyShorteningButton = page.locator('.rc-Composer [aria-label="Clear Ow.ly shortening"]');
 		this.addTrackingButton = page.getByLabel('Add tracking');
