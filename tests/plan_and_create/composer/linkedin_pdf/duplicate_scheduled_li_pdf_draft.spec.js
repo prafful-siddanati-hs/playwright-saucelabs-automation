@@ -3,7 +3,7 @@ const { test, expect } = require('@playwright/test');
 const createUser = require('../../../../custom-commands/createUser');
 const getFixture = require('../../../../custom-commands/getFixture');
 const tearDown = require('../../../../custom-commands/tearDown');
-const { getObjectByName } = require('../../../../globals');
+const { getObjectByName, plan_create } = require('../../../../globals');
 const { formatISO, addHours } = require('date-fns');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
@@ -64,6 +64,7 @@ test('Duplicate a scheduled draft with LinkedIn PDF', async ({ page }) => {
 				getObjectByName(global.fixture, 'li_pdf_scheduled_draft').socialProfile.socialProfileId,
 				pdfDraftText,
 				'LINKEDIN',
+				plan_create.getRandomPDF(),
 				formatISO(draftScheduleTime),
 			);
 		} catch (error) {

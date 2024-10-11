@@ -87,9 +87,10 @@ exports.DraftsPage = class DraftsPage {
 
 	/**
 	 * Creates a draft message via API by network.
+	 * 'attachments' is an optional parameter. For text-only drafts default value is [].
 	 * 'draftScheduleTime' is an optional parameter to create either scheduled or unscheduled draft.
 	 */
-	async createDraftViaApiByNetwork(memberId, orgId, snId, message, socialNetwork, draftScheduleTime = null) {
+	async createDraftViaApiByNetwork(memberId, orgId, snId, message, socialNetwork, attachments = [], draftScheduleTime = null) {
 		const createDraft = new draftMessage();
 		const orgid = orgId ? orgId : null;
 
@@ -102,7 +103,6 @@ exports.DraftsPage = class DraftsPage {
 			draftMessage: {
 				text: message,
 				messageType: 'draft',
-				publishingMode: 'IG_PUSH',
 				messages: [
 					{
 						message: message,
@@ -110,7 +110,7 @@ exports.DraftsPage = class DraftsPage {
 						snId: snId.toString()
 					}
 				],
-				attachments: [plan_create.getRandomPDF()]
+				attachments: [attachments]
 			}
 		};
 		if (draftScheduleTime) {

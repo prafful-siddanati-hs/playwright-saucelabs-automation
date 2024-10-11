@@ -3,7 +3,7 @@ const { test, expect } = require('@playwright/test');
 const createUser = require('../../../../custom-commands/createUser');
 const getFixture = require('../../../../custom-commands/getFixture');
 const tearDown = require('../../../../custom-commands/tearDown');
-const { getObjectByName } = require('../../../../globals');
+const { getObjectByName, plan_create } = require('../../../../globals');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const { PlannerPage } = require('../../../../pages/planandcreate/planner');
@@ -58,7 +58,8 @@ test('Schedule a LinkedIn PDF post from draft', async ({ page }) => {
 				null,
 				getObjectByName(global.fixture, 'li_pdf_draft').socialProfile.socialProfileId,
 				pdfDraftText,
-				'LINKEDIN'
+				'LINKEDIN',
+				plan_create.getRandomPDF()
 			);
 		} catch (error) {
 			throw new Error(`Failed to create unscheduled draft: ${error}`);
