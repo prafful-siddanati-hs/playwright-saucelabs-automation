@@ -97,6 +97,7 @@ exports.ComposePage = class ComposePage {
 		this.igStoryToggleDropdown = page.locator('.vk-ComposerModal .vk-ListItemWrapper[aria-label="Instagram Story"]');
 		this.igPostToggleDropdown = page.locator('.vk-ComposerModal .vk-ListItemWrapper[aria-label="Instagram Post"]');
 		this.instagramStoryPreviewSingleImage = page.locator('//*[contains(@class,"vk-PortraitImage") or contains(@class,"vk-ImageContainer")]', {locationStrategy: 'xpath'});
+		this.instagramPreviewHeaderName = page.locator('.vk-ComposerModal .vk-InstagramPreview .vk-InstagramPreviewHeader .vk-Name');
 		this.linkedInPreviewSingleImage = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-MediaImg');
 		this.linkedInCompanyPreviewSingleImage = page.locator('.vk-ComposerModal [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-MediaImg');
 		this.linkedInCompanyPreviewSingleVideo = page.locator('.vk-ComposerModal [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-VideoContainer');

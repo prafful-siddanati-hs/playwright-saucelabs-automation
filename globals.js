@@ -214,6 +214,18 @@ module.exports = {
 			return URLS[Math.floor(Math.random() * URLS.length)];
 		},
 
+		getInstagramBusinessCollaborator: function () {
+			const MESSAGE = [
+				'hootpncigb_1',
+				'hoot_wave_igb',
+				'hootpncigb_stgthree',
+				'hootpncigbstg_four',
+				'hoot_over_water',
+				'0wlsaway'
+			];
+			return MESSAGE[Math.floor(Math.random() * MESSAGE.length)];
+		},
+
 		getSBETestUrl: function () {
 			const URLS = [
 				'https://www.scottish-enterprise.com',

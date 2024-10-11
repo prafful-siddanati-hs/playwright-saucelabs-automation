@@ -169,6 +169,8 @@ exports.PlannerPage = class PlannerPage {
 		this.altTextDescription = page.locator('.vk-AltText p');
 		this.previewPaneNetworkType = page.locator('.vk-Planner .vk-DetailPane .vk-NetworkType');
 		this.previewPaneScheduledTime = page.locator('.vk-DetailPane .vk-ScheduledTime');
+		this.instagramPreviewHeaderName = page.locator('.vk-Planner .vk-InstagramPreview .vk-InstagramPreviewHeader .vk-Name');
+		this.instagramCollaboratorsonSidePane = page.locator('.vk-Planner .vk-DetailPane [data-testid = "Info"] .vk-InstagramCollaboratorsDetails p');
 		this.viewApprovalHistory = page.getByLabel('View approval history');
 		this.approvalDescription = page.locator('.-modalDialog .-content .-description');
 		this.approvalHistoryFirstDetails = page.locator('.-modalDialog .-action:nth-child(1) .-description');
