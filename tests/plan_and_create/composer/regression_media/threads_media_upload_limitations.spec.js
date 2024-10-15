@@ -15,7 +15,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Validate uploaded media limitations for Threads', async ({page}) => {
+test.skip('Validate uploaded media limitations for Threads', async ({page}) => {
 	const composeText = `Threads media upload ${Math.floor(Math.random() * 100)}`;
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);

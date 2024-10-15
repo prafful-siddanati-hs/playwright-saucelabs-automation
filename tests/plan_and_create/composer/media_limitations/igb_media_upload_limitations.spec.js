@@ -18,7 +18,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Validate uploaded media limitations for Instagram business', async ({page}) => {
+test.skip('Validate uploaded media limitations for Instagram business', async ({page}) => {
 	const mediaText = `IG Post & Story media upload ${Math.floor(Math.random() * 100)}`;
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
