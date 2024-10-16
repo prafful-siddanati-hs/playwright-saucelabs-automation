@@ -22,6 +22,7 @@ exports.ComposePage = class ComposePage {
 		this.snPilltext = page.locator('.vk-ComposerModal .vk-PillText');
 		this.postToWrapper = page.locator('.vk-PostToWrapper');
 		this.profileListItemTitle = page.locator('.vk-ComposerModal .vk-ProfileListItemTitle');
+		this.clearAccountsButton = page.locator('.vk-ComposerModal .vk-ClearProfileButtonAnchor');
 		this.composerHeader = page.locator('.vk-ComposerHeader');
 		this.previewNetworkType = page.locator('.vk-ComposerModal [type="INSTAGRAMBUSINESS"] .vk-MessagePreviewHeader .vk-NetworkType');
 		this.tabContent = page.locator('.vk-ComposerModal .vk-TabContent');
@@ -73,6 +74,7 @@ exports.ComposePage = class ComposePage {
 		this.instagramReelVideoPreviewSelector = page.getByTestId('preview-container').locator('.vk-InstagramReelPreview .vk-StreamlinedVideo');
 		this.genericPreviewText = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-PreviewMessageText');
 		this.genericVideoPreview = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-VideoContainer');
+		this.genericProfileName = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-Name');
 		this.basePreviewLayout = page.locator('.vk-PreviewBaseLayout');
 		this.twitterPreviewText = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-ContentBody');
 		this.facebookPreviewText = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody');
