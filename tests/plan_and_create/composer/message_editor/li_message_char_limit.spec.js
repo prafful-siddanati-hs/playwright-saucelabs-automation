@@ -81,7 +81,7 @@ test('Verify the LinkedIn message character limit that are above and below the 3
 	});
 
 	await test.step('Upload single image and verify its preview', async () => {
-		await composePage.uploadMediaFile('test_data/publisher/images');
+		await composePage.uploadMediaFile('test_data/publisher/images', 'test_data/publisher/images/coffee.jpg');
 		await expect(composePage.linkedInPreviewSingleImage).toBeVisible();
 		await expect(composePage.linkedInPreviewSingleImage).toHaveAttribute('src', /staging/);
 	});
