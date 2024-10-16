@@ -79,4 +79,11 @@ test('Verify one time approver is only enabled for enterprise user', async ({pag
 		await expect(page.getByText('Invite a team member with access to the selected accounts to approve this post first.')).toBeVisible();
 		await expect(composePage.oneTimeApproverDropDown).toBeVisible();
 	});
+
+	await test.step('Remove the selected network and verify one time approver field is not displayed', async () => {
+		await page.getByLabel(`Clear selection ${enterpriseUserLinkedin}`).click();
+		await expect(page.getByRole('heading', { name: 'Ask for approval' })).not.toBeVisible();
+		await expect(page.getByText('Invite a team member with access to the selected accounts to approve this post first.')).not.toBeVisible();
+		await expect(composePage.oneTimeApproverDropDown).not.toBeVisible();
+	});
 });

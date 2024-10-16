@@ -46,13 +46,13 @@ test('Add one time approver to unscheduled draft', async ({ page }) => {
 		team3sMemberId = global.member[1].memberId;
 	});
 
-	await page.pause();
 	await test.step('Login as team3s user', async () => {
 		await loginPage.signInSkipOnboarding('draft_team3s_author');
 	});
 
 	await test.step('Hide native posts & recommended times', async () => {
 		await plannerPage.hideNativePosts(team3sMemberId);
+		await plannerPage.hideRecommendedTimes(team3sMemberId);
 	});
 
 	await test.step('Delete residual drafts', async () => {
@@ -126,6 +126,7 @@ test('Add one time approver to unscheduled draft', async ({ page }) => {
 
 	await test.step('Hide native posts', async () => {
 		await plannerPage.hideNativePosts(reviewerMemberId);
+		await plannerPage.hideRecommendedTimes(reviewerMemberId);
 	});
 
 	await test.step('Navigate to planner for teams user', async () => {
@@ -141,7 +142,7 @@ test('Add one time approver to unscheduled draft', async ({ page }) => {
 		await expect(plannerPage.previewPaneRejectButton).toBeVisible();
 		await plannerPage.previewPaneRejectButton.click();
 		await expect(plannerPage.rejectModalInput).toBeVisible();
-		await plannerPage.rejectModalInput.fill('Wrong PDF');
+		await plannerPage.rejectModalInput.fill('Wrong Content');
 		await expect(plannerPage.rejectModalRejectButton).toBeVisible();
 		await plannerPage.rejectModalRejectButton.click();
 		await expect(composePage.feCallOuts).toBeVisible();
