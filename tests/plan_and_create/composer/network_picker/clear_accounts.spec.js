@@ -20,13 +20,13 @@ test('Composer basic validations', async ({ page }) => {
 	const composePage = new ComposePage(page);
 
 	await test.step('Setup user & accounts', async () => {
-		await addFixture.command('composer_basic', 'pro_user_composer', true, 300);
-		twAccount = getObjectByName(global.fixture, 'composer_basic').twitter.username;
-		fbAccount = getObjectByName(global.fixture, 'composer_basic').facebookPage.username;
+		await addFixture.command('clear_accounts', 'pro_user_composer', true, 300);
+		twAccount = getObjectByName(global.fixture, 'clear_accounts').twitter.username;
+		fbAccount = getObjectByName(global.fixture, 'clear_accounts').facebookPage.username;
 	});
 
 	await test.step('Login as pro user', async () => {
-		await loginPage.signIn('composer_basic');
+		await loginPage.signIn('clear_accounts');
 	});
 
 	await test.step('Open composer', async () => {
@@ -45,7 +45,7 @@ test('Composer basic validations', async ({ page }) => {
 		await expect(composePage.emptyFacebookPreview).toBeVisible();
 	});
 
-	await test.step('Write a message', async () => {
+	await test.step('Write a message and verify its preview', async () => {
 		await composePage.writeMessage(composeBasicText);
 		await composePage.verifyTwitterPreview(composeBasicText);
 		await composePage.verifyFacebookPreview(composeBasicText);
