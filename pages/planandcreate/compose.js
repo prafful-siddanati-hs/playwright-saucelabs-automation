@@ -15,6 +15,8 @@ exports.ComposePage = class ComposePage {
 		this.composeScreen = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal');
 		this.headerLabel = page.locator('.vk-ComposerModal .vk-HeaderLabel');
 		this.minimizeComposeButton = page.locator('.vk-ComposerModal [aria-label="Minimize"]');
+		this.maximizeComposeButton = page.locator('.vk-MinimizedComposerModal button[aria-label="Maximize"]');
+		this.composerFloatingDock = page.locator('#fe-pnc-app-docker .vk-MinimizedComposerModal');
 		this.exitComposeButton = page.locator('.vk-ComposerModal [aria-label="Exit Composer"]');
 		this.profileDropDown = page.locator('.vk-ComposerModal [aria-label="Select a social account (required)"]');
 		this.snInputPlaceholder = page.locator('.vk-ComposerModal [aria-label="Select a social account (required)"]');
@@ -28,7 +30,6 @@ exports.ComposePage = class ComposePage {
 		this.tabContent = page.locator('.vk-ComposerModal .vk-TabContent');
 		this.messageCharCount = page.locator('(//*[contains(@class, "MessageEditArea")]//*[contains(@class, "-characterCounterCount")])[1]', {locationStrategy: 'xpath'});
 		this.genericPostPreview = page.locator('.vk-ComposerModal [aria-label="generic post preview"]');
-		this.genericPostPreviewText = page.locator('.vk-ComposerModal [aria-label="generic post preview"] .vk-PreviewMessageText');
 		this.genericPreviewSingleImage = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-MediaImg');
 		this.genericFacebookLinkPreviewMedia = page.locator('.vk-ComposerModal [aria-label="generic post preview"] .vk-FacebookPreview .vk-LinkPreviewMedia');
 		this.genericTwitterLinkPreviewMedia = page.locator('.vk-ComposerModal [aria-label="generic post preview"] .vk-TwitterPreview .vk-LinkPreviewMedia');
@@ -257,6 +258,11 @@ exports.ComposePage = class ComposePage {
 		await this.exitComposeButton.click();
 	}
 
+	async minimizeComposer() {
+		await expect(this.minimizeComposeButton, 'Composer minimize button is visible').toBeVisible();
+		await this.minimizeComposeButton.click();
+	}
+
 	async verifyComposerHeader() {
 		await expect(this.headerLabel).toHaveText('Create a post');
 		await expect(this.minimizeComposeButton, 'Composer minimize button is visible').toBeVisible();
@@ -275,7 +281,7 @@ exports.ComposePage = class ComposePage {
 		await expect(this.addMediaButton, 'Composer media button is visible').toBeVisible();
 		await expect(this.canvaButton, 'Composer canva button is visible').toBeVisible();
 		await expect(this.genericPostPreview, 'Composer generic preview is visible').toBeVisible();
-		await expect(this.genericPostPreviewText).toHaveText('Write your caption, then customize it for each social network');
+		await expect(this.genericPreviewText).toHaveText('Write your caption, then customize it for each social network');
 	}
 
 	async verifyComposerFooter() {

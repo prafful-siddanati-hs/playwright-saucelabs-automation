@@ -19,6 +19,8 @@ exports.DraftsPage = class DraftsPage {
 		this.editButtonOnSidePane = page.getByTestId('DetailPaneRenderer').getByLabel('Edit post');
 		this.moreActionsButtonOnSidePane = page.getByTestId('DetailPaneRenderer').getByLabel('More actions');
 		this.duplicateButtonOnSidePane = page.locator('//*[contains(@data-testid, DetailPaneRenderer)]//*[contains(@class,vk-ListItemWrapper)]//*[text()="Duplicate"]');
+		this.draftsListMoreActions = page.locator('.vk-ActionsWrapper button[aria-label="More actions"]');
+		this.draftsListDuplicateAction = page.locator('//*[contains(@class,vk-ListItemWrapper)]//*[text()="Duplicate"]');
 		this.previewMessageText = page.getByTestId('DetailPaneRenderer').locator('.vk-PreviewMessageText');
 		this.previewMedia = page.getByTestId('DetailPaneRenderer').locator('img');
 		this.confirmationModalSubmitButton = page.getByRole('button', { name: 'Delete post' });
@@ -28,6 +30,7 @@ exports.DraftsPage = class DraftsPage {
 		this.instagramCollaborators = page.locator('[data-testid = "DetailPaneRenderer"] [data-testid ="Info"] .vk-InstagramCollaboratorsDetails p');
 		this.instagramAltText = page.locator('[data-testid = "DetailPaneRenderer"] [data-testid ="Info"] .vk-AltText p');
 		this.facebookPreviewText = page.locator('[data-testid = "DetailPaneRenderer"] .vk-FacebookPreview .vk-ContentBody p');
+		this.draftsSuccessCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
 	}
 
 	async selectCreateButton() {
@@ -77,6 +80,14 @@ exports.DraftsPage = class DraftsPage {
 	async editDraftByContent(text) {
 		await this.page.getByText(text).hover();
 		await this.editButtonOnListView.click();
+	}
+
+	async duplicateDraftByContent(text) {
+		await this.page.getByText(text).hover();
+		await expect(this.draftsListMoreActions).toBeVisible();
+		await this.draftsListMoreActions.click();
+		await expect(this.draftsListDuplicateAction).toBeVisible();
+		await this.draftsListDuplicateAction.click();
 	}
 
 	async deleteDraft(){
