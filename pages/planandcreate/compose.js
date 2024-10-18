@@ -231,6 +231,10 @@ exports.ComposePage = class ComposePage {
 		this.emoticonStickers= page.locator('[data-testid="imageEditor"] button[data-test="Emoticons"]');
 		this.grinEmoticonSticker = page.locator('[data-testid="imageEditor"] [data-test="Grin"]');
 		this.imageEditorSaveButton = page.locator('#fe-app-image-editor button[aria-label="Save"]');
+		this.campaignPicker = page.locator('.vk-ComposerModal .vk-CampaignDropdownButton span');
+		this.campaignListBuuton = page.locator('.vk-ComposerModal  button.campaign-dropdown-button-item');
+		this.campaignSelected = page.locator('.vk-ComposerModal .rc-CampaignSelectDropdown span');
+		this.manageCampaignsButton = page.locator('.vk-ComposerModal .rc-CampaignSelectDropdown [role="listbox"] button', { hasText: 'Manage campaigns' });
 	}
 
 	async setDarkLaunchCookies() {
