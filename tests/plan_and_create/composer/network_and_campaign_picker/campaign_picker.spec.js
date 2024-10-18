@@ -31,7 +31,7 @@ test('Campaigns picker validation', async ({ page }) => {
 		await composePage.selectComposeButton();
 	});
 
-	await test.step('Select campaign picker and select campaign', async () => {
+	await test.step('Select first campaign from campaign picker', async () => {
 		await expect(composePage.campaignPicker).toBeVisible();
 		await composePage.campaignPicker.click();
 		firstCampaign = await composePage.campaignListBuuton.first().innerText();
@@ -40,7 +40,7 @@ test('Campaigns picker validation', async ({ page }) => {
 		await expect(composePage.campaignSelected).toHaveText(firstCampaign);
 	});
 
-	await test.step('Select another campaign from campaign picker', async () => {
+	await test.step('Select second campaign from campaign picker', async () => {
 		await expect(composePage.campaignPicker).toBeVisible();
 		await composePage.campaignPicker.click();
 		secondCampaign = await composePage.campaignListBuuton.nth(1).innerText();
