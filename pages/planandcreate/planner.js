@@ -169,8 +169,6 @@ exports.PlannerPage = class PlannerPage {
 		this.altTextDescription = page.locator('.vk-AltText p');
 		this.previewPaneNetworkType = page.locator('.vk-Planner .vk-DetailPane .vk-NetworkType');
 		this.previewPaneScheduledTime = page.locator('.vk-DetailPane .vk-ScheduledTime');
-		this.instagramPreviewHeaderName = page.locator('.vk-Planner .vk-InstagramPreview .vk-InstagramPreviewHeader .vk-Name');
-		this.instagramCollaboratorsonSidePane = page.locator('.vk-Planner .vk-DetailPane [data-testid = "Info"] .vk-InstagramCollaboratorsDetails p');
 		this.viewApprovalHistory = page.getByLabel('View approval history');
 		this.approvalDescription = page.locator('.-modalDialog .-content .-description');
 		this.approvalHistoryFirstDetails = page.locator('.-modalDialog .-action:nth-child(1) .-description');
@@ -187,6 +185,17 @@ exports.PlannerPage = class PlannerPage {
 		this.suspendedReasonSidePane = page.locator('(//*[contains(@class, "vk-SuspendActions")]//p)[2]', { locateStrategy: 'xpath' });
 		this.suspendedInfoMsgSidePane = page.locator('(//*[contains(@class, "vk-SuspendActions")]//p)[1]', { locateStrategy: 'xpath' });
 		this.detailPaneCloseButton = page.getByTestId('CloseButton');
+		this.internalCommentsTab = page.getByRole('tab', { name: 'Internal comments' });
+		this.internalCommentTextArea = page.locator('#ConversationsEditableTextArea [aria-label="Text editor"] p');
+		this.saveInternalComment = page.getByLabel('Save comment');
+		this.commentPreview = page.locator('[role="tabpanel"] [data-testid="Comment"] p');
+		this.editInternalComment = page.getByTestId('CommentActions').getByLabel('Edit');
+		this.copyInternalCommentLink = page.getByTestId('CommentActions').getByLabel('Copy link');
+		this.deleteInternalComment = page.getByTestId('CommentActions').getByLabel('Delete');
+		this.deleteConfirmationButton = page.getByLabel('Confirm delete');
+		this.addInternalCommentMedia = page.getByTestId('Editor').getByLabel('Add media');
+		this.internalCommentMediaDownloadButton = page.getByTestId('Attachment').getByLabel('Download media');
+		this.internalCommentMediaDeleteButton = page.getByTestId('Attachment').getByLabel('Delete media');
 
 		//Twitter
 		this.twitterPreviewSocialProfile = page.locator('.vk-Planner .vk-DetailPane .vk-TwitterPreview .vk-Handle');
@@ -240,6 +249,8 @@ exports.PlannerPage = class PlannerPage {
 		this.productTagTitle = page.locator('.rc-Planner .vk-ProductTagContainer .vk-ProductTagTitle');
 		this.productTagName = page.locator('.rc-Planner .vk-ProductTagContainer p.vk-ProductTagTitle');
 		this.instagramCarouselIndicators = page.locator('.vk-Planner .vk-InstagramPreview .vk-IndicatorDot');
+		this.instagramPreviewHeaderName = page.locator('.vk-Planner .vk-InstagramPreview .vk-InstagramPreviewHeader .vk-Name');
+		this.instagramCollaboratorsonSidePane = page.locator('.vk-Planner .vk-DetailPane [data-testid = "Info"] .vk-InstagramCollaboratorsDetails p');
 
 		//Pinterest
 		this.pinterestPreviewMessageText = page.locator('.vk-Planner .vk-DetailPane .vk-PinterestPreview .vk-PinterestPreviewDescription');

@@ -1,0 +1,116 @@
+/* Test to verify internal comments can be added, edited & deleted */
+const { test, expect} = require('@playwright/test');
+const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
+const { LoginPage } = require('../../../../pages/login');
+const { PlannerPage } = require('../../../../pages/planandcreate/planner');
+const { getObjectByName } = require('../../../../globals');
+const { formatISO, addDays } = require('date-fns');
+const scheduleV3Message = require('../../../../custom-commands/scheduleV3Message');
+const tearDown = require('../../../../custom-commands/tearDown');
+
+const scheduleDate = addDays(new Date(), 1);
+let enterpriseUserMemberId;
+
+test.afterEach(async ({ page }) => {
+	const cleanUp = new tearDown();
+
+	await cleanUp.command();
+	await page.close();
+});
+
+test('Verify internal comments can be added, edited & deleted', async ({page}) => {
+	let orgName = 'internal_comments_actions_org_' + Math.floor(Math.random() * 10000);
+	const scheduledText = 'Perform internal comments actions ' + Math.floor(Math.random() * 10000);
+	const commentText = 'This is an internal comment ';
+	const editedCommentText = commentText.concat('-edit the comment');
+	let accounts = {
+		plan_create_facebookpage: []
+	};
+	accounts.plan_create_facebookpage.push('fb_internal_comments');
+
+	const loginPage = new LoginPage(page);
+	const plannerPage = new PlannerPage(page);
+	const setUpEnterpriseUser = new SetUpEnterpriseUser();
+	const createScheduleMessage = new scheduleV3Message();
+
+	await test.step('Setup user & accounts', async () => {
+		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'internal_comment_actions', accounts);
+		enterpriseUserMemberId = global.member[0].memberId;
+	});
+
+	await test.step('Login as enterprise user', async () => {
+		await loginPage.signInSkipOnboarding('internal_comment_actions');
+	});
+
+	await test.step('Dismiss enterprise user onboarding modals', async () => {
+		await page.evaluate(() => {
+			return (hs.memberExtras.hasSeenNewComposerOnboarding = true);
+		});
+	});
+
+	await test.step('Hide native posts & recommended times', async () => {
+		await plannerPage.hideNativePosts(enterpriseUserMemberId);
+		await plannerPage.hideRecommendedTimes(enterpriseUserMemberId);
+	});
+
+	await test.step('Schedule a post for enterprise user', async () => {
+		await createScheduleMessage.command(
+			parseInt(enterpriseUserMemberId, 10),
+			{
+				messages: [
+					{
+						socialProfileId: getObjectByName(global.fixture, 'fb_internal_comments').socialProfile.socialProfileId,
+						text: scheduledText,
+						scheduledSendTime: formatISO(scheduleDate),
+					}
+				]
+			}
+		);
+	});
+
+	await test.step('Navigate to planner', async () => {
+		await plannerPage.visit();
+		await expect(plannerPage.approvalstab).toBeVisible(); // Check to make sure entitlement check completes
+	});
+
+	await test.step('Verify internal comments is available for enterprise user', async () => {
+		await plannerPage.showPreviewPane(scheduledText);
+		await plannerPage.verifyTextInPreviewPane(scheduledText);
+		await expect(plannerPage.internalCommentsTab).toBeVisible();
+		await plannerPage.internalCommentsTab.click();
+		await expect(page.getByText('Comments will only be seen by you and your teammates. They won\'t be published.')).toBeVisible();
+	});
+
+	await test.step('Add internal comment', async () => {
+		await expect(plannerPage.internalCommentTextArea).toBeVisible();
+		await plannerPage.internalCommentTextArea.click();
+		await expect(plannerPage.saveInternalComment).toBeDisabled(); // Save button should be disabled
+		await plannerPage.internalCommentTextArea.fill(commentText);
+		await expect(plannerPage.saveInternalComment).toBeEnabled(); // Save button should be enabled only after adding comment
+		await plannerPage.saveInternalComment.click();
+	});
+
+	await test.step('Verify internal comment is successfully added', async () => {
+		await expect(page.getByText(commentText)).toBeVisible();
+		await expect(plannerPage.editInternalComment).toBeVisible();
+		await expect(plannerPage.copyInternalCommentLink).toBeVisible();
+		await expect(plannerPage.deleteInternalComment).toBeVisible();
+	});
+
+	await test.step('Edit & verify internal comment', async () => {
+		await plannerPage.editInternalComment.click();
+		await plannerPage.internalCommentTextArea.fill(editedCommentText);
+		await plannerPage.saveInternalComment.click();
+		await expect(page.getByText(editedCommentText)).toBeVisible();
+	});
+
+	await test.step('Delete & verify internal comment', async () => {
+		await expect(plannerPage.deleteInternalComment).toBeVisible();
+		await plannerPage.deleteInternalComment.click();
+		await expect(page.getByRole('heading', { name: 'Delete this comment?' })).toBeVisible();
+		await expect(page.getByText('Are you sure you want to delete this comment? This can\'t be undone.')).toBeVisible();
+		await expect(plannerPage.deleteConfirmationButton).toBeVisible();
+		await plannerPage.deleteConfirmationButton.click();
+		await expect(page.getByText(editedCommentText)).not.toBeVisible(); // Verify comment is deleted
+	});
+});
