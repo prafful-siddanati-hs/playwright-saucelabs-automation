@@ -1,4 +1,4 @@
-/* Test to verify internal comments can accpet Image,Video & PDF files */
+/* Test to verify internal comments can accept Image,Video & PDF files */
 const { test, expect} = require('@playwright/test');
 const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
 const { LoginPage } = require('../../../../pages/login');
@@ -18,7 +18,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Verify internal comments can accpet Image,Video & PDF files', async ({page}) => {
+test('Verify internal comments can accept Image,Video & PDF files', async ({page}) => {
 	let orgName = 'internal_comments_media_org_' + Math.floor(Math.random() * 10000);
 	const scheduledText = 'Attach media to internal comments ' + Math.floor(Math.random() * 10000);
 	const commentText = 'This is an internal comment with media attachment ';
