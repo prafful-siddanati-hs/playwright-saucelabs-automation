@@ -214,6 +214,7 @@ exports.ComposePage = class ComposePage {
 		this.addFBTargetAudienceButton = page.locator('.vk-FacebookTargetingWrapper a.vk-EditTargeting');
 		this.addLITargetAudienceButton = page.locator('.vk-AudienceTargetingWrapper  a.vk-EditTargeting');
 		this.fbAudienceCountryPicker = page.locator('.vk-SectionWrapper .vk-PillsInputBoxWrapper [placeholder="Search for a country"]');
+		this.fbAgePicker = page.locator('.vk-TargetingEditModal .vk-SectionWrapper .vk-ButtonWrapper');
 		this.audienceTargetingOptionsPopup = page.locator('.vk-TargetingEditModal');
 		this.addTargetAudienceButton = page.locator('//div[contains(@class, "vk-TargetingEditModal")]//button[contains(text(),"Add")]');
 		this.liAudienceLanguage = page.locator('.vk-SectionWrapper .vk-PillsInputBoxWrapper [placeholder="Select a language"]');
@@ -844,6 +845,15 @@ exports.ComposePage = class ComposePage {
 		await expect(this.fbAudienceCountryPicker).toBeVisible();
 		await this.fbAudienceCountryPicker.click();
 		await this.fbAudienceCountryPicker.pressSequentially(country);
+		await expect(this.page.locator(selector)).toBeVisible();
+		await this.page.locator(selector).click();
+	}
+
+	async setFBAgeTargetAudience(age) {
+		const selector = `//*[contains(@class, "vk-TargetingEditModal")]//*[contains(@class,"vk-ListItemWrapper")]//*[text()="${age}"]`;
+
+		await expect(this.fbAgePicker).toBeVisible();
+		await this.fbAgePicker.click();
 		await expect(this.page.locator(selector)).toBeVisible();
 		await this.page.locator(selector).click();
 	}
