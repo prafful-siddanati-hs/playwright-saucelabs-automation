@@ -9,7 +9,7 @@ const scheduleV3Message = require('../../../../custom-commands/scheduleV3Message
 const { formatISO, addHours} = require('date-fns');
 const {PlannerPage} = require('../../../../pages/planandcreate/planner');
 
-let twProfile, fbProfile, memberId;
+let twProfile, memberId;
 const scheduleTime = addHours(new Date(), 1);
 
 test.afterEach(async ({ page }) => {
@@ -30,7 +30,6 @@ test('Verify character limit validation is checked when mentions are added at th
 	await test.step('Setup user & account', async () => {
 		await addFixture.command('fb_target_audience', 'pro_user_composer', true, 300);
 		twProfile = getObjectByName(global.fixture, 'fb_target_audience').twitter.username;
-		fbProfile = getObjectByName(global.fixture, 'fb_target_audience').facebookPage.username;
 		memberId = global.member[0].memberId;
 	});
 
