@@ -76,7 +76,7 @@ test('Create draft for FB and LI with target audience', async ({ page }) => {
 		await expect(composePage.appliedTargetValue).toContainText('Canada');
 	});
 
-	await test.step('Select linkedin tab and add FB target audience', async () => {
+	await test.step('Select linkedin tab and add li target audience', async () => {
 		await expect(composePage.linkedInTab).toBeVisible();
 		await composePage.linkedInTab.click();
 		await composePage.selectAddLITargetAudienceButton();
