@@ -19,7 +19,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Verify target audience is persisted for edit facebook scheduled message', async ({ page }) => {
+test('Verify new target audience value is added to facebook scheduled message', async ({ page }) => {
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
