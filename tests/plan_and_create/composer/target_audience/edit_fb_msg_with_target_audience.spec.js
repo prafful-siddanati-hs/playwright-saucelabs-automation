@@ -19,7 +19,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Verify character limit validation is checked when mentions are added at the end of text', async ({ page }) => {
+test('Verify target audience is persisted for edit facebook scheduled message', async ({ page }) => {
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
