@@ -1,4 +1,4 @@
-/* Test to edit facebook scheduled message with new target audience values */
+/* Test to edit facebook scheduled message with new target audience values and remove existing */
 const { test, expect } = require('@playwright/test');
 const getFixture = require('../../../../custom-commands/getFixture');
 const tearDown = require('../../../../custom-commands/tearDown');
@@ -19,7 +19,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Verify new target audience value is added to facebook scheduled message', async ({ page }) => {
+test('Verify remove and add new target audience value to facebook scheduled message', async ({ page }) => {
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
