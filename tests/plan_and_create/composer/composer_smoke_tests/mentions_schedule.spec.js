@@ -49,6 +49,7 @@ test('Schedule a message with mentions', async ({ page }) => {
 	await test.step('Write a message with mention', async () => {
 		await composePage.writeMessage(`${mentionsText} `);
 		await composePage.messageArea.pressSequentially(`@${liMention}`);
+		await page.waitForTimeout(500); // Wait for the mention to be added
 		await composePage.verifyLinkedInPreview(`${mentionsText}@${liMention}`);
 	});
 
