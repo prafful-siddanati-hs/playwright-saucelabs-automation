@@ -60,7 +60,7 @@ test('Verify internal comments added to drafts are maintained when scheduled', a
 		});
 	});
 
-	await test.step('Create an unscheduled draft', async () => {
+	await test.step('Create a scheduled draft', async () => {
 		try {
 			await draftsPage.createDraftViaApiByNetwork(
 				enterpriseUserMemberId,

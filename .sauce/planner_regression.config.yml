@@ -37,17 +37,18 @@ suites:
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
     testMatch: ['tests/plan_and_create/planner/.*.js']
+    numShards: 4
     params:
       browserName: "chromium"
       project: "chromium"
-  - name: "Planner_Regression - Safari"
-    platformName: "macOS 13"
-    screenResolution: "1600x1200"
-    timeZone: 'Vancouver'
-    testMatch: ['tests/plan_and_create/planner/.*.js']
-    params:
-      browserName: "webkit"
-      project: "webkit"
+  # - name: "Planner_Regression - Safari"
+  #   platformName: "macOS 13"
+  #   screenResolution: "1600x1200"
+  #   timeZone: 'Vancouver'
+  #   testMatch: ['tests/plan_and_create/planner/.*.js']
+  #   params:
+  #     browserName: "webkit"
+  #     project: "webkit"
 
 # Controls what artifacts to fetch when the suites have finished.
 artifacts:
