@@ -6,6 +6,8 @@ exports.HomePage = class HomePage {
 		this.homePageGlobalNavButton = page.locator('[data-dap-target="global-nav-apps-section"] [aria-label="Home"]');
 		this.homePageWidget = page.locator('.homepage-widget-inspirations');
 		this.homePageCreateButton = page.locator('//*[contains(@class, "homepage-welcome-header")]//*[contains(text(), "Create a post")]', {locationStrategy: 'xpath'});
+		this.showMoreOptions = page.getByLabel('Show more options');
+		this.productNotificationsButton = page.getByLabel('Notifications');
 	}
 
 	async visit() {

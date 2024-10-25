@@ -197,6 +197,7 @@ exports.PlannerPage = class PlannerPage {
 		this.internalCommentMediaDownloadButton = page.getByTestId('Attachment').getByLabel('Download media');
 		this.internalCommentMediaDeleteButton = page.getByTestId('Attachment').getByLabel('Delete media');
 		this.tagContainerText = page.locator('.vk-Planner [data-testid="DetailPaneRenderer"] .vk-FacebookTargeting p');
+		this.hideDraftComments = page.getByRole('button', { name: 'Hide draft comments' });
 
 		//Twitter
 		this.twitterPreviewSocialProfile = page.locator('.vk-Planner .vk-DetailPane .vk-TwitterPreview .vk-Handle');

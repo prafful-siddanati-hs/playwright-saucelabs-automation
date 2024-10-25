@@ -9,6 +9,7 @@ const { getObjectByName } = require('../../../../globals');
 const { formatISO, addDays } = require('date-fns');
 const { LoginPage } = require('../../../../pages/login');
 const { PlannerPage } = require('../../../../pages/planandcreate/planner');
+const { HomePage } = require('../../../../pages/homepage');
 const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
 
 const scheduleDate = addDays(new Date(), 1);
@@ -28,6 +29,7 @@ test('Verify user can be mentioned in internal comments', async ({ page }) => {
 
 	const loginPage = new LoginPage(page);
 	const plannerPage = new PlannerPage(page);
+	const homePage = new HomePage(page);
 	const createNewUser = new createUser();
 	const addUserToNewOrg = new addUserToOrg();
 	const setUpEnterpriseUser = new SetUpEnterpriseUser();
@@ -128,14 +130,12 @@ test('Verify user can be mentioned in internal comments', async ({ page }) => {
 		await plannerPage.hideRecommendedTimes(enterpriseUserMemberId);
 	});
 
-	await test.step('Navigate to planner', async () => {
-		await plannerPage.visit();
-		await expect(plannerPage.approvalstab).toBeVisible(); // Check to make sure entitlement check completes
-	});
-
-	await test.step('Verify the scheduled message', async () => {
-		await plannerPage.showPreviewPane(scheduleText);
-		await plannerPage.verifyScheduledMessage(scheduleText);
+	await test.step('Check in-product notification is received for internal comments', async () => {
+		await expect(homePage.showMoreOptions).toBeVisible();
+		await homePage.showMoreOptions.click();
+		await expect(homePage.productNotificationsButton).toBeVisible();
+		await homePage.productNotificationsButton.click();
+		await page.getByText(`${team3sUsername} mentioned you in a comment`).first().click();
 	});
 
 	await test.step('Ensure the mentioned used is correct', async () => {
