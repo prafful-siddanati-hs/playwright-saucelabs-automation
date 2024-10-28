@@ -1,0 +1,54 @@
+apiVersion: v1alpha
+kind: playwright
+sauce:
+  region: us-west-1
+  tunnel:
+    name: 'sauce-playwright-tunnel'
+    owner: '$SAUCE_USERNAME'
+  concurrency: 10 # Controls how many suites are executed at the same time.
+  metadata:
+    build: '$JOB_NAME-$BUILD_NUMBER'
+    tags:
+      - '$JOB_BASE_NAME'
+      - regression
+      - composer
+  launchOrder: fail rate
+showConsoleLog: true
+playwright:
+  version: package.json # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/#supported-testing-platforms for a list of supported versions.
+  configFile: playwright.config.js # See https://docs.saucelabs.com/web-apps/automated-testing/playwright/yaml/#configfile for a list of supported configuration files.
+# Controls what files are available in the context of a test run (unless explicitly excluded by .sauceignore).
+rootDir: ./
+env:
+  AWS_SDK_LOAD_CONFIG: 1
+  AWS_SHARED_CREDENTIALS_FILE: ".aws-session.saucelabs.ini"
+  AWS_CONFIG_FILE: ".aws-config.saucelabs.ini"
+npm:
+  dependencies:
+    - hsdynamodb
+    - hsapi
+    - underscore
+    - date-fns
+    - date-fns-tz
+    - events
+suites:
+  - name: "Target_Audience - Chrome"
+    platformName: "Windows 11"
+    screenResolution: "1920x1200"
+    timeZone: 'Vancouver'
+    testMatch: ['tests/plan_and_create/composer/target_audience/*.*.js']
+    numShards: 2
+    params:
+      browserName: "chromium"
+      project: "chromium"
+
+# Controls what artifacts to fetch when the suites have finished.
+artifacts:
+  cleanup: true
+  download:
+    when: always
+    match:
+      - console.log
+      - 'sauce-test-report.json'
+      - '*.png'
+    directory: ./artifacts/
