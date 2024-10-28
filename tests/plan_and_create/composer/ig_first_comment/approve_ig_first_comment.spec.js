@@ -51,7 +51,7 @@ test('Approve an IG post with first comment', async ({ page }) => {
 	});
 
 	await test.step('Login as reviewer', async () => {
-		await loginPage.signIn('ig_first_comment_reviewer');
+		await loginPage.signInSkipOnboarding('ig_first_comment_reviewer');
 		await expect(page.locator('//*[contains(@class, "homepage-welcome-header")]//*[contains(text(), "Create a post")]')).toBeVisible();
 	});
 
