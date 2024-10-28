@@ -10,6 +10,7 @@ const { LoginPage } = require('../../../../pages/login');
 const { getObjectByName } = require('../../../../globals');
 const { BulkComposePage } = require('../../../../pages/planandcreate/bulkCompose');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
+const {TagComponentPage} = require('../../../../pages/planandcreate/tagComponent');
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -25,6 +26,7 @@ test('Adjust text limit in bulk composer', async ({ page }) => {
 	const loginPage = new LoginPage(page);
 	const bulkComposePage = new BulkComposePage(page);
 	const composePage = new ComposePage(page);
+	const tagComponentPage = new TagComponentPage(page);
 
 	await test.step('Setup user & account', async () => {
 		await createNewUser.command('bulk_composer_text_limit', 'professional');
@@ -56,6 +58,10 @@ test('Adjust text limit in bulk composer', async ({ page }) => {
 	await test.step('Review the posts', async () => {
 		await expect(bulkComposePage.reviewPostsButton).toBeEnabled();
 		await bulkComposePage.reviewPostsButton.click();
+	});
+
+	await test.step('Verify that there i no tag option visible on BC', async () => {
+		await expect(tagComponentPage.editTagsButton).not.toBeVisible();
 	});
 
 	await test.step('Verify message dashboard & edit area are displayed', async () => {
