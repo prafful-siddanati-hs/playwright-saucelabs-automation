@@ -60,7 +60,7 @@ test('Adjust text limit in bulk composer', async ({ page }) => {
 		await bulkComposePage.reviewPostsButton.click();
 	});
 
-	await test.step('Verify that there i no tag option visible on BC', async () => {
+	await test.step('Verify that there is no tag option visible on BC', async () => {
 		await expect(tagComponentPage.editTagsButton).not.toBeVisible();
 	});
 
