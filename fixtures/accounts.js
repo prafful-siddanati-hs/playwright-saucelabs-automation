@@ -648,7 +648,7 @@ module.exports = {
 		}
 	],
 
-	enterprise: [
+	plan_create_enterprise: [
 		{
 			memberId: '13747229',
 			isSocialProfile: false,
