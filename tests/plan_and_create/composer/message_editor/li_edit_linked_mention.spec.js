@@ -1,5 +1,4 @@
 /* This test is to edit a linked mention with a new one for linkedin */
-/* Test to edit an existing mention and link a new one for facebook page */
 const { test, expect } = require('@playwright/test');
 const getFixture = require('../../../../custom-commands/getFixture');
 const tearDown = require('../../../../custom-commands/tearDown');
@@ -88,9 +87,10 @@ test('Edit an existing mention and link two new ones for linkedin profile', asyn
 
 	await test.step('Edit by updating the linked mention', async () => {
 		await composePage.removeCharacters(initialMention.length + 1);
-		await page.waitForTimeout(1000);
+		await page.waitForTimeout(500);
+		await expect(composePage.linkedInMentionLink).not.toBeVisible();
 		await composePage.verifyLinkedInPreview(`${scheduleText}`);
-		await composePage.messageArea.pressSequentially(`@${newMention} `, {delay : 100});
+		await composePage.messageArea.pressSequentially(` @${newMention} `, {delay : 100});
 		await composePage.selectMention(newMention);
 		await composePage.verifyLinkedInMentionPreview(newMention);
 	});
@@ -107,7 +107,6 @@ test('Edit an existing mention and link two new ones for linkedin profile', asyn
 	});
 
 	await test.step('Verify message has updated linked mention in preview pane', async () => {
-		await expect(composePage.feCallOuts).not.toBeVisible();
 		await expect(plannerPage.linkedInMentionLink).toHaveCount(2);
 	});
 

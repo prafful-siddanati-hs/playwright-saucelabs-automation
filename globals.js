@@ -158,7 +158,6 @@ module.exports = {
 				'MENT Internet Works',
 				'MENT',
 				'The Good Judge-ment Podcast',
-				'Hoot',
 				'Music Business Worldwide (MBW)',
 				'Music Reports, Inc',
 				'Газпром', //Russian (Gazprom)
