@@ -171,7 +171,7 @@ exports.ComposePage = class ComposePage {
 		this.composeTextAreaErrorTitle = page.locator('//*[text()="Oops! You haven\'t added any text"]', {locationStrategy: 'xpath'});
 		this.composeMediaAreaErrorTitle = page.locator('//*[text()="Oops! You haven\'t added any media"]', {locationStrategy: 'xpath'});
 		this.tiktokMediaAreaErrorTitle = page.locator('//*[text()="It looks like you haven\'t added a video"]', {locationStrategy: 'xpath'});
-		this.linkedInEmptyTextAreaErrorDescription = page.locator('//*[@aria-labelledby="message-tab-bar-linkedIn"]//*[text()="LinkedIn Page requires text to be included"]', {locationStrategy: 'xpath'});
+		this.linkedInEmptyTextAreaErrorDescription = page.locator('//*[@aria-labelledby="message-tab-bar-linkedIn"]//*[text()="LinkedIn requires text to be included"]', {locationStrategy: 'xpath'});
 		this.twitterEmptyTextAreaErrorDescription = page.locator('//*[@aria-labelledby="message-tab-bar-twitter"]//*[text()="Twitter requires text to be included"]', {locationStrategy: 'xpath'});
 		this.tiktokMediaTextAreaErrorDescription = page.locator('//*[@aria-labelledby="message-tab-bar-tiktok"]//*[text()="TikTok Business requires a video."]', {locationStrategy: 'xpath'});
 		this.instagramEmptyMediaAreaErrorDescription = page.locator('//*[@aria-labelledby="message-tab-bar-instagram"]//*[text()="Instagram posts requires an image or video. Looking for inspiration?"]', {locationStrategy: 'xpath'});
