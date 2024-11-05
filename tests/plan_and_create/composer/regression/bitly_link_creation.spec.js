@@ -22,7 +22,7 @@ test('Bitly link shortener creation', async ({ page }) => {
 	const linkPresetsManagePage = new LinkPresetsManagePage(page);
 
 	await test.step('Setup user & accounts', async () => {
-		await addFixture.command('bit_ly_user', 'enterprise', false, 300);
+		await addFixture.command('bit_ly_user', 'plan_create_enterprise', false, 300);
 		await createNewOrg.command(orgName);
 	});
 
