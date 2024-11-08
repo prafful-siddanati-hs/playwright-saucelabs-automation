@@ -53,6 +53,7 @@ exports.ComposePage = class ComposePage {
 		this.threadsPreviewSingleImage = page.locator('.vk-ComposerModal [type="THREADS"] .vk-ThreadsPreview .vk-MediaImg');
 		this.threadsPreviewSingleVideo = page.locator('.vk-ComposerModal [type="THREADS"] .vk-ThreadsPreview .vk-VideoContainer');
 		this.messageArea = page.locator('.rc-MessageEditText [aria-label="Text"].public-DraftEditor-content');
+		this.messageAreaFBCompleteMention = page.locator('[aria-labelledby = "message-tab-bar-facebook"] .CompleteMention');
 		this.emojiButton = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="Add an emoji"]');
 		this.hashTagSuggestions = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="AI hashtag suggestions"]');
 		this.canvaButton = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="Design with Canva"]');
