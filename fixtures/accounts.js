@@ -1739,6 +1739,14 @@ module.exports = {
 				ownerId: '13515514',
 				ownerType: 'MEMBER'
 			},
+			twitter: {
+				id: '1997871609',
+				email: 'lavanya.petchetti+hs_composer1@hootsuite.com',
+				username: 'HComposer1',
+				password: 'Password!',
+				ownerId: '13515514',
+				ownerType: 'MEMBER'
+			},
 		}
 	],
 
