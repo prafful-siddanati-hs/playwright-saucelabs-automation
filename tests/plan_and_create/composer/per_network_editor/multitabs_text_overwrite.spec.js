@@ -14,7 +14,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Verify overwrite the message across all networks', async ({ page }) => {
+test('Verify message overwrite the initial content to all accounts', async ({ page }) => {
 	const fbText = 'FB message';
 	const twText = 'TW message';
 	const initialPost = 'Original message';
