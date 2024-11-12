@@ -54,6 +54,11 @@ exports.ComposePage = class ComposePage {
 		this.threadsPreviewSingleVideo = page.locator('.vk-ComposerModal [type="THREADS"] .vk-ThreadsPreview .vk-VideoContainer');
 		this.messageArea = page.locator('.rc-MessageEditText [aria-label="Text"].public-DraftEditor-content');
 		this.messageAreaFBCompleteMention = page.locator('[aria-labelledby = "message-tab-bar-facebook"] .CompleteMention');
+		this.OwlyWriterAI = page.locator('.vk-ComposerModal [aria-label="Enhance with OwlyWriter AI"]');
+		this.optimizeLength = page.locator('.vk-ComposerModal [aria-label="Optimize length"]');
+		this.UseThisContentButton = page.locator('(//*[contains(@class,"vk-ComposerModal")]//button[text() = "Use this content"])[1]' ,{locationStrategy: 'xpath'});
+		this.aiContent = page.locator('(//*[contains(@class,"vk-ComposerModal")]//*[contains(@role,"listitem")]//p)[1]');
+		this.closeAIPanel = page.locator('.vk-ComposerModal [aria-label="Close OwlyWriter AI panel"]');
 		this.emojiButton = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="Add an emoji"]');
 		this.hashTagSuggestions = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="AI hashtag suggestions"]');
 		this.canvaButton = page.locator('#fullScreenComposerMountPoint .vk-ComposerModal [aria-label="Design with Canva"]');
