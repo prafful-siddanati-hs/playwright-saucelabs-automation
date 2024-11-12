@@ -83,6 +83,7 @@ exports.ComposePage = class ComposePage {
 		this.genericVideoPreview = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-VideoContainer');
 		this.genericProfileName = page.locator('.vk-ComposerModal .vk-GenericPreview .vk-Name');
 		this.basePreviewLayout = page.locator('.vk-PreviewBaseLayout');
+		this.restoreOriginalPost = page.locator('.vk-ComposerModal [aria-label="Restore original post"]');
 		this.twitterPreviewText = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-ContentBody');
 		this.facebookPreviewText = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody');
 		this.threadsPreviewText = page.locator('.vk-ComposerModal .vk-ThreadsPreview .vk-ContentBody');
@@ -155,6 +156,7 @@ exports.ComposePage = class ComposePage {
 		this.editVideoButton = page.getByLabel('Edit video');
 		this.videoSettingsButton = page.getByLabel('Video settings');
 		this.mentionsList = page.locator('.vk-NewMentionsList');
+		this.yourPostTab = page.getByLabel('Your post');
 		this.twitterTab = page.getByLabel('Twitter content');
 		this.linkedInTab = page.getByLabel('LinkedIn content');
 		this.facebookPageTab = page.getByLabel('Facebook content');
