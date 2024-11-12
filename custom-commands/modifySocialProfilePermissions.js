@@ -1,6 +1,6 @@
 const events = require('events');
-const SocialProfiles = require('hsapi').som;
 let MemberPermissions = require('hsapi').topsService;
+const axios = require('axios');
 
 const { som_bridge, tops_skyline, hasResponseErrors, getObjectByName } = require('../globals.js');
 
@@ -39,7 +39,6 @@ class modifySocialProfilePermissions extends events.EventEmitter {
 	}
 
 	async command(permissionPreset, socialProfile, member) {
-		let socialProfiles = new SocialProfiles(som_bridge);
 		let memberPermissions = new MemberPermissions(tops_skyline);
 		let permissionPresets = [
 			'SN_LIMITED',
@@ -90,16 +89,40 @@ class modifySocialProfilePermissions extends events.EventEmitter {
 
 			this.step = 'Get social profile';
 
-			let socialProfileResult = await socialProfiles.getSocialProfile(profile.type, optionalData);
+			const headers = {
+				'Content-Type': 'application/json',
+			};
 
-			this.checkResponse(socialProfileResult, 'Found social profile');
+			const body = {
+				socialProfileType: profile.type,
+				organizationId: optionalData.organizationId || '',
+				memberId: optionalData.memberId || '',
+				userId: optionalData.userId || '',
+				includeSocialNetworkAppAuthData: optionalData.includeSocialNetworkAppAuthData || 'true'
+			};
+
+			let socialProfileResult = await axios.get(`${som_bridge}/socialProfiles`, {
+				headers: headers,
+				params: body
+			});
+
+			if (!socialProfileResult.data || typeof socialProfileResult.data !== 'object' || Object.keys(socialProfileResult.data).length === 0) {
+				throw new Error('Invalid response received for social profile');
+			}
+
+			this.checkResponse(socialProfileResult.data, 'Found social profile');
 
 			this.step = 'Changing permissions for social profile';
 
-			let socialProfileId = socialProfileResult[Object.keys(socialProfileResult)[0]].socialProfileId;
-			let memberResult = memberPermissions.editSocialProfilePermissions(parseInt(user.memberId), parseInt(socialProfileId), {permissionPreset: permissionPreset});
+			let socialProfileId = socialProfileResult.data[Object.keys(socialProfileResult.data)[0]].socialProfileId;
+			if (Number.isNaN(socialProfileId)) {
+				throw new Error('Invalid social profile ID received');
+			}
+
+			let memberResult = await memberPermissions.editSocialProfilePermissions(parseInt(user.memberId), parseInt(socialProfileId), {permissionPreset: permissionPreset});
 			this.checkResponse(memberResult, `Changed permissions to ${permissionPreset}`);
-		} catch (err) {
+		}
+		catch (err) {
 			console.log(`\nERROR: ${err}.\n`);
 		} finally {
 			this.emit('complete');

@@ -92,7 +92,8 @@ test('Verify user can be mentioned in internal comments', async ({ page }) => {
 		await expect(plannerPage.internalCommentTextArea).toBeVisible();
 		await plannerPage.internalCommentTextArea.click();
 		await expect(plannerPage.saveInternalComment).toBeDisabled(); // Save button should be disabled
-		await plannerPage.internalCommentTextArea.fill(commentText.concat(`@${enterpriseUsername}`));
+		await plannerPage.internalCommentTextArea.click();
+		await plannerPage.internalCommentTextArea.pressSequentially(commentText.concat(`@${enterpriseUsername}`));
 	});
 
 	await test.step('Verify user mention is highlighted and save it', async () => {

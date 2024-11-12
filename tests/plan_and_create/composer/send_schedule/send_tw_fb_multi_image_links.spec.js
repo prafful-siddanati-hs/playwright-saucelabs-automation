@@ -45,7 +45,7 @@ test('Send twitter and facebook post with text, multiple images and one time app
 	});
 
 	await test.step('Login as pro user', async () => {
-		await loginPage.signIn('tw_fb_send_multiple_images');
+		await loginPage.signInSkipOnboarding('tw_fb_send_multiple_images');
 	});
 
 	await test.step('Select compose button', async () => {

@@ -186,7 +186,7 @@ exports.PlannerPage = class PlannerPage {
 		this.suspendedInfoMsgSidePane = page.locator('(//*[contains(@class, "vk-SuspendActions")]//p)[1]', { locateStrategy: 'xpath' });
 		this.detailPaneCloseButton = page.getByTestId('CloseButton');
 		this.internalCommentsTab = page.getByRole('tab', { name: 'Internal comments' });
-		this.internalCommentTextArea = page.locator('#ConversationsEditableTextArea [aria-label="Text editor"] p');
+		this.internalCommentTextArea = page.locator('#ConversationsEditableTextArea [aria-label="Text editor"]');
 		this.saveInternalComment = page.getByLabel('Save comment');
 		this.commentPreview = page.locator('[role="tabpanel"] [data-testid="Comment"] p');
 		this.editInternalComment = page.getByTestId('CommentActions').getByLabel('Edit');

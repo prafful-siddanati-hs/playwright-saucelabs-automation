@@ -29,6 +29,7 @@
     "@types/node": "^20.7.1",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
+    "axios": "^1.7.7",
     "date-fns": "^2.30.0",
     "date-fns-tz": "2.0.0",
     "eslint": "^8.56.0",
