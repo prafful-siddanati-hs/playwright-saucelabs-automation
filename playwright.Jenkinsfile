@@ -24,12 +24,12 @@ properties(
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer_regression.config.yml', description: 'Composer tests on chrome'),
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer_media_limitations.config.yml', description: 'Composer media limitations tests on chrome'),
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer_regression_media.config.yml', description: 'Composer regression media tests on chrome'),
-            string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer_send.config.yml', description: 'Composer Send tests on chrome')
-            string(name: 'CONFIG_FILE', defaultValue: '.sauce/target_audience.config.yml', description: 'Target audience tests on chrome ')
-            string(name: 'CONFIG_FILE', defaultValue: '.sauce/one_time_approver.config.yml', description: 'Composer one time approver tests on chrome')
-            string(name: 'CONFIG_FILE', defaultValue: '.sauce/network_campaign_picker.config.yml', description: 'Composer network and campaign picker tests on chrome')
-            string(name: 'CONFIG_FILE', defaultValue: '.sauce/ig_collaborators.config.yml', description: 'Instagram Collaborators tests on chrome')
-            string(name: 'CONFIG_FILE', defaultValue: '.sauce/drafts.config.yml', description: 'Drafts tests on chrome')
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer_send.config.yml', description: 'Composer Send tests on chrome'),
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/target_audience.config.yml', description: 'Target audience tests on chrome'),
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/one_time_approver.config.yml', description: 'Composer one time approver tests on chrome'),
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/network_campaign_picker.config.yml', description: 'Composer network and campaign picker tests on chrome'),
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/ig_collaborators.config.yml', description: 'Instagram Collaborators tests on chrome'),
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/drafts.config.yml', description: 'Drafts tests on chrome'),
         ]),
         //Tests run only on chrome from 4.10AM - 8AM PST in 20 minute intervals
         pipelineTriggers(
