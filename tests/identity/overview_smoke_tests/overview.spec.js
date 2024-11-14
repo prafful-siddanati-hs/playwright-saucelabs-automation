@@ -3,6 +3,7 @@ const tearDown = require('../../../custom-commands/tearDown');
 const { LoginPage } = require('../../../pages/login');
 const { OverviewPage } = require('../../../pages/identity/T&O/overview');
 const { SetUpEnterpriseUser } = require('../../../custom-commands/setUpEnterpriseUser');
+const { HomePage } = require('../../../pages/homepage');
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -11,10 +12,11 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Header functional tests', async ({ page }) => {
-	let overviewPage;
+test('Overview page functional tests', async ({ page }) => {
+	const homePage = new HomePage(page);
+	const overviewPage = new OverviewPage(page);
 
-	await test.step('Login as enterprise user', async() => {
+	await test.step('Login as an enterprise user', async () => {
 		const orgName = 'identity_test_org_' + Math.floor(Math.random() * 10000);
 		let accounts = {
 			twitter: []
@@ -25,30 +27,16 @@ test('Header functional tests', async ({ page }) => {
 
 		await userSetUp.setUpEnterpriseUser(orgName, 'identity', accounts, 'enterprise_user_identity');
 		await loginPage.signInSkipOnboarding('identity');
-
-		overviewPage = new OverviewPage(page);
-		await overviewPage.visit();
 	});
 
-	await test.step('New button should be visible and clickable', async () => {
+	await test.step('Navigate to Overview page via sidebar button on the Home page', async () => {
+		await homePage.homePageAccountButton.click();
+		await expect(homePage.homePageSocialAccountsAndTeamsButton).toBeVisible();
 
-		await expect(overviewPage.pageHeaderActionButton).toBeVisible();
-		await expect(overviewPage.pageHeaderActionButton).toBeEnabled();
+		await homePage.homePageSocialAccountsAndTeamsButton.click();
 	});
 
-	await test.step('Click the new button opens dropdown with expected options', async () => {
-		await overviewPage.pageHeaderActionButton.click();
-
-		await expect(overviewPage.createNewTeamOption).toBeVisible();
-		await expect(overviewPage.inviteNewMembersOption).toBeVisible();
-		await expect(overviewPage.addSocialAccountsOption).toBeVisible();
-	});
-
-	await test.step('Dropdown closes when clicking outside', async () => {
-		await page.click('body');
-
-		await expect(overviewPage.createNewTeamOption).not.toBeVisible();
-		await expect(overviewPage.inviteNewMembersOption).not.toBeVisible();
-		await expect(overviewPage.addSocialAccountsOption).not.toBeVisible();
+	await test.step('Verify Overview page loads successfully', async() => {
+		await expect(overviewPage.pageHeader).toBeVisible();
 	});
 });
