@@ -49,7 +49,7 @@ properties(
                  10 16 * * 1-5 %CONFIG_FILE=.sauce/one_time_approver.config.yml
                  30 16 * * 1-5 %CONFIG_FILE=.sauce/network_campaign_picker.config.yml
                  50 16 * * 1-5 %CONFIG_FILE=.sauce/ig_collaborators.config.yml
-                 10 16 * * 1-5 %CONFIG_FILE=.sauce/drafts.config.yml
+                 10 17 * * 1-5 %CONFIG_FILE=.sauce/drafts.config.yml
                 ''')]
         )
     ]
