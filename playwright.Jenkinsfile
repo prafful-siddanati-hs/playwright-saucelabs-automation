@@ -25,31 +25,31 @@ properties(
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer_media_limitations.config.yml', description: 'Composer media limitations tests on chrome'),
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer_regression_media.config.yml', description: 'Composer regression media tests on chrome'),
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/composer_send.config.yml', description: 'Composer Send tests on chrome')
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/target_audience.config.yml', description: 'Target audience tests on chrome ')
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/one_time_approver.config.yml', description: 'Composer one time approver tests on chrome')
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/network_campaign_picker.config.yml', description: 'Composer network and campaign picker tests on chrome')
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/ig_collaborators.config.yml', description: 'Instagram Collaborators tests on chrome')
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/drafts.config.yml', description: 'Drafts tests on chrome')
         ]),
-        //Linkedin PDF - Run at 4:30 PM on Thursday
-        //Planner Regression - Run at 8:20 AM on Monday
-        //Composer Preview - Run at 10:05 AM on Monday
-        //Link Settings - Run at 3:50 PM on Monday
-        //Link Previews - Run at 3:20 PM on Monday
-        //IG First Comment - Run at 11:00 AM on Monday
-        //Composer Regression - Run at 10:05 PM on Tuesday
-        //Composer Message Editor - Run at 10:05 PM on Wednesday
-        //Composer Media Limitations - Run at 10:05 PM on Wednesday
-        //Composer Regression Media - Run at 11:05 PM on Wednesday
-        //Composer Send - Run at 10:05 PM on Monday
+        //Tests run only on chrome from 4.10AM - 8AM PST in 20 minute intervals
         pipelineTriggers(
             [parameterizedCron('''
-                 05 19 * * 4 %CONFIG_FILE=.sauce/composer_regression_media.config.yml
-                 05 18 * * 4 %CONFIG_FILE=.sauce/composer_media_limitations.config.yml
-                 05 18 * * 3  %CONFIG_FILE=.sauce/composer_message_editor.config.yml
-                 05 18 * * 2  %CONFIG_FILE=.sauce/composer_regression.config.yml
-                 05 18 * * 1 %CONFIG_FILE=.sauce/composer_preview.config.yml
-                 30 23 * * 4 %CONFIG_FILE=.sauce/linkedin_pdf.config.yml
-                 50 22 * * 1 %CONFIG_FILE=.sauce/link_settings.config.yml
-                 20 22 * * 1 %CONFIG_FILE=.sauce/link_previews.config.yml
-                 05 20 * * 1 %CONFIG_FILE=.sauce/ig_first_comment.config.yml
-                 05 18 * * 1  %CONFIG_FILE=.sauce/composer_send.config.yml
-                 20 13 * * 1 %CONFIG_FILE=.sauce/planner_regression.config.yml
+                 10 12 * * 1-5 %CONFIG_FILE=.sauce/composer_regression_media.config.yml
+                 30 12 * * 1-5 %CONFIG_FILE=.sauce/composer_media_limitations.config.yml
+                 50 12 * * 1-5  %CONFIG_FILE=.sauce/composer_message_editor.config.yml
+                 10 13 * * 1-5  %CONFIG_FILE=.sauce/composer_regression.config.yml
+                 30 17 * * 1-5 %CONFIG_FILE=.sauce/composer_preview.config.yml
+                 50 17 * * 1-5 %CONFIG_FILE=.sauce/linkedin_pdf.config.yml
+                 10 18 * * 1-5 %CONFIG_FILE=.sauce/link_settings.config.yml
+                 30 18 * * 1-5 %CONFIG_FILE=.sauce/link_previews.config.yml
+                 50 18 * * 1-5 %CONFIG_FILE=.sauce/ig_first_comment.config.yml
+                 10 20 * * 1-5  %CONFIG_FILE=.sauce/composer_send.config.yml
+                 30 20 * * 1-5 %CONFIG_FILE=.sauce/planner_regression.config.yml
+                 50 20 * * 1-5 %CONFIG_FILE=.sauce/target_audience.config.yml
+                 10 21 * * 1-5 %CONFIG_FILE=.sauce/one_time_approver.config.yml
+                 30 21 * * 1-5 %CONFIG_FILE=.sauce/network_campaign_picker.config.yml
+                 50 21 * * 1-5 %CONFIG_FILE=.sauce/ig_collaborators.config.yml
+                 10 22 * * 1-5 %CONFIG_FILE=.sauce/drafts.config.yml
                 ''')]
         )
     ]
