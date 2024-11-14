@@ -38,18 +38,18 @@ properties(
                  30 12 * * 1-5 %CONFIG_FILE=.sauce/composer_media_limitations.config.yml
                  50 12 * * 1-5  %CONFIG_FILE=.sauce/composer_message_editor.config.yml
                  10 13 * * 1-5  %CONFIG_FILE=.sauce/composer_regression.config.yml
-                 30 17 * * 1-5 %CONFIG_FILE=.sauce/composer_preview.config.yml
-                 50 17 * * 1-5 %CONFIG_FILE=.sauce/linkedin_pdf.config.yml
-                 10 18 * * 1-5 %CONFIG_FILE=.sauce/link_settings.config.yml
-                 30 18 * * 1-5 %CONFIG_FILE=.sauce/link_previews.config.yml
-                 50 18 * * 1-5 %CONFIG_FILE=.sauce/ig_first_comment.config.yml
-                 10 20 * * 1-5  %CONFIG_FILE=.sauce/composer_send.config.yml
-                 30 20 * * 1-5 %CONFIG_FILE=.sauce/planner_regression.config.yml
-                 50 20 * * 1-5 %CONFIG_FILE=.sauce/target_audience.config.yml
-                 10 21 * * 1-5 %CONFIG_FILE=.sauce/one_time_approver.config.yml
-                 30 21 * * 1-5 %CONFIG_FILE=.sauce/network_campaign_picker.config.yml
-                 50 21 * * 1-5 %CONFIG_FILE=.sauce/ig_collaborators.config.yml
-                 10 22 * * 1-5 %CONFIG_FILE=.sauce/drafts.config.yml
+                 30 13 * * 1-5 %CONFIG_FILE=.sauce/composer_preview.config.yml
+                 50 13 * * 1-5 %CONFIG_FILE=.sauce/linkedin_pdf.config.yml
+                 10 14 * * 1-5 %CONFIG_FILE=.sauce/link_settings.config.yml
+                 30 14 * * 1-5 %CONFIG_FILE=.sauce/link_previews.config.yml
+                 50 14 * * 1-5 %CONFIG_FILE=.sauce/ig_first_comment.config.yml
+                 10 15 * * 1-5  %CONFIG_FILE=.sauce/composer_send.config.yml
+                 30 15 * * 1-5 %CONFIG_FILE=.sauce/planner_regression.config.yml
+                 50 15 * * 1-5 %CONFIG_FILE=.sauce/target_audience.config.yml
+                 10 16 * * 1-5 %CONFIG_FILE=.sauce/one_time_approver.config.yml
+                 30 16 * * 1-5 %CONFIG_FILE=.sauce/network_campaign_picker.config.yml
+                 50 16 * * 1-5 %CONFIG_FILE=.sauce/ig_collaborators.config.yml
+                 10 16 * * 1-5 %CONFIG_FILE=.sauce/drafts.config.yml
                 ''')]
         )
     ]
