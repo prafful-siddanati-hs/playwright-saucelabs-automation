@@ -75,12 +75,13 @@ test('Verify error validations for LinkedIn PDF post', async ({page}) => {
 
 	await test.step('Verify LinkedIn PDF preview', async () => {
 		await composePage.verifyLinkedInPdfPreview();
+		await expect(composePage.linkedMultipageIndicator).toHaveCount(5);
 	});
 
 	await test.step('Verify page navigators for pdf are displayed in preview', async () => {
-		await expect(page.getByLabel('Next item')).toBeVisible();
-		await page.getByLabel('Next item').click();
-		await expect(page.getByLabel('Previous item')).toBeVisible();
+		await expect(composePage.pdfNextPageButton).toBeVisible();
+		await composePage.pdfNextPageButton.click();
+		await expect(composePage.pdfPreviosPageButton).toBeVisible();
 	});
 
 	await test.step('Attach an image', async () => {
@@ -88,14 +89,19 @@ test('Verify error validations for LinkedIn PDF post', async ({page}) => {
 		await page.waitForTimeout(1000);
 	});
 
-	await test.step('Verify multiple media types error is displayed', async () => {
+	await test.step('Verify media type error & remove the image', async () => {
 		await expect(page.getByText(LINKEDIN_MIXED_MEDIA_ERROR)).toBeVisible();
-	});
-
-	await test.step('Remove image and attach a 2nd pdf', async () => {
 		await expect(composePage.imageRemoveButton).toBeVisible();
 		await composePage.imageRemoveButton.click();
-		await composePage.uploadMediaFile('test_data/publisher/pdfs');
+		await expect(composePage.mediaDeleteAnimation).toBeVisible();
+	});
+
+	await test.step('Attach second PDF', async () => {
+		let filePath = 'test_data/publisher/pdfs/single_page.pdf';
+		await expect(composePage.mediaDeleteAnimation).not.toBeVisible();
+		await composePage.uploadMediaFile('test_data/publisher/pdfs', filePath);
+		await expect(composePage.mediaLoadingAnimation).not.toBeVisible();
+		await expect(composePage.mediaOverLay).toHaveCount(2);
 	});
 
 	await test.step('Verify multiple pdfs error is displayed', async () => {

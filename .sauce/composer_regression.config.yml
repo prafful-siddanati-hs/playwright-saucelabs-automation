@@ -36,7 +36,8 @@ suites:
     platformName: "Windows 11"
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
-    testMatch: ['tests/plan_and_create/composer/regression/*.*.js', 'tests/plan_and_create/composer/create_post_button/*.*.ts']
+    testMatch: ['tests/plan_and_create/composer/regression/*.*.js', 'tests/plan_and_create/composer/create_post_button/*.*.js']
+    excludedTestFiles: ['tests/plan_and_create/composer/regression_media/*.*.js']
     params:
       browserName: "chromium"
       project: "chromium"

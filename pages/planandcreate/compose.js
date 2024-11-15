@@ -126,6 +126,9 @@ exports.ComposePage = class ComposePage {
 		this.linkedinLinkCompanyPreviewSource = page.locator('.rc-Composer [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-MessageLinkPreview .vk-Source');
 		this.linkedinCompanyLinkPrevewMedia = page.locator('.rc-Composer [type="LINKEDINCOMPANY"] .vk-LinkedInPreview .vk-MessageLinkPreview .vk-LinkPreviewMedia');
 		this.linkedInPdfPreview = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-PdfContainer .vk-PdfDocument');
+		this.linkedMultipageIndicator = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-IndicatorDot');
+		this.pdfNextPageButton = page.locator('button[aria-label="Next item"]');
+		this.pdfPreviosPageButton = page.locator('button[aria-label="Previous item"]');
 		this.facebookMentionLink = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody .vk-MessageMention');
 		this.twitterHashtagLink = page.locator('.vk-TwitterPreview .vk-ContentBody .vk-MessageHashtag');
 		this.facebookHashtagLink = page.locator('.vk-FacebookPreview .vk-ContentBody .vk-MessageHashtag');
@@ -151,6 +154,9 @@ exports.ComposePage = class ComposePage {
 		this.mediaContent = page.locator('.-mediaContent');
 		this.firstImage = page.locator('.-mediaRow');
 		this.mediaThumbnail = page.locator('.rc-MediaLibrary .-mediaContainer .MediaThumbnail');
+		this.mediaThumbnailOverLay = page.locator('.vk-ComposerModal .vk-MediaThumbnailOverlay');
+		this.mediaLoadingAnimation = page.locator('.vk-ComposerModal .vk-StyledLoadingAnimation');
+		this.mediaDeleteAnimation = page.locator('.vk-ComposerModal .vk-StyledLottieDeleteAnimation');
 		this.altTextButton = page.getByLabel('Edit alternative text');
 		this.editImageButton = page.getByLabel('Edit image');
 		this.editVideoButton = page.getByLabel('Edit video');

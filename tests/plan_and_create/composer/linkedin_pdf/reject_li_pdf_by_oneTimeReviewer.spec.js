@@ -91,6 +91,7 @@ test('Reject LinkedIn PDF post by one time reviewer : ', async ({ page }) => {
 		await plannerPage.rejectModalInput.fill('Wrong PDF');
 		await expect(plannerPage.rejectModalRejectButton).toBeVisible();
 		await plannerPage.rejectModalRejectButton.click();
+		await expect(plannerPage.rejectModalInput).not.toBeVisible();
 		await expect(composePage.feCallOuts).toBeVisible();
 	});
 
