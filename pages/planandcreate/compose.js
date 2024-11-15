@@ -249,7 +249,7 @@ exports.ComposePage = class ComposePage {
 		this.grinEmoticonSticker = page.locator('[data-testid="imageEditor"] [data-test="Grin"]');
 		this.imageEditorSaveButton = page.locator('#fe-app-image-editor button[aria-label="Save"]');
 		this.campaignPicker = page.locator('.vk-ComposerModal .vk-CampaignDropdownButton span');
-		this.campaignListBuuton = page.locator('.vk-ComposerModal  button.campaign-dropdown-button-item');
+		this.campaignListButton = page.locator('.vk-ComposerModal  button.campaign-dropdown-button-item');
 		this.campaignSelected = page.locator('.vk-ComposerModal .rc-CampaignSelectDropdown span');
 		this.manageCampaignsButton = page.locator('.vk-ComposerModal .rc-CampaignSelectDropdown [role="listbox"] button', { hasText: 'Manage campaigns' });
 		this.removeTargetAudiencePill = page.locator('.vk-TargetingEditModal .vk-RemovePillButton');
@@ -531,7 +531,7 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async verifyLinkInThreadsPreview(text) {
-		await expect(this.threadsMessageLink, 'Twitter preview is updated with link preview on composer').toBeVisible();
+		await expect(this.threadsMessageLink, 'Threads preview is updated with link preview on composer').toBeVisible();
 		expect(await this.threadsMessageLink.innerText()).toContain(text);
 	}
 

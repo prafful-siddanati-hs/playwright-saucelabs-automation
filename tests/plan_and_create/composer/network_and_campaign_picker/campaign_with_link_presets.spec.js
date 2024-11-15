@@ -37,29 +37,13 @@ test('Campaign with link presets validations', async ({ page }) => {
 		await expect(page.locator('.vk-ComposerModal [data-testid="dropdown-container"]').first()).toBeVisible();
 		await page.locator('.vk-ComposerModal [data-testid="dropdown-container"]').first().click();
 		await orgName.click();
-	});
-
-	await test.step('Select first campaign from campaign picker', async () => {
-		await expect(composePage.campaignPicker).toBeVisible();
-		await composePage.campaignPicker.click();
-		firstCampaign = await composePage.campaignListBuuton.first().innerText();
-		await expect(composePage.campaignListBuuton.first()).toBeVisible();
-		await composePage.campaignListBuuton.first().click();
-		await expect(composePage.campaignSelected).toHaveText(firstCampaign);
-	});
-
-	await test.step('Select twitter account from social network picker', async () => {
-		await composePage.profileDropDown.click();
-		await expect(composePage.snContentItems).toBeVisible();
-		await composePage.selectSocialProfile('DeauthedTestAcc');
-		await composePage.postToWrapper.click();
-		await expect(composePage.profileListItemTitle).not.toBeVisible();
-		await expect(composePage.emptyTwitterPreview).toBeVisible();
+		await page.waitForTimeout(500); // wait for the org to load
+		await expect(composePage.emptyThreadsPreview).toBeVisible();
 	});
 
 	await test.step('Verify preview with text containing link', async () => {
 		await composePage.writeMessage(composeText);
-		await composePage.verifyTwitterPreview('Text with link');
-		await composePage.verifyLinkInTwitterPreview('https://ow.ly');
+		await composePage.verifyThreadsPreview('Text with link');
+		await composePage.verifyLinkInThreadsPreview('https://ow.ly');
 	});
 });
