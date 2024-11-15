@@ -55,6 +55,8 @@ test('Send pinterest message using composer', async ({ page }) => {
 	});
 
 	await test.step('Remove gif and Upload an image', async () => {
+		await expect(pinPage.imageRemoveButton).toBeVisible();
+		await pinPage.imageRemoveButton.hover();
 		await pinPage.imageRemoveButton.click();
 		await pinPage.uploadImageFile('test_data/publisher/images');
 		await page.waitForTimeout(1000);
