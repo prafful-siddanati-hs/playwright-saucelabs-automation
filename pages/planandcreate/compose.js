@@ -531,7 +531,7 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async verifyLinkInThreadsPreview(text) {
-		await expect(this.threadsMessageLink, 'Twitter preview is updated with link preview on composer').toBeVisible();
+		await expect(this.threadsMessageLink, 'Threads preview is updated with link preview on composer').toBeVisible();
 		expect(await this.threadsMessageLink.innerText()).toContain(text);
 	}
 
