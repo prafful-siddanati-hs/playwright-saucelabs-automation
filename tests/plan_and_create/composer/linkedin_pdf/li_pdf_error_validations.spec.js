@@ -81,7 +81,7 @@ test('Verify error validations for LinkedIn PDF post', async ({page}) => {
 	await test.step('Verify page navigators for pdf are displayed in preview', async () => {
 		await expect(composePage.pdfNextPageButton).toBeVisible();
 		await composePage.pdfNextPageButton.click();
-		await expect(composePage.pdfPreviosPageButton).toBeVisible();
+		await expect(composePage.pdfPreviousPageButton).toBeVisible();
 	});
 
 	await test.step('Attach an image', async () => {

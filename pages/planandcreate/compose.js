@@ -128,7 +128,7 @@ exports.ComposePage = class ComposePage {
 		this.linkedInPdfPreview = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-LinkedInPreview .vk-PdfContainer .vk-PdfDocument');
 		this.linkedMultipageIndicator = page.locator('.vk-ComposerModal .vk-LinkedInPreview .vk-IndicatorDot');
 		this.pdfNextPageButton = page.locator('button[aria-label="Next item"]');
-		this.pdfPreviosPageButton = page.locator('button[aria-label="Previous item"]');
+		this.pdfPreviousPageButton = page.locator('button[aria-label="Previous item"]');
 		this.facebookMentionLink = page.locator('.vk-ComposerModal .vk-FacebookPreview .vk-ContentBody .vk-MessageMention');
 		this.twitterHashtagLink = page.locator('.vk-TwitterPreview .vk-ContentBody .vk-MessageHashtag');
 		this.facebookHashtagLink = page.locator('.vk-FacebookPreview .vk-ContentBody .vk-MessageHashtag');
