@@ -37,7 +37,6 @@ suites:
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
     testMatch: ['tests/plan_and_create/composer/network_and_campaign_picker/*.*.js']
-    numShards: 2
     params:
       browserName: "chromium"
       project: "chromium"
