@@ -37,7 +37,7 @@ suites:
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
     testMatch: ['tests/plan_and_create/composer/linkedin_pdf/*.*.js']
-    numShards: 4
+    numShards: 2
     params:
       browserName: "chromium"
       project: "chromium"
