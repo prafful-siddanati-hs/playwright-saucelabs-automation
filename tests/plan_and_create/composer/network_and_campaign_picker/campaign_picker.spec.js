@@ -34,18 +34,22 @@ test('Campaigns picker validation', async ({ page }) => {
 	await test.step('Select first campaign from campaign picker', async () => {
 		await expect(composePage.campaignPicker).toBeVisible();
 		await composePage.campaignPicker.click();
-		firstCampaign = await composePage.campaignListBuuton.first().innerText();
-		await expect(composePage.campaignListBuuton.first()).toBeVisible();
-		await composePage.campaignListBuuton.first().click();
+		firstCampaign = await composePage.campaignListButton.first().innerText();
+		await page.waitForTimeout(500); // wait for the campaign list to load
+		await expect(composePage.campaignListButton.first()).toBeVisible();
+		await composePage.campaignListButton.first().hover();
+		await composePage.campaignListButton.first().click();
 		await expect(composePage.campaignSelected).toHaveText(firstCampaign);
 	});
 
 	await test.step('Select second campaign from campaign picker', async () => {
 		await expect(composePage.campaignPicker).toBeVisible();
 		await composePage.campaignPicker.click();
-		secondCampaign = await composePage.campaignListBuuton.nth(1).innerText();
-		await expect(composePage.campaignListBuuton.nth(1)).toBeVisible();
-		await composePage.campaignListBuuton.nth(1).click();
+		await page.waitForTimeout(500); // wait for the campaign list to load
+		secondCampaign = await composePage.campaignListButton.nth(1).innerText();
+		await expect(composePage.campaignListButton.nth(1)).toBeVisible();
+		await composePage.campaignListButton.nth(1).hover();
+		await composePage.campaignListButton.nth(1).click();
 		await expect(composePage.campaignSelected).toHaveText(secondCampaign);
 	});
 

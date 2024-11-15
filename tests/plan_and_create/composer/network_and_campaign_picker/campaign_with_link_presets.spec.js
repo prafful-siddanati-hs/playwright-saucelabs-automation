@@ -42,9 +42,11 @@ test('Campaign with link presets validations', async ({ page }) => {
 	await test.step('Select first campaign from campaign picker', async () => {
 		await expect(composePage.campaignPicker).toBeVisible();
 		await composePage.campaignPicker.click();
-		firstCampaign = await composePage.campaignListBuuton.first().innerText();
-		await expect(composePage.campaignListBuuton.first()).toBeVisible();
-		await composePage.campaignListBuuton.first().click();
+		await page.waitForTimeout(500); // wait for the campaign list to load
+		firstCampaign = await composePage.campaignListButton.first().innerText();
+		await expect(composePage.campaignListButton.first()).toBeVisible();
+		await composePage.campaignListButton.first().hover();
+		await composePage.campaignListButton.first().click();
 		await expect(composePage.campaignSelected).toHaveText(firstCampaign);
 	});
 
