@@ -54,7 +54,7 @@ test('Verify error validations for LinkedIn PDF post', async ({page}) => {
 		await composePage.writeMessage(pdfText);
 	});
 
-	await test.step('Select linkedin account from social network dropdown', async () => {
+	await test.step(`Select ${liAccount} account from social network dropdown`, async () => {
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(liAccount);
@@ -115,7 +115,7 @@ test('Verify error validations for LinkedIn PDF post', async ({page}) => {
 		await expect(page.getByRole('heading', { name: LINKEDIN_MULTIPLE_PDFS_ERROR })).not.toBeVisible();
 	});
 
-	await test.step('Select twitter account and verify error validations', async () => {
+	await test.step(`Select ${twAccount} account and verify error validations`, async () => {
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(twAccount);

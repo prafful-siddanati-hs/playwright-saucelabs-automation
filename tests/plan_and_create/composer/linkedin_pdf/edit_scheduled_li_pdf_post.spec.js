@@ -18,7 +18,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Edit a LinkedIn PDF post', async ({ page }) => {
+test('Edit a LinkedIn PDF post by changing the profile', async ({ page }) => {
 	const pdfText = 'Edit this text ' + Math.floor(Math.random() * 1000);
 	const newPdfText = pdfText.concat(`--edited with url https://www.${plan_create.getRandomUrl()} `);
 	const createNewUser = new createUser();
@@ -50,7 +50,7 @@ test('Edit a LinkedIn PDF post', async ({ page }) => {
 		});
 	});
 
-	await test.step('Schedule a LinkedIn PDF post', async () => {
+	await test.step(`Schedule a PDF post for ${liAccount1}`, async () => {
 		await plannerPage.scheduleMessageWithPDF(
 			memberId,
 			getObjectByName(global.fixture, 'linkedin_sn_1').socialProfile.socialProfileId,
@@ -79,7 +79,7 @@ test('Edit a LinkedIn PDF post', async ({ page }) => {
 		await composePage.messageArea.fill(`${newPdfText}`);
 	});
 
-	await test.step('Select a different linkedin account', async () => {
+	await test.step(`Select a different ${liAccount2} account`, async () => {
 		await page.getByLabel('Clear selection '.concat(liAccount1)).click();
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();

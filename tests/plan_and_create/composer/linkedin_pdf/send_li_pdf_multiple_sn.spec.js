@@ -58,7 +58,7 @@ test('Send LinkedIn PDF post with multiple social networks', async ({ page }) =>
 		await page.waitForTimeout(1000);
 	});
 
-	await test.step('Verify preview for Twiiter & Facebook', async () => {
+	await test.step(`Verify preview for ${accounts.twitter} & ${accounts.plan_create_facebookpage}`, async () => {
 		await expect(composePage.twitterTab).toBeVisible();
 		await composePage.twitterTab.click();
 		await composePage.verifyTwitterPreview(pdfText);
@@ -67,7 +67,7 @@ test('Send LinkedIn PDF post with multiple social networks', async ({ page }) =>
 		await composePage.verifyFacebookPreview(pdfText);
 	});
 
-	await test.step('Verify LinkedIn preview', async () => {
+	await test.step(`Verify ${accounts.linkedin} preview`, async () => {
 		await expect(composePage.linkedInTab).toBeVisible();
 		await composePage.linkedInTab.click();
 		await composePage.verifyLinkedInPreview(pdfText);

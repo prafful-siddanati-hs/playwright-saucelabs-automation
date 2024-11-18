@@ -4,7 +4,6 @@ const getFixture = require('../../../../custom-commands/getFixture');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const {plan_create} = require('../../../../globals');
-let firstCampaign;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -32,7 +31,7 @@ test('Campaign with link presets validations', async ({ page }) => {
 	});
 
 	await test.step('Select test org from org picker', async () => {
-		const orgName = await page.locator('//*[contains(@class,"vk-ComposerModal")]//*[contains(@data-testid,"list-item-clickable")]//*[@title and contains(text(),"Prafful\'s Test Org")]');
+		const orgName = page.locator('//*[contains(@class,"vk-ComposerModal")]//*[contains(@data-testid,"list-item-clickable")]//*[@title and contains(text(),"Prafful\'s Test Org")]');
 
 		await expect(page.locator('.vk-ComposerModal [data-testid="dropdown-container"]').first()).toBeVisible();
 		await page.locator('.vk-ComposerModal [data-testid="dropdown-container"]').first().click();

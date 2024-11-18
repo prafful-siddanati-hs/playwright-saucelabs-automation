@@ -154,7 +154,7 @@ module.exports = {
 				'Composer Staging Page Two',
 				'catsRUs',
 				'Hootsuite Academy',
-				'Hootsuite Test Page!',
+				'Hootsuite Test Page',
 				'MENT Internet Works',
 				'MENT',
 				'The Good Judge-ment Podcast',
