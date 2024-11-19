@@ -36,7 +36,7 @@ test('Verify PDF validations for all networks', async ({page}) => {
 		await composePage.searchSocialProfile('BridgeWang4');
 		await composePage.searchSocialProfile('anotherowlmail');
 		await composePage.searchSocialProfile('freshestdonut');
-		await composePage.searchSocialProfile('nimataheri89');
+		await composePage.searchSocialProfile('testharp');
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
 		await expect(composePage.emptyTwitterPreview).toBeVisible();

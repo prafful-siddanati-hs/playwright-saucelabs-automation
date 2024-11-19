@@ -51,6 +51,7 @@ test('Validate uploaded media limitations for facebook page', async ({page}) => 
 	await test.step('Upload a GIF of size greater than 8 MB and verify the error', async () => {
 		let largeGiphy = 'test_data/publisher/giphy/starsLargeGIF.gif';
 		await composePage.uploadMediaFile('test_data/publisher/giphy/', largeGiphy);
+		await expect(composePage.mediaLoadingAnimation, { delay : 1000 }).not.toBeVisible();
 		await expect(composePage.facebookPreviewSingleImage, 'Facebook preview is updated with image').toBeVisible();
 		await expect(composePage.facebookPreviewSingleImage).toHaveAttribute('src', /staging/);
 		await expect(composePage.imagePublishLimit).toHaveText('errorImage file size is too largeFacebook Page supports images up to 8 MB. Your file is 13.1 MB.');
@@ -59,11 +60,14 @@ test('Validate uploaded media limitations for facebook page', async ({page}) => 
 	await test.step('Remove attached giphy file', async () => {
 		await expect(composePage.imageRemoveButton).toBeVisible();
 		await composePage.imageRemoveButton.click();
+		await expect(composePage.mediaDeleteAnimation).toBeVisible();
 		await expect(composePage.facebookPreviewSingleImage).not.toBeVisible();
 	});
 
 	await test.step('Upload more than 20 images and verify the no errors/info banners are displayed', async () => {
+		await expect(composePage.mediaDeleteAnimation).not.toBeVisible();
 		await composePage.uploadMediaFile('test_data/publisher/images','', 25);
+		await expect(composePage.mediaLoadingAnimation).not.toBeVisible();
 		await expect(composePage.imagePublishLimit).not.toBeVisible();
 		await expect(page.getByText('+21'), '25 media items attached').toBeVisible();
 		await expect(composePage.facebookPreviewMediaContainer).toHaveCount(4);
@@ -72,6 +76,7 @@ test('Validate uploaded media limitations for facebook page', async ({page}) => 
 	await test.step('Upload a few giphy files and verify there is no errors/info banners', async () => {
 		let giphyFile = 'test_data/publisher/giphy/OrbitAnimation.gif';
 		await composePage.uploadMediaFile('test_data/publisher/giphy/', giphyFile, 3);
+		await expect(composePage.mediaLoadingAnimation).not.toBeVisible();
 		await expect(page.getByText('+24'), '28 media items attached').toBeVisible();
 		await expect(composePage.facebookPreviewMediaContainer).toHaveCount(4);
 		await expect(composePage.imagePublishLimit).not.toBeVisible();

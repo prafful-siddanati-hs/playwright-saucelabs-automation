@@ -8,7 +8,7 @@ const { ComposePage } = require('../../../../pages/planandcreate/compose');
 
 let liAccount;
 const LINKEDIN_MIXED_MEDIA_INFO = 'LinkedIn posts can\'t include different media types. You can attach images, a video, or a PDF';
-const LINKEDIN_MAX_MEDIA_LIMIT_INFO = 'LinkedIn supports 20 images per post. You can drag files to reorder them or remove extra files';
+const LINKEDIN_MAX_MEDIA_LIMIT_INFO = 'LinkedIn supports 20 images per post. You can drag files to reorder them or remove extra files.';
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -53,6 +53,7 @@ test('Validate uploaded media limitations for linkedin', async ({page}) => {
 	await test.step('Uploda a GIF of size more than 5MB and verify the error message', async () => {
 		let largeGiphy = 'test_data/publisher/giphy/OrbitAnimation.gif';
 		await composePage.uploadMediaFile('test_data/publisher/giphy/', largeGiphy);
+		await expect(composePage.mediaLoadingAnimation, { delay : 1000 }).not.toBeVisible();
 		await expect(composePage.linkedInPreviewSingleImage, 'LinkedIn preview is updated with image').toBeVisible();
 		await expect(composePage.linkedInPreviewSingleImage).toHaveAttribute('src', /staging/);
 		await expect(composePage.imagePublishLimit).toHaveText('errorImage file size is too largeLinkedIn supports images up to 5 MB. Your file is 7.2 MB.');
@@ -61,21 +62,32 @@ test('Validate uploaded media limitations for linkedin', async ({page}) => {
 	await test.step('Remove attached giphy file', async () => {
 		await expect(composePage.imageRemoveButton).toBeVisible();
 		await composePage.imageRemoveButton.click();
+		await expect(composePage.mediaDeleteAnimation).toBeVisible();
 		await expect(composePage.linkedInPreviewSingleImage).not.toBeVisible();
+		await expect(composePage.mediaDeleteAnimation).not.toBeVisible();
 	});
 
 	await test.step('Upload more than 20 images and verify the info banners', async () => {
 		await composePage.uploadMediaFile('test_data/publisher/images','', 21);
+		await expect(composePage.mediaLoadingAnimation).not.toBeVisible();
 		await expect(page.getByText(LINKEDIN_MAX_MEDIA_LIMIT_INFO)).toBeVisible();
 	});
 
-	await test.step('Verify mixed media does not show any error', async () => {
-		let giphyFile = 'test_data/publisher/giphy/stay_cool.gif';
+	await test.step('Remove 1 image and verify the info banner is not displayed', async () => {
 		await expect(composePage.imageRemoveButton).toBeVisible();
 		await composePage.imageRemoveButton.click();
-		await page.waitForTimeout(1000);
+		await expect(composePage.mediaDeleteAnimation).toBeVisible();
+		await expect(page.getByText(LINKEDIN_MAX_MEDIA_LIMIT_INFO)).not.toBeVisible();
+		await expect(composePage.mediaDeleteAnimation).not.toBeVisible();
+	});
+
+	await test.step('Verify mixed media does not show any error when gif file is attached', async () => {
+		await expect(composePage.imageRemoveButton).toBeVisible();
 		await composePage.imageRemoveButton.click();
-		await composePage.uploadMediaFile('test_data/publisher/giphy', giphyFile);
+		await expect(composePage.mediaDeleteAnimation).toBeVisible();
+		await page.waitForTimeout(1000);
+		await composePage.uploadMediaFile('test_data/publisher/giphy', 'test_data/publisher/giphy/stay_cool.gif');
+		await expect(composePage.mediaLoadingAnimation).not.toBeVisible();
 		await expect(page.getByText(LINKEDIN_MAX_MEDIA_LIMIT_INFO)).not.toBeVisible();
 		await expect(page.getByText(LINKEDIN_MIXED_MEDIA_INFO)).not.toBeVisible();
 	});

@@ -20,7 +20,7 @@ test.afterEach(async ({ page }) => {
 
 test('Edit a LinkedIn PDF post by changing the profile', async ({ page }) => {
 	const pdfText = 'Edit this text ' + Math.floor(Math.random() * 1000);
-	const newPdfText = pdfText.concat(`--edited with url https://www.${plan_create.getRandomUrl()} `);
+	const newPdfText = `--edited with url https://www.${plan_create.getRandomUrl()} `;
 	const createNewUser = new createUser();
 	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
@@ -33,7 +33,6 @@ test('Edit a LinkedIn PDF post by changing the profile', async ({ page }) => {
 		await addFixture.command('linkedin_sn_2', 'linkedin', true, 300);
 		liAccount1 = getObjectByName(global.fixture, 'linkedin_sn_1').socialProfile.username;
 		liAccount2 = getObjectByName(global.fixture, 'linkedin_sn_2').socialProfile.username;
-		memberId = global.member[0].memberId;
 	});
 
 	await test.step('Login as test user', async () => {
@@ -42,6 +41,7 @@ test('Edit a LinkedIn PDF post by changing the profile', async ({ page }) => {
 
 	await test.step('Hide native posts', async () => {
 		await plannerPage.hideNativePosts(memberId);
+		await plannerPage.hideRecommendedTimes(memberId);
 	});
 
 	await test.step('Dismiss new user onboarding modal', async () => {
@@ -75,8 +75,8 @@ test('Edit a LinkedIn PDF post by changing the profile', async ({ page }) => {
 	});
 
 	await test.step('Update the message', async () => {
-		await composePage.messageArea.click();
-		await composePage.messageArea.fill(`${newPdfText}`);
+		await composePage.writeMessage(newPdfText);
+		await composePage.verifyLinkedInPreview(pdfText.concat(newPdfText));
 	});
 
 	await test.step(`Select a different ${liAccount2} account`, async () => {
@@ -100,7 +100,7 @@ test('Edit a LinkedIn PDF post by changing the profile', async ({ page }) => {
 	await test.step('Verify edited message in preview pane', async () => {
 		await expect(composePage.feCallOuts).not.toBeVisible();
 		await plannerPage.weekViewPostCountHeader(1); //Check count to ensure original post is edited instead of creating a new post
-		await plannerPage.verifyScheduledMessage(newPdfText);
-		await plannerPage.showPreviewPane(newPdfText);
+		await plannerPage.verifyScheduledMessage(pdfText.concat(newPdfText));
+		await plannerPage.showPreviewPane(pdfText.concat(newPdfText));
 	});
 });

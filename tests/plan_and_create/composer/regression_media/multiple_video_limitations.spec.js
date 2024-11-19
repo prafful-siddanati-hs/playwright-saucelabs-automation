@@ -33,7 +33,7 @@ test('Verify multiple video limitation for twitter, linkedin and tiktok', async 
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.searchSocialProfile('BridgeWang4');
-		await composePage.searchSocialProfile('nimataheri89');
+		await composePage.searchSocialProfile('testharp');
 		await composePage.searchSocialProfile('Nima Taheri');
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();

@@ -4,7 +4,7 @@ const getFixture = require('../../../../custom-commands/getFixture');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 
-let tiktokProfile = 'nimataheri89';
+let tiktokProfile = 'testharp';
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();

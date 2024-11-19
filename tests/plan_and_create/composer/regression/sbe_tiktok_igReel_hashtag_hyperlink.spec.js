@@ -7,7 +7,7 @@ const { LoginPage } = require('../../../../pages/login.js');
 const { ComposePage } = require('../../../../pages/planandcreate/compose.js');
 const getFixture = require('../../../../custom-commands/getFixture.js');
 const tearDown = require('../../../../custom-commands/tearDown.js');
-let tiktokProfile = 'nimataheri89';
+let tiktokProfile = 'testharp';
 let igReelProfile = 'hoot_igb';
 
 test.afterEach(async ({ page }) => {

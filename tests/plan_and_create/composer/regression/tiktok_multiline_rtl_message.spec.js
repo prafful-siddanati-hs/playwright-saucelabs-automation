@@ -5,7 +5,7 @@ const { ComposePage } = require('../../../../pages/planandcreate/compose.js');
 const getFixture = require('../../../../custom-commands/getFixture.js');
 const tearDown = require('../../../../custom-commands/tearDown.js');
 const { plan_create } = require('../../../../globals.js');
-let tiktokProfile = 'nimataheri89';
+let tiktokProfile = 'testharp';
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();

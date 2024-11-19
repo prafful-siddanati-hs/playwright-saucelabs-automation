@@ -9,6 +9,8 @@ const {addHours, formatISO} = require('date-fns');
 const {PlannerPage} = require('../../../../pages/planandcreate/planner');
 const {SetUpEnterpriseUser} = require('../../../../custom-commands/setUpEnterpriseUser');
 
+let memberId;
+
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
 
@@ -23,6 +25,7 @@ test('Edit scheduled linkedin message with link customization', async ({ page })
 	const userSetUp = new SetUpEnterpriseUser();
 	const scheduleTime = addHours(new Date(), 1);
 	const plannerPage = new PlannerPage(page);
+	const orgName = 'Test_li_org';
 	const url = 'slack.com';
 	const composeBasicText = `${plan_create.getComposeMessage().concat(' ' + Math.floor(Math.random() * 1000)) + ' '}`;
 	let accounts = {
@@ -31,7 +34,8 @@ test('Edit scheduled linkedin message with link customization', async ({ page })
 	accounts.linkedin.push('li_msg');
 
 	await test.step('Setup user & accounts', async () => {
-		await userSetUp.setUpEnterpriseUser('Test_li_org','edit_link_cus', accounts);
+		await userSetUp.setUpEnterpriseUser(orgName,'edit_link_cus', accounts);
+		memberId = global.member[0].memberId;
 	});
 
 	await test.step('Login as enterprise user', async () => {
@@ -39,18 +43,16 @@ test('Edit scheduled linkedin message with link customization', async ({ page })
 	});
 
 	await test.step('Schedule linkedin message via API', async () => {
-		await createScheduleMessage.command(
-			parseInt(global.member[0].memberId, 10),
-			{
-				messages: [
-					{
-						socialProfileId: getObjectByName(global.fixture, `${accounts.linkedin}`).socialProfile.socialProfileId,
-						text: composeBasicText,
-						scheduledSendTime: formatISO(scheduleTime),
-					}
-				]
-			}
-		);
+		const options = {
+			messages: [
+				{
+					socialProfileId: parseInt(getObjectByName(global.fixture, 'li_msg').socialProfile.socialProfileId, 10),
+					text: composeBasicText,
+					scheduledSendTime: formatISO(scheduleTime),
+				}
+			]
+		};
+		await createScheduleMessage.command(parseInt(memberId, 10), options);
 	});
 
 	await test.step('Navigate to planner', async () => {
@@ -94,5 +96,4 @@ test('Edit scheduled linkedin message with link customization', async ({ page })
 		await plannerPage.verifyTextInPreviewPane(composeBasicText + url);
 		await expect(plannerPage.linkedinLinkPreviewMedia).toBeVisible();
 	});
-
 });

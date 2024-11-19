@@ -28,7 +28,7 @@ test('Schedule a LinkedIn PDF post from draft', async ({ page }) => {
 	const draftsPage = new DraftsPage(page);
 
 	await test.step('Setup user & accounts', async () => {
-		await createNewUser.command('pw_li_pdf_draft', 'team3s');
+		await createNewUser.command('pw_li_pdf_draft', 'professional');
 		await addFixture.command('li_pdf_draft', 'linkedin', true, 300);
 		memberId = global.member[0].memberId;
 	});
@@ -39,6 +39,7 @@ test('Schedule a LinkedIn PDF post from draft', async ({ page }) => {
 
 	await test.step('Hide native posts', async () => {
 		await plannerPage.hideNativePosts(memberId);
+		await plannerPage.hideRecommendedTimes(memberId);
 	});
 
 	await test.step('Dismiss new user onboarding modal', async () => {
@@ -56,7 +57,7 @@ test('Schedule a LinkedIn PDF post from draft', async ({ page }) => {
 			await draftsPage.createDraftViaApiByNetwork(
 				memberId,
 				null,
-				getObjectByName(global.fixture, 'li_pdf_draft').socialProfile.socialProfileId,
+				parseInt(getObjectByName(global.fixture, 'li_pdf_draft').socialProfile.socialProfileId, 10),
 				pdfDraftText,
 				'LINKEDIN',
 				plan_create.getRandomPDF()
