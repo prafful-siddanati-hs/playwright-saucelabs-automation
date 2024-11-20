@@ -8,7 +8,7 @@ const { getObjectByName } = require('../../../../globals');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 
-let proUserLinkedin, enterpriseUserLinkedin;
+let proUserFacebookPage, enterpriseUserFacebookPage;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -18,22 +18,21 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Verify one time approver is only enabled for enterprise user', async ({page}) => {
-	let orgName = 'li_flex_approver_enterprise_' + Math.floor(Math.random() * 10000);
-	let accounts = {
-		linkedin: []
-	};
-	accounts.linkedin.push('li_flex_approver_enterprise');
-
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const createNewUser = new createUser();
 	const addFixture = new getFixture();
 	const setUpEnterpriseUser = new SetUpEnterpriseUser();
 
+	let orgName = 'fb_flex_approver_enterprise_' + Math.floor(Math.random() * 10000);
+	let accounts = {
+		plan_create_facebookpage: ['fb_flex_approver_enterprise']
+	};
+
 	await test.step('Setup user & accounts', async () => {
 		await createNewUser.command('flex_approver_pro_user', 'professional');
-		await addFixture.command('li_flex_approver_pro','linkedin', true, 300);
-		proUserLinkedin = getObjectByName(global.fixture, 'li_flex_approver_pro').socialProfile.username;
+		await addFixture.command('fb_flex_approver_pro','plan_create_facebookpage', true, 300);
+		proUserFacebookPage = getObjectByName(global.fixture, 'fb_flex_approver_pro').socialProfile.username;
 	});
 
 	await test.step('Login as professional user', async () => {
@@ -45,7 +44,7 @@ test('Verify one time approver is only enabled for enterprise user', async ({pag
 	});
 
 	await test.step('Verify linkedin account is selected', async () => {
-		await composePage.verifySocialProfileSelected(proUserLinkedin);
+		await composePage.verifySocialProfileSelected(proUserFacebookPage);
 	});
 
 	await test.step('Verify one time approver field is not displayed', async () => {
@@ -59,7 +58,7 @@ test('Verify one time approver is only enabled for enterprise user', async ({pag
 
 	await test.step('Create an enterprise user', async () => {
 		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'flex_approver_enterprise', accounts);
-		enterpriseUserLinkedin = getObjectByName(global.fixture, 'li_flex_approver_enterprise').socialProfile.username;
+		enterpriseUserFacebookPage = getObjectByName(global.fixture, 'fb_flex_approver_enterprise').socialProfile.username;
 	});
 
 	await test.step('Login as enterprise user', async () => {
@@ -71,7 +70,7 @@ test('Verify one time approver is only enabled for enterprise user', async ({pag
 	});
 
 	await test.step('Verify linkedin account is selected', async () => {
-		await composePage.verifySocialProfileSelected(enterpriseUserLinkedin);
+		await composePage.verifySocialProfileSelected(enterpriseUserFacebookPage);
 	});
 
 	await test.step('Verify one time approver field is displayed', async () => {
@@ -81,7 +80,7 @@ test('Verify one time approver is only enabled for enterprise user', async ({pag
 	});
 
 	await test.step('Remove the selected network and verify one time approver field is not displayed', async () => {
-		await page.getByLabel(`Clear selection ${enterpriseUserLinkedin}`).click();
+		await page.getByLabel(`Clear selection ${enterpriseUserFacebookPage}`).click();
 		await expect(page.getByRole('heading', { name: 'Ask for approval' })).not.toBeVisible();
 		await expect(page.getByText('Invite a team member with access to the selected accounts to approve this post first.')).not.toBeVisible();
 		await expect(composePage.oneTimeApproverDropDown).not.toBeVisible();

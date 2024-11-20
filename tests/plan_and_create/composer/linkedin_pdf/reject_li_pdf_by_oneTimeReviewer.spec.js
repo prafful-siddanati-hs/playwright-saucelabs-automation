@@ -22,8 +22,6 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Reject LinkedIn PDF post by one time reviewer : ', async ({ page }) => {
-	let orgName = 'pw_li_pdf_reject_' + Math.floor(Math.random() * 10000);
-	const pdfText = 'Reject with PDF ' + Math.floor(Math.random() * 1000);
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const plannerPage = new PlannerPage(page);
@@ -32,10 +30,11 @@ test('Reject LinkedIn PDF post by one time reviewer : ', async ({ page }) => {
 	const setUpEnterpriseUser = new SetUpEnterpriseUser();
 	const updateSNPermissions = new modifySocialProfilePermissions();
 
+	let orgName = 'pw_li_pdf_reject_' + Math.floor(Math.random() * 10000);
 	let accounts = {
-		linkedin: []
+		linkedin: ['pw_li_pdf_ca_reject']
 	};
-	accounts.linkedin.push('pw_li_pdf_ca_reject');
+	const pdfText = 'Reject with PDF ' + Math.floor(Math.random() * 1000);
 
 	await test.step('Setup user & accounts', async () => {
 		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'li_pdf_admin_user', accounts);

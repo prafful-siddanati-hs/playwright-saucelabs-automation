@@ -33,9 +33,8 @@ test('Approve Linkedin PDF posts via custom approval : ', async ({ page }) => {
 	const updateSNPermissions = new modifySocialProfilePermissions();
 
 	let accounts = {
-		linkedin: []
+		linkedin: ['pw_li_pdf_ca']
 	};
-	accounts.linkedin.push('pw_li_pdf_ca');
 
 	await test.step('Setup user & accounts', async () => {
 		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'li_pdf_admin_user', accounts);

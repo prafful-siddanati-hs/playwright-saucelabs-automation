@@ -1,11 +1,10 @@
 /* Test to verify appropriate error validations are displayed while PDF & other media types are attached to LinkedIn post. */
 const { test, expect} = require('@playwright/test');
-const createUser = require('../../../../custom-commands/createUser');
-const getFixture = require('../../../../custom-commands/getFixture');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { getObjectByName } = require('../../../../globals');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
+const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
 
 const LINKEDIN_MIXED_MEDIA_ERROR = 'LinkedIn posts can\'t include different media types. You can attach images, a video, or a PDF.';
 const LINKEDIN_MULTIPLE_PDFS_ERROR = 'LinkedIn doesn\'t support multiple PDFs';
@@ -21,23 +20,25 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Verify error validations for LinkedIn PDF post', async ({page}) => {
-	const pdfText = 'Check PDF validations '+ + Math.floor(Math.random() * 1000);
-
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
-	const createNewUser = new createUser();
-	const addFixture = new getFixture();
+	const setUpEnterpriseUser = new SetUpEnterpriseUser();
+
+	let orgName = 'pdf_error_validations_' + Math.floor(Math.random() * 10000);
+	let accounts = {
+		linkedin: ['li_pdf_validation'],
+		twitter: ['tw_pdf_validation']
+	};
+	const pdfText = 'Check PDF validations '+ + Math.floor(Math.random() * 1000);
 
 	await test.step('Setup user & accounts', async () => {
-		await createNewUser.command('pw_li_pdf_error_validations', 'team3s');
-		await addFixture.command('tw_pdf_validations','twitter', true, 300);
-		await addFixture.command('li_pdf_validations','linkedin', true, 300);
-		liAccount = getObjectByName(global.fixture, 'li_pdf_validations').socialProfile.username;
-		twAccount = getObjectByName(global.fixture, 'tw_pdf_validations').socialProfile.username;
+		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'pw_li_pdf_error_validations', accounts);
+		liAccount = getObjectByName(global.fixture, 'li_pdf_validation').socialProfile.username;
+		twAccount = getObjectByName(global.fixture, 'tw_pdf_validation').socialProfile.username;
 	});
 
 	await test.step('Login as teams user', async () => {
-		await loginPage.signInAsProUser('pw_li_pdf_error_validations');
+		await loginPage.signInSkipOnboarding('pw_li_pdf_error_validations');
 	});
 
 	await test.step('Dismiss new user onboarding modals', async () => {

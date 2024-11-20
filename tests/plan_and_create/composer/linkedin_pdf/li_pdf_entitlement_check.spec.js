@@ -1,14 +1,14 @@
 /* Test to verify professional user cannot upload PDFs to linkedin */
 const { test, expect} = require('@playwright/test');
-const createUser = require('../../../../custom-commands/createUser');
 const getFixture = require('../../../../custom-commands/getFixture');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { getObjectByName } = require('../../../../globals');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
+const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
 
 const PDF_UNSUPPORTED_ERROR = 'You can\'t upload files of this type.';
-let proUserLinkedin, teamUserLinkedin;
+let proUserLinkedin, enterpriseUserLinkedin;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -20,31 +20,34 @@ test.afterEach(async ({ page }) => {
 test('Verify professional user cannot upload PDFs to linkedin', async ({page}) => {
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
-	const createNewUser = new createUser();
 	const addFixture = new getFixture();
+	const setUpEnterpriseUser = new SetUpEnterpriseUser();
+
+	let orgName = 'pdf_entitlement_' + Math.floor(Math.random() * 10000);
+	let accounts = {
+		linkedin: ['ent_li_account'],
+	};
 
 	await test.step('Setup user & accounts', async () => {
-		await createNewUser.command('pw_li_pdf_pro_user', 'professional');
-		await addFixture.command('li_pdf_entitlement_pro','linkedin', true, 300);
-		proUserLinkedin = getObjectByName(global.fixture, 'li_pdf_entitlement_pro').socialProfile.username;
+		await addFixture.command('li_pdf_entitlement_pro', 'pro_user_composer', true, 300);
+		proUserLinkedin = getObjectByName(global.fixture, 'li_pdf_entitlement_pro').linkedinProfile.username;
 	});
 
 	await test.step('Login as professional user', async () => {
-		await loginPage.signInAsProUser('pw_li_pdf_pro_user');
-	});
-
-	await test.step('Dismiss new user onboarding modals', async () => {
-		await page.evaluate(() => {
-			return (hs.memberExtras.hasSeenNewComposerOnboarding = true);
-		});
+		await loginPage.signIn('li_pdf_entitlement_pro');
 	});
 
 	await test.step('Select new compose button', async () => {
 		await composePage.selectComposeButton();
 	});
 
-	await test.step('Verify linkedin account is selected', async () => {
-		await composePage.verifySocialProfileSelected(proUserLinkedin);
+	await test.step(`Select ${proUserLinkedin} account`, async () => {
+		await composePage.profileDropDown.click();
+		await expect(composePage.snContentItems).toBeVisible();
+		await composePage.selectSocialProfile(proUserLinkedin);
+		await composePage.postToWrapper.click();
+		await expect(composePage.profileListItemTitle).not.toBeVisible();
+		await expect(composePage.emptyLinkedInPreview).toBeVisible();
 	});
 
 	await test.step('Verify PDF unsupported error', async () => {
@@ -57,14 +60,13 @@ test('Verify professional user cannot upload PDFs to linkedin', async ({page}) =
 		new tearDown().command();
 	});
 
-	await test.step('Create a teams user', async () => {
-		await createNewUser.command('pw_li_pdf_team_user', 'team3s');
-		await addFixture.command('li_pdf_entitlement_teams','linkedin', true, 300);
-		teamUserLinkedin = getObjectByName(global.fixture, 'li_pdf_entitlement_teams').socialProfile.username;
+	await test.step('Create an enterprise user', async () => {
+		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'li_pdf_entitlement_enterprise', accounts);
+		enterpriseUserLinkedin = getObjectByName(global.fixture, 'ent_li_account').socialProfile.username;
 	});
 
-	await test.step('Login as teams user', async () => {
-		await loginPage.signInAsProUser('pw_li_pdf_team_user');
+	await test.step('Login as enterprise user', async () => {
+		await loginPage.signInSkipOnboarding('li_pdf_entitlement_enterprise');
 	});
 
 	await test.step('Dismiss team user onboarding modals', async () => {
@@ -78,7 +80,7 @@ test('Verify professional user cannot upload PDFs to linkedin', async ({page}) =
 	});
 
 	await test.step('Verify account is selected', async () => {
-		await composePage.verifySocialProfileSelected(teamUserLinkedin);
+		await composePage.verifySocialProfileSelected(enterpriseUserLinkedin);
 	});
 
 	await test.step('Upload PDF & check no error', async () => {

@@ -18,18 +18,16 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Duplicate a LinkedIn PDF post', async ({page}) => {
-	let orgName = 'pw_duplicate_li_pdf_' + Math.floor(Math.random() * 10000);
-	const pdfText = 'Duplicate PDF post '+ + Math.floor(Math.random() * 1000);
-
-	let accounts = {
-		linkedin: []
-	};
-	accounts.linkedin.push('pw_duplicate_pdf');
-
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const plannerPage = new PlannerPage(page);
 	const setUpEnterpriseUser = new SetUpEnterpriseUser();
+
+	let orgName = 'pw_duplicate_li_pdf_' + Math.floor(Math.random() * 10000);
+	let accounts = {
+		linkedin: ['pw_duplicate_pdf']
+	};
+	const pdfText = 'Duplicate PDF post '+ + Math.floor(Math.random() * 1000);
 
 	await test.step('Setup user & accounts', async () => {
 		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'pw_duplicate_li_pdf', accounts);

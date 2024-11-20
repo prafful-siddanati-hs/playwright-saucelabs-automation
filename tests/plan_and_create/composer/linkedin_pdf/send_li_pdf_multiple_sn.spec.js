@@ -80,7 +80,9 @@ test('Send LinkedIn PDF post with multiple social networks', async ({ page }) =>
 	await test.step('Remove image for linkedin', async () => {
 		await expect(composePage.imageRemoveButton).toBeVisible();
 		await composePage.imageRemoveButton.click();
+		await expect(composePage.mediaDeleteAnimation).toBeVisible();
 		await composePage.verifyLinkedInPdfPreview();
+		await expect(composePage.mediaDeleteAnimation).not.toBeVisible();
 	});
 
 	await test.step('Send the post', async () => {

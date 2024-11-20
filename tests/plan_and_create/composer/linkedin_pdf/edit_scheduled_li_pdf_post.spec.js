@@ -1,13 +1,13 @@
 /* Edit a LinkedIn Pdf post with a different text & network */
 const { test, expect } = require('@playwright/test');
-const createUser = require('../../../../custom-commands/createUser');
-const getFixture = require('../../../../custom-commands/getFixture');
 const tearDown = require('../../../../custom-commands/tearDown');
 const { getObjectByName, plan_create } = require('../../../../globals');
 const { formatISO, addHours } = require('date-fns');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const { PlannerPage } = require('../../../../pages/planandcreate/planner');
+const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
+
 const scheduleDate = addHours(new Date(), 1);
 let liAccount1, liAccount2, memberId;
 
@@ -19,24 +19,27 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Edit a LinkedIn PDF post by changing the profile', async ({ page }) => {
-	const pdfText = 'Edit this text ' + Math.floor(Math.random() * 1000);
-	const newPdfText = `--edited with url https://www.${plan_create.getRandomUrl()} `;
-	const createNewUser = new createUser();
-	const addFixture = new getFixture();
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const plannerPage = new PlannerPage(page);
+	const setUpEnterpriseUser = new SetUpEnterpriseUser();
+
+	let orgName = 'pw_edit_scheduled_li_pdf_post_' + Math.floor(Math.random() * 10000);
+	let accounts = {
+		linkedin: ['liAccount1', 'liAccount2'],
+	};
+	const pdfText = 'Edit this text ' + Math.floor(Math.random() * 1000);
+	const newPdfText = `--edited with url https://www.${plan_create.getRandomUrl()} `;
 
 	await test.step('Setup user & accounts', async () => {
-		await createNewUser.command('pw_li_pdf_edit', 'team3s');
-		await addFixture.command('linkedin_sn_1', 'linkedin', true, 300);
-		await addFixture.command('linkedin_sn_2', 'linkedin', true, 300);
-		liAccount1 = getObjectByName(global.fixture, 'linkedin_sn_1').socialProfile.username;
-		liAccount2 = getObjectByName(global.fixture, 'linkedin_sn_2').socialProfile.username;
+		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'pw_li_pdf_edit', accounts);
+		memberId = global.member[0].memberId;
+		liAccount1 = getObjectByName(global.fixture, 'liAccount1').socialProfile.username;
+		liAccount2 = getObjectByName(global.fixture, 'liAccount2').socialProfile.username;
 	});
 
 	await test.step('Login as test user', async () => {
-		await loginPage.signInAsProUser('pw_li_pdf_edit');
+		await loginPage.signInSkipOnboarding('pw_li_pdf_edit');
 	});
 
 	await test.step('Hide native posts', async () => {
@@ -53,7 +56,7 @@ test('Edit a LinkedIn PDF post by changing the profile', async ({ page }) => {
 	await test.step(`Schedule a PDF post for ${liAccount1}`, async () => {
 		await plannerPage.scheduleMessageWithPDF(
 			memberId,
-			getObjectByName(global.fixture, 'linkedin_sn_1').socialProfile.socialProfileId,
+			getObjectByName(global.fixture, 'liAccount1').socialProfile.socialProfileId,
 			pdfText,
 			formatISO(scheduleDate)
 		);
@@ -75,6 +78,7 @@ test('Edit a LinkedIn PDF post by changing the profile', async ({ page }) => {
 	});
 
 	await test.step('Update the message', async () => {
+		await expect(page.getByTestId('preview-container').getByText(`${liAccount1}`)).toBeVisible(); //Wait for preview to load
 		await composePage.writeMessage(newPdfText);
 		await composePage.verifyLinkedInPreview(pdfText.concat(newPdfText));
 	});
