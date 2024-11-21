@@ -1,6 +1,5 @@
 /* Test to verify Professional (& Team) users do not have access to One time approval workflows. Only enterprise users can access it. */
 const { test, expect} = require('@playwright/test');
-const createUser = require('../../../../custom-commands/createUser');
 const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
 const getFixture = require('../../../../custom-commands/getFixture');
 const tearDown = require('../../../../custom-commands/tearDown');
@@ -20,7 +19,6 @@ test.afterEach(async ({ page }) => {
 test('Verify one time approver is only enabled for enterprise user', async ({page}) => {
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
-	const createNewUser = new createUser();
 	const addFixture = new getFixture();
 	const setUpEnterpriseUser = new SetUpEnterpriseUser();
 
@@ -30,21 +28,25 @@ test('Verify one time approver is only enabled for enterprise user', async ({pag
 	};
 
 	await test.step('Setup user & accounts', async () => {
-		await createNewUser.command('flex_approver_pro_user', 'professional');
-		await addFixture.command('fb_flex_approver_pro','plan_create_facebookpage', true, 300);
-		proUserFacebookPage = getObjectByName(global.fixture, 'fb_flex_approver_pro').socialProfile.username;
+		await addFixture.command('flex_approver_pro_user', 'pro_user_composer', true, 300);
+		proUserFacebookPage = getObjectByName(global.fixture, 'flex_approver_pro_user').facebookPage.username;
 	});
 
 	await test.step('Login as professional user', async () => {
-		await loginPage.signInAsProUser('flex_approver_pro_user');
+		await loginPage.signIn('flex_approver_pro_user');
 	});
 
 	await test.step('Select new compose button', async () => {
 		await composePage.selectComposeButton();
 	});
 
-	await test.step('Verify linkedin account is selected', async () => {
-		await composePage.verifySocialProfileSelected(proUserFacebookPage);
+	await test.step(`Select ${proUserFacebookPage} account`, async () => {
+		await composePage.profileDropDown.click();
+		await expect(composePage.snContentItems).toBeVisible();
+		await composePage.selectSocialProfile(proUserFacebookPage);
+		await composePage.postToWrapper.click();
+		await expect(composePage.profileListItemTitle).not.toBeVisible();
+		await expect(composePage.emptyFacebookPreview).toBeVisible();
 	});
 
 	await test.step('Verify one time approver field is not displayed', async () => {

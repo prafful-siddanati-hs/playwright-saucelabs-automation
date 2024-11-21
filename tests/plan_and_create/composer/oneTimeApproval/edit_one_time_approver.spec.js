@@ -23,8 +23,6 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Change one time approver for a scheduled post', async ({ page }) => {
-	let orgName = 'edit_flex_approver_' + Math.floor(Math.random() * 10000);
-	const scheduleText = 'Update one time approver for this scheduled post ';
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const plannerPage = new PlannerPage(page);
@@ -35,9 +33,10 @@ test('Change one time approver for a scheduled post', async ({ page }) => {
 	const createScheduleMessage = new scheduleV3Message();
 
 	let accounts = {
-		twitter: []
+		twitter: ['tw_flex_approver_update']
 	};
-	accounts.twitter.push('tw_flex_approver_update');
+	let orgName = 'edit_flex_approver_' + Math.floor(Math.random() * 10000);
+	const scheduleText = 'Update one time approver for this scheduled post ';
 
 	await test.step('Setup user & accounts', async () => {
 		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'update_flex_approver', accounts);

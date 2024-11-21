@@ -11,7 +11,7 @@ const { PlannerPage } = require('../../../../pages/planandcreate/planner');
 const { DraftsPage } = require('../../../../pages/planandcreate/drafts');
 const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
 
-let team3sMemberId, reviewerMemberId;
+let authorMemberId, reviewerMemberId;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -21,8 +21,6 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Add one time approver to unscheduled draft', async ({ page }) => {
-	let orgName = 'add_one_time_approver_to_draft_' + Math.floor(Math.random() * 10000);
-	const draftText = 'Add one time approver to this draft ';
 	const loginPage = new LoginPage(page);
 	const composePage = new ComposePage(page);
 	const plannerPage = new PlannerPage(page);
@@ -36,27 +34,29 @@ test('Add one time approver to unscheduled draft', async ({ page }) => {
 		plan_create_facebookpage: []
 	};
 	accounts.plan_create_facebookpage.push('fb_flex_approver_draft');
+	let orgName = 'add_one_time_approver_to_draft_' + Math.floor(Math.random() * 10000);
+	const draftText = 'Add one time approver to this draft ';
 
 	await test.step('Setup user & accounts', async () => {
 		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'draft_flex_reviewer', accounts);
-		await createNewUser.command('draft_team3s_author', 'team3s');
-		await addUserToNewOrg.command('draft_team3s_author', orgName);
-		await updateSNPermissions.command('SN_ADVANCED', 'fb_flex_approver_draft', 'draft_team3s_author');
+		await createNewUser.command('draft_author', 'professional');
+		await addUserToNewOrg.command('draft_author', orgName);
+		await updateSNPermissions.command('SN_ADVANCED', 'fb_flex_approver_draft', 'draft_author');
 		reviewerMemberId = global.member[0].memberId;
-		team3sMemberId = global.member[1].memberId;
+		authorMemberId = global.member[1].memberId;
 	});
 
-	await test.step('Login as team3s user', async () => {
-		await loginPage.signInSkipOnboarding('draft_team3s_author');
+	await test.step('Login as test user', async () => {
+		await loginPage.signInSkipOnboarding('draft_author');
 	});
 
 	await test.step('Hide native posts & recommended times', async () => {
-		await plannerPage.hideNativePosts(team3sMemberId);
-		await plannerPage.hideRecommendedTimes(team3sMemberId);
+		await plannerPage.hideNativePosts(authorMemberId);
+		await plannerPage.hideRecommendedTimes(authorMemberId);
 	});
 
 	await test.step('Delete residual drafts', async () => {
-		await draftsPage.deleteDraftsViaApi(team3sMemberId);
+		await draftsPage.deleteDraftsViaApi(authorMemberId);
 	});
 
 	await test.step('Dismiss new user onboarding modal', async () => {
@@ -68,7 +68,7 @@ test('Add one time approver to unscheduled draft', async ({ page }) => {
 	await test.step('Create an unscheduled draft', async () => {
 		try {
 			await draftsPage.createDraftViaApiByNetwork(
-				team3sMemberId,
+				authorMemberId,
 				null,
 				getObjectByName(global.fixture, 'fb_flex_approver_draft').socialProfile.socialProfileId,
 				draftText,
@@ -116,7 +116,7 @@ test('Add one time approver to unscheduled draft', async ({ page }) => {
 		await plannerPage.closeApprovalHistoryModal.click();
 	});
 
-	await test.step('Logout from author (team3s user)', async () => {
+	await test.step('Logout from author', async () => {
 		await loginPage.logout();
 	});
 
@@ -129,7 +129,7 @@ test('Add one time approver to unscheduled draft', async ({ page }) => {
 		await plannerPage.hideRecommendedTimes(reviewerMemberId);
 	});
 
-	await test.step('Navigate to planner for teams user', async () => {
+	await test.step('Navigate to planner for author user', async () => {
 		await plannerPage.visit();
 	});
 
