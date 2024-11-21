@@ -2153,10 +2153,10 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			pinterest: {
-				id: '1997882571',
-				email: 'plan.create.automation+pin1@hootsuite.com',
-				username: 'plancreateautomationpin1',
-				password: 'AWrAG75DD3wV',
+				id: '1998706199',
+				email: 'plan.create.automation+sandbox2@hootsuite.com',
+				username: 'plancreateautomationsandbox2',
+				password: 'exWaN5PV452Wf3',
 				ownerId: '13465508',
 				ownerType: 'MEMBER'
 			},
@@ -2195,10 +2195,10 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			pinterest: {
-				id: '1997882791',
-				email: 'plan.create.automation+pin2@hootsuite.com',
-				username: 'plancreateautomationpin2',
-				password: '0DmK1veHA35p',
+				id: '1998706201',
+				email: 'plan.create.automation+sandbox3@hootsuite.com',
+				username: 'plancreateautomationsandbox3',
+				password: 'gBTabbY9HmYA9im',
 				ownerId: '13465719',
 				ownerType: 'MEMBER'
 			},
@@ -2237,10 +2237,10 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			pinterest: {
-				id: '1997881463',
-				email: 'plan.create.automation+pin3@hootsuite.com',
-				username: 'plancreateautomationpin3',
-				password: 'G6rR84q61dAw',
+				id: '1998706203',
+				email: 'plan.create.automation+sandbox4@hootsuite.com',
+				username: 'plancreateautomationsandbox4',
+				password: '5YTTGrrAf1uQxMA',
 				ownerId: '13465786',
 				ownerType: 'MEMBER'
 			},
@@ -2279,10 +2279,10 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			pinterest: {
-				id: '1998671308',
-				email: 'plan.create.automation+pinfour@hootsuite.com',
-				username: 'plancreateautomationpinfour',
-				password: '@s?veZwL5S(bos60xZb;',
+				id: '1998706216',
+				email: 'plan.create.automation+sandbox5@hootsuite.com',
+				username: 'plancreateautomationsandbox5',
+				password: '1BE50As8bZdKi0E',
 				ownerId: '13465802',
 				ownerType: 'MEMBER'
 			},
@@ -2336,10 +2336,10 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			pinterest: {
-				id: '1998673110',
-				email: 'plan.create.automation+pinfive@hootsuite.com',
-				username: 'plancreateautomationpinfive',
-				password: '^B9y5g4KYI=1,qSs}x3}',
+				id: '1998706222',
+				email: 'plan.create.automation+sandbox6@hootsuite.com',
+				username: 'plancreateautomationsandbox6',
+				password: '3E2qwBLtOJEQsl1',
 				ownerId: '13465807',
 				ownerType: 'MEMBER'
 			}
