@@ -711,12 +711,10 @@ exports.ComposePage = class ComposePage {
 	}
 
 	async attachImageFromMediaLibrary(numImages) {
-		let randomImage;
 		await expect(this.mediaContent, 'Media library content is loaded').toBeVisible();
 		await expect(this.firstImage.nth(0)).toBeVisible();
 		for (let i = 0; i < numImages; i ++) {
-			randomImage = Math.floor(Math.random() * 15) + 1;
-			const image = await this.mediaThumbnail.nth(randomImage);
+			const image = await this.mediaThumbnail.nth(i);
 			if (await image.isVisible()) {
 				await image.click();
 				await this.page.waitForTimeout(1000);
