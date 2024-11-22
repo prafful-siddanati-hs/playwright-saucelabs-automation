@@ -85,9 +85,10 @@ test('Verify internal comments can accept Image,Video & PDF files', async ({page
 		await plannerPage.internalCommentTextArea.click();
 		await expect(plannerPage.saveInternalComment).toBeDisabled(); // Save button should be disabled
 		await plannerPage.internalCommentTextArea.fill(commentText);
+		await page.waitForTimeout(1000); // Wait for the text to be entered
 	});
 
-	await test.step('Add diffrent types of media and save the internal comment', async () => {
+	await test.step('Add different types of media and save the internal comment', async () => {
 		const filesToUpload = [ // Fixed file paths to avoid uploading large files
 			'test_data/publisher/images/Art.png',
 			'test_data/publisher/giphy/stay_cool.gif',

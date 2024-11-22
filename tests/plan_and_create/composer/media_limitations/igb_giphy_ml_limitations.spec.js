@@ -51,6 +51,7 @@ test('Validate the media library\'s GIF limits for Instagram', async ({page}) =>
 	await test.step('Upload 10 gif\'s from media library and verify its preview', async () => {
 		await composePage.openMediaLibrary();
 		await composePage.selectGiphyInMediaLibrary();
+		await composePage.searchMediaLibrary('owl');
 		await composePage.attachImageFromMediaLibrary(10);
 		await composePage.closeMediaLibrary();
 		await expect(composePage.instagramCarouselIndicators).toHaveCount(10);

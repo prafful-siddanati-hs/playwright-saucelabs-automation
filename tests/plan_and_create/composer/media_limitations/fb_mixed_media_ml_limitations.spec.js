@@ -60,6 +60,7 @@ test('Validate the media library\'s mixed media limits for Facebook', async ({pa
 	await test.step('Upload a few giphy files and verify there is no errors/info banners', async () => {
 		await composePage.openMediaLibrary();
 		await composePage.selectGiphyInMediaLibrary();
+		await composePage.searchMediaLibrary('owl');
 		await composePage.attachImageFromMediaLibrary(5);
 		await composePage.closeMediaLibrary();
 		await expect(page.getByText('+22'), '26 media items attached').toBeVisible();

@@ -52,6 +52,7 @@ test('Validate the media library\'s GIF limits for Linkedin', async ({page}) => 
 	await test.step('Upload 20 gif\'s from media library and verify its preview', async () => {
 		await composePage.openMediaLibrary();
 		await composePage.selectGiphyInMediaLibrary();
+		await composePage.searchMediaLibrary('owl');
 		await composePage.attachImageFromMediaLibrary(20);
 		await composePage.closeMediaLibrary();
 		await expect(composePage.linkedInPreviewMediaContainer).toHaveCount(5);

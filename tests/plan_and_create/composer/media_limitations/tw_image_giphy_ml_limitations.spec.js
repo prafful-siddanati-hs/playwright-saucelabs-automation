@@ -50,6 +50,7 @@ test('Validate the media library\'s image and GIF limits for Twitter', async ({p
 	await test.step('Upload more than one giphy from media library and verify its preview', async () => {
 		await composePage.openMediaLibrary();
 		await composePage.selectGiphyInMediaLibrary();
+		await composePage.searchMediaLibrary('owl');
 		await composePage.attachImageFromMediaLibrary(2);
 		await expect(composePage.twitterPreviewMediaContainer).toBeHidden(2);
 		await expect(composePage.imagePublishLimit).toHaveText('errorOops! It seems like you got a bit carried away with GIFsTwitter has a limit of one animated image per tweet.');
