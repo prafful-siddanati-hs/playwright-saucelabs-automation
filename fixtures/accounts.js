@@ -1982,18 +1982,18 @@ module.exports = {
 				ownerType: 'MEMBER'
 			},
 			facebookPage_igb: {
-				id: '1998134105',
+				id: '1998706813',
 				email: 'plan.create.automation+fbhsstgigb4@hootsuite.com',
-				username: 'Test IGB5',
+				username: 'PnC Page 5',
 				password: '1tAzjMKDH4nu',
 				ownerId: '13517069',
 				ownerType: 'MEMBER'
 			},
 			instagramBusiness: {
-				id: '1998134935',
-				email: 'luis.tellez+ig_account@hootsuite.com',
-				username: 'hoot_over_water',
-				password: 'IG:3005_p4ss!',
+				id: '1998706826',
+				email: 'plan.create.automation+igbstgsix@hootsuite.com',
+				username: 'hootpncigbstg_six',
+				password: 'XNQnr4KdLbx',
 				ownerId: '13517069',
 				ownerType: 'MEMBER'
 			}
