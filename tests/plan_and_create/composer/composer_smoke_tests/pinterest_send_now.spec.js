@@ -19,11 +19,11 @@ test('Send pinterest message using composer', async ({ page }) => {
 	const pinPage = new PinPage(page);
 
 	await test.step('Setup user & accounts', async () => {
-		await addFixture.command('pin_send', 'enterprise_user_composer', true, 300);
+		await addFixture.command('pin_send', 'linkedin_enterprise', true, 300);
 	});
 
-	await test.step('Login as enterprise user', async () => {
-		await loginPage.signInSkipOnboarding('pin_send');
+	await test.step('Login as pro user', async () => {
+		await loginPage.signInAsProUser('pin_send');
 	});
 
 	await test.step('Select pin button from global navigator', async () => {
