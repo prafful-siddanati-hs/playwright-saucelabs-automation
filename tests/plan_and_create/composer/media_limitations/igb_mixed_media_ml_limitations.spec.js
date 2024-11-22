@@ -53,6 +53,7 @@ test('Validate the media library\'s mixed media limits for Instagram', async ({p
 		await composePage.openMediaLibrary();
 		await composePage.attachImageFromMediaLibrary(5);
 		await composePage.selectGiphyInMediaLibrary();
+		await composePage.searchMediaLibrary('owl');
 		await composePage.attachImageFromMediaLibrary(5);
 		await composePage.closeMediaLibrary();
 		await expect(composePage.instagramCarouselIndicators).toHaveCount(10);

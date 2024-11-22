@@ -63,6 +63,7 @@ test('Validate the media library\'s image and gif limits for Instagram Story', a
 		await expect(composePage.imagePublishLimit).not.toBeVisible();
 		await composePage.openMediaLibrary();
 		await composePage.selectGiphyInMediaLibrary();
+		await composePage.searchMediaLibrary('owl');
 		await composePage.attachImageFromMediaLibrary(1);
 		await composePage.closeMediaLibrary();
 		await expect(composePage.instagramStoryPreviewSingleImage).toBeVisible();

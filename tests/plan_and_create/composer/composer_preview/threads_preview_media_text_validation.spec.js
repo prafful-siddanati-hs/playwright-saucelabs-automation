@@ -91,6 +91,7 @@ test('Threads preview validations for media, text and link settings', async ({ p
 	await test.step('Attach gif from media library and verify its preview', async () => {
 		await composePage.openMediaLibrary();
 		await composePage.selectGiphyInMediaLibrary();
+		await composePage.searchMediaLibrary('owl');
 		await composePage.attachImageFromMediaLibrary(1);
 		await composePage.closeMediaLibrary();
 		await composePage.verifyThreadsImagePreview();
