@@ -37,9 +37,6 @@ exports.ComposePage = class ComposePage {
 		this.twitterPreviewSingleVideo = page.locator('.vk-ComposerModal [type="TWITTER"] .vk-TwitterPreview .vk-VideoContainer');
 		this.twitterPreviewMediaContainer = page.locator('.vk-ComposerModal .vk-TwitterPreview .vk-MediaContainer');
 		this.imagePublishLimit = page.locator('.vk-ComposerModal  .rc-MessageEditContent [role="alert"]');
-		this.giphyAttachmentReplacementModalTitle = page.locator('.vk-MediaReplaceModal h2');
-		this.giphyAttachmentReplacementButton = page.locator('.vk-MediaReplaceModal .vk-SubmitButton');
-		this.giphySelection = page.locator('.vk-MediaReplaceModal .vk-Media:nth-of-type(2) label');
 		this.emptyTwitterPreview = page.locator('.vk-ComposerModal .vk-TwitterPreview');
 		this.emptyFacebookPreview = page.locator('.vk-ComposerModal .vk-FacebookPreview');
 		this.linkedinNetworkType = page.locator('.vk-ComposerModal [type="LINKEDIN"] .vk-MessagePreviewHeader .vk-NetworkType');

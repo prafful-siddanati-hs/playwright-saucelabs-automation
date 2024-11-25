@@ -79,22 +79,15 @@ test('Validate uploaded media limitations for linkedin', async ({page}) => {
 		await expect(composePage.mediaDeleteAnimation).toBeVisible();
 		await expect(page.getByText(LINKEDIN_MAX_MEDIA_LIMIT_INFO)).not.toBeVisible();
 		await expect(composePage.mediaDeleteAnimation).not.toBeVisible();
-		await page.waitForTimeout(1000);
 	});
 
 	await test.step('Verify mixed media does not show any error when gif file is attached', async () => {
-		// await expect(composePage.imageRemoveButton).toBeVisible();
-		// await composePage.imageRemoveButton.click();
-		// await expect(composePage.mediaDeleteAnimation).toBeVisible();
-		// await page.waitForTimeout(1000);
-		await composePage.uploadMediaFile('test_data/publisher/giphy', 'test_data/publisher/giphy/stay_cool.gif');
+		await expect(composePage.imageRemoveButton).toBeVisible();
+		await composePage.imageRemoveButton.click();
+		await expect(composePage.mediaDeleteAnimation).toBeVisible();
 		await page.waitForTimeout(1000);
+		await composePage.uploadMediaFile('test_data/publisher/giphy', 'test_data/publisher/giphy/stay_cool.gif');
 		await expect(composePage.mediaLoadingAnimation).not.toBeVisible();
-		await expect(composePage.giphyAttachmentReplacementModalTitle).toBeVisible();
-		await expect(composePage.giphySelection).toBeVisible();
-		await composePage.giphySelection.click();
-		await expect(composePage.giphyAttachmentReplacementButton).toBeVisible();
-		await composePage.giphyAttachmentReplacementButton.click();
 		await expect(page.getByText(LINKEDIN_MAX_MEDIA_LIMIT_INFO)).not.toBeVisible();
 		await expect(page.getByText(LINKEDIN_MIXED_MEDIA_INFO)).not.toBeVisible();
 	});
