@@ -49,6 +49,7 @@ test('Validate the media library\'s mixed media limits for Threads', async ({pag
 	await test.step('Upload 10 gif\'s from media library and verify its preview', async () => {
 		await composePage.openMediaLibrary();
 		await composePage.selectGiphyInMediaLibrary();
+		await composePage.searchMediaLibrary('owl');
 		await composePage.attachImageFromMediaLibrary(10);
 		await composePage.closeMediaLibrary();
 		await expect(composePage.threadsmCarouselIndicators).toHaveCount(10);

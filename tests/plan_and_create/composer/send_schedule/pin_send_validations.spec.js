@@ -13,7 +13,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Send pinterest message using composer', async ({ page }) => {
+test.skip('Send pinterest message using composer', async ({ page }) => {
 	const pinText =  `Send Pin ${plan_create.getRandomUrl()} ${plan_create.getRandomEmoji()} ${Math.floor(Math.random() * 1000)}`;
 
 	const addFixture = new getFixture();

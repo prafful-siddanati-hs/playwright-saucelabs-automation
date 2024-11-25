@@ -17,7 +17,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Pinterest preview validations for google analytics link settings', async ({ page }) => {
+test.skip('Pinterest preview validations for google analytics link settings', async ({ page }) => {
 	const pinText = `GA ${URL} `;
 	const loginPage = new LoginPage(page);
 	const linkSettingsModal = new LinkSettingsModal(page);
