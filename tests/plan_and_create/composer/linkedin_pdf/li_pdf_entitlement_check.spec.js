@@ -28,7 +28,39 @@ test('Verify professional user cannot upload PDFs to linkedin', async ({page}) =
 		linkedin: ['ent_li_account'],
 	};
 
-	await test.step('Setup user & accounts', async () => {
+	await test.step('Setup an enterprise user', async () => {
+		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'li_pdf_entitlement_enterprise', accounts);
+		enterpriseUserLinkedin = getObjectByName(global.fixture, 'ent_li_account').socialProfile.username;
+	});
+
+	await test.step('Login as enterprise user', async () => {
+		await loginPage.signInSkipOnboarding('li_pdf_entitlement_enterprise');
+	});
+
+	await test.step('Dismiss new user onboarding modals', async () => {
+		await page.evaluate(() => {
+			return (hs.memberExtras.hasSeenNewComposerOnboarding = true);
+		});
+	});
+
+	await test.step('Select new compose', async () => {
+		await composePage.selectComposeButton();
+	});
+
+	await test.step(`Verify ${enterpriseUserLinkedin} account is selected`, async () => {
+		await composePage.verifySocialProfileSelected(enterpriseUserLinkedin);
+	});
+
+	await test.step('Upload PDF & check no error', async () => {
+		await composePage.uploadMediaFile('test_data/publisher/pdfs');
+		await expect(page.getByRole('heading', { name: PDF_UNSUPPORTED_ERROR})).not.toBeVisible();
+	});
+
+	await test.step('Logout from enterprise user', async () => {
+		await loginPage.logout();
+	});
+
+	await test.step('Setup pro user & accounts', async () => {
 		await addFixture.command('li_pdf_entitlement_pro', 'pro_user_composer', true, 300);
 		proUserLinkedin = getObjectByName(global.fixture, 'li_pdf_entitlement_pro').linkedinProfile.username;
 	});
@@ -37,7 +69,7 @@ test('Verify professional user cannot upload PDFs to linkedin', async ({page}) =
 		await loginPage.signIn('li_pdf_entitlement_pro');
 	});
 
-	await test.step('Select new compose button', async () => {
+	await test.step('Select new compose for pro user', async () => {
 		await composePage.selectComposeButton();
 	});
 
@@ -53,38 +85,5 @@ test('Verify professional user cannot upload PDFs to linkedin', async ({page}) =
 	await test.step('Verify PDF unsupported error', async () => {
 		await composePage.uploadMediaFile('test_data/publisher/pdfs');
 		await expect(page.getByRole('heading', { name: PDF_UNSUPPORTED_ERROR})).toBeVisible();
-	});
-
-	await test.step('Logout from professional user', async () => {
-		await loginPage.logout();
-		new tearDown().command();
-	});
-
-	await test.step('Create an enterprise user', async () => {
-		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'li_pdf_entitlement_enterprise', accounts);
-		enterpriseUserLinkedin = getObjectByName(global.fixture, 'ent_li_account').socialProfile.username;
-	});
-
-	await test.step('Login as enterprise user', async () => {
-		await loginPage.signInSkipOnboarding('li_pdf_entitlement_enterprise');
-	});
-
-	await test.step('Dismiss team user onboarding modals', async () => {
-		await page.evaluate(() => {
-			return (hs.memberExtras.hasSeenNewComposerOnboarding = true);
-		});
-	});
-
-	await test.step('Select team user new compose button', async () => {
-		await composePage.selectComposeButton();
-	});
-
-	await test.step('Verify account is selected', async () => {
-		await composePage.verifySocialProfileSelected(enterpriseUserLinkedin);
-	});
-
-	await test.step('Upload PDF & check no error', async () => {
-		await composePage.uploadMediaFile('test_data/publisher/pdfs');
-		await expect(page.getByRole('heading', { name: PDF_UNSUPPORTED_ERROR})).not.toBeVisible();
 	});
 });
