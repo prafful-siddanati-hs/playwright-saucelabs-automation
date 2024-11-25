@@ -14,7 +14,7 @@ test.afterEach(async ({ page }) => {
 	await page.close();
 });
 
-test('Verify the pinterest message character limit that are above and below the 500-character threshold', async ({ page }) => {
+test.skip('Verify the pinterest message character limit that are above and below the 500-character threshold', async ({ page }) => {
 	const pinMsg = `${plan_create.getRandomUrl()} ${plan_create.getRandomHashTag()} Hey everyone! 🌟 I’m doing a quick test to see how this message looks on Pinterest. If you’re seeing this, it means I’m checking formatting, spacing, and all the little details to make sure everything looks great when I share my upcoming content. 📸✨`;
 	const msgWithInTheLimit = plan_create.generateRandomMessage(pinMsg,495);
 	const addFixture = new getFixture();

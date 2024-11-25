@@ -71,6 +71,7 @@ Get ready to experience a world of culture and diversity at The Autumn Fair Show
 
 	await test.step('Write a RTL message and verify instagram preview', async () => {
 		await composePage.clearMessageEditor();
+		await page.waitForTimeout(1000); // Wait for the editor to clear
 		await page.keyboard.press('Escape');
 		await composePage.messageArea.click();
 		await composePage.messageArea.fill(ltrRtlMessage);
