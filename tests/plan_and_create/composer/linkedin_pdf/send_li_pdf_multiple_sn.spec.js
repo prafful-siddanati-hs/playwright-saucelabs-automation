@@ -14,8 +14,9 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Send LinkedIn PDF post with multiple social networks', async ({ page }) => {
-	let orgName = 'pw_send_li_pdf_multiple_sn_' + Math.floor(Math.random() * 10000);
-	const pdfText = 'Send with PDF ' + Math.floor(Math.random() * 1000);
+	const loginPage = new LoginPage(page);
+	const composePage = new ComposePage(page);
+	const setUpEnterpriseUser = new SetUpEnterpriseUser();
 
 	let accounts = {
 		linkedin: ['pw_send_li'],
@@ -23,9 +24,8 @@ test('Send LinkedIn PDF post with multiple social networks', async ({ page }) =>
 		plan_create_facebookpage: ['pw_send_fb']
 	};
 
-	const loginPage = new LoginPage(page);
-	const composePage = new ComposePage(page);
-	const setUpEnterpriseUser = new SetUpEnterpriseUser();
+	let orgName = 'pw_send_li_pdf_multiple_sn_' + Math.floor(Math.random() * 10000);
+	const pdfText = 'Send with PDF ' + Math.floor(Math.random() * 1000);
 
 	await test.step('Setup user & accounts', async () => {
 		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'pw_send_li_pdf_multiple_sn', accounts);

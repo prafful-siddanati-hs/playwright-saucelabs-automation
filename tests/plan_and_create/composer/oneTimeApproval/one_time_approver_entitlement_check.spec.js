@@ -22,43 +22,12 @@ test('Verify one time approver is only enabled for enterprise user', async ({pag
 	const addFixture = new getFixture();
 	const setUpEnterpriseUser = new SetUpEnterpriseUser();
 
-	let orgName = 'fb_flex_approver_enterprise_' + Math.floor(Math.random() * 10000);
 	let accounts = {
 		plan_create_facebookpage: ['fb_flex_approver_enterprise']
 	};
+	let orgName = 'fb_flex_approver_enterprise_' + Math.floor(Math.random() * 10000);
 
-	await test.step('Setup user & accounts', async () => {
-		await addFixture.command('flex_approver_pro_user', 'pro_user_composer', true, 300);
-		proUserFacebookPage = getObjectByName(global.fixture, 'flex_approver_pro_user').facebookPage.username;
-	});
-
-	await test.step('Login as professional user', async () => {
-		await loginPage.signIn('flex_approver_pro_user');
-	});
-
-	await test.step('Select new compose button', async () => {
-		await composePage.selectComposeButton();
-	});
-
-	await test.step(`Select ${proUserFacebookPage} account`, async () => {
-		await composePage.profileDropDown.click();
-		await expect(composePage.snContentItems).toBeVisible();
-		await composePage.selectSocialProfile(proUserFacebookPage);
-		await composePage.postToWrapper.click();
-		await expect(composePage.profileListItemTitle).not.toBeVisible();
-		await expect(composePage.emptyFacebookPreview).toBeVisible();
-	});
-
-	await test.step('Verify one time approver field is not displayed', async () => {
-		await expect(composePage.oneTimeApproverDropDown).not.toBeVisible();
-	});
-
-	await test.step('Logout from professional user', async () => {
-		await loginPage.logout();
-		new tearDown().command();
-	});
-
-	await test.step('Create an enterprise user', async () => {
+	await test.step('Setup an enterprise user', async () => {
 		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'flex_approver_enterprise', accounts);
 		enterpriseUserFacebookPage = getObjectByName(global.fixture, 'fb_flex_approver_enterprise').socialProfile.username;
 	});
@@ -85,6 +54,36 @@ test('Verify one time approver is only enabled for enterprise user', async ({pag
 		await page.getByLabel(`Clear selection ${enterpriseUserFacebookPage}`).click();
 		await expect(page.getByRole('heading', { name: 'Ask for approval' })).not.toBeVisible();
 		await expect(page.getByText('Invite a team member with access to the selected accounts to approve this post first.')).not.toBeVisible();
+		await expect(composePage.oneTimeApproverDropDown).not.toBeVisible();
+	});
+
+	await test.step('Logout from enterprise user', async () => {
+		await loginPage.logout();
+	});
+
+	await test.step('Setup professional user & accounts', async () => {
+		await addFixture.command('flex_approver_pro_user', 'pro_user_composer', true, 300);
+		proUserFacebookPage = getObjectByName(global.fixture, 'flex_approver_pro_user').facebookPage.username;
+	});
+
+	await test.step('Login as professional user', async () => {
+		await loginPage.signIn('flex_approver_pro_user');
+	});
+
+	await test.step('Select new compose button', async () => {
+		await composePage.selectComposeButton();
+	});
+
+	await test.step(`Select ${proUserFacebookPage} account`, async () => {
+		await composePage.profileDropDown.click();
+		await expect(composePage.snContentItems).toBeVisible();
+		await composePage.selectSocialProfile(proUserFacebookPage);
+		await composePage.postToWrapper.click();
+		await expect(composePage.profileListItemTitle).not.toBeVisible();
+		await expect(composePage.emptyFacebookPreview).toBeVisible();
+	});
+
+	await test.step('Verify one time approver field is not displayed', async () => {
 		await expect(composePage.oneTimeApproverDropDown).not.toBeVisible();
 	});
 });
