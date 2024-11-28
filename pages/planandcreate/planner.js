@@ -372,7 +372,7 @@ exports.PlannerPage = class PlannerPage {
 		if (hour) {
 			await this.loadLazyRenderedCards(hour);
 		}
-		await expect(this.page.getByText(text), 'Schedule message is not visible on planner').toBeVisible();
+		await expect(this.page.getByText(text), 'Schedule message is visible on planner').toBeVisible();
 	}
 
 	async verifyScheduledMessageNotPresent (text, hour) {
