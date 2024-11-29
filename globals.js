@@ -38,6 +38,13 @@ module.exports = {
 	},
 
 	plan_create: {
+		image_url: 'https://hootsuite-video.s3.amazonaws.com/staging/12262804-4kFLS6Ca.jpeg',
+
+		thumbnail_url: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-12262804-4kFLS6Ca.jpeg',
+
+		video_url: 'https://hootsuite-video.s3.amazonaws.com/staging/12262804_8dcc8204-bb88-446d-ba92-55944bea29c8.mp4',
+
+		gif_url: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-12262804-4QUAIMtz.gif',
 
 		pdfs: {
 			single_page:

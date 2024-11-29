@@ -23,7 +23,7 @@ test('Sample CA test: Add user & Update permissions : ', async ({ page }) => {
 	const addUserToNewOrg = new addUserToOrg();
 	const updateSNPermissions = new modifySocialProfilePermissions();
 
-	await addFixture.command('pw_enterprise_test_ca', 'enterprise', false, 300);
+	await addFixture.command('pw_enterprise_test_ca', 'plan_create_enterprise', false, 300);
 	await addFixture.command('test_x_acc1','twitter', false, 240);
 	await createNewUser.command('pw_test_ca');
 	await createNewOrg.command(orgName);
