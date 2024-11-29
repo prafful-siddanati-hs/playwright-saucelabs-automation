@@ -46,7 +46,8 @@ exports.PlannerPage = class PlannerPage {
 		this.filterPostStatusPicker = page.getByTestId('right-sheet').getByText('Post status');
 		this.filterCampaignsPicker = page.getByTestId('right-sheet').getByText('Campaigns');
 		this.filterApplyButton = page.getByLabel('Apply filters');
-		this.filterClearButton = page.getByLabel('Clear filters');
+		this.clearAllFilters = page.locator('button[aria-label="Clear filters"]');
+		this.filterPanelClearButton = page.locator('[data-testid="right-sheet"] button[aria-label="Clear filters"]');
 		this.filterCloseButton = page.getByTestId('right-sheet').getByLabel('Close Panel');
 		this.filterBackButton = page.getByText('keyboard_arrow_left');
 		this.viewWeekToggle = page.getByLabel('View weekly planner');
@@ -371,7 +372,7 @@ exports.PlannerPage = class PlannerPage {
 		if (hour) {
 			await this.loadLazyRenderedCards(hour);
 		}
-		await expect(this.page.getByText(text), 'Schedule message is not visible on planner').toBeVisible();
+		await expect(this.page.getByText(text), 'Schedule message is visible on planner').toBeVisible();
 	}
 
 	async verifyScheduledMessageNotPresent (text, hour) {
@@ -456,6 +457,84 @@ exports.PlannerPage = class PlannerPage {
 	async checkAltText(text) {
 		await expect(this.altTextDescription).toBeVisible();
 		await expect(this.altTextDescription).toHaveText(text);
+	}
+
+	async toggleFiltersButton() {
+		await expect(this.filtersButton).toBeVisible();
+		await this.filtersButton.click();
+	}
+
+	async filterBySocialProfile(profileName) {
+		const profileSelectorItem = this.page.locator(`//*[contains(@data-testid,"ListItem")]//*[text()="${profileName}"]`, { locateStrategy: 'xpath' });
+
+		await expect(this.filterAccountsPicker).toBeVisible();
+		await this.filterAccountsPicker.click();
+
+		await expect(profileSelectorItem).toBeVisible();
+		await profileSelectorItem.click();
+
+		await expect(this.filterApplyButton).toBeVisible();
+		await this.filterApplyButton.click();
+	}
+
+	async filterByPostStatus(postType) {
+		const POST_STATUS_LABELS = {
+			Drafts: 'POST-DRAFTS',
+			Scheduled: 'POST-SCHEDULED',
+			Published: 'POST-SENT',
+			PendingApproval: 'POST-PENDING_APPROVAL',
+			Rejected: 'POST-REJECTED_APPROVAL',
+			Failed: 'POST-SEND_FAILED_PERMANENTLY',
+			Disconnected: 'POST-DISCONNECTED',
+			Expired: 'POST-EXPIRED_APPROVAL'
+		};
+		const getPostStatusSelector = (labelName) => `[data-testid="${POST_STATUS_LABELS[labelName]}"]`;
+
+		await expect(this.filterPostStatusPicker).toBeVisible();
+		await this.filterPostStatusPicker.click();
+
+		const postStatusSelector = getPostStatusSelector(postType);
+		await expect(this.page.locator(postStatusSelector)).toBeVisible();
+		await this.page.locator(postStatusSelector).click();
+
+		await expect(this.filterApplyButton).toBeVisible();
+		await this.filterApplyButton.click();
+	}
+
+	async closeFilterPanel() {
+		await expect(this.filterCloseButton).toBeVisible();
+		await this.filterCloseButton.click();
+	}
+
+	async resetSelectedFilters() {
+		await expect(this.clearAllFilters).toBeVisible();
+		await this.clearAllFilters.click();
+	}
+
+	async approveFromApprovalsListView(text, postType) {
+		const approveButton = this.page.locator(`(//*[contains(@data-testid,"approvals-list-table")]//*[contains(@data-testid,"Content")]//span[text()="${text}"]/following::*//*[contains(@aria-label, "Approve post")])[1]`, { locateStrategy: 'xpath' });
+		const postTypeSelector = this.page.locator(`(//*[contains(@data-testid,"approvals-list-table")]//*[contains(@data-testid,"Content")]//span[text()="${text}"]/following::*[contains(@data-testid,"PostType") and contains(text(),"${postType}")])[1]`, { locateStrategy: 'xpath' });
+
+		await expect(postTypeSelector).toBeVisible();
+		await expect(postTypeSelector).toHaveText(postType);
+		await expect(approveButton).toBeVisible();
+		await approveButton.click();
+		await expect(approveButton).not.toBeVisible();
+	}
+
+	async rejectFromApprovalsListView(text, postType, reason) {
+		const rejectButton = this.page.locator(`(//*[contains(@data-testid,"approvals-list-table")]//*[contains(@data-testid,"Content")]//span[text()="${text}"]/following::*//*[contains(@aria-label, "Reject post")])[1]`, { locateStrategy: 'xpath' });
+		const postTypeSelector = this.page.locator(`(//*[contains(@data-testid,"approvals-list-table")]//*[contains(@data-testid,"Content")]//span[text()="${text}"]/following::*[contains(@data-testid,"PostType") and contains(text(),"${postType}")])[1]`, { locateStrategy: 'xpath' });
+
+		await expect(postTypeSelector).toBeVisible();
+		await expect(postTypeSelector).toHaveText(postType);
+		await expect(rejectButton).toBeVisible();
+		await rejectButton.click();
+		await expect(this.rejectModalInput).toBeVisible();
+		await this.rejectModalInput.fill(reason);
+		await expect(this.rejectModalRejectButton).toBeVisible();
+		await this.rejectModalRejectButton.click();
+
 	}
 
 	async dragAndDropCard(message, hour, id) {
