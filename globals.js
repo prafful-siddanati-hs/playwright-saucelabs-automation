@@ -11,7 +11,7 @@ module.exports = {
 	service_trail: 'https://trail.staging.hootops.com',
 	launch_url_cms: 'https://www-staging.hootsuite.com',
 	login_url: 'https://staging.hootsuite.com/login?lang=en',
-	defaultPassword: '5U{=2;56mjm1lf5ZpNTm',
+	defaultPassword: 'Z7U18uJAereIxkRAck!',
 	testOrgPrefix: 'TEMP_ORG_',
 	isOrgSafeToDelete: function (org, memberId, testOrgPrefix) {
 		const DO_NOT_DELETE_STAGING_ORG = [1866699];
@@ -38,6 +38,13 @@ module.exports = {
 	},
 
 	plan_create: {
+		image_url: 'https://hootsuite-video.s3.amazonaws.com/staging/12262804-4kFLS6Ca.jpeg',
+
+		thumbnail_url: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-12262804-4kFLS6Ca.jpeg',
+
+		video_url: 'https://hootsuite-video.s3.amazonaws.com/staging/12262804_8dcc8204-bb88-446d-ba92-55944bea29c8.mp4',
+
+		gif_url: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-12262804-4QUAIMtz.gif',
 
 		pdfs: {
 			single_page:
