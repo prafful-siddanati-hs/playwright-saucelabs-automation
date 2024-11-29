@@ -70,11 +70,10 @@ test('Verify scheduled message & post filtering in week view', async ({ page }) 
 
 	await test.step('Navigate to planner', async () => {
 		await plannerPage.visit();
-		await plannerPage.switchToExpandedView(global.member[0].memberId);
 	});
 
 	await test.step('Verify scheduled message in week view', async () => {
-		await plannerPage.verifyScheduledMessage(message, scheduleTime.getHours());
+		await plannerPage.verifyScheduledMessage(message);
 	});
 
 	await test.step('Ensure post is not displayed when filtered by facebook', async () => {
