@@ -550,12 +550,8 @@ exports.PlannerPage = class PlannerPage {
 		const timeSlots = await this.timeSlot;
 		const timeSlotCount = await timeSlots.count();
 		expect(timeSlotCount).toBe(NUM_TIME_SLOTS_IN_WEEK);
-
-		// Click on the first time slot
-		await this.timeSlot.first().click();
-
-		// Wait for the desired selector and click it
-		await expect(selector).toBeVisible();
+		await this.timeSlot.first().click(); // Click on the first time slot
+		await expect(selector).toBeVisible(); // Wait for the desired selector and click it
 		await selector.click();
 	}
 
