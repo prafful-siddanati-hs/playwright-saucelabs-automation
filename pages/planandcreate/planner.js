@@ -54,7 +54,7 @@ exports.PlannerPage = class PlannerPage {
 		this.viewWeekToggle = page.getByLabel('View weekly planner');
 		this.viewMonthToggle = page.getByLabel('View monthly planner');
 		this.todayButton = page.getByTestId('TodayButton');
-		this.navigateToNextWeek = page.getByTestId('NextNavButton');
+		this.nextWeek = page.getByTestId('NextNavButton');
 		this.navigateToPreviousWeek = page.getByTestId('PrevNavButton');
 		this.settingsButton = page.getByTestId('SettingsButton');
 		this.exportButton = page.getByTestId('planner-export-button');
@@ -544,8 +544,8 @@ exports.PlannerPage = class PlannerPage {
 	}
 
 	async selectPost(selector) {
-		await expect(this.navigateToNextWeek).toBeVisible();
-		await this.navigateToNextWeek.click();
+		await expect(this.nextWeek).toBeVisible();
+		await this.nextWeek.click();
 
 		const timeSlots = await this.timeSlot;
 		const timeSlotCount = await timeSlots.count();
