@@ -131,7 +131,7 @@ test('Link settings via content library template', async ({ page }) => {
 	});
 
 	await test.step('Verify scheduled message', async () => {
-		await plannerPage.verifyScheduledMessage(clLinkText.concat(`?${PARAMETER_NAME}=${PARAMETER_VALUE}`));
+		await plannerPage.verifyScheduledMessage(clLinkText.concat(`?${PARAMETER_NAME}=${PARAMETER_VALUE}`), getObjectByName(global.fixture, 'pw_cl_links_tw').username);
 		await plannerPage.showPreviewPane(clLinkText.concat(`?${PARAMETER_NAME}=${PARAMETER_VALUE}`));
 	});
 

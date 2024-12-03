@@ -63,7 +63,7 @@ test('Verify that the 3000-character threshold works as expected for edit linked
 	});
 
 	await test.step('Verify scheduled message', async () => {
-		await plannerPage.verifyScheduledMessage(originalText);
+		await plannerPage.verifyScheduledMessage(originalText, getObjectByName(global.fixture, 'edit_li_msg_char_limit').linkedinProfile.username);
 		await plannerPage.showPreviewPane(originalText);
 	});
 

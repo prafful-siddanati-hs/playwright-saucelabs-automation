@@ -71,7 +71,7 @@ test('Approve message with video fom planner list view', async ({ page }) => {
 
 	await test.step('Verify scheduled video message is present on planner list view', async () => {
 		await plannerPage.selectListView();
-		await plannerPage.verifyScheduledMessage(scheduleText);
+		await plannerPage.verifyScheduledMessage(scheduleText, getObjectByName(global.fixture, `${accounts.plan_create_facebookpage}`).socialProfile.username);
 		await plannerPage.showPreviewPane(scheduleText);
 	});
 
