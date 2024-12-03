@@ -69,7 +69,7 @@ test('Verify schedule message as instagram story from composer', async ({ page }
 	});
 
 	await test.step('Verify scheduled message in week view', async () => {
-		await plannerPage.verifyScheduledMessage(igbAccount, composeBasicText);
+		await plannerPage.verifyScheduledMessage(composeBasicText, igbAccount);
 	});
 
 	await test.step('Delete the scheduled messages', async () => {
