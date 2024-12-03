@@ -15,7 +15,7 @@ exports.PlannerPage = class PlannerPage {
      * - - - - - PLANNER GENERIC - - - - -
      */
 		this.plannerButton = page.getByLabel('Plan', { exact: true });
-		this.detailPane = page.locator('.vk-Planner .vk-DetailPane');
+		this.detailPane = page.locator('[data-testid="DetailPaneRenderer"]');
 		this.genericDetailPaneText = page.locator('.vk-GenericPreview .vk-PreviewMessageText');
 		this.unschedPostCheckbox = page.getByTestId('UnscheduledPostsCheckBoxContainer');
 		this.closeExportModalButton = page.locator('.vk-DialogCloseButton');
@@ -29,6 +29,7 @@ exports.PlannerPage = class PlannerPage {
 		this.recommendedTimesPopoverSocialProfile = page.locator('.vk-SuggestedPostContainer #popper li');
 		this.recommendedTimesNewPost = page.locator('(//*[contains(@class, "vk-SuggestedPostContainer")]//*[contains(@class,"vk-NewPostPlaceholderDropdownItem")]//*[text()="Post"])[1]', { locateStrategy: 'xpath' });
 		this.editDraftButton = page.locator('//button[text()="Edit draft"]', { locateStrategy: 'xpath' });
+		this.ghostCard = page.locator('//*[contains(@data-testid,"ghost-card")]', { locateStrategy: 'xpath' });
 
 		/**
      * - - - - - CALENDAR: TOP PANE - - - - -
@@ -53,8 +54,8 @@ exports.PlannerPage = class PlannerPage {
 		this.viewWeekToggle = page.getByLabel('View weekly planner');
 		this.viewMonthToggle = page.getByLabel('View monthly planner');
 		this.todayButton = page.getByTestId('TodayButton');
-		this.navigateToNextWeek = page.getByTestId('NextNavButton');
-		this.navigateToPreviousWeek = page.getByTestId('PrevNavButton');
+		this.nextButton = page.getByTestId('NextNavButton');
+		this.prevButton = page.getByTestId('PrevNavButton');
 		this.settingsButton = page.getByTestId('SettingsButton');
 		this.exportButton = page.getByTestId('planner-export-button');
 		this.csvExportOption = page.getByTestId('export-dropdown-csv-list-item');
@@ -89,8 +90,9 @@ exports.PlannerPage = class PlannerPage {
 		this.daySlot = page.locator('.vk-Planner .vk-Month .vk-Day');
 		this.pausedIconInMonthView = page.locator('.vk-Row .vk-CountByPostTypeWrapper .pause');
 		this.monthDayTodayClickable = page.locator('//*[@data-today]', { locateStrategy: 'xpath' });
-		this.prevYearNavigationButton = page.getByTestId('Go to previous month');
-		this.nextYearNavigationButton = page.getByTestId('Go to next month');
+		this.monthDateRangeButton = page.locator('.vk-Planner .vk-DateRangeAnchorButton');
+		this.prevYearNavigationButton = page.getByLabel('Previous year');
+		this.nextYearNavigationButton = page.getByLabel('Next year');
 		this.newPostMonthSidePane = page.locator('//*[contains(@id, "popper")]//*[contains(@class,"vk-NewPostPlaceholderDropdownItem")]//*[text()="Post"]', { locateStrategy: 'xpath' });
 		this.messageStatusOnMonthView = page.getByTestId('DayOfMonthStatus-SCHEDULED').first();
 		this.messageCountOnMonthView = page.getByTestId('DayOfMonthCount-SCHEDULED').first();
@@ -99,11 +101,13 @@ exports.PlannerPage = class PlannerPage {
 		this.disconnectedIcon = page.locator('[data-status="DISCONNECTED"]');
 		this.monthSidePaneCloseButton = page.locator('.vk-DetailPane .vk-CloseButton');
 		this.monthSidePaneCreateButton = page.locator('.vk-DetailPane .vk-MonthSidePaneCreateButton');
+		this.monthSidePaneBackButton = page.locator('.vk-DetailPane .vk-BackButton');
 		this.hourCardBlockFirstCard = page.locator('(//*[contains(@class, "vk-DetailPane")]//*[contains(@class, "vk-HourBlockContainer")]//*[contains(@class, "vk-Card")])[1]', { locateStrategy: 'xpath' });
 		this.hourCardBlockTitle = page.locator('(//*[contains(@class, "vk-DetailPane")]//*[contains(@class, "vk-HourBlockContainer")]//*[contains(@class, "vk-HourBlockTitle")])[1]', { locateStrategy: 'xpath' });
-		this.hourCardBlockShowMore = page.locator('//*[contains(@class, "vk-DetailPane")]//*[contains(@class, "vk-HourBlockContainer")]//button', { locateStrategy: 'xpath' });
+		this.hourCardBlockShowMore = page.locator('//button[.//*[starts-with(text(), "Show")]]', { locateStrategy: 'xpath' });
 		this.recommendedTimesPlaceholderMonthPanel = page.locator('(//*[contains(@class,"vk-RecommendedTimeCardContainer")])[1]', { locateStrategy: 'xpath' });
 		this.recommendedTimesNewPostListPanel = page.locator('((//*[contains(@class, "vk-DropdownContainer")]//*[contains(@class,"vk-NewPostPlaceholderDropdownItem")]//*[text()="Post"])[1]', { locateStrategy: 'xpath' });
+		this.monthSidePaneCards = page.locator('.vk-DetailPane .vk-HourBlockCardsContainer .vk-Card');
 
 		/**
      * - - - - - CALENDAR: LIST VIEW - - - - -
@@ -139,6 +143,7 @@ exports.PlannerPage = class PlannerPage {
 		this.messageRejectReason = page.getByTestId('RejectionReason');
 		this.recommendedTimesPlaceholderListPanel = page.locator('(//*[contains(@class,"vk-DropdownAnchorWrapper")])[1]', { locateStrategy: 'xpath' });
 		this.todayInListView = page.locator('//*[contains(@class,"vk-InnerDay") and contains(@aria-label,"today")]');
+		this.listViewCards = page.locator('[data-testid="CardWrapper"]');
 
 		/**
      * - - - - CALENDAR: PREVIEW PANE - - - - -
@@ -336,7 +341,25 @@ exports.PlannerPage = class PlannerPage {
 	}
 
 	async selectWeekView() {
+		await expect(this.viewWeekToggle).toBeVisible();
 		await this.viewWeekToggle.click();
+	}
+
+	async selectMonthView() {
+		await expect(this.viewMonthToggle).toBeVisible();
+		await this.viewMonthToggle.click();
+	}
+
+	async toggleMonthView() {
+		await expect(this.viewToggleMonthByInactiveButton).toBeVisible();
+		await this.viewToggleMonthByInactiveButton.click();
+	}
+
+	async selectMonthDay(day) {
+		const dayCell = this.page.locator(`//*[contains(@class, 'vk-Row')]//*[contains(@class, 'vk-Day') and contains(@id, 'Date-${day}')]`, { locateStrategy: 'xpath' });
+		await expect(dayCell).toBeVisible();
+		await dayCell.click();
+		await expect(this.detailPane).toBeVisible();
 	}
 
 	async loadLazyRenderedCards(hour) {
@@ -373,6 +396,20 @@ exports.PlannerPage = class PlannerPage {
 			await this.loadLazyRenderedCards(hour);
 		}
 		await expect(this.page.getByText(text), 'Schedule message is visible on planner').toBeVisible();
+	}
+
+	async verifyScheduledMessageInCurrentOrNextWeek(text, hour) {
+		if (hour) {
+			await this.loadLazyRenderedCards(hour);
+		}
+
+		if (!(await this.ghostCard.isVisible())) {
+			await this.verifyScheduledMessage(text, hour);
+		} else {
+			await expect(this.page.getByLabel('Next week')).toBeVisible();
+			await this.nextButton.click();
+			await this.verifyScheduledMessage(text, hour);
+		}
 	}
 
 	async verifyScheduledMessageNotPresent (text, hour) {
@@ -424,7 +461,7 @@ exports.PlannerPage = class PlannerPage {
 	}
 
 	async editFromPreviewPane() {
-		await expect(this.editButton, 'Edit button is not visible on planner preview pane').toBeVisible();
+		await expect(this.editButton, 'Edit button is visible on planner preview pane').toBeVisible();
 		await this.editButton.click();
 	}
 
@@ -511,6 +548,16 @@ exports.PlannerPage = class PlannerPage {
 		await this.clearAllFilters.click();
 	}
 
+	async rejectScheduledMessage(rejectReason) {
+		await expect(this.previewPaneRejectButton).toBeVisible();
+		await this.previewPaneRejectButton.click();
+		await expect(this.messageRejectModal).toBeVisible();
+		await expect(this.messageRejectModalInput).toBeVisible();
+		await this.messageRejectModalInput.fill(rejectReason);
+		await expect(this.messageRejectModalRejectButton).toBeVisible();
+		await this.messageRejectModalRejectButton.click();
+	}
+
 	async approveFromApprovalsListView(text, postType) {
 		const approveButton = this.page.locator(`(//*[contains(@data-testid,"approvals-list-table")]//*[contains(@data-testid,"Content")]//span[text()="${text}"]/following::*//*[contains(@aria-label, "Approve post")])[1]`, { locateStrategy: 'xpath' });
 		const postTypeSelector = this.page.locator(`(//*[contains(@data-testid,"approvals-list-table")]//*[contains(@data-testid,"Content")]//span[text()="${text}"]/following::*[contains(@data-testid,"PostType") and contains(text(),"${postType}")])[1]`, { locateStrategy: 'xpath' });
@@ -534,7 +581,13 @@ exports.PlannerPage = class PlannerPage {
 		await this.rejectModalInput.fill(reason);
 		await expect(this.rejectModalRejectButton).toBeVisible();
 		await this.rejectModalRejectButton.click();
+	}
 
+	async openComposerFromMonthSidePane() {
+		await expect(this.monthSidePaneCreateButton).toBeVisible();
+		await this.monthSidePaneCreateButton.click();
+		await expect(this.newPostMonthSidePane).toBeVisible();
+		await this.newPostMonthSidePane.click();
 	}
 
 	async dragAndDropCard(message, hour, id) {
@@ -544,7 +597,7 @@ exports.PlannerPage = class PlannerPage {
 		await this.hideNativePosts(id);
 		await this.hideRecommendedTimes(id);
 		await expect(this.page.getByLabel('Next week')).toBeVisible();
-		await this.navigateToNextWeek.click();
+		await this.nextButton.click();
 		await this.loadLazyRenderedCards(hour);
 		await expect(this.page.getByText(message)).toBeVisible();
 
