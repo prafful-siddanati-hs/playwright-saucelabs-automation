@@ -595,6 +595,7 @@ exports.PlannerPage = class PlannerPage {
 		await this.monthSidePaneCreateButton.click();
 		await expect(this.newPostMonthSidePane).toBeVisible();
 		await this.newPostMonthSidePane.click();
+	}
 
 	async selectPost(selector) {
 		await expect(this.nextButton).toBeVisible();
