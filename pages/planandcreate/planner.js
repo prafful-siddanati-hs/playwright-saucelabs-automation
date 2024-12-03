@@ -7,6 +7,7 @@ const getScheduledMessages = require('../../custom-commands/getScheduledMessages
 const scheduleV3Message = require('../../custom-commands/scheduleV3Message');
 const timeZone = 'America/Toronto';
 const assert = require('assert');
+const NUM_TIME_SLOTS_IN_WEEK = 7;
 
 exports.PlannerPage = class PlannerPage {
 	constructor(page) {
@@ -37,7 +38,7 @@ exports.PlannerPage = class PlannerPage {
 		this.calendarTab = page.getByTestId('MainPanelWrapper').getByText('Calendar');
 		this.draftsTab = page.getByTestId('MainPanelWrapper').getByText('Drafts');
 		this.approvalstab = page.getByTestId('MainPanelWrapper').getByText('Approvals');
-		this.contentTab = page.getByTestId('MainPanelWrapper').getByText('Content');
+		this.contentTab = page.locator('.vk-NavigationTab [data-label-content="Content"]');
 		this.datePickerButton = page.locator('.vk-Planner .vk-Toolbar #dateRangeAnchor');
 		this.orgPicker= page.getByTestId('OrgPicker');
 		this.createPostButton = page.locator('.vk-Planner [data-testid="CreatePostButton"]');
@@ -391,11 +392,13 @@ exports.PlannerPage = class PlannerPage {
 		}, [memberId]);
 	}
 
-	async verifyScheduledMessage(text, hour) {
-		if (hour) {
-			await this.loadLazyRenderedCards(hour);
+	async verifyScheduledMessage(text, userName = false) {
+		if (!userName) {
+			await expect(this.page.getByText(text), 'Schedule message is visible on planner').toBeVisible();
+		} else {
+			const cardSelector = `//*[contains(@class, "vk-Card")]//*[@aria-label[contains(., '${userName}')]]/following::div[2][contains(text(), '${text}')]`;
+			await expect(this.page.locator(cardSelector), 'Schedule message is visible on planner').toBeVisible();
 		}
-		await expect(this.page.getByText(text), 'Schedule message is visible on planner').toBeVisible();
 	}
 
 	async verifyScheduledMessageInCurrentOrNextWeek(text, hour) {
@@ -417,6 +420,10 @@ exports.PlannerPage = class PlannerPage {
 			await this.loadLazyRenderedCards(hour);
 		}
 		await expect(this.page.getByText(text), 'Schedule message is visible on planner').not.toBeVisible();
+	}
+
+	async verifyMessageOnApprovalsView(text) {
+		await expect(this.page.getByText(text), 'Schedule message is visible on planner').toBeVisible();
 	}
 
 	/**
@@ -588,6 +595,17 @@ exports.PlannerPage = class PlannerPage {
 		await this.monthSidePaneCreateButton.click();
 		await expect(this.newPostMonthSidePane).toBeVisible();
 		await this.newPostMonthSidePane.click();
+
+	async selectPost(selector) {
+		await expect(this.nextButton).toBeVisible();
+		await this.nextButton.click();
+
+		const timeSlots = await this.timeSlot;
+		const timeSlotCount = await timeSlots.count();
+		expect(timeSlotCount).toBe(NUM_TIME_SLOTS_IN_WEEK);
+		await this.timeSlot.first().click(); // Click on the first time slot
+		await expect(selector).toBeVisible(); // Wait for the desired selector and click it
+		await selector.click();
 	}
 
 	async dragAndDropCard(message, hour, id) {

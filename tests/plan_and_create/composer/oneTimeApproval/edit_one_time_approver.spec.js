@@ -152,7 +152,7 @@ test('Change one time approver for a scheduled post', async ({ page }) => {
 
 	await test.step('Verify the scheduled message', async () => {
 		await plannerPage.showPreviewPane(scheduleText);
-		await plannerPage.verifyScheduledMessage(scheduleText);
+		await plannerPage.verifyScheduledMessage(scheduleText, getObjectByName(global.fixture, 'tw_flex_approver_update').socialProfile.username);
 	});
 
 	await test.step('Try to change one time approver as non-author user', async () => {

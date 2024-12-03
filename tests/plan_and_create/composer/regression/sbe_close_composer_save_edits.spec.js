@@ -70,7 +70,7 @@ test('Navigate away from composer and save edits', async ({page}) => {
 	});
 
 	await test.step('Verify scheduled message', async () => {
-		await plannerPage.verifyScheduledMessage(originalText);
+		await plannerPage.verifyScheduledMessage(originalText, getObjectByName(global.fixture, 'tw_save_edit').socialProfile.username);
 		await plannerPage.showPreviewPane(originalText);
 	});
 

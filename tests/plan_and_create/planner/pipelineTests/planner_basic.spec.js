@@ -73,7 +73,7 @@ test('Verify scheduled message & post filtering in week view', async ({ page }) 
 	});
 
 	await test.step('Verify scheduled message in week view', async () => {
-		await plannerPage.verifyScheduledMessage(message);
+		await plannerPage.verifyScheduledMessage(message, getObjectByName(global.fixture, `${accounts.twitter}`).socialProfile.username);
 	});
 
 	await test.step('Ensure post is not displayed when filtered by facebook', async () => {

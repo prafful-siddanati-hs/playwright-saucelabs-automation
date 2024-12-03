@@ -88,7 +88,7 @@ test('Approve send now and scheduled message from manage approvals view', async 
 	});
 
 	await test.step('Verify the post now message', async () => {
-		await plannerPage.verifyScheduledMessage(postNowText);
+		await plannerPage.verifyMessageOnApprovalsView(postNowText);
 		await plannerPage.showPreviewPane(postNowText);
 	});
 
@@ -105,7 +105,7 @@ test('Approve send now and scheduled message from manage approvals view', async 
 
 	await test.step('Verify the scheduled message', async () => {
 		await expect(plannerPage.feCallOut).not.toBeVisible();
-		await plannerPage.verifyScheduledMessage(scheduleText);
+		await plannerPage.verifyMessageOnApprovalsView(scheduleText);
 		await plannerPage.showPreviewPane(scheduleText);
 	});
 
