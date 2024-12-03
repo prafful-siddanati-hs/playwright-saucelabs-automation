@@ -135,7 +135,7 @@ test('Add one time approver to unscheduled draft', async ({ page }) => {
 
 	await test.step('Verify the scheduled message', async () => {
 		await plannerPage.showPreviewPane(draftText);
-		await plannerPage.verifyScheduledMessage(draftText);
+		await plannerPage.verifyScheduledMessage(draftText, getObjectByName(global.fixture, 'fb_flex_approver_draft').socialProfile.username);
 	});
 
 	await test.step('Reject as one time reviewer', async () => {
