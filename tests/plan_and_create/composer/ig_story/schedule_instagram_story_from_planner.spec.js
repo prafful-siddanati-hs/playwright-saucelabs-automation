@@ -38,7 +38,7 @@ test('Verify schedule message as instagram story from planner', async ({ page })
 		await plannerPage.selectPost(plannerPage.newPost);
 	});
 
-	await test.step('Select instagram and linkedin accounts from social network dropdown', async () => {
+	await test.step('Select instagram account from social network dropdown', async () => {
 		await composePage.profileDropDown.click();
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(igbAccount);
