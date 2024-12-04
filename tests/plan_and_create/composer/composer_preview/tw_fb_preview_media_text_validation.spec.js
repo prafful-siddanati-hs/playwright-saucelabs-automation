@@ -70,6 +70,7 @@ test('Twitter and facebook page preview validations for media, text and link set
 	await test.step('Upload giphy and verify its preview', async () => {
 		await composePage.uploadMediaFile('test_data/publisher/giphy');
 		await expect(composePage.twitterPreviewSingleImage, 'Twitter preview is updated with giphy').toBeVisible({timeout: 5000});
+		await expect(composePage.mediaLoadingAnimation).not.toBeVisible();
 		await expect(composePage.twitterPreviewSingleImage).toHaveAttribute('src', /staging/);
 		await expect(composePage.facebookPreviewSingleImage, 'Facebook preview is updated with image').toBeVisible();
 		await expect(composePage.facebookPreviewSingleImage).toHaveAttribute('src', /staging/);

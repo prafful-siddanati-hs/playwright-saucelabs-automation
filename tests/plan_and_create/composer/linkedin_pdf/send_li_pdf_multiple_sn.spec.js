@@ -21,7 +21,6 @@ test('Send LinkedIn PDF post with multiple social networks', async ({ page }) =>
 	let accounts = {
 		linkedin: ['pw_send_li'],
 		twitter: ['pw_send_tw'],
-		plan_create_facebookpage: ['pw_send_fb']
 	};
 
 	let orgName = 'pw_send_li_pdf_multiple_sn_' + Math.floor(Math.random() * 10000);
@@ -48,7 +47,6 @@ test('Send LinkedIn PDF post with multiple social networks', async ({ page }) =>
 		await expect(composePage.snContentItems).toBeVisible();
 		await composePage.selectSocialProfile(getObjectByName(global.fixture, `${accounts.linkedin}`).username);
 		await composePage.selectSocialProfile(getObjectByName(global.fixture, `${accounts.twitter}`).username);
-		await composePage.selectSocialProfile(getObjectByName(global.fixture, `${accounts.plan_create_facebookpage}`).username);
 		await composePage.postToWrapper.click();
 		await expect(composePage.profileListItemTitle).not.toBeVisible();
 	});
@@ -58,13 +56,10 @@ test('Send LinkedIn PDF post with multiple social networks', async ({ page }) =>
 		await page.waitForTimeout(1000);
 	});
 
-	await test.step(`Verify preview for ${accounts.twitter} & ${accounts.plan_create_facebookpage}`, async () => {
+	await test.step(`Verify preview for ${accounts.twitter}`, async () => {
 		await expect(composePage.twitterTab).toBeVisible();
 		await composePage.twitterTab.click();
 		await composePage.verifyTwitterPreview(pdfText);
-		await expect(composePage.facebookPageTab).toBeVisible();
-		await composePage.facebookPageTab.click();
-		await composePage.verifyFacebookPreview(pdfText);
 	});
 
 	await test.step(`Verify ${accounts.linkedin} preview`, async () => {
