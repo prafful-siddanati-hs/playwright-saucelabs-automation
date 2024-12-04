@@ -40,7 +40,7 @@ test('Reject send now and scheduled message from manage approvals view', async (
 		await setUpEnterpriseUser.setUpEnterpriseUser(orgName,'postNowSchedule_reject_admin', accounts);
 		await createNewUser.command('postNowSchedule_limited_user_reject');
 		await addUserToNewOrg.command('postNowSchedule_limited_user_reject', orgName);
-		await updateSNPermissions.command('SN_LIMITED', 'postNowScheduleToTwitter', 'postNowSchedule_limited_user');
+		await updateSNPermissions.command('SN_LIMITED', 'postNowScheduleToTwitter', 'postNowSchedule_limited_user_reject');
 		limitedUserMemberId = global.member[1].memberId;
 	});
 
