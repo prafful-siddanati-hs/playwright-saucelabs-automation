@@ -401,24 +401,17 @@ exports.PlannerPage = class PlannerPage {
 		}
 	}
 
-	async verifyScheduledMessageInCurrentOrNextWeek(text, hour) {
-		if (hour) {
-			await this.loadLazyRenderedCards(hour);
-		}
-
+	async verifyScheduledMessageInCurrentOrNextWeek(text) {
 		if (!(await this.ghostCard.isVisible())) {
-			await this.verifyScheduledMessage(text, hour);
+			await this.verifyScheduledMessage(text);
 		} else {
 			await expect(this.page.getByLabel('Next week')).toBeVisible();
 			await this.nextButton.click();
-			await this.verifyScheduledMessage(text, hour);
+			await this.verifyScheduledMessage(text);
 		}
 	}
 
-	async verifyScheduledMessageNotPresent (text, hour) {
-		if (hour) {
-			await this.loadLazyRenderedCards(hour);
-		}
+	async verifyScheduledMessageNotPresent (text) {
 		await expect(this.page.getByText(text), 'Schedule message is visible on planner').not.toBeVisible();
 	}
 
