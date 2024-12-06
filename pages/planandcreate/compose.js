@@ -253,6 +253,11 @@ exports.ComposePage = class ComposePage {
 		this.campaignSelected = page.locator('.vk-ComposerModal .rc-CampaignSelectDropdown span');
 		this.manageCampaignsButton = page.locator('.vk-ComposerModal .rc-CampaignSelectDropdown [role="listbox"] button', { hasText: 'Manage campaigns' });
 		this.removeTargetAudiencePill = page.locator('.vk-TargetingEditModal .vk-RemovePillButton');
+		this.campaignDropdown = page.locator('.rc-CampaignSelectDropdown .vk-CampaignDropdownButton');
+		this.composeFooterScheduleButton = page.locator('.vk-ComposerFooter .vk-SchedulerSelector');
+		this.setDateButtonWithRecommendedScheduler = page.locator('//h2[contains(text(),"Schedule post")]//following-sibling::button[contains(text(),"Done")]');
+		this.scheduleForLaterButton = page.locator('//div[contains(@class, "vk-ComposerFooter")]//span[contains(@class, "vk-SchedulerSelector")]//*[text()= "Schedule for later"]');
+		this.invalidTimeSelectedButton = page.locator('//div[contains(@class, "vk-ComposerFooter")]//span[contains(@class, "vk-SchedulerSelector")]//*[text()="Invalid time selected"]');
 	}
 
 	async setDarkLaunchCookies() {
@@ -898,6 +903,18 @@ exports.ComposePage = class ComposePage {
 		await this.altTextInputbox.fill(altText);
 		await expect(this.addAltTextButton).toBeVisible();
 		await this.addAltTextButton.click();
+	}
+
+	async openCampaignDropdown() {
+		await expect(this.campaignDropdown).toBeVisible();
+		await this.campaignDropdown.click();
+	}
+
+	async selectCampaign(name) {
+		const selector = `//div[contains(@class, "rc-CampaignSelectDropdown")]//*[contains(text(), "${name}")]`;
+
+		await expect(this.page.locator(selector)).toBeVisible();
+		await this.page.locator(selector).click();
 	}
 
 	async deleteComposeScheduledMessagesForNextMonthViaAPI(memberId) {
