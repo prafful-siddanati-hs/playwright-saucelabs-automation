@@ -12,9 +12,9 @@ def pod = declarePod {
     containerDefault = 'playwright'
     container {
         name = 'playwright'
-        image = 'default/playwright-20-1.41'
-        cpu = 2
-        memory = '8Gi'
+        image = 'default/playwright-22-1.49'
+        cpu = 6
+        memory = '16Gi'
     }
 }
 

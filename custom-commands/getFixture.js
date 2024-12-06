@@ -227,9 +227,14 @@ class getFixture extends events.EventEmitter {
 				}
 			} else {
 				fixture.isSocialProfile = false;
-				fixture.customAccount = {};
+				fixture.customAccount = fixture.customAccount || {};
 
-				Object.assign(fixture.customAccount, locked.resource);
+				if (locked.resource) {
+					Object.assign(fixture.customAccount, locked.resource);
+					console.log(`customAccount locked: ${JSON.stringify(fixture.customAccount)}`);
+				} else {
+					console.log('No locked resource found');
+				}
 
 				if (fixture.type === 'enterprise') {
 					let organizationMembers = new OrganizationMembers(tops_skyline);

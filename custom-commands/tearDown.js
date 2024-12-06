@@ -59,10 +59,13 @@ class tearDown extends events.EventEmitter {
 			let organizationMembers = new OrganizationMembers(tops_skyline);
 
 			let users = (global.member && global.member[0]) ? global.member[0] : (global.fixture && global.fixture[0]);
-			if (users.customAccount) {
+			if (users && users.customAccount) {
 				users = [users.customAccount];
-			} else {
+			} else if (users) {
 				users = [users];
+			} else {
+				console.warn('No users found.');
+				users = [];
 			}
 			//Set default values for fixtures & orgs
 			let fixtures = global.fixture ? global.fixture : [];
