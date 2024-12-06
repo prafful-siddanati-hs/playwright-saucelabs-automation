@@ -231,7 +231,7 @@ class getFixture extends events.EventEmitter {
 
 				if (locked.resource) {
 					Object.assign(fixture.customAccount, locked.resource);
-					console.log(`customAccount locked: ${JSON.stringify(fixture.customAccount)}`);
+					console.log(`customAccount locked: ${fixture.customAccount.email} / ${fixture.customAccount.username}`);
 				} else {
 					console.log('No locked resource found');
 				}

@@ -1,13 +1,13 @@
 /* Test to validate and send post with text, links & multiple images to Twitter & Facebook */
 const { test, expect} = require('@playwright/test');
-const tearDown = require('../../../../custom-commands/tearDown');
-const {ComposePage} = require('../../../../pages/planandcreate/compose');
-const {getObjectByName, plan_create} = require('../../../../globals');
-const {LoginPage} = require('../../../../pages/login');
+const {SetUpEnterpriseUser} = require('../../../../custom-commands/setUpEnterpriseUser');
 const createUser = require('../../../../custom-commands/createUser');
 const addUserToOrg = require('../../../../custom-commands/addUserToOrg');
-const {SetUpEnterpriseUser} = require('../../../../custom-commands/setUpEnterpriseUser');
 const modifySocialProfilePermissions = require('../../../../custom-commands/modifySocialProfilePermissions');
+const {LoginPage} = require('../../../../pages/login');
+const {getObjectByName, plan_create} = require('../../../../globals');
+const {ComposePage} = require('../../../../pages/planandcreate/compose');
+const tearDown = require('../../../../custom-commands/tearDown');
 
 const SHORTENER = 'https://ow.ly';
 
@@ -19,22 +19,19 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Send twitter and facebook post with text, multiple images and one time approver', async ({ page }) => {
-	let orgName = 'Send_Flex_' + Math.floor(Math.random() * 10000);
-	const sendText = `Post now tw & fb with multiple images & ${plan_create.getRandomUrl()} ` + Math.floor(Math.random() * 1000);
-	const loginPage = new LoginPage(page);
-	const composePage = new ComposePage(page);
+	const setUpEnterpriseUser = new SetUpEnterpriseUser();
 	const createNewUser = new createUser();
 	const addUserToNewOrg = new addUserToOrg();
-	const setUpEnterpriseUser = new SetUpEnterpriseUser();
 	const updateSNPermissions = new modifySocialProfilePermissions();
+	const loginPage = new LoginPage(page);
+	const composePage = new ComposePage(page);
 
 	let accounts = {
-		twitter: [],
-		plan_create_facebookpage: []
+		twitter: ['pw_tw'],
+		plan_create_facebookpage: ['pw_fb']
 	};
-
-	accounts.twitter.push('pw_tw');
-	accounts.plan_create_facebookpage.push('pw_fb');
+	let orgName = 'Send_Flex_' + Math.floor(Math.random() * 10000);
+	const sendText = `Post now tw & fb with multiple images & ${plan_create.getRandomUrl()} ` + Math.floor(Math.random() * 1000);
 
 	await test.step('Setup user & accounts', async () => {
 		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'tw_fb_send_multiple_images', accounts);

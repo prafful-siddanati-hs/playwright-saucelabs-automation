@@ -72,7 +72,7 @@ test('Verify that link settings are maintained via approval workflow', async ({ 
 
 	await test.step('Verify scheduled image and link message is present on planner list view', async () => {
 		await plannerPage.selectListView();
-		await plannerPage.verifyScheduledMessage(getObjectByName(global.fixture, `${accounts.plan_create_facebookpage}`).socialProfile.username, scheduleText);
+		await plannerPage.verifyScheduledMessage(scheduleText, getObjectByName(global.fixture, `${accounts.plan_create_facebookpage}`).socialProfile.username);
 		await plannerPage.showPreviewPane(scheduleText);
 		await expect(plannerPage.detailPaneMessageStateText).toHaveText('Pending approval');
 		await expect(plannerPage.detailPaneSocialNetwork).toHaveText('Facebook');
@@ -99,7 +99,7 @@ test('Verify that link settings are maintained via approval workflow', async ({ 
 
 	await test.step('Verify scheduled message is present on planner list view', async () => {
 		await plannerPage.selectListView();
-		await plannerPage.verifyScheduledMessage(scheduleText);
+		await plannerPage.verifyScheduledMessage(scheduleText, getObjectByName(global.fixture, `${accounts.plan_create_facebookpage}`).socialProfile.username);
 		await expect(plannerPage.mediaThumbnailListView).toBeVisible();
 		await plannerPage.showPreviewPane(scheduleText);
 		await expect(plannerPage.viewApprovalHistory).toBeVisible();

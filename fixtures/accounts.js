@@ -481,8 +481,8 @@ module.exports = {
 		{
 			id: '9b7aa7f3-7ce6-47ab-b78c-a9627385c7c2',
 			username: 'hoot_ps',
-			auth1: 'act.iGh3Bm75tPe1kgNCjtq78YC08TdgOGIdOE4xRxD78FPnVzzjiB9rTp36ajRa!4635.va',
-			auth2: 'rft.QFqUkKAQ3TZDewbqcfO33GQ4pzs6V5uviZc60h8hEBDGrLaIPmhMrxSlt8S2!4592.va',
+			auth1: 'act.IDmdvHywcivkjOGhxsc6YAykoGxmZuBBa3jXI49uLeu4HwXmHwl7qjO7Ll8m!4574.va',
+			auth2: 'rft.61DMgyk5LpoEltlxj5k7xcNrb2Qe79Jid18mLNEVx3Q5XBSMzDyLSqJ2HbnB!4596.va',
 			email: 'prafful.siddanati+tiktok@hootsuite.com',
 			password: '!1Password',
 			type: 'TIKTOKBUSINESS'

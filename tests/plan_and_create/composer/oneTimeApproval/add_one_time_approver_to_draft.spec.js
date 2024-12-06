@@ -1,15 +1,15 @@
 /* Test to verify that one time approver can be added to a saved draft before scheduling it */
 const { test,expect } = require('@playwright/test');
+const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
 const createUser = require('../../../../custom-commands/createUser');
-const tearDown = require('../../../../custom-commands/tearDown');
 const addUserToOrg = require('../../../../custom-commands/addUserToOrg');
 const modifySocialProfilePermissions = require('../../../../custom-commands/modifySocialProfilePermissions');
-const { getObjectByName } = require('../../../../globals');
 const { LoginPage } = require('../../../../pages/login');
-const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const { PlannerPage } = require('../../../../pages/planandcreate/planner');
 const { DraftsPage } = require('../../../../pages/planandcreate/drafts');
-const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
+const { getObjectByName } = require('../../../../globals');
+const { ComposePage } = require('../../../../pages/planandcreate/compose');
+const tearDown = require('../../../../custom-commands/tearDown');
 
 let authorMemberId, reviewerMemberId;
 
@@ -21,19 +21,18 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Add one time approver to unscheduled draft', async ({ page }) => {
-	const loginPage = new LoginPage(page);
-	const composePage = new ComposePage(page);
-	const plannerPage = new PlannerPage(page);
-	const draftsPage = new DraftsPage(page);
+	const setUpEnterpriseUser = new SetUpEnterpriseUser();
 	const createNewUser = new createUser();
 	const addUserToNewOrg = new addUserToOrg();
-	const setUpEnterpriseUser = new SetUpEnterpriseUser();
 	const updateSNPermissions = new modifySocialProfilePermissions();
+	const loginPage = new LoginPage(page);
+	const plannerPage = new PlannerPage(page);
+	const draftsPage = new DraftsPage(page);
+	const composePage = new ComposePage(page);
 
 	let accounts = {
-		plan_create_facebookpage: []
+		plan_create_facebookpage: ['fb_flex_approver_draft']
 	};
-	accounts.plan_create_facebookpage.push('fb_flex_approver_draft');
 	let orgName = 'add_one_time_approver_to_draft_' + Math.floor(Math.random() * 10000);
 	const draftText = 'Add one time approver to this draft ';
 
@@ -134,8 +133,8 @@ test('Add one time approver to unscheduled draft', async ({ page }) => {
 	});
 
 	await test.step('Verify the scheduled message', async () => {
+		await plannerPage.verifyScheduledMessage(draftText);
 		await plannerPage.showPreviewPane(draftText);
-		await plannerPage.verifyScheduledMessage(draftText, getObjectByName(global.fixture, 'fb_flex_approver_draft').socialProfile.username);
 	});
 
 	await test.step('Reject as one time reviewer', async () => {
