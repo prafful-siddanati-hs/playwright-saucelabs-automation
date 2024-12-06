@@ -31,6 +31,8 @@ exports.DraftsPage = class DraftsPage {
 		this.instagramAltText = page.locator('[data-testid = "DetailPaneRenderer"] [data-testid ="Info"] .vk-AltText p');
 		this.facebookPreviewText = page.locator('[data-testid = "DetailPaneRenderer"] .vk-FacebookPreview .vk-ContentBody p');
 		this.draftsSuccessCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
+		this.pastDateOnPVG = page.locator('//div[contains(@aria-label, "today")]/preceding::div[4]', { locateStrategy: 'xpath' });
+		this.nextMonthNavigationButton = page.locator('//button[contains(@aria-label, "Next month")]', { locateStrategy: 'xpath' });
 	}
 
 	async selectCreateButton() {
@@ -121,7 +123,7 @@ exports.DraftsPage = class DraftsPage {
 						snId: snId.toString()
 					}
 				],
-				attachments: [attachments]
+				attachments: Array.isArray(attachments) && attachments.length > 0 ? attachments : [],
 			}
 		};
 		if (draftScheduleTime) {

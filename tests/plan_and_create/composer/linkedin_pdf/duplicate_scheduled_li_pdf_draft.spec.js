@@ -64,7 +64,7 @@ test('Duplicate a scheduled draft with LinkedIn PDF', async ({ page }) => {
 				getObjectByName(global.fixture, 'li_pdf_scheduled_draft').socialProfile.socialProfileId,
 				pdfDraftText,
 				'LINKEDIN',
-				plan_create.getRandomPDF(),
+				[plan_create.getRandomPDF()],
 				formatISO(draftScheduleTime),
 			);
 		} catch (error) {

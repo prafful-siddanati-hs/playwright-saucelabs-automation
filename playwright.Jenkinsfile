@@ -36,6 +36,7 @@ properties(
         pipelineTriggers(
             [parameterizedCron('''
                   5  7 * * 1-5 %CONFIG_FILE=.sauce/custom_approvals.config.yml
+                 45 7 * * 1-5 %CONFIG_FILE=.sauce/drafts.config.yml
                  10 12 * * 1-5 %CONFIG_FILE=.sauce/composer_regression_media.config.yml
                  30 12 * * 1-5 %CONFIG_FILE=.sauce/composer_media_limitations.config.yml
                  50 12 * * 1-5  %CONFIG_FILE=.sauce/composer_message_editor.config.yml
@@ -51,7 +52,6 @@ properties(
                  10 16 * * 1-5 %CONFIG_FILE=.sauce/one_time_approver.config.yml
                  30 16 * * 1-5 %CONFIG_FILE=.sauce/network_campaign_picker.config.yml
                  50 16 * * 1-5 %CONFIG_FILE=.sauce/ig_collaborators.config.yml
-                 10 17 * * 1-5 %CONFIG_FILE=.sauce/drafts.config.yml
                 ''')]
         )
     ]

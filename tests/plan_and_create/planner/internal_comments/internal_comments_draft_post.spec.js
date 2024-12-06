@@ -10,7 +10,7 @@ const { DraftsPage } = require('../../../../pages/planandcreate/drafts');
 const tearDown = require('../../../../custom-commands/tearDown');
 
 const draftScheduleTime = addDays(new Date(), 1);
-let enterpriseUserMemberId, profileName, userName;
+let enterpriseUserMemberId, profileName, userName, orgId;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -20,25 +20,25 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Verify internal comments added to drafts are maintained when scheduled', async ({page}) => {
+	const setUpEnterpriseUser = new SetUpEnterpriseUser();
+	const loginPage = new LoginPage(page);
+	const plannerPage = new PlannerPage(page);
+	const draftsPage = new DraftsPage(page);
+	const composePage = new ComposePage(page);
+
 	let orgName = 'internal_comments_actions_org_' + Math.floor(Math.random() * 10000);
 	const draftText = 'Add internal comment to this draft ';
 	const draftCommentText = 'This is an internal comment on draft post ';
 	let accounts = {
-		plan_create_facebookpage: []
+		plan_create_facebookpage: ['fb_draft_internal_comments']
 	};
-	accounts.plan_create_facebookpage.push('fb_draft_internal_comments');
-
-	const loginPage = new LoginPage(page);
-	const plannerPage = new PlannerPage(page);
-	const setUpEnterpriseUser = new SetUpEnterpriseUser();
-	const draftsPage = new DraftsPage(page);
-	const composePage = new ComposePage(page);
 
 	await test.step('Setup user & accounts', async () => {
 		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'internal_comment_drafts', accounts);
 		profileName = getObjectByName(global.fixture, 'fb_draft_internal_comments').socialProfile.username;
 		enterpriseUserMemberId = global.member[0].memberId;
 		userName = global.member[0].username;
+		orgId = global.organization[0].id;
 	});
 
 	await test.step('Login as enterprise user', async () => {
@@ -64,11 +64,11 @@ test('Verify internal comments added to drafts are maintained when scheduled', a
 		try {
 			await draftsPage.createDraftViaApiByNetwork(
 				enterpriseUserMemberId,
-				null,
+				orgId,
 				getObjectByName(global.fixture, 'fb_draft_internal_comments').socialProfile.socialProfileId,
 				draftText,
 				'FACEBOOKPAGE',
-				null,
+				[],
 				formatISO(draftScheduleTime),
 			);
 		} catch (error) {

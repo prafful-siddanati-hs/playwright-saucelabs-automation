@@ -11,7 +11,7 @@ const { getObjectByName } = require('../../../../globals');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const tearDown = require('../../../../custom-commands/tearDown');
 
-let authorMemberId, reviewerMemberId;
+let authorMemberId, reviewerMemberId, orgId;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -43,6 +43,7 @@ test('Add one time approver to unscheduled draft', async ({ page }) => {
 		await updateSNPermissions.command('SN_ADVANCED', 'fb_flex_approver_draft', 'draft_author');
 		reviewerMemberId = global.member[0].memberId;
 		authorMemberId = global.member[1].memberId;
+		orgId = global.organization[0].id;
 	});
 
 	await test.step('Login as test user', async () => {
@@ -68,7 +69,7 @@ test('Add one time approver to unscheduled draft', async ({ page }) => {
 		try {
 			await draftsPage.createDraftViaApiByNetwork(
 				authorMemberId,
-				null,
+				orgId,
 				getObjectByName(global.fixture, 'fb_flex_approver_draft').socialProfile.socialProfileId,
 				draftText,
 				'FACEBOOKPAGE'

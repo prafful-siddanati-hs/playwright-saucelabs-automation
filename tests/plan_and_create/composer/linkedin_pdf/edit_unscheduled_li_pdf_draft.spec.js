@@ -8,7 +8,7 @@ const { PlannerPage } = require('../../../../pages/planandcreate/planner');
 const { DraftsPage } = require('../../../../pages/planandcreate/drafts');
 const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
 
-let memberId, liAccount;
+let memberId, orgId, liAccount;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -34,6 +34,7 @@ test('Schedule a LinkedIn PDF post from draft', async ({ page }) => {
 	await test.step('Setup user & accounts', async () => {
 		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'pw_li_pdf_draft', accounts);
 		memberId = global.member[0].memberId;
+		orgId = global.organization[0].id;
 		liAccount = getObjectByName(global.fixture, 'liAccount').socialProfile.username;
 	});
 
@@ -54,11 +55,11 @@ test('Schedule a LinkedIn PDF post from draft', async ({ page }) => {
 		try {
 			await draftsPage.createDraftViaApiByNetwork(
 				memberId,
-				null,
+				orgId,
 				parseInt(getObjectByName(global.fixture, 'liAccount').socialProfile.socialProfileId, 10),
 				pdfDraftText,
 				'LINKEDIN',
-				plan_create.getRandomPDF()
+				[plan_create.getRandomPDF()]
 			);
 		} catch (error) {
 			throw new Error(`Failed to create unscheduled draft: ${error}`);
