@@ -13,6 +13,7 @@ exports.MemberOverViewPage = class MemberOverViewPage {
 		this.addToTeamBtn = page.locator('._popupListTeam ._plusAction');
 		this.createBtn = page.locator('//*[contains(@id, "inviteUserPopup")]//*[contains(@class,"btns-right")]//*[contains(@class,"_create")]');
 		this.invitePopup = page.locator('#inviteUserPopup');
+		this.campaignsButton = page.locator('button[data-tracking-action="show_campaigns"]');
 	}
 
 	async  visitMember() {
@@ -29,5 +30,10 @@ exports.MemberOverViewPage = class MemberOverViewPage {
 		const selector = `//div[contains(@id, "popOverPane")]//div[contains(@class, "_scroll-list")]//span[contains(text(), "${teamName}")]`;
 		await expect(this.page.locator(selector)).toBeVisible();
 		await this.page.locator(selector).click();
+	}
+
+	async selectCampaignsButton(){
+		await expect(this.campaignsButton).toBeVisible();
+		await this.campaignsButton.click();
 	}
 };
