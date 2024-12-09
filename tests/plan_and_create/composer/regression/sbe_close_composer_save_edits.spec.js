@@ -3,16 +3,17 @@
  * Test to verify that the user is able to close the composer and save the edits.
  */
 const { test,expect } = require('@playwright/test');
-const { LoginPage } = require('../../../../pages/login');
-const { PlannerPage } = require('../../../../pages/planandcreate/planner');
-const scheduleV3Message = require('../../../../custom-commands/scheduleV3Message');
 const createUser = require('../../../../custom-commands/createUser');
 const getFixture = require('../../../../custom-commands/getFixture');
-const tearDown = require('../../../../custom-commands/tearDown');
+const { LoginPage } = require('../../../../pages/login');
 const { getObjectByName } = require('../../../../globals');
 const { formatISO, addHours } = require('date-fns');
+const scheduleV3Message = require('../../../../custom-commands/scheduleV3Message');
+const { PlannerPage } = require('../../../../pages/planandcreate/planner');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const { HomePage } = require('../../../../pages/homepage');
+const tearDown = require('../../../../custom-commands/tearDown');
+
 let memberId;
 
 test.afterEach(async ({ page }) => {
@@ -23,17 +24,17 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Navigate away from composer and save edits', async ({page}) => {
-	let originalText = `Save edits while closing ${Date.now()}`;
-	let editedText = originalText.concat('--edited');
-	const scheduleTime = addHours(new Date(), 1);
 	const createNewUser = new createUser();
 	const addFixture = new getFixture();
-	const createScheduleMessage = new scheduleV3Message();
 	const loginPage = new LoginPage(page);
+	const createScheduleMessage = new scheduleV3Message();
 	const plannerPage = new PlannerPage(page);
 	const composePage = new ComposePage(page);
 	const homePage = new HomePage(page);
 
+	let originalText = `Save edits while closing ${Date.now()}`;
+	let editedText = originalText.concat('--edited');
+	const scheduleTime = addHours(new Date(), 1);
 
 	await test.step('Setup user & accounts', async () => {
 		await createNewUser.command('save_edit_on_close', 'professional');
@@ -82,6 +83,7 @@ test('Navigate away from composer and save edits', async ({page}) => {
 	await test.step('Edit message', async () => {
 		await composePage.messageArea.click();
 		await composePage.messageArea.fill(`${editedText}`);
+		await composePage.verifyTwitterPreview(editedText);
 	});
 
 	await test.step('Click on home page and save edits', async () => {

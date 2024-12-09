@@ -1,12 +1,12 @@
 /* Edit a LinkedIn Pdf post with a different text & network */
 const { test, expect } = require('@playwright/test');
-const tearDown = require('../../../../custom-commands/tearDown');
+const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
 const { getObjectByName, plan_create } = require('../../../../globals');
 const { formatISO, addHours } = require('date-fns');
 const { LoginPage } = require('../../../../pages/login');
-const { ComposePage } = require('../../../../pages/planandcreate/compose');
 const { PlannerPage } = require('../../../../pages/planandcreate/planner');
-const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
+const { ComposePage } = require('../../../../pages/planandcreate/compose');
+const tearDown = require('../../../../custom-commands/tearDown');
 
 const scheduleDate = addHours(new Date(), 1);
 let liAccount1, liAccount2, memberId;
@@ -19,10 +19,10 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Edit a LinkedIn PDF post by changing the profile', async ({ page }) => {
-	const loginPage = new LoginPage(page);
-	const composePage = new ComposePage(page);
-	const plannerPage = new PlannerPage(page);
 	const setUpEnterpriseUser = new SetUpEnterpriseUser();
+	const loginPage = new LoginPage(page);
+	const plannerPage = new PlannerPage(page);
+	const composePage = new ComposePage(page);
 
 	let orgName = 'pw_edit_scheduled_li_pdf_post_' + Math.floor(Math.random() * 10000);
 	let accounts = {
@@ -36,21 +36,14 @@ test('Edit a LinkedIn PDF post by changing the profile', async ({ page }) => {
 		memberId = global.member[0].memberId;
 		liAccount1 = getObjectByName(global.fixture, 'liAccount1').socialProfile.username;
 		liAccount2 = getObjectByName(global.fixture, 'liAccount2').socialProfile.username;
+
+		if (liAccount1 === liAccount2) {
+			throw new Error(`The same account '${liAccount1}' cannot be used for both liAccount1 and liAccount2`);
+		}
 	});
 
 	await test.step('Login as test user', async () => {
 		await loginPage.signInSkipOnboarding('pw_li_pdf_edit');
-	});
-
-	await test.step('Hide native posts', async () => {
-		await plannerPage.hideNativePosts(memberId);
-		await plannerPage.hideRecommendedTimes(memberId);
-	});
-
-	await test.step('Dismiss new user onboarding modal', async () => {
-		await page.evaluate(() => {
-			return (hs.memberExtras.hasSeenNewComposerOnboarding = true);
-		});
 	});
 
 	await test.step(`Schedule a PDF post for ${liAccount1}`, async () => {
@@ -60,6 +53,17 @@ test('Edit a LinkedIn PDF post by changing the profile', async ({ page }) => {
 			pdfText,
 			formatISO(scheduleDate)
 		);
+	});
+
+	await test.step('Dismiss new user onboarding modal', async () => {
+		await page.evaluate(() => {
+			return (hs.memberExtras.hasSeenNewComposerOnboarding = true);
+		});
+	});
+
+	await test.step('Hide native posts', async () => {
+		await plannerPage.hideNativePosts(memberId);
+		await plannerPage.hideRecommendedTimes(memberId);
 	});
 
 	await test.step('Navigate to planner', async () => {

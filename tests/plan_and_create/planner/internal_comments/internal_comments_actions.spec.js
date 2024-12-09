@@ -2,10 +2,10 @@
 const { test, expect} = require('@playwright/test');
 const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
 const { LoginPage } = require('../../../../pages/login');
-const { PlannerPage } = require('../../../../pages/planandcreate/planner');
 const { getObjectByName } = require('../../../../globals');
 const { formatISO, addDays } = require('date-fns');
 const scheduleV3Message = require('../../../../custom-commands/scheduleV3Message');
+const { PlannerPage } = require('../../../../pages/planandcreate/planner');
 const tearDown = require('../../../../custom-commands/tearDown');
 
 const scheduleDate = addDays(new Date(), 1);
@@ -19,19 +19,18 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Verify internal comments can be added, edited & deleted', async ({page}) => {
+	const setUpEnterpriseUser = new SetUpEnterpriseUser();
+	const createScheduleMessage = new scheduleV3Message();
+	const loginPage = new LoginPage(page);
+	const plannerPage = new PlannerPage(page);
+
+	let accounts = {
+		plan_create_facebookpage: ['fb_internal_comments']
+	};
 	let orgName = 'internal_comments_actions_org_' + Math.floor(Math.random() * 10000);
 	const scheduledText = 'Perform internal comments actions ' + Math.floor(Math.random() * 10000);
 	const commentText = 'This is an internal comment ';
 	const editedCommentText = commentText.concat('-edit the comment');
-	let accounts = {
-		plan_create_facebookpage: []
-	};
-	accounts.plan_create_facebookpage.push('fb_internal_comments');
-
-	const loginPage = new LoginPage(page);
-	const plannerPage = new PlannerPage(page);
-	const setUpEnterpriseUser = new SetUpEnterpriseUser();
-	const createScheduleMessage = new scheduleV3Message();
 
 	await test.step('Setup user & accounts', async () => {
 		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'internal_comment_actions', accounts);

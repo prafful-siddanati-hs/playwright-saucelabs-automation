@@ -2,10 +2,10 @@
 const { test, expect} = require('@playwright/test');
 const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
 const { LoginPage } = require('../../../../pages/login');
-const { PlannerPage } = require('../../../../pages/planandcreate/planner');
 const { getObjectByName } = require('../../../../globals');
 const { formatISO, addDays } = require('date-fns');
 const scheduleV3Message = require('../../../../custom-commands/scheduleV3Message');
+const { PlannerPage } = require('../../../../pages/planandcreate/planner');
 const tearDown = require('../../../../custom-commands/tearDown');
 
 const scheduleDate = addDays(new Date(), 1);
@@ -19,18 +19,17 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Verify internal comments can accept Image,Video & PDF files', async ({page}) => {
+	const setUpEnterpriseUser = new SetUpEnterpriseUser();
+	const loginPage = new LoginPage(page);
+	const createScheduleMessage = new scheduleV3Message();
+	const plannerPage = new PlannerPage(page);
+
+	let accounts = {
+		twitter: ['tw_internal_comments_media']
+	};
 	let orgName = 'internal_comments_media_org_' + Math.floor(Math.random() * 10000);
 	const scheduledText = 'Attach media to internal comments ' + Math.floor(Math.random() * 10000);
 	const commentText = 'This is an internal comment with media attachment ';
-	let accounts = {
-		twitter: []
-	};
-	accounts.twitter.push('tw_internal_comments_media');
-
-	const loginPage = new LoginPage(page);
-	const plannerPage = new PlannerPage(page);
-	const setUpEnterpriseUser = new SetUpEnterpriseUser();
-	const createScheduleMessage = new scheduleV3Message();
 
 	await test.step('Setup user & accounts', async () => {
 		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'internal_comment_media', accounts);
@@ -39,17 +38,6 @@ test('Verify internal comments can accept Image,Video & PDF files', async ({page
 
 	await test.step('Login as enterprise user', async () => {
 		await loginPage.signInSkipOnboarding('internal_comment_media');
-	});
-
-	await test.step('Dismiss enterprise user onboarding modals', async () => {
-		await page.evaluate(() => {
-			return (hs.memberExtras.hasSeenNewComposerOnboarding = true);
-		});
-	});
-
-	await test.step('Hide native posts & recommended times', async () => {
-		await plannerPage.hideNativePosts(enterpriseUserMemberId);
-		await plannerPage.hideRecommendedTimes(enterpriseUserMemberId);
 	});
 
 	await test.step('Schedule a post for enterprise user', async () => {
@@ -65,6 +53,17 @@ test('Verify internal comments can accept Image,Video & PDF files', async ({page
 				]
 			}
 		);
+	});
+
+	await test.step('Dismiss enterprise user onboarding modals', async () => {
+		await page.evaluate(() => {
+			return (hs.memberExtras.hasSeenNewComposerOnboarding = true);
+		});
+	});
+
+	await test.step('Hide native posts & recommended times', async () => {
+		await plannerPage.hideNativePosts(enterpriseUserMemberId);
+		await plannerPage.hideRecommendedTimes(enterpriseUserMemberId);
 	});
 
 	await test.step('Navigate to planner', async () => {

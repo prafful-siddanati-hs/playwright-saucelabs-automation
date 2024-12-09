@@ -36,14 +36,19 @@ test('Verify that the user can select recently used profile to send/schedule mes
 	});
 
 	await test.step('Select twitter account from recently user network pill', async () => {
-		const pillSelector= `//*[contains(@class, "vk-ComposerModal")]//*[contains(@class, "vk-SocialNetworkPillsContainer")]//*[@title="${twAccount}"]`;
-		await expect(page.locator(pillSelector)).toBeVisible();
-		await page.locator(pillSelector).click();
+		const pillSelector= page.locator(`//*[contains(@class, "vk-ComposerModal")]//*[contains(@class, "vk-SocialNetworkPillsContainer")]//*[starts-with(@title,"${twAccount}")]`, { locateStrategy: 'xpath' });
+		await expect(pillSelector.first()).toBeVisible();
+		await pillSelector.first().click();
 		await expect(composePage.emptyTwitterPreview).toBeVisible();
 	});
 
 	await test.step('Write a message and verify its preview', async () => {
 		await composePage.writeMessage(composeBasicText);
+		if (await composePage.twitterTab.isVisible()) { // If more than one social network gets selected from the pill, perform the below steps so that in case IG is selected, the test will not fail.
+			await composePage.uploadMediaFile('test_data/publisher/images/', 'test_data/publisher/images/Art.png');
+			await composePage.twitterTab.click();
+			await composePage.verifyTwitterPreview(composeBasicText);
+		}
 		await composePage.verifyTwitterPreview(composeBasicText);
 	});
 
@@ -53,6 +58,6 @@ test('Verify that the user can select recently used profile to send/schedule mes
 
 	await test.step('Delete the scheduled messages', async () => {
 		await plannerPage.deleteScheduleMessagesViaAPI(memberId);
-		await page.waitForTimeout(500);
+		await page.waitForTimeout(800);
 	});
 });
