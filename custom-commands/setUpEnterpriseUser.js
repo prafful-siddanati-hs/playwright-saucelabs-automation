@@ -14,22 +14,43 @@ exports.SetUpEnterpriseUser = class SetUpEnterpriseUser {
 		const addFixture = new getFixture();
 		const createNewOrg = new createOrg();
 		const addSocialNetwork = new addSocialToOrg();
-		await addFixture.command(user, customType, false, 300);
-		const keys = Object.getOwnPropertyNames(networks);
 
+		try {
+			await addFixture.command(user, customType, false, 300);
+		} catch (addFixtureError) {
+			console.error(`Error while adding fixture for ${user} with ${customType}: ${addFixtureError}`);
+			throw addFixtureError;
+		}
+
+		const keys = Object.getOwnPropertyNames(networks);
 		for (const key of keys) {
 			for (const account_name of networks[key]) {
-				console.log(`Account_type: ${key}, Account_name: ${account_name}`);
-				await addFixture.command(`${account_name}`, `${key}`, false, 300);
+				try {
+					console.log(`Account_type: ${key}, Account_name: ${account_name}`);
+					await addFixture.command(`${account_name}`, `${key}`, false, 300);
+				} catch (addFixtureError) {
+					console.error(`Error while adding fixture for ${account_name} with ${key}: ${addFixtureError}`);
+					throw addFixtureError;
+				}
 			}
 		}
 
-		await createNewOrg.command(org);
+		try {
+			await createNewOrg.command(org);
+		} catch (createOrgError) {
+			console.error(`Error while creating organization ${org}: ${createOrgError}`);
+			throw createOrgError;
+		}
 
 		for (const key of keys) {
 			for (const account_name of networks[key]) {
-				console.log(`Account_type: ${key}, Account_name: ${account_name}`);
-				await addSocialNetwork.command(`${account_name}`);
+				try {
+					console.log(`Account_type: ${key}, Account_name: ${account_name}`);
+					await addSocialNetwork.command(`${account_name}`);
+				} catch (addSocialNetworkError) {
+					console.error(`Error while adding social network ${account_name}: ${addSocialNetworkError}`);
+					throw addSocialNetworkError;
+				}
 			}
 		}
 	}
