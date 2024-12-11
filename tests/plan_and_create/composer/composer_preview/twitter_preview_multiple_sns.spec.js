@@ -30,6 +30,8 @@ test('Error verification for multiple twitter selection', async ({ page }) => {
 
 	await test.step('Open composer from global navigator', async () => {
 		await composePage.selectComposeButton();
+		await expect(composePage.postToWrapper).toBeVisible();
+		await composePage.postToWrapper.click();
 	});
 
 	await test.step('Select two twitter accounts from profile picker', async () => {

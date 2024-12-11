@@ -1,19 +1,19 @@
 /* Test to verify user can be mentioned in internal comments */
 const { test,expect } = require('@playwright/test');
+const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
 const createUser = require('../../../../custom-commands/createUser');
-const tearDown = require('../../../../custom-commands/tearDown');
 const addUserToOrg = require('../../../../custom-commands/addUserToOrg');
 const modifySocialProfilePermissions = require('../../../../custom-commands/modifySocialProfilePermissions');
-const scheduleV3Message = require('../../../../custom-commands/scheduleV3Message');
 const { getObjectByName } = require('../../../../globals');
 const { formatISO, addDays } = require('date-fns');
+const scheduleV3Message = require('../../../../custom-commands/scheduleV3Message');
 const { LoginPage } = require('../../../../pages/login');
 const { PlannerPage } = require('../../../../pages/planandcreate/planner');
 const { HomePage } = require('../../../../pages/homepage');
-const { SetUpEnterpriseUser } = require('../../../../custom-commands/setUpEnterpriseUser');
+const tearDown = require('../../../../custom-commands/tearDown');
 
 const scheduleDate = addDays(new Date(), 1);
-let proUserMemberId, proUserFullName, enterpriseUsername, enterpriseUserMemberId;
+let coreUserMemberId, coreUserFullName, enterpriseUsername, enterpriseUserMemberId;
 
 test.afterEach(async ({ page }) => {
 	const cleanUp = new tearDown();
@@ -23,14 +23,14 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Verify user can be mentioned in internal comments', async ({ page }) => {
-	const loginPage = new LoginPage(page);
-	const plannerPage = new PlannerPage(page);
-	const homePage = new HomePage(page);
+	const setUpEnterpriseUser = new SetUpEnterpriseUser();
 	const createNewUser = new createUser();
 	const addUserToNewOrg = new addUserToOrg();
-	const setUpEnterpriseUser = new SetUpEnterpriseUser();
 	const updateSNPermissions = new modifySocialProfilePermissions();
+	const loginPage = new LoginPage(page);
+	const plannerPage = new PlannerPage(page);
 	const createScheduleMessage = new scheduleV3Message();
+	const homePage = new HomePage(page);
 
 	let orgName = 'internal_comments_user_mention_org_' + Math.floor(Math.random() * 10000);
 	let accounts = {
@@ -41,11 +41,11 @@ test('Verify user can be mentioned in internal comments', async ({ page }) => {
 
 	await test.step('Setup user & accounts', async () => {
 		await setUpEnterpriseUser.setUpEnterpriseUser(orgName, 'internal_comments_mention_user', accounts);
-		await createNewUser.command('internal_comments_user', 'professional');
+		await createNewUser.command('internal_comments_user');
 		await addUserToNewOrg.command('internal_comments_user', orgName);
-		await updateSNPermissions.command('SN_ADVANCED', 'fb_internal_comments_mention', 'internal_comments_user');
-		proUserMemberId = global.member[1].memberId;
-		proUserFullName = global.member[1].fullName;
+		await updateSNPermissions.command('SN_LIMITED', 'fb_internal_comments_mention', 'internal_comments_user');
+		coreUserMemberId = global.member[1].memberId;
+		coreUserFullName = global.member[1].fullName;
 		enterpriseUserMemberId = global.member[0].memberId;
 		enterpriseUsername = global.member[0].username;
 	});
@@ -55,13 +55,13 @@ test('Verify user can be mentioned in internal comments', async ({ page }) => {
 	});
 
 	await test.step('Hide native posts & recommended times', async () => {
-		await plannerPage.hideNativePosts(proUserMemberId);
-		await plannerPage.hideRecommendedTimes(proUserMemberId);
+		await plannerPage.hideNativePosts(coreUserMemberId);
+		await plannerPage.hideRecommendedTimes(coreUserMemberId);
 	});
 
 	await test.step('Schedule a post', async () => {
 		await createScheduleMessage.command(
-			parseInt(proUserMemberId, 10),
+			parseInt(coreUserMemberId, 10),
 			{
 				messages: [
 					{
@@ -76,6 +76,10 @@ test('Verify user can be mentioned in internal comments', async ({ page }) => {
 
 	await test.step('Navigate to planner', async () => {
 		await plannerPage.visit();
+	});
+
+	await test.step('Verify scheduled post is visible', async () => {
+		await plannerPage.verifyScheduledMessageInCurrentOrNextWeek(scheduleText);
 	});
 
 	await test.step('Verify internal comments is available for user inside org', async () => {
@@ -134,14 +138,14 @@ test('Verify user can be mentioned in internal comments', async ({ page }) => {
 		await homePage.showMoreOptions.click();
 		await expect(homePage.productNotificationsButton).toBeVisible();
 		await homePage.productNotificationsButton.click();
-		await page.getByText(`${proUserFullName} mentioned you in a comment`).first().click();
+		await page.getByText(`${coreUserFullName} mentioned you in a comment`).first().click();
 	});
 
 	await test.step('Ensure the mentioned used is correct', async () => {
 		const mentionElement = page.getByTestId('Mention');
 		await expect(plannerPage.internalCommentsTab).toBeVisible();
 		await plannerPage.internalCommentsTab.click();
-		await expect(page.getByTestId('Comment').getByText(`${proUserFullName}`)).toBeVisible();
+		await expect(page.getByTestId('Comment').getByText(`${coreUserFullName}`)).toBeVisible();
 		await expect(page.getByText(commentText.concat(`@${enterpriseUsername}`))).toBeVisible();
 		await expect(mentionElement).toHaveText(`@${enterpriseUsername}`);
 

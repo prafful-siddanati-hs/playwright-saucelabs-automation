@@ -63,6 +63,7 @@ exports.LoginPage = class LoginPage {
 		// console.log('Deleting cookies to force a logout. See PLAT-10602 for more details.');
 		await this.page.goto('/logout');
 		await expect(this.homeLoginButton).toBeVisible();
+		await expect(this.page).toHaveURL('https://www-staging.hootsuite.com/logged-out');
 	}
 
 	// Redirect to dashboard home after login to skip any onboarding
