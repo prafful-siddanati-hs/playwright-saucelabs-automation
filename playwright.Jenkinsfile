@@ -37,6 +37,7 @@ properties(
             [parameterizedCron('''
                   5  7 * * 1-5 %CONFIG_FILE=.sauce/custom_approvals.config.yml
                  45 7 * * 1-5 %CONFIG_FILE=.sauce/drafts.config.yml
+                 45 8 * * 1-5 %CONFIG_FILE=.sauce/planner_regression.config.yml
                  10 12 * * 1-5 %CONFIG_FILE=.sauce/composer_regression_media.config.yml
                  30 12 * * 1-5 %CONFIG_FILE=.sauce/composer_media_limitations.config.yml
                  50 12 * * 1-5  %CONFIG_FILE=.sauce/composer_message_editor.config.yml
@@ -47,7 +48,6 @@ properties(
                  30 14 * * 1-5 %CONFIG_FILE=.sauce/link_previews.config.yml
                  50 14 * * 1-5 %CONFIG_FILE=.sauce/ig_first_comment.config.yml
                  10 15 * * 1-5  %CONFIG_FILE=.sauce/composer_send.config.yml
-                 30 15 * * 1-5 %CONFIG_FILE=.sauce/planner_regression.config.yml
                  50 15 * * 1-5 %CONFIG_FILE=.sauce/target_audience.config.yml
                  10 16 * * 1-5 %CONFIG_FILE=.sauce/one_time_approver.config.yml
                  30 16 * * 1-5 %CONFIG_FILE=.sauce/network_campaign_picker.config.yml

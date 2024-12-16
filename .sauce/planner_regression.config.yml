@@ -36,7 +36,7 @@ suites:
     platformName: "Windows 11"
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
-    testMatch: ['tests/plan_and_create/planner/regression/*.*.js']
+    testMatch: ['tests/plan_and_create/planner/regression/*.*.js','tests/plan_and_create/planner/internal_comments/*.*.js']
     params:
       browserName: "chromium"
       project: "chromium"

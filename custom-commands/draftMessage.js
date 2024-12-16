@@ -35,6 +35,7 @@ class draftMessage extends events.EventEmitter {
 
 		} catch (err) {
 			console.assert(false, `Error while drafting a message. ${err}`);
+			throw new Error(err);
 		} finally {
 			this.emit('complete');
 		}

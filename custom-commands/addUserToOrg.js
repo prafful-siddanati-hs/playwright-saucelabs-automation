@@ -81,6 +81,7 @@ class addUserToOrg extends events.EventEmitter {
 			this.checkResponse(orgMember, `Member: ${u.name} added to the org: ${o.name}`);
 		} catch (err) {
 			console.log(err === null, `Failed to add user to the specified org: ${JSON.stringify(err)}`);
+			throw new Error(err);
 		} finally {
 			this.emit('complete');
 		}

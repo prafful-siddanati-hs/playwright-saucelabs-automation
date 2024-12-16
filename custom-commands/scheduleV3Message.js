@@ -38,6 +38,7 @@ class scheduleV3Message extends events.EventEmitter {
 
 		} catch (err) {
 			console.assert(false, `Error scheduling a message. ${err}`);
+			throw new Error(err);
 		} finally {
 			this.emit('complete');
 		}
