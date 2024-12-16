@@ -28,7 +28,9 @@ class scheduleV3Message extends events.EventEmitter {
 				throw new Error(`Request did not return a message ID. Error code ${data.errors[0].codes}`);
 			}
 
-			console.log(data !== undefined, `SN ID: ${data.messages[0].socialProfile.id} / Message ID: ${data.messages[0].id} / Text: ${data.messages[0].text}`);
+			data.messages.forEach((message) => {
+				console.log(`SN ID: ${message.socialProfile.id} / Message ID: ${message.id} / Text: ${message.text}`);
+			});
 
 			if (typeof callback === 'function') {
 				callback.call(this, data);

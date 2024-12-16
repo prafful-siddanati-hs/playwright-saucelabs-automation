@@ -36,8 +36,7 @@ suites:
     platformName: "Windows 11"
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
-    testMatch: ['tests/plan_and_create/planner/.*.js']
-    excludedTestFiles: ['tests/plan_and_create/planner/pipelineTests/*.*.js','tests/plan_and_create/planner/planner_smoke/*.*.js']
+    testMatch: ['tests/plan_and_create/planner/regression/*.*.js']
     params:
       browserName: "chromium"
       project: "chromium"

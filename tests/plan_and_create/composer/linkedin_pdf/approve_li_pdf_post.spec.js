@@ -50,12 +50,17 @@ test('Approve Linkedin PDF posts via custom approval : ', async ({ page }) => {
 	});
 
 	await test.step('Schedule a LinkedIn PDF post', async () => {
-		await plannerPage.scheduleMessageWithPDF(
-			limitedUserMemberId,
-			getObjectByName(global.fixture, 'pw_li_pdf_ca').socialProfile.socialProfileId,
-			pdfText,
-			formatISO(scheduleDate)
-		);
+		try {
+			await plannerPage.scheduleMessageWithPDF(
+				limitedUserMemberId,
+				getObjectByName(global.fixture, 'pw_li_pdf_ca').socialProfile.socialProfileId,
+				pdfText,
+				formatISO(scheduleDate)
+			);
+		} catch (pdfScheduleError) {
+			console.error('Error scheduling PDF post: ', pdfScheduleError);
+			throw pdfScheduleError;
+		}
 	});
 
 	await test.step('Hide native posts & recommended times', async () => {

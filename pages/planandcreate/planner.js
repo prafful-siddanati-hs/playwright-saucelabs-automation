@@ -8,6 +8,7 @@ const scheduleV3Message = require('../../custom-commands/scheduleV3Message');
 const timeZone = 'America/Toronto';
 const assert = require('assert');
 const NUM_TIME_SLOTS_IN_WEEK = 7;
+const NUM_TIME_SLOTS_IN_EXPANDED_VIEW = 168;
 
 exports.PlannerPage = class PlannerPage {
 	constructor(page) {
@@ -61,9 +62,9 @@ exports.PlannerPage = class PlannerPage {
 		this.exportButton = page.getByTestId('planner-export-button');
 		this.csvExportOption = page.getByTestId('export-dropdown-csv-list-item');
 		this.exportModal = page.locator('.vk-ExportingModalContainer');
-		this.startOfWeekSundayButton = page.getByTestId('Sunday');
-		this.startOfWeekMondayButton = page.getByTestId('Monday');
-		this.recommendedTimeToggle = page.getByTestId('RecommendedTimesToggle');
+		this.startOfWeekSundayButton = page.locator('//*[contains(@role, "listbox")]//label[text()="Sunday"]', { locateStrategy: 'xpath' });
+		this.startOfWeekMondayButton = page.locator('//*[contains(@role, "listbox")]//label[text()="Monday"]', { locateStrategy: 'xpath' });
+		this.recommendedTimeToggle = page.locator('//*[contains(@role, "listbox")]//label[text()="Show recommended times"]', { locateStrategy: 'xpath' });
 
 		/**
      * - - - - - CALENDAR: WEEK VIEW - - - -
@@ -99,6 +100,7 @@ exports.PlannerPage = class PlannerPage {
 		this.messageCountOnMonthView = page.getByTestId('DayOfMonthCount-SCHEDULED').first();
 		this.draftCountOnMonthView = page.getByTestId('DayOfMonthCount-DRAFTS');
 		this.messageSNCountOnMonthView = page.locator('//*[contains(@class, "vk-SNCountBarWrapper")]//div//div[last()]', { locateStrategy: 'xpath' });
+		this.messageBarCountOnMonthSNView = page.locator('//*[contains(@class, "vk-SNCountBarWrapper")]', { locateStrategy: 'xpath' });
 		this.disconnectedIcon = page.locator('[data-status="DISCONNECTED"]');
 		this.monthSidePaneCloseButton = page.locator('.vk-DetailPane .vk-CloseButton');
 		this.monthSidePaneCreateButton = page.locator('.vk-DetailPane .vk-MonthSidePaneCreateButton');
@@ -145,6 +147,7 @@ exports.PlannerPage = class PlannerPage {
 		this.recommendedTimesPlaceholderListPanel = page.locator('(//*[contains(@class,"vk-DropdownAnchorWrapper")])[1]', { locateStrategy: 'xpath' });
 		this.todayInListView = page.locator('//*[contains(@class,"vk-InnerDay") and contains(@aria-label,"today")]');
 		this.listViewCards = page.locator('[data-testid="CardWrapper"]');
+		this.listViewDayContainer = page.locator('//*[contains(@class, "vk-Planner")]//*[contains(@class,"vk-CardListContainer")]', { locateStrategy: 'xpath' });
 
 		/**
      * - - - - CALENDAR: PREVIEW PANE - - - - -
@@ -316,7 +319,6 @@ exports.PlannerPage = class PlannerPage {
 		this.approvalsListViewRejectButton = page.locator('(//*[contains(@class, "vk-Planner")]//*[contains(@aria-label, "Reject post")])[1]', { locateStrategy: 'xpath' });
 		this.approvalsListViewApproveButton = page.locator('(//*[contains(@class, "vk-Planner")]//*[contains(@aria-label, "Approve post")])[1]', { locateStrategy: 'xpath' });
 		this.sectionHeaderTitle = page.locator('//*[contains(@class,"vk-SectionContainerTitle")][contains(text(),"Content you submitted for approval")]', { locateStrategy: 'xpath' });
-
 	}
 
 	async visit() {
@@ -411,8 +413,13 @@ exports.PlannerPage = class PlannerPage {
 		}
 	}
 
-	async verifyScheduledMessageNotPresent (text) {
-		await expect(this.page.getByText(text), 'Schedule message is visible on planner').not.toBeVisible();
+	async verifyScheduledMessageNotPresent (text, profile = false) {
+		if (!profile) {
+			await expect(this.page.getByText(text), 'Schedule message is no longer visible on planner').not.toBeVisible();
+		} else {
+			const cardSelector = `//*[contains(@class, "vk-Card")]//*[@aria-label[contains(text(), '${profile}')]]/following::div[2][contains(text(), '${text}')]`;
+			await expect(this.page.locator(cardSelector)).not.toBeVisible();
+		}
 	}
 
 	async verifyMessageOnApprovalsView(text) {
@@ -467,7 +474,7 @@ exports.PlannerPage = class PlannerPage {
 
 	async duplicateFromPreviewPane() {
 		await this.moreActions.click();
-		await expect(this.duplicateButton, 'Duplicate button is not visible on planner preview pane').toBeVisible();
+		await expect(this.duplicateButton, 'Duplicate button is visible on planner preview pane').toBeVisible();
 		await this.duplicateButton.click();
 	}
 
@@ -593,13 +600,18 @@ exports.PlannerPage = class PlannerPage {
 	async selectPost(selector) {
 		await expect(this.nextButton).toBeVisible();
 		await this.nextButton.click();
-
 		const timeSlots = await this.timeSlot;
 		const timeSlotCount = await timeSlots.count();
-		expect(timeSlotCount).toBe(NUM_TIME_SLOTS_IN_WEEK);
+		expect([NUM_TIME_SLOTS_IN_WEEK, NUM_TIME_SLOTS_IN_EXPANDED_VIEW]).toContain(timeSlotCount);
 		await this.timeSlot.first().click(); // Click on the first time slot
 		await expect(selector).toBeVisible(); // Wait for the desired selector and click it
 		await selector.click();
+	}
+
+	async clickListViewDayCard(text, username) {
+		const cardSelector = this.page.locator(`//*[contains(@class, "vk-Card") and contains(.//div, "${username}") and contains(.//div, "${text}")]`, { locateStrategy: 'xpath' });
+		await expect(cardSelector).toBeVisible();
+		await cardSelector.click();
 	}
 
 	async dragAndDropCard(message, hour, id) {

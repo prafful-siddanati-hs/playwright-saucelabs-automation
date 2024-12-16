@@ -43,12 +43,17 @@ test('Duplicate a LinkedIn PDF post', async ({page}) => {
 	});
 
 	await test.step('Schedule a LinkedIn PDF post', async () => {
-		await plannerPage.scheduleMessageWithPDF(
-			memberId,
-			getObjectByName(global.fixture, 'pw_duplicate_pdf').socialProfile.socialProfileId,
-			pdfText,
-			formatISO(scheduleDate)
-		);
+		try {
+			await plannerPage.scheduleMessageWithPDF(
+				memberId,
+				getObjectByName(global.fixture, 'pw_duplicate_pdf').socialProfile.socialProfileId,
+				pdfText,
+				formatISO(scheduleDate)
+			);
+		} catch (pdfScheduleError) {
+			console.error('Error scheduling PDF post: ', pdfScheduleError);
+			throw pdfScheduleError;
+		}
 	});
 
 	await test.step('Navigate to planner', async () => {

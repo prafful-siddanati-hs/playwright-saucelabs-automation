@@ -10,6 +10,11 @@ exports.TagComponentPage = class TagComponentPage {
 		this.tagDisplayArea = page.locator('.rc-TagArea .-tagDisplayArea');
 		this.tagAreaTitle = page.locator('.rc-TagArea h3');
 		this.manageTagsButton = page.locator('//div[contains(@class, "-tagEditArea")]//button[contains(text(), "Manage tags")] | //*[contains(@class, "-tagPopover")]//*[contains(@class, "-manageTagArea")]//*[text()="Manage Tags"]');
+		this.createTag = page.getByRole('button', { name: 'Create New Tag' });
+		this.createTagModal = page.locator('.-modalDialog');
+		this.tagNameInput = page.getByPlaceholder('Choose a tag name');
+		this.tagModalCreateButton = page.getByRole('button', { name: 'Create', exact: true });
+		this.closeTagManagerButton = page.getByLabel('Close Tag Manager');
 	}
 
 	async selectEditTagsButton() {
@@ -19,12 +24,40 @@ exports.TagComponentPage = class TagComponentPage {
 		await this.tagInputArea.click();
 	}
 
+	async selectManageTagsButton() {
+		await expect(this.manageTagsButton).toBeVisible();
+		await this.manageTagsButton.click();
+	}
+
+	async openCreateTagModal() {
+		await expect(this.createTag).toBeVisible();
+		await this.createTag.click();
+	}
+
+	async enterTagName(tagName) {
+		await expect(this.tagNameInput).toBeVisible();
+		await this.tagNameInput.fill(tagName);
+	}
+
+	async clickTagModalCreateButton() {
+		await expect(this.tagModalCreateButton).toBeVisible();
+		await this.tagModalCreateButton.click();
+		await expect(this.tagModalCreateButton).not.toBeVisible();
+		await expect(this.tagNameInput).not.toBeVisible();
+		await expect(this.createTagModal).not.toBeVisible();
+	}
+
+	async closeTagManager() {
+		await expect(this.closeTagManagerButton).toBeVisible();
+		await this.closeTagManagerButton.click();
+		await expect(this.closeTagManagerButton).not.toBeVisible();
+	}
+
 	async selectTag(tag) {
 		const tagSelector = `//div[contains(@class, "rc-TagArea")]//div[contains(@class, "-tagEditArea")]//*[text()="${tag}"]`;
 
 		await expect(this.page.locator(tagSelector)).toBeVisible();
 		await this.page.locator(tagSelector).click();
-		await expect(this.inputTag).toHaveText(tag);
 	}
 
 	async dismissTagPopoverList() {

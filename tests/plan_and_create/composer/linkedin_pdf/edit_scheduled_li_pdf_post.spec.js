@@ -47,12 +47,17 @@ test('Edit a LinkedIn PDF post by changing the profile', async ({ page }) => {
 	});
 
 	await test.step(`Schedule a PDF post for ${liAccount1}`, async () => {
-		await plannerPage.scheduleMessageWithPDF(
-			memberId,
-			getObjectByName(global.fixture, 'liAccount1').socialProfile.socialProfileId,
-			pdfText,
-			formatISO(scheduleDate)
-		);
+		try {
+			await plannerPage.scheduleMessageWithPDF(
+				memberId,
+				getObjectByName(global.fixture, 'liAccount1').socialProfile.socialProfileId,
+				pdfText,
+				formatISO(scheduleDate)
+			);
+		} catch (pdfScheduleError) {
+			console.error('Error scheduling PDF post: ', pdfScheduleError);
+			throw pdfScheduleError;
+		}
 	});
 
 	await test.step('Dismiss new user onboarding modal', async () => {

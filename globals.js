@@ -11,6 +11,9 @@ module.exports = {
 	service_trail: 'https://trail.staging.hootops.com',
 	launch_url_cms: 'https://www-staging.hootsuite.com',
 	login_url: 'https://staging.hootsuite.com/login?lang=en',
+	tags_service: 'https://tag.staging.hootops.com/tags/create',
+	service_scheduled_data: 'https://scheduled-data.staging.hootops.com',
+	service_message_review: 'https://message-review.staging.hootops.com',
 	defaultPassword: 'Gp8#zKq@V3sW*Ld9',
 	testOrgPrefix: 'TEMP_ORG_',
 	isOrgSafeToDelete: function (org, memberId, testOrgPrefix) {
@@ -43,6 +46,12 @@ module.exports = {
 		thumbnail_url: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-12262804-4kFLS6Ca.jpeg',
 
 		video_url: 'https://hootsuite-video.s3.amazonaws.com/staging/12262804_8dcc8204-bb88-446d-ba92-55944bea29c8.mp4',
+
+		tiktok_video_url: 'https://hootsuite-video.s3.amazonaws.com/staging/11707509_2ab4584a-0416-43e2-8efe-5dd751e7d087.mp4',
+
+		reels_video_url: 'https://hootsuite-video.s3.amazonaws.com/staging/12262804_f4d7c506-35c3-47f0-a952-07cfe5dfeda7.mp4',
+
+		reels_thumbnail_url: 'https://hootsuite-video.s3.amazonaws.com/staging/12262804_f4d7c506-35c3-47f0-a952-07cfe5dfeda7_0.jpg',
 
 		gif_url: 'https://hootsuite-video.s3.amazonaws.com/staging/thumb-12262804-4QUAIMtz.gif',
 

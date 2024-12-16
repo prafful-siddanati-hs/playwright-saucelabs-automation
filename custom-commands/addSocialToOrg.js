@@ -58,7 +58,8 @@ class addSocialToOrg extends events.EventEmitter {
 					externalId: s.socialProfile.userId
 				});
 		} catch (err) {
-			console.log(false, JSON.stringify(err));
+			console.log('Error adding social network to org:', JSON.stringify(err));
+			throw err;
 		} finally {
 			if (!hasResponseErrors(response)) {
 				s.socialProfile.socialProfileId = response.socialProfileId;

@@ -18,6 +18,7 @@ exports.ComposePage = class ComposePage {
 		this.maximizeComposeButton = page.locator('.vk-MinimizedComposerModal button[aria-label="Maximize"]');
 		this.composerFloatingDock = page.locator('#fe-pnc-app-docker .vk-MinimizedComposerModal');
 		this.exitComposeButton = page.locator('.vk-ComposerModal [aria-label="Exit Composer"]');
+		this.confirmationCancelButton = page.locator('[role="dialog"] [aria-label="Discard post"], [role="dialog"] [aria-label="Discard changes"]');
 		this.profileDropDown = page.locator('.vk-ComposerModal [aria-label="Select a social account (required)"]');
 		this.snInputPlaceholder = page.locator('.vk-ComposerModal [aria-label="Select a social account (required)"]');
 		this.snContentItems = page.locator('.vk-ComposerModal .vk-ContentItems');

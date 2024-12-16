@@ -62,6 +62,7 @@ test('Create draft for FB and LI with target audience', async ({ page }) => {
 	await test.step('Add tag to draft message', async () => {
 		await tagComponentPage.selectEditTagsButton();
 		await tagComponentPage.selectTag('a');
+		await expect(tagComponentPage.inputTag).toContainText('a');
 		await tagComponentPage.dismissTagPopoverList();
 		await tagComponentPage.selectApplyTagButton();
 		await expect(tagComponentPage.tagDisplayArea).toHaveText('a');

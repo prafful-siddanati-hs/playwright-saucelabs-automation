@@ -99,6 +99,8 @@ test('Verify that link settings are maintained via approval workflow', async ({ 
 
 	await test.step('Verify scheduled message is present on planner list view', async () => {
 		await plannerPage.selectListView();
+		await expect(plannerPage.postVolumeCalendarContainer).toBeVisible();
+		await expect(plannerPage.listViewCards).toHaveCount(1);
 		await plannerPage.verifyScheduledMessage(scheduleText, getObjectByName(global.fixture, `${accounts.plan_create_facebookpage}`).socialProfile.username);
 		await expect(plannerPage.mediaThumbnailListView).toBeVisible();
 		await plannerPage.showPreviewPane(scheduleText);

@@ -50,13 +50,18 @@ test('Reject LinkedIn PDF post by one time reviewer : ', async ({ page }) => {
 	});
 
 	await test.step('Schedule a LinkedIn PDF post with one time reviewer', async () => {
-		await plannerPage.scheduleMessageWithPDF(
-			limitedUserMemberId,
-			getObjectByName(global.fixture, 'pw_li_pdf_ca_reject').socialProfile.socialProfileId,
-			pdfText,
-			formatISO(scheduleDate),
-			adminMemberId
-		);
+		try {
+			await plannerPage.scheduleMessageWithPDF(
+				limitedUserMemberId,
+				getObjectByName(global.fixture, 'pw_li_pdf_ca_reject').socialProfile.socialProfileId,
+				pdfText,
+				formatISO(scheduleDate),
+				adminMemberId
+			);
+		} catch (pdfScheduleError) {
+			console.error('Error scheduling PDF post: ', pdfScheduleError);
+			throw pdfScheduleError;
+		}
 	});
 
 	await test.step('Hide native posts', async () => {
