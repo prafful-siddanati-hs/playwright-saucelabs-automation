@@ -66,13 +66,13 @@ exports.ComposePage = class ComposePage {
 		this.scheduleLaterButton = page.getByRole('button', {name: 'Schedule for later'});
 		this.scheduleDone = page.getByRole('button', {name: 'Done'});
 		this.scheduleDoneButton = page.getByTestId('schedule-post-done-btn');
-		this.scheduleButton = page.locator('button.vk-EditFooterScheduleButton');
+		this.scheduleButton = page.locator('[data-dap-target="composer-schedule-button"]');
 		this.saveAsDraftButton = page.locator('.vk-ComposerModal [data-testid= "SaveAsDraftButton"]');
 		this.saveChangesButton = page.getByRole('button', {name: 'Save changes'});
 		this.saveEditsButton = page.getByRole('button', {name: 'Save edits'});
 		this.postNowButton = page.getByRole('button', {name: 'Post now', exact: true});
 		this.addTagsButton = page.locator('.vk-ComposerModal [aria-label= "Add tags"]');
-		this.saveToContentLibraryButton = page.getByRole('button', {name: 'Save to content library'});
+		this.saveToContentLibraryButton = page.getByRole('gridcell', {name: 'Save to content library'});
 		this.openCalendarButton = page.getByLabel('Open calendar');
 		this.nextMonthButton = page.getByLabel('Go to next month');
 		this.firstDayOfNextMonth = page.locator('(//button[contains(@class, "rdp-day") and text()="1"])[1]');
@@ -140,7 +140,7 @@ exports.ComposePage = class ComposePage {
 		this.closeMobileSetUpPopUp = page.locator('.vk-ComposerModal [aria-label = "Close Set up mobile notifications to publish with Instagram"]');
 		this.linkedInHashtagLink = page.locator('.vk-LinkedInPreview .vk-MessageHashtag');
 		this.feCallOuts = page.locator('#fe-lib-async-callouts-container>div>div>div>div[type="success"]');
-		this.moreButton = page.getByLabel('more', {exact: true});
+		this.moreButton = page.locator('[aria-label="More"]');
 		this.saveDraftButton = page.getByRole('button', {name: 'Save as draft', exact: true});
 		this.addMediaButton = page.locator('.vk-ComposerModal [aria-label="Add media"]');
 		this.mediaLibraryButton = page.locator('.vk-ComposerModal [aria-label="Media library"]');
