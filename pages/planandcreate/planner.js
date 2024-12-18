@@ -88,11 +88,10 @@ exports.PlannerPage = class PlannerPage {
      */
 		this.month = page.locator('.vk-Planner .vk-Month');
 		this.viewToggleMonthByInactiveButton = page.locator('.vk-Planner .vk-CountToggleBar [aria-pressed="false"]');
-		this.monthDateRangeButton = page.locator('.vk-Planner .vk-DateRangeAnchorButton');
+		this.monthDateRangeButton = page.locator('.vk-Planner [data-testid="date-picker-toggle-button"]');
 		this.daySlot = page.locator('.vk-Planner .vk-Month .vk-Day');
 		this.pausedIconInMonthView = page.locator('.vk-Row .vk-CountByPostTypeWrapper .pause');
 		this.monthDayTodayClickable = page.locator('//*[@data-today]', { locateStrategy: 'xpath' });
-		this.monthDateRangeButton = page.locator('.vk-Planner .vk-DateRangeAnchorButton');
 		this.prevYearNavigationButton = page.getByLabel('Previous year');
 		this.nextYearNavigationButton = page.getByLabel('Next year');
 		this.newPostMonthSidePane = page.locator('//*[contains(@id, "popper")]//*[contains(@class,"vk-NewPostPlaceholderDropdownItem")]//*[text()="Post"]', { locateStrategy: 'xpath' });

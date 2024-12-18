@@ -6,7 +6,7 @@ const addSocialToOrg = require('../../../../custom-commands/addSocialToOrg.js');
 const { getObjectByName } = require('../../../../globals.js');
 const { LoginPage } = require('../../../../pages/login.js');
 const scheduleV3Message = require('../../../../custom-commands/scheduleV3Message.js');
-const { formatISO, addMonths, startOfMonth } = require('date-fns');
+const { formatISO, addMonths, startOfMonth, format } = require('date-fns');
 const { PlannerPage } = require('../../../../pages/planandcreate/planner.js');
 const { ComposePage } = require('../../../../pages/planandcreate/compose.js');
 const tearDown = require('../../../../custom-commands/tearDown.js');
@@ -110,9 +110,8 @@ test('Test to verify scheduled messages in future and current month via planner 
 	});
 
 	await test.step('Verify scheduled message in future month', async () => {
-		const futureMonthDateString = startOfMonth(futureMonthTodayDate).toISOString().split('T')[0];
-		const futureMonthRangeSelectorButton = page.locator(`//*[contains(@id, "popper")]//button[contains(@data-date, "${futureMonthDateString}")]`, { locateStrategy: 'xpath' });
-
+		const futureMonthDateString = format(startOfMonth(futureMonthTodayDate), 'EEEE, MMMM d, yyyy');
+		const futureMonthRangeSelectorButton = page.locator(`//*[contains(@aria-label,"${futureMonthDateString}")]`, { locateStrategy: 'xpath' });
 		await expect(plannerPage.monthDateRangeButton).toBeVisible();
 		await plannerPage.monthDateRangeButton.click();
 
