@@ -67,7 +67,7 @@ class addSocialToOrg extends events.EventEmitter {
 				s.socialProfile.isReauthRequired = response.isReauthRequired;
 				console.log(true, `Social profile ${s.socialProfile.username} has been added to ${o.name} with Org Id: ${o.id}`);
 			} else {
-				console.log(false, JSON.stringify(response));
+				console.log('Error adding social network to org:', JSON.stringify(response));
 			}
 			this.emit('Complete');
 		}

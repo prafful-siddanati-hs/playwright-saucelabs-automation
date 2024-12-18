@@ -1,6 +1,6 @@
 const events = require('events');
 let MemberPermissions = require('hsapi').topsService;
-const axios = require('axios');
+const { request } = require('playwright');
 
 const { som_bridge, tops_skyline, hasResponseErrors, getObjectByName } = require('../globals.js');
 
@@ -101,20 +101,23 @@ class modifySocialProfilePermissions extends events.EventEmitter {
 				includeSocialNetworkAppAuthData: optionalData.includeSocialNetworkAppAuthData || 'true'
 			};
 
-			let socialProfileResult = await axios.get(`${som_bridge}/socialProfiles`, {
+			const apiRequestContext = await request.newContext();
+			const response = await apiRequestContext.get(`${som_bridge}/socialProfiles`, {
 				headers: headers,
 				params: body
 			});
 
-			if (!socialProfileResult.data || typeof socialProfileResult.data !== 'object' || Object.keys(socialProfileResult.data).length === 0) {
+			const socialProfileResult = await response.json();
+
+			if (!socialProfileResult || typeof socialProfileResult !== 'object' || Object.keys(socialProfileResult).length === 0) {
 				throw new Error('Invalid response received for social profile');
 			}
 
-			this.checkResponse(socialProfileResult.data, 'Found social profile');
+			this.checkResponse(socialProfileResult, 'Found social profile');
 
 			this.step = 'Changing permissions for social profile';
 
-			let socialProfileId = socialProfileResult.data[Object.keys(socialProfileResult.data)[0]].socialProfileId;
+			let socialProfileId = socialProfileResult[Object.keys(socialProfileResult)[0]].socialProfileId;
 			if (Number.isNaN(socialProfileId)) {
 				throw new Error('Invalid social profile ID received');
 			}
