@@ -31,10 +31,10 @@ test('Campaign with link presets validations', async ({ page }) => {
 	});
 
 	await test.step('Select test org from org picker', async () => {
-		const orgName = page.locator('//*[contains(@class,"vk-ComposerModal")]//*[contains(@data-testid,"list-item-clickable")]//*[@title and contains(text(),"Prafful\'s Test Org")]');
+		const orgName = page.getByRole('gridcell', { name: 'Prafful\'s Test Org' });
 
-		await expect(page.locator('.vk-ComposerModal [data-testid="dropdown-container"]').first()).toBeVisible();
-		await page.locator('.vk-ComposerModal [data-testid="dropdown-container"]').first().click();
+		await expect(page.locator('.vk-ComposerModal [data-testid="connected-org-picker-dropdown"]').first()).toBeVisible();
+		await page.locator('.vk-ComposerModal [data-testid="connected-org-picker-dropdown"]').first().click();
 		await orgName.click();
 		await page.waitForTimeout(500); // wait for the org to load
 		await expect(composePage.emptyThreadsPreview).toBeVisible();
