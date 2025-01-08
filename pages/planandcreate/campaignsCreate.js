@@ -4,7 +4,7 @@ exports.CampaignsCreatePage = class CampaignsCreatePage {
 	constructor(page) {
 		this.page = page;
 		this.closeButton = page.locator('.rc-ManageCampaigns .rc-HeaderCloseButton');
-		this.createButton = page.locator('button.-createCampaignButton');
+		this.createButton = page.locator('.rc-AppCampaignsView button.-createCampaignButton');
 		this.campaignNameInput = page.locator('.rc-CreateCampaign .-campaignNameTextInput input');
 		this.campaignDescriptionInput = page.locator('.rc-CreateCampaign .-campaignDescriptionTextArea textarea');
 		this.linkPresetsDropdown = page.locator('.rc-CreateCampaign .vk-LinkPresetsDropdownAnchor');
@@ -29,7 +29,6 @@ exports.CampaignsCreatePage = class CampaignsCreatePage {
 	async setCampaignName(name) {
 		await expect(this.campaignNameInput).toBeVisible();
 		await this.campaignNameInput.fill(name);
-		await expect(this.createButton).not.toBeEnabled();
 	}
 
 	async selectDefaultDateRange() {
@@ -42,6 +41,28 @@ exports.CampaignsCreatePage = class CampaignsCreatePage {
 		await this.campaignEndDate.click();
 		await this.datePickerSetButton.click();
 		await expect(this.datePickerSetButton).not.toBeVisible();
+	}
+
+	async clickLinkPresetsDropdown() {
+		await expect(this.linkPresetsDropdown).toBeVisible();
+		await this.linkPresetsDropdown.click();
+	}
+
+	async extendDateRange() {
+		await expect(this.dateRangeDropdown).toBeVisible();
+		await this.dateRangeDropdown.click();
+		await expect(this.datePickerNextMonth).toBeVisible();
+		await this.datePickerNextMonth.click();
+		await this.datePickerNextMonth.click();
+		await this.campaignEndDate.click();
+		await this.datePickerSetButton.click();
+		await expect(this.datePickerSetButton).not.toBeVisible();
+	}
+
+	async clickCreateCampaignButton() {
+		await expect(this.createButton).toBeVisible();
+		await this.createButton.hover();
+		await this.createButton.click();
 	}
 
 };

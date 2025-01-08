@@ -15,6 +15,8 @@ exports.TagComponentPage = class TagComponentPage {
 		this.tagNameInput = page.getByPlaceholder('Choose a tag name');
 		this.tagModalCreateButton = page.getByRole('button', { name: 'Create', exact: true });
 		this.closeTagManagerButton = page.getByLabel('Close Tag Manager');
+		this.addFirstTagButton = page.locator('.-tagEditArea button[aria-label="Add tags"]');
+		this.tagPillsInputBox = page.locator('.rc-TagArea .rc-TagInputSelector input, .rc-TagArea .vk-PillsInputBoxWrapper input');
 	}
 
 	async selectEditTagsButton() {
@@ -71,4 +73,30 @@ exports.TagComponentPage = class TagComponentPage {
 		await this.applyTagButton.click();
 		await expect(this.applyTagButton).not.toBeVisible();
 	}
+
+	async clickAddTagButton() {
+		await expect(this.addFirstTagButton).toBeVisible();
+		await this.addFirstTagButton.click();
+	}
+
+	async clickTagInputButton() {
+		await expect(this.tagPillsInputBox).toBeVisible();
+		await this.tagPillsInputBox.click();
+	}
+
+	async selectTagOnCampaignPage(name) {
+		const tag = `//*[@data-testid="tag-area-edit"]//*[@data-testid="list-item-clickable"]//*[text()="${name}"]`;
+
+		await expect(this.page.locator(tag)).toBeVisible();
+		await this.page.locator(tag).hover();
+		await this.page.locator(tag).click();
+	}
+
+	async removeTagOnCampaignPage(name) {
+		const tag = `//*[contains(@class, "-tagEditArea")]//*[contains(@class, "vk-PillsInputWrapper")]//*[text()="${name}"]/following::div[contains(@class, "vk-RemovePillButton")][1]`;
+
+		await expect(this.page.locator(tag)).toBeVisible();
+		await this.page.locator(tag).click();
+	}
+
 };

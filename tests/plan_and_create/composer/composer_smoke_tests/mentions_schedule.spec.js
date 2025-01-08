@@ -55,11 +55,12 @@ test('Schedule a message with mentions', async ({ page }) => {
 
 	await test.step('Select and link the mention', async () => {
 		await composePage.selectMention(liMention);
+		await page.waitForTimeout(1000);
 	});
 
 	await test.step('Verify linkedIn mention in preview', async () => {
 		await composePage.verifyLinkedInMentionPreview(liMention);
-		await page.waitForTimeout(2000);
+		await page.waitForTimeout(500);
 	});
 
 	await test.step('Schedule the message', async () => {

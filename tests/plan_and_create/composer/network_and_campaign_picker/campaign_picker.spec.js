@@ -3,7 +3,7 @@ const tearDown = require('../../../../custom-commands/tearDown');
 const getFixture = require('../../../../custom-commands/getFixture');
 const { LoginPage } = require('../../../../pages/login');
 const { ComposePage } = require('../../../../pages/planandcreate/compose');
-const { ManageCampaignsPage } = require('../../../../pages/planandcreate/manageCampaigns');
+const { ManageCampaignsPage } = require('../../../../pages/planandcreate/campaignsManage');
 let firstCampaign, secondCampaign;
 
 test.afterEach(async ({ page }) => {
