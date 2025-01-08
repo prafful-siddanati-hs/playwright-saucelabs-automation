@@ -10,6 +10,7 @@ exports.LinkPresetsCreatePage = class LinkPresetsCreatePage {
 		this.linkPresetCreateButton = page.getByRole('button', { name: 'Create new preset' });
 		this.linkPresetCancelButton = page.getByRole('button', { name: 'Cancel' });
 		this.linkSettingsApplyButton = page.locator('.vk-LinkSettingsApply');
+		this.submitButton = page.locator('//button[contains(text(),"Create new preset")]');
 	}
 
 	async clickCreateButton() {
@@ -60,4 +61,26 @@ exports.LinkPresetsCreatePage = class LinkPresetsCreatePage {
 		await this.linkSettingsApplyButton.click();
 	}
 
+	async clickLinkShortenerDropdown() {
+		await expect(this.linkPresetShortenerDropdown).toBeVisible();
+		await this.linkPresetShortenerDropdown.click();
+	}
+
+	async clickLinkTrackerDropdown() {
+		await expect(this.linkPresetTrackerDropdown).toBeVisible();
+		await this.linkPresetTrackerDropdown.click();
+	}
+
+	async clickSubmitButton() {
+		await expect(this.submitButton).toBeVisible();
+		await this.submitButton.click();
+		await expect(this.submitButton).not.toBeVisible();
+	}
+
+	async selectMenuItemByName(name) {
+		const menuItem = `.vk-ListItemWrapper:has-text("${name}")`;
+		await expect(this.page.locator(menuItem)).toBeVisible();
+		await this.page.locator(menuItem).hover();
+		await this.page.locator(menuItem).click();
+	}
 };
