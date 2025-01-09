@@ -33,8 +33,10 @@ exports.LoginPage = class LoginPage {
 
 		await this.page.goto('/login?lang=en');
 		await expect(this.page).toHaveTitle(/Hootsuite - Login/);
+		await expect(this.loginSubmit).toBeDisabled();
 		await this.emailAddress.fill(user.email);
 		await this.password.fill(user.password);
+		await expect(this.loginSubmit).toBeEnabled();
 		await this.loginSubmit.click();
 		await expect(this.emailAddress, 'Login into Hootsuite failed').not.toBeVisible();
 		await this.page.waitForLoadState();
@@ -43,8 +45,10 @@ exports.LoginPage = class LoginPage {
 	async login(email, password) {
 		await this.page.goto('/login?lang=en');
 		await expect(this.page).toHaveTitle(/Hootsuite - Login/);
+		await expect(this.loginSubmit).toBeDisabled();
 		await this.emailAddress.fill(email);
 		await this.password.fill(password);
+		await expect(this.loginSubmit).toBeEnabled();
 		await this.loginSubmit.click();
 		await expect(this.emailAddress, 'Login into Hootsuite failed').not.toBeVisible();
 		await this.page.waitForLoadState();
