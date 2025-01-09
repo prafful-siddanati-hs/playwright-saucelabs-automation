@@ -31,10 +31,12 @@ properties(
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/ig_collaborators.config.yml', description: 'Instagram Collaborators tests on chrome'),
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/drafts.config.yml', description: 'Drafts tests on chrome'),
             string(name: 'CONFIG_FILE', defaultValue: '.sauce/custom_approvals.config.yml', description: 'Custom Approvals tests on chrome'),
+            string(name: 'CONFIG_FILE', defaultValue: '.sauce/campaigns.config.yml', description: 'Campaigns tests on chrome'),
         ]),
         //Tests run only on chrome from 4.10AM - 8AM PST in 20 minute intervals
         pipelineTriggers(
             [parameterizedCron('''
+                  45 4 * * 1-5 %CONFIG_FILE=.sauce/campaigns.config.yml
                   5  7 * * 1-5 %CONFIG_FILE=.sauce/custom_approvals.config.yml
                  45 7 * * 1-5 %CONFIG_FILE=.sauce/drafts.config.yml
                  45 8 * * 1-5 %CONFIG_FILE=.sauce/planner_regression.config.yml
