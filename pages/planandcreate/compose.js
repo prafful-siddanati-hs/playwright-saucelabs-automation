@@ -243,9 +243,7 @@ exports.ComposePage = class ComposePage {
 		this.inputCollaborators = page.locator('.vk-ComposerModal [data-testid="collaborators-input"]');
 		this.collaboratorPill = page.locator('.vk-ComposerModal [data-testid="collaborator-pill"] span');
 		this.imageEditorCanvas = page.locator('[data-testid="imageEditor"] canvas[aria-label="Canvas"]');
-		this.videoEditorCanvas = page.locator('[data-testid="videoEditor"] #root-shadow');
 		this.imageEditorStickers = page.locator('[data-testid="imageEditor"] li button[aria-label="Stickers"]');
-		this.videoEditorStickers = page.getByRole('button', { name: 'Stickers' });
 		this.emoticonStickers= page.locator('[data-testid="imageEditor"] button[data-test="Emoticons"]');
 		this.grinEmoticonSticker = page.locator('[data-testid="imageEditor"] [data-test="Grin"]');
 		this.imageEditorSaveButton = page.locator('#fe-app-image-editor button[aria-label="Save"]');
@@ -259,6 +257,13 @@ exports.ComposePage = class ComposePage {
 		this.setDateButtonWithRecommendedScheduler = page.locator('//h2[contains(text(),"Schedule post")]//following-sibling::button[contains(text(),"Done")]');
 		this.scheduleForLaterButton = page.locator('//div[contains(@class, "vk-ComposerFooter")]//span[contains(@class, "vk-SchedulerSelector")]//*[text()= "Schedule for later"]');
 		this.invalidTimeSelectedButton = page.locator('//div[contains(@class, "vk-ComposerFooter")]//span[contains(@class, "vk-SchedulerSelector")]//*[text()="Invalid time selected"]');
+		this.facebookPreviewVideo = page.locator('.rc-Composer .vk-FacebookPreview .vk-VideoContainer .vk-VideoPlayer');
+		this.imageOnImageEditor = page.locator('[data-testid="imageEditor"] canvas[aria-label="Canvas"]');
+		this.stickerCanvas = page.locator('[data-testid="imageEditor"] li button[aria-label="Stickers"]');
+		this.emoticonOnStickerList = page.locator('[data-testid="imageEditor"] button[data-test="Grin"]');
+		this.emoticonsButton = page.locator('[data-testid="imageEditor"] button[data-test="Emoticons"]');
+		this.emoticonActions = page.locator('[data-testid="imageEditor"] [data-test="Sprite"]');
+		this.saveButtonOnImageEditor = page.locator('button[aria-label="Save"]');
 	}
 
 	async setDarkLaunchCookies() {
