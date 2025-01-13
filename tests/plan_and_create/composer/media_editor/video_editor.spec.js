@@ -14,7 +14,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test('Edit video using composer', async ({ page }) => {
-	const messageText = `Message within limit ${Math.floor(Math.random() * 100)} `;
+	const messageText = `Message with video edit ${Math.floor(Math.random() * 100)} `;
 	const addFixture = new getFixture();
 	const createNewUser = new createUser();
 	const loginPage = new LoginPage(page);
