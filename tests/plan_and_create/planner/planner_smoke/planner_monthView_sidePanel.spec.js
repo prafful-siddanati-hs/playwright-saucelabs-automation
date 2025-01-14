@@ -87,6 +87,7 @@ test('Verify count of scheduled messages in planner month view side panel', asyn
 
 	await test.step('Verify scheduled messages in next month', async () => {
 		await plannerPage.selectMonthView();
+		await page.waitForTimeout(1000);
 		await expect(plannerPage.nextButton).toBeVisible();
 		await plannerPage.nextButton.click();
 		await expect(plannerPage.messageCountOnMonthView).toBeVisible();
