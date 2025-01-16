@@ -72,6 +72,7 @@ test('Duplicate a LinkedIn PDF post', async ({page}) => {
 
 	await test.step('Update the message', async () => {
 		await composePage.writeMessage('--Duplicated');
+		await composePage.verifyLinkedInPreview(pdfText.concat('--Duplicated'));
 	});
 
 	await test.step('Save the edited message', async () => {

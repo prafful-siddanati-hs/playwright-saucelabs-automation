@@ -10,8 +10,8 @@ sauce:
     build: '$JOB_NAME-$BUILD_NUMBER'
     tags:
       - '$JOB_BASE_NAME'
-      - smoke
-      - composer
+      - regression
+      - planner
   launchOrder: fail rate
 showConsoleLog: true
 playwright:
@@ -32,31 +32,15 @@ npm:
     - date-fns-tz
     - events
 suites:
-  - name: "Composer_Smoke - Chrome"
+  - name: "Planner_ListView - Chrome"
     platformName: "Windows 11"
     screenResolution: "1920x1200"
     timeZone: 'Vancouver'
-    testMatch: ['tests/plan_and_create/composer/composer_smoke_tests/*.*.js']
+    testMatch: ['tests/plan_and_create/planner/listView/*.*.js']
     excludedTestFiles: ['${DISABLED_TESTS}']
-    numShards: 4
     params:
-      browserName: "chromium"
+      browserName: "chrome"
       project: "chromium"
-  # - name: "Composer_Smoke - Firefox"
-  #   platformName: "Windows 11"
-  #   screenResolution: "1400x1050"
-  #   testMatch: ['tests/composer/composer_smoke_tests/*.*.js']
-  #   params:
-  #     browserName: "firefox"
-  #     project: "firefox"
-#  - name: "Composer_Smoke - Safari"
-#    platformName: "macOS 13"
-#    screenResolution: "1600x1200"
-#    timeZone: 'Vancouver'
-#    testMatch: [ 'tests/composer/composer_smoke_tests/*.*.js' ]
-#    params:
-#      browserName: "webkit"
-#      project: "webkit"
 
 # Controls what artifacts to fetch when the suites have finished.
 artifacts:

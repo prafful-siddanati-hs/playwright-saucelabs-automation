@@ -21,7 +21,7 @@ exports.PlannerPage = class PlannerPage {
 		this.genericDetailPaneText = page.locator('.vk-GenericPreview .vk-PreviewMessageText');
 		this.unschedPostCheckbox = page.getByTestId('UnscheduledPostsCheckBoxContainer');
 		this.closeExportModalButton = page.locator('.vk-DialogCloseButton');
-		this.firstDayFromMonthCalendar = page.locator('.vk-Planner .rdp-day[tabindex="0"]');
+		this.firstDayFromMonthCalendar = page.locator('(//*[contains(@data-testid,"date-picker-day-cell") and contains(@tabindex,"0")])[1]', { locateStrategy: 'xpath' });
 		this.nextMonthNavigator = page.getByLabel('Go to next month');
 		this.startDayOfSunWeek = page.locator('//div[position() = 1 and text() = "Sun"]', { locateStrategy: 'xpath' });
 		this.startDayOfMonWeek = page.locator('//div[position() = 1 and text() = "Mon"]', { locateStrategy: 'xpath' });
@@ -40,7 +40,8 @@ exports.PlannerPage = class PlannerPage {
 		this.draftsTab = page.getByTestId('MainPanelWrapper').getByText('Drafts');
 		this.approvalstab = page.getByTestId('MainPanelWrapper').getByText('Approvals');
 		this.contentTab = page.locator('.vk-NavigationTab [data-label-content="Content"]');
-		this.datePickerButton = page.locator('.vk-Planner .vk-Toolbar #dateRangeAnchor');
+		this.datePickerButton = page.locator('.vk-Planner [data-testid="date-picker-toggle-button"]');
+		this.nextMonthFromDateRange = page.locator('button[data-testid="date-picker-next-button"]');
 		this.orgPicker= page.getByTestId('OrgPicker');
 		this.createPostButton = page.locator('.vk-Planner [data-testid="CreatePostButton"]');
 		this.addMediaButton = page.getByTestId('ContentButton');
@@ -78,7 +79,6 @@ exports.PlannerPage = class PlannerPage {
 		this.todayColumn = page.getByLabel('today');
 		this.newPost = page.locator('//*[contains(@class, "vk-NewPostContainer")]//*[contains(@class,"vk-NewPostPlaceholderDropdownItem")]//*[text()="Post"]', { locateStrategy: 'xpath' });
 		this.newPin = page.locator('//*[contains(@class, "vk-NewPostContainer")]//*[contains(@class,"vk-NewPostPlaceholderDropdownItem")]//*[text()="Pin"]', { locateStrategy: 'xpath' });
-		this.nextMonthFromDateRange = page.locator('//*[contains(@class, "vk-Planner")]//*[contains(@class, \'rdp-month\')]//*[@aria-label="Go to next month"]', { locateStrategy: 'xpath' });
 		this.firstHolidayPill = page.locator('//*[@data-dap-target="planner-ai-suggestions-chip"]', { locateStrategy: 'xpath' });
 		this.draggableCard = page.getByTestId('DraggableCard');
 		this.exitOnboardingPopover = page.locator('#walkthrough-root .vk-OnboardingPopoverExit');
@@ -133,12 +133,12 @@ exports.PlannerPage = class PlannerPage {
 		this.draftCardsListView = page.locator('//*[contains(@data-testid,"StateText") and text()="Draft"]', { locateStrategy: 'xpath' });
 		this.listViewApproveAction = page.locator('.vk-ActionsWrapper button[aria-label="Approve post"]');
 		this.listViewRejectAction = page.locator('.vk-ActionsWrapper button[aria-label="Reject post"]');
-		this.listViewMoreActions = page.locator('.vk-ActionsWrapper button[aria-label="More actions"]');
+		this.listViewMoreActions = page.getByTestId('ListCardActionsWrapper').getByLabel('More actions');
 		this.listViewDuplicateAction = page.locator('.vk-ActionsWrapper button[aria-label="Duplicate post"]');
 		this.listViewEditAction = page.locator('.vk-ActionsWrapper button[aria-label="Edit post"]');
 		this.listViewDeleteAction = page.locator('.vk-ActionsWrapper button[aria-label="Delete post"]');
 		this.editFromMoreActionsItems = page.locator('//*[contains(@class, "vk-ActionsWrapper")]//*[contains(@class, "vk-ListItemWrapper")]//*[text()="Edit"]', { locateStrategy: 'xpath' });
-		this.duplicateFromMoreActionsItems = page.locator('//*[contains(@class, "vk-ActionsWrapper")]//*[contains(@class, "vk-ListItemWrapper")]//*[text()="Duplicate"]', { locateStrategy: 'xpath' });
+		this.duplicateFromMoreActionsItems = page.getByTestId('ListCardActionsWrapper').getByRole('button', { name: 'Duplicate' });
 		this.deleteFromMoreActionsItems = page.locator('//*[contains(@class, "vk-ActionsWrapper")]//*[contains(@class, "vk-ListItemWrapper")]//*[text()="Delete"]', { locateStrategy: 'xpath' });
 		this.moveToDraftsFromMoreActionsItems = page.locator('//*[contains(@class, "vk-ActionsWrapper")]//*[contains(@class, "vk-ListItemWrapper")]//*[text()="Move to drafts"]', { locateStrategy: 'xpath' });
 		this.ReconnectFromMoreActionsItems = page.locator('//*[contains(@class, "vk-ActionsWrapper")]//*[contains(@class, "vk-ListItemWrapper")]//*[text()="Reconnect"]', { locateStrategy: 'xpath' });
@@ -154,7 +154,6 @@ exports.PlannerPage = class PlannerPage {
 		this.detailPaneMessageStateText = page.locator('.vk-Planner .vk-DetailPane .vk-StateText');
 		this.detailPaneSocialNetwork = page.locator('.vk-Planner .vk-DetailPane .vk-NetworkType');
 		this.duplicateButton = page.locator('//*[contains(@class,"vk-AdditionalActions")]//*[text()="Duplicate"]');
-		this.moveToDraftsButton = page.locator('.vk-Planner .vk-DetailPane .vk-ConvertPostToDraft');
 		this.postDuplicateButton = page.getByTestId('DuplicateButton');
 		this.rescheduleButton = page.getByTestId('RescheduleButton');
 		this.editButton = page.getByTestId('EditButton');
@@ -165,8 +164,9 @@ exports.PlannerPage = class PlannerPage {
 		this.messageRejectModalInput = page.locator('.vk-MessageRejectModal input');
 		this.messageRejectModalRejectButton = page.locator('.vk-MessageRejectModal .vk-SubmitButton');
 		this.confirmationSubmitButton = page.locator('.vk-ConfirmationModal .vk-SubmitButton');
+		this.additionalActionsButton = page.locator('.vk-Planner .vk-DetailPane .vk-AdditionalActions');
 		this.duplicateButton = page.locator('//*[contains(@class,"vk-AdditionalActions")]//*[text()="Duplicate"]', { locateStrategy: 'xpath' });
-		this.moveToDraftsBtn = page.locator('button[data-testid="MoveToDraftsButton"]');
+		this.moveToDraftsButton = page.locator('button[data-testid="MoveToDraftsButton"]');
 		this.sidePaneCloseButton = page.getByTestId('CloseButton');
 		this.deletePostButton = page.getByRole('button', { name: 'Delete post' });
 		this.termsOfServiceWall = page.locator('.vk-TermsOfServiceWall button');
@@ -611,6 +611,12 @@ exports.PlannerPage = class PlannerPage {
 		const cardSelector = this.page.locator(`//*[contains(@class, "vk-Card") and contains(.//div, "${username}") and contains(.//div, "${text}")]`, { locateStrategy: 'xpath' });
 		await expect(cardSelector).toBeVisible();
 		await cardSelector.click();
+	}
+
+	async deleteFromListView() {
+		await expect(this.listViewDeleteAction).toBeVisible();
+		await this.listViewDeleteAction.click();
+		await this.confirmationSubmitButton.click();
 	}
 
 	async dragAndDropCard(message, hour, id) {

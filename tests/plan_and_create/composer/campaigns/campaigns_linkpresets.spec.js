@@ -5,7 +5,6 @@ const getFixture = require('../../../../custom-commands/getFixture');
 const createOrg = require('../../../../custom-commands/createOrg');
 const addSocialToOrg = require('../../../../custom-commands/addSocialToOrg');
 const {getObjectByName} = require('../../../../globals');
-const {PlannerPage} = require('../../../../pages/planandcreate/planner');
 const {ComposePage} = require('../../../../pages/planandcreate/compose');
 const {MemberOverViewPage} = require('../../../../pages/memberOverview');
 const {CampaignsCreatePage} = require('../../../../pages/planandcreate/campaignsCreate');
